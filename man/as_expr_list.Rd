@@ -2,12 +2,12 @@
 % Please edit documentation in R/expand.R
 \name{as_expr_list}
 \alias{as_expr_list}
-\title{Convert Lazy Dots to Expression List}
+\title{Convert quosures to Expression List}
 \usage{
 as_expr_list(.dots)
 }
 \arguments{
-\item{.dots}{A lazy dots object.}
+\item{.dots}{A quosures object.}
 }
 \value{
 A list of expression.

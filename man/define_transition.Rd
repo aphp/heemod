@@ -39,7 +39,7 @@ names.}
 }
 \value{
 An object of class \code{uneval_matrix} (actually a
-named list of \code{lazy} expressions).
+named list of \code{quosures} expressions).
 }
 \description{
 Define a matrix of transition probabilities. Probability

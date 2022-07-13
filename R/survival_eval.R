@@ -181,7 +181,7 @@ extract_strata <- function(sf) {
   if (is.null(sf$strata)) {
     extract_stratum(sf, 1)
   } else {
-    plyr::ldply(
+    purrr::map_dfr(
       seq_len(length(sf$strata)),
       function(i) extract_stratum(sf, i)
     )
@@ -301,15 +301,29 @@ eval_surv.survfit <- function(x, time,  ...) {
       # Use NA when time > max time
       value[selector] <- as.numeric(NA)
       tibble(
-        t = time, 
+        
+        m = maxtime,
+        t = time,
         value = value,
         n = d$n[1])
     }
   )
   
+  surv_df2 <- pl_table %>%
+    dplyr::group_by( !!!syms(terms)) %>%
+    dplyr::summarise(
+      maxtime = max(time),
+      selector = {{ time }} > maxtime,
+      value = stats::stepfun(time[-1], surv)( {{ time }}),
+      n = dplyr::first(n),
+      t = {{ time }}
+    ) %>%
+    dplyr::mutate(value = ifelse(selector, as.numeric(NA), value)) %>%
+    dplyr::select(-maxtime, -selector)
+  
   if (is.null(dots$covar)) {
     if (length(terms) > 0) {
-      message("No covariates provided, returning aggregate survial across all subjects.")
+          message("No covariates provided, returning aggregate survival across all subjects.")
     }
     # If covariates are not provided, do weighted average for each time.
     agg_df <- surv_df %>%
@@ -591,12 +605,12 @@ eval_surv.surv_table <- function(x, time, ...){
   look_up(data = x, time = time, bin = "time", value = "survival")
 }
 
-eval_surv.lazy <- function(x, ...){
+eval_surv.quosure <- function(x, ...){
   dots <- list(...)
   use_data <- list()
   if("extra_env" %in% names(dots))
     use_data <- as.list.environment(dots$extra_env)
-  eval_surv(lazyeval::lazy_eval(x, data = use_data), ...)
+  eval_surv(eval_tidy(x, data = use_data), ...)
 }
 
 eval_surv.character <- function(x, ...){

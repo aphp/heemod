@@ -19,8 +19,8 @@ test_that(
     ## 
     ##  parameters from the discrete sensitivity analysis
     expect_identical(
-      sapply(result_1core$dsa$dsa$.par_value, lazyeval::lazy_eval),
-      sapply(result_2core$dsa$dsa$.par_value, lazyeval::lazy_eval)
+      sapply(result_1core$dsa$dsa$.par_value, eval_tidy),
+      sapply(result_2core$dsa$dsa$.par_value, eval_tidy)
     )
     ##  counts from all models from the discrete sensitivity analysis
     expect_identical(

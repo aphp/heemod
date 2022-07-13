@@ -384,7 +384,7 @@ expand_if_necessary <- function(strategy, parameters,
   # to retain values in case of expansion
   if (expand) {
     complete_parameters <- eval_parameters(structure(
-      c(lazyeval::lazy_dots(state_time = 1),
+      c(quos(state_time = 1),
         old_parameters),
       class = class(old_parameters)
     ),

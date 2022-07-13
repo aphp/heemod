@@ -140,12 +140,11 @@ plot.dsa <- function(x, type = c("simple", "difference"),
         ! all(var_col == "=")
       )
   }
-  x_lazy <- lazyeval::as.lazy_dots(list(
+  x_tidy <- as_quosures(list(
     d = substitute(
       diff(range(xxx)),
-      list(xxx = as.name(var_plot)))))
-  
-  x_tidy <- compat_lazy_dots(x_lazy)
+      list(xxx = as.name(var_plot)))),
+    env = rlang::caller_env())
   
   if (widest_on_top) {
     tab$.par_names <- stats::reorder(

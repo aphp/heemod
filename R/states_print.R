@@ -3,7 +3,7 @@ print.state <- function(x, ...) {
   val <- x$.dots
   start <- x$starting_values
   nb_sv <- lapply(start, function(x){
-    x$expr != 0
+    get_expr(x) != 0
   }) %>% 
     unlist() %>%
     sum()
@@ -15,13 +15,13 @@ print.state <- function(x, ...) {
     phrase_start))
   
   nv <- names(val)
-  ex <- lapply(val, function(y) paste(deparse(y$expr), collapse = "\n"))
+  ex <- lapply(val, function(y) paste(as_label(y), collapse = "\n"))
   
   cat(paste(nv, ex, sep = " = "), sep = "\n")
   if (nb_sv > 0){
     nv <- names(start)
     ex <- lapply(seq_along(start), function(i) {
-      if (start[[i]]$expr > 0) paste(names(start)[i], deparse(start[[i]]$expr), collapse = "\n", sep = " = ")
+      if (get_expr(start[[i]]) > 0) paste(names(start)[i], as_label(start[[i]]), collapse = "\n", sep = " = ")
     })
     cat("Start", paste(ex[lengths(ex) != 0]), sep = "\n")
   }

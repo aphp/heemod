@@ -21,19 +21,19 @@
 #' )
 #' 
 define_dsa <- function(...) {
-  .dots <- lazyeval::lazy_dots(...)
+  .dots <- quos(...)
   
   if (! length(.dots) %% 3 == 0) {
     stop("Incorrect number of elements in sensitivity definition, the correct form is A, min(A), max(A)...")
   }
   
   par_names <- character()
-  low_dots <- lazyeval::lazy_dots()
-  high_dots <- lazyeval::lazy_dots()
+  low_dots <- quos()
+  high_dots <- quos()
   
   for (i in seq_along(.dots)) {
     if (i %% 3 == 1) {
-      par_names <- c(par_names, deparse(.dots[[i]]$expr))
+      par_names <- c(par_names, deparse(get_expr(.dots[[i]])))
     } else if (i %% 3 == 2) {
       low_dots <- c(low_dots, list(.dots[[i]]))
     } else {

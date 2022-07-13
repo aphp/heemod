@@ -22,18 +22,15 @@ Depends: R (>= 3.6.0)
 Imports:
     dplyr (>= 1.0.4),
     ggplot2 (>= 3.3.3),
-    lazyeval (>= 0.2.2),
     memoise (>= 2.0.0),
     mvnfast (>= 0.2.5),
-    plyr (>= 1.8.6),
-    pryr (>= 0.1.4),
     tibble (>= 3.0.6),
     rlang (>= 0.4.1), 
     purrr (>= 0.3.4)
 License: GPL (>= 3)
 LazyData: true
 VignetteBuilder: knitr
-RoxygenNote: 7.1.1
+RoxygenNote: 7.2.0
 Suggests:
     BCEA,
     diagram,

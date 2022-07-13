@@ -16,7 +16,7 @@ test_that(
     )
     expect_s3_class(
       se1$dsa$a[[1]],
-      "lazy"
+      "quosure"
     )
     expect_error(
       define_dsa(

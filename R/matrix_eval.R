@@ -84,7 +84,7 @@ eval_transition.uneval_matrix <- function(x, parameters) {
   # update calls to dispatch_strategy()
   x <- dispatch_strategy_hack(x)
   
-  x_tidy <- compat_lazy_dots(x)
+  x_tidy <- x
   
   p2 <- parameters
   p2$C <- -pi

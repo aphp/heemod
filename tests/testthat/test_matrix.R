@@ -11,8 +11,7 @@ test_that(
     expect_output(
       str(mat1),
       'List of 4
- $ cell_1_1:List of 2
-  ..$ expr: num 0.3',
+ $ cell_1_1: language ~0.3',
       fixed = TRUE
     )
     expect_error(
@@ -52,8 +51,7 @@ test_that(
         )
       ),
       'List of 4
- $ cell_1_1:List of 2
-  ..$ expr: num 0.4',
+ $ cell_1_1: language ~0.4',
       fixed = TRUE
     )
     expect_output(

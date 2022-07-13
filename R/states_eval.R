@@ -16,7 +16,7 @@ eval_state_list <- function(x, parameters) {
     # update calls to dispatch_strategy()
     x <- dispatch_strategy_hack(x)
     
-    x_tidy <- compat_lazy_dots(x)
+    x_tidy <-x
     # bottleneck!
     lapply(seq_along(x_tidy), function(i){
       #parameters[names(x)[i]] <<- eval(rlang::quo_squash(x_tidy[[i]]), parameters)
@@ -59,7 +59,7 @@ discount_hack <- function(.dots) {
       x
     } else if (is.call(x)) {
       if (discount_check(x[[1]], env)) {
-        x <- pryr::standardise_call(x)
+        x <- call_standardise(x)
         #x$x <- substitute((.x * rep(x = 1, times = dplyr::n())), list(.x = x$x))
         x[[1]] <- substitute(discount2)
         x$time <- substitute(model_time)
@@ -80,8 +80,7 @@ discount_hack <- function(.dots) {
       .Data = lapply(
         .dots,
         function(x) {
-          x$expr <- f(x$expr, env = x$env)
-          x
+          set_expr(x, f(get_expr(x), env = get_env(x)))
         }
       )),
       attributes(.dots)
@@ -93,12 +92,6 @@ discount_hack <- function(.dots) {
 discount_check <- function(x, env) {
   if (identical(x, quote(discount)) ||
       identical(x, quote(heemod::discount))) {
-    if (identical(x, quote(heemod::discount)) &&
-        (utils::packageVersion("dplyr") <= "0.5" ||
-         utils::packageVersion("lazyeval") <= "0.2")) {
-      warning("Install the development version of 'lazyeval' and 'dplyr' ",
-              'to avoid the error \'could not find function "n"\'.')
-    }
     if (identical(environment(eval(x, envir = env)),
                   asNamespace("heemod"))) {
       TRUE
