@@ -1,3 +1,6 @@
+## heemod 1.0.0
+ * remove lazyeval, plyr and pryr dependencies
+
 ## heemod 0.15.0
   * Performance improvements: using state_time is much faster now, as well as
   probabilistic sensitivity analyses

@@ -50,6 +50,6 @@ Suggests:
     triangle,
     magrittr,
     cli
-BugReports: https://github.com/kzarca/heemod/issues
+BugReports: https://github.com/aphp/heemod/issues
 Roxygen: list(markdown = TRUE)
 Encoding: UTF-8

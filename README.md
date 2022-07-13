@@ -15,7 +15,7 @@ install.packages("heemod")
   * the latest development version from github with:
 
 ```r
-devtools::install_github("kzarca/heemod")
+devtools::install_github("aphp/heemod")
 ```
 
   * `heemod` can be cited with:
