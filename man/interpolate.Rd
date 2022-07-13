@@ -7,7 +7,7 @@
 \alias{interpolate.state}
 \alias{interpolate.part_surv}
 \alias{interpolate.uneval_state_list}
-\title{Interpolate Lazy Dots}
+\title{Interpolate Quosures}
 \usage{
 interpolate(x, ...)
 
@@ -30,10 +30,10 @@ object.}
 \item{more}{A list of expressions.}
 }
 \value{
-An interpolated lazy dots object.
+An interpolated quosures object.
 }
 \description{
-Sequentially interpolates lazy dots, optionally using
+Sequentially interpolates quosures, optionally using
 external references.
 }
 \details{

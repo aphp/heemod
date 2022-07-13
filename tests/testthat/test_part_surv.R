@@ -314,13 +314,13 @@ test_that("we can run construct_part_surv_tib",
                                                        "ProgressiveDisease", 
                                                        "Terminal", "Death")
               )
-            expect_identical(class(mixed_dist_part_surv[["part_surv"]][[1]]$os),
-                             "lazy")
-            expect_identical(lazyeval::lazy_eval(mixed_dist_part_surv[["part_surv"]][[1]]$pfs),
+            expect_identical(class(mixed_dist_part_surv[["part_surv"]][[1]]$os)[1],
+                             "quosure")
+            expect_identical(eval_tidy(mixed_dist_part_surv[["part_surv"]][[1]]$pfs),
                              'define_survival(distribution = "exp", rate = 1/100)')
-            expect_identical(class(lazyeval::lazy_eval(mixed_dist_part_surv[["part_surv"]][[1]]$os)),
+            expect_identical(class(eval_tidy(mixed_dist_part_surv[["part_surv"]][[1]]$os)),
                              "flexsurvreg")
-            prob <- compute_surv(lazyeval::lazy_eval(mixed_dist_part_surv[["part_surv"]][[1]]$os), 1)
+            prob <- compute_surv(eval_tidy(mixed_dist_part_surv[["part_surv"]][[1]]$os), 1)
             expect_equal(round(prob, 5), 0.00213)
                       })
 

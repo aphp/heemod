@@ -7,10 +7,10 @@
 dispatch_strategy_hack(.dots)
 }
 \arguments{
-\item{.dots}{A \code{lazy_dots} object.}
+\item{.dots}{A \code{quosures} object.}
 }
 \value{
-A modified \code{lazy_dots} object.
+A modified \code{quosures} object.
 }
 \description{
 This function is a hack to automate the definition of the

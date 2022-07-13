@@ -1,6 +1,6 @@
 # heemod - Health Economic Evaluation MODelling
 
-[![Travis-CI Build Status](https://travis-ci.org/pierucci/heemod.svg?branch=devel)](https://travis-ci.org/pierucci/heemod) [![](https://www.r-pkg.org/badges/version/heemod)](https://www.r-pkg.org/pkg/heemod) 
+[![](https://www.r-pkg.org/badges/version/heemod)](https://www.r-pkg.org/pkg/heemod) 
 
 Markov Models for Health Economic Evaluations. An implementation of the modelling and reporting features described in reference textbooks and guidelines: deterministic and probabilistic sensitivity analysis, heterogeneity analysis, time dependency on state-time and model-time (semi-Markov and non-homogeneous Markov models), etc.
 
@@ -15,7 +15,7 @@ install.packages("heemod")
   * the latest development version from github with:
 
 ```r
-devtools::install_github("pierucci/heemod")
+devtools::install_github("kzarca/heemod")
 ```
 
   * `heemod` can be cited with:

@@ -61,8 +61,8 @@ update.run_model <- function(object, newdata, ...) {
     weights <- rep(1, nrow(newdata))
   }
   
-  ce <- get_ce(object) %>%
-    compat_lazy_dots()
+  ce <- get_ce(object) 
+  
   list_res <- list()
   
   for (n in get_strategy_names(object)) {
