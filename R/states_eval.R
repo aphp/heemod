@@ -60,8 +60,6 @@ discount_hack <- function(.dots) {
     } else if (is.call(x)) {
       if (discount_check(x[[1]], env)) {
         x <- call_standardise(x)
-        #x$x <- substitute((.x * rep(x = 1, times = dplyr::n())), list(.x = x$x))
-        x[[1]] <- substitute(discount2)
         x$time <- substitute(model_time)
       }
       as.call(lapply(x, f, env = env))

@@ -53,12 +53,19 @@ is.wholenumber <- function(x, tol = .Machine$double.eps^0.5) {
 
 #' Discount a Quantity Over Time
 #' 
-#' @param x numeric. A quantity to discount.
+#' @param x numeric. A quantity to discount. Should be a scalar if time is 
+#' specified, a vector otherwise
 #' @param r discount rate.
-#' @param first logical. Should discouting start at the
-#'   first value ?
+#' @param first logical. Should discounting start at the
+#'   first value?
 #' @param period Number of cycle per unit of discount rate.
-#'   
+#' @param linear logical. Should the discount rate vary linearly along the 
+#' whole period?
+#' @param time The cycle number.
+#'
+#' @details If the unit of discount rate is the year and a cycle duration is 1 
+#' month, period should be 12.
+#' 
 #' @return A numeric vector of the same length as `x`.
 #' @export
 #' 
@@ -66,29 +73,26 @@ is.wholenumber <- function(x, tol = .Machine$double.eps^0.5) {
 #' 
 #' discount(rep(10, 5), .02)
 #' discount(rep(10, 5), .02, first = FALSE)
+#' discount(1000, .05, time = 10)
+#' discount(1000, .05, period = 2, time = 1:10)
+#' discount(1000, .05, period = 2, time = 1:10, linear = TRUE)
 #' 
-#' @keywords internal
-discount <- function(x, r, first = FALSE, period = 1) {
+discount <- function(x, r, first = FALSE, period = 1, linear = FALSE, time) {
   if (length(r) > 1) r <- r[1]
   stopifnot(
     r >= 0,
     r <= 1,
     period > 0
   )
-  dr <- trunc((seq_along(x) - (1 - isTRUE(first))) / period)
+  fun <- if(linear) function(x) x else trunc
+  dr <- if (missing(time)){
+    fun((seq_along(x) - (1 - isTRUE(first))) / period)
+  } else {
+    fun((time - as.numeric(!isTRUE(first)))/period)
+  }
   x / (1 + r) ^ dr
 }
 
-
-discount2 <- function(x, r, first = FALSE, period = 1, time) {
-  if (length(r) > 1) r <- r[1]
-  stopifnot(
-    r >= 0,
-    r <= 1
-  )
-  dr <- trunc((time - as.numeric(!isTRUE(first)))/period)
-  x / (1 + r) ^ dr
-}
 
 #' Check if All the Elements of a List Are the Same
 #' 

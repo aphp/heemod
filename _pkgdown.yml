@@ -69,7 +69,8 @@ reference:
     - rescale_discount_rate
     - who_mortality
     - reindent_transition
-  - title: Tabluar data
+    - discount
+  - title: Tabular data
     contents:
     - construct_part_surv_tib
     - define_surv_table

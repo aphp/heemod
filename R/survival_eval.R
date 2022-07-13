@@ -290,36 +290,17 @@ eval_surv.survfit <- function(x, time,  ...) {
   )
   
   # Generate predicted survival for each group
-  surv_df <- plyr::ddply(
-    pl_table,
-    terms,
-    function(d) {
-      maxtime <- max(d$time)
-      selector <- (time > maxtime)
-      # Use stepfun to look up survival probabilities
-      value <- stats::stepfun(d$time[-1], d$surv)(time)
-      # Use NA when time > max time
-      value[selector] <- as.numeric(NA)
-      tibble(
-        
-        m = maxtime,
-        t = time,
-        value = value,
-        n = d$n[1])
-    }
-  )
-  
-  surv_df2 <- pl_table %>%
+  surv_df <- pl_table %>%
     dplyr::group_by( !!!syms(terms)) %>%
     dplyr::summarise(
       maxtime = max(time),
-      selector = {{ time }} > maxtime,
-      value = stats::stepfun(time[-1], surv)( {{ time }}),
+      selector = !!time > .data$maxtime,
+      value = stats::stepfun(time[-1], .data$surv)( !!time ),
       n = dplyr::first(n),
-      t = {{ time }}
+      t = !!time
     ) %>%
-    dplyr::mutate(value = ifelse(selector, as.numeric(NA), value)) %>%
-    dplyr::select(-maxtime, -selector)
+    dplyr::mutate(value = ifelse(.data$selector, as.numeric(NA), .data$value)) %>%
+    dplyr::select(-.data$maxtime, -.data$selector)
   
   if (is.null(dots$covar)) {
     if (length(terms) > 0) {
