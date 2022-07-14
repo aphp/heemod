@@ -28,7 +28,7 @@ has_state_time.state <- function(x, ...) {
 
 substitute_dots <- function(.dots, .values) {
   as_quosures(
-    lapply(.dots, interp3, .values = .values)
+    lapply(.dots, interp, .values = .values)
   )
 }
 
@@ -66,7 +66,7 @@ expand_state.uneval_matrix <- function(x, state_pos,
 
   val_to_expand <- tm[state_pos, state_pos][[1]]
   for (i in seq.int(1L, cycles)){
-    m[i + state_pos -1, i + state_pos] <- list(interp3(val_to_expand, state_time = i))
+    m[i + state_pos -1, i + state_pos] <- list(interp(val_to_expand, state_time = i))
   }
 
 
@@ -223,7 +223,7 @@ interpolate.default <- function(x, more = NULL, ...) {
       ))
     }
     
-    new <- setNames(list(interp3(
+    new <- setNames(list(interp(
       to_interp,
       .values = for_interp
     )

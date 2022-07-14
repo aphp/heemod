@@ -607,7 +607,7 @@ matrix_expand_grid <- function(...){
     cargs
 }
 
-interp3 <-  function (x, ..., .values) {
+interp <-  function (x, ..., .values) {
   .dots <- enexprs(...)
   values <- all_values(.values, .dots)
   expr <- substitute_(get_expr(x), values)
