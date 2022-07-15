@@ -63,7 +63,9 @@ eval_strategy_newdata <- function(x, strategy = 1, newdata) {
               inflow = inflow,
               method = method,
               strategy_name = strategy,
-              expand_limit = expand_limit
+              expand_limit = expand_limit,
+              top_eval_env = x$top_eval_env, 
+              top_caller_env = x$top_caller_env
             )
           ) %>% 
           dplyr::ungroup() %>% 
@@ -89,7 +91,9 @@ eval_strategy_newdata <- function(x, strategy = 1, newdata) {
             method = method,
             inflow = inflow,
             strategy_name = strategy,
-            expand_limit = expand_limit
+            expand_limit = expand_limit,
+            top_eval_env = x$top_eval_env, 
+            top_caller_env = x$top_caller_env
           )
         ) %>% 
         dplyr::ungroup() %>% 
@@ -103,7 +107,9 @@ eval_strategy_newdata <- function(x, strategy = 1, newdata) {
 
 eval_newdata <- function(new_parameters, strategy, old_parameters,
                          cycles, init, method, inflow,
-                         strategy_name, expand_limit) {
+                         strategy_name, expand_limit,
+                         top_eval_env = eval_env(), 
+                         top_caller_env = caller_env()) {
   
   new_parameters <- Filter(
     function(x) all(rlang::is_call(x) || ! is.na(x)),
@@ -125,6 +131,8 @@ eval_newdata <- function(new_parameters, strategy, old_parameters,
     method = method,
     inflow = inflow,
     strategy_name = strategy_name,
-    expand_limit = expand_limit
+    expand_limit = expand_limit,
+    top_eval_env = top_eval_env, 
+    top_caller_env = top_caller_env
   )
 }

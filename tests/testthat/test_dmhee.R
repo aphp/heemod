@@ -175,6 +175,7 @@ test_that("Exactly match THR model",
                                                markov_cycle ^ gamma)),
               np1RR = 1 - exp(lambda * rrNP1 * ((markov_cycle - 1) ^ gamma - 
                                                   markov_cycle ^ gamma)),
+              death_prob = find(death_prob),
               
               # age-related mortality rate
               sex_cat = ifelse(sex == 0, "FMLE", "MLE"),

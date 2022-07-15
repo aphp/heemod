@@ -20,7 +20,7 @@ variables to bin (see examples).}
 data frame.}
 }
 \value{
-A vector of values, same lenght as \code{...}.
+A vector of values, same length as \code{...}.
 }
 \description{
 A convenience function to easily look for values in a

@@ -400,7 +400,7 @@ set_covariates_ <- function(dist, covariates, data = NULL) {
       dist = dist,
       covar = data
     ),
-    class = "surv_model"
+    class = c("surv_model")
   )
 }
 

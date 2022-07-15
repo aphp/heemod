@@ -47,8 +47,7 @@
 #' @example inst/examples/example_define_transition.R
 #'   
 define_transition <- function(..., state_names) {
-  .dots <- as_quosures(exprs(...), 
-                      env = as.environment("package:heemod"))
+  .dots <- quos(...)
   
   if (missing(state_names)) {
     message("No named state -> generating names.")
@@ -117,8 +116,7 @@ get_matrix_order.uneval_matrix <- function(x){
 #' @export
 #' @rdname define_transition
 modify.uneval_matrix <- function(.OBJECT, ...){
-  .dots <- as_quosures(exprs(...), 
-                      env = as.environment("package:heemod"))
+  .dots <- quos(...) 
   
   modify_(.OBJECT = .OBJECT, .dots = .dots)
 }

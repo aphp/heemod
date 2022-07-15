@@ -640,3 +640,20 @@ substitute_ <- function (x, env)
   call <- substitute(substitute(x, env), list(x = x))
   eval(call)
 }
+
+eval_env <- function(){
+  new_env<- rlang::new_environment(parent = as.environment("package:heemod"))
+  
+  n <- 0
+  repeat({
+    n <- n + 1
+    env <- caller_env(n)
+    purrr::walk(ls(env, all.names = TRUE), function(y){
+      if (!inherits(try(env[[y]], silent = TRUE), "try-error") && 
+          inherits(env[[y]], c("surv_object", "surv_model"))) {
+        if (!rlang::env_has(new_env, y)) assign(y, get(y, env), new_env)
+      }
+    })
+    if(identical(env, globalenv())) return(new_env)
+  })
+}

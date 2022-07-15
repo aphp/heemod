@@ -12,7 +12,9 @@ eval_strategy(
   method,
   expand_limit,
   inflow,
-  strategy_name
+  strategy_name,
+  top_current_env = current_env(),
+  top_caller_env = caller_env()
 )
 }
 \arguments{

@@ -28,7 +28,9 @@ run_model_(
   effect,
   state_time_limit,
   central_strategy,
-  inflow
+  inflow,
+  top_current_env = current_env(),
+  top_caller_env = caller_env()
 )
 }
 \arguments{

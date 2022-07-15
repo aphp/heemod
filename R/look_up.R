@@ -20,7 +20,7 @@
 #'   binned, or character vector giving the names of
 #'   variables to bin (see examples).
 #'   
-#' @return A vector of values, same lenght as `...`.
+#' @return A vector of values, same length as `...`.
 #' @export
 #' 
 #' @example inst/examples/example_look_up.R

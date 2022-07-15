@@ -42,8 +42,7 @@
 #' @example inst/examples/example_define_parameters.R
 #'   
 define_parameters <- function(...) {
-  .dots <- as_quosures(exprs(...), 
-                       env = as.environment("package:heemod"))
+  .dots <- quos(...)
   define_parameters_(.dots)
 }
 
@@ -113,9 +112,7 @@ modify_ <- function(.OBJECT, .dots, ...) {
 #' @export
 #' @rdname define_parameters
 modify.uneval_parameters <- function(.OBJECT, ...) {
-  .dots <- as_quosures(exprs(...), 
-                      env = as.environment("package:heemod"))
-  
+  .dots <- quos(...)
   modify_(.OBJECT = .OBJECT, .dots = .dots)
 }
 
@@ -138,8 +135,7 @@ modify_.uneval_parameters <- function(.OBJECT, .dots) {
 #'   [define_parameters()].
 #' @export
 define_inflow <- function(...) {
-  .dots <- as_quosures(exprs(...), 
-                      env = as.environment("package:heemod"))
+  .dots <- quos(...) 
   define_inflow_(.dots)
 }
 
@@ -161,8 +157,7 @@ define_inflow_ <- function(.dots) {
 #'   [define_parameters()].
 #' @export
 define_init <- function(...) {
-  .dots <- as_quosures(exprs(...), 
-                      env = as.environment("package:heemod"))
+  .dots <- quos(...) 
   define_init_(.dots)
 }
 
@@ -195,8 +190,7 @@ define_init_ <- function(.dots) {
 #'   [define_parameters()].
 #' @export
 define_starting_values <- function(...) {
-  .dots <- as_quosures(exprs(...), 
-                      env = as.environment("package:heemod"))
+  .dots <- quos(...) 
   define_starting_values_(.dots)
 }
 

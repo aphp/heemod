@@ -32,7 +32,9 @@
 #' @keywords internal
 eval_strategy <- function(strategy, parameters, cycles, 
                           init, method, expand_limit,
-                          inflow, strategy_name) {
+                          inflow, strategy_name,                        
+                          top_eval_env = eval_env(),
+                          top_caller_env = caller_env()) {
   
   stopifnot(
     cycles > 0,
@@ -49,7 +51,9 @@ eval_strategy <- function(strategy, parameters, cycles,
     method        = method,
     expand_limit  = expand_limit,
     inflow        = inflow,
-    strategy_name = strategy_name)
+    strategy_name = strategy_name,
+    top_eval_env = top_eval_env,
+    top_caller_env = top_caller_env)
   
   uneval_states <- expanded$uneval_states
   uneval_transition <- expanded$uneval_transition
@@ -60,10 +64,14 @@ eval_strategy <- function(strategy, parameters, cycles,
   parameters <- expanded$parameters
   actually_expanded_something <- expanded$actually_expanded_something
   
-  states <- eval_state_list(uneval_states, parameters)
+  states <- eval_state_list(uneval_states, parameters,
+                            top_eval_env = top_eval_env,
+                            top_caller_env = top_caller_env)
   
   transition <- eval_transition(uneval_transition,
-                                parameters)
+                                parameters,
+                                top_eval_env = top_eval_env,
+                                top_caller_env = top_caller_env)
   
   count_list <- compute_counts(
     x = transition,
@@ -303,7 +311,9 @@ compute_values <- function(states, count_list, strategy_starting_values) {
 expand_if_necessary <- function(strategy, parameters, 
                                 cycles, init, method,
                                 expand_limit, inflow,
-                                strategy_name) {
+                                strategy_name,
+                                top_eval_env = eval_env(),
+                                top_caller_env = caller_env()) {
   uneval_transition <- get_transition(strategy)
   uneval_states <- get_states(strategy)
   to_expand <- NULL
@@ -379,17 +389,21 @@ expand_if_necessary <- function(strategy, parameters,
   
   parameters <- eval_parameters(parameters,
                                 cycles = cycles,
-                                strategy_name = strategy_name)
+                                strategy_name = strategy_name,
+                                top_eval_env = top_eval_env,
+                                top_caller_env = top_caller_env)
   
   # to retain values in case of expansion
   if (expand) {
     complete_parameters <- eval_parameters(structure(
-      c(quos(state_time = 1),
+      c(exprs(state_time = 1),
         old_parameters),
       class = class(old_parameters)
     ),
     cycles = 1,
-    strategy_name = strategy_name)
+    strategy_name = strategy_name, 
+    top_eval_env = top_eval_env,
+    top_caller_env = top_caller_env)
   } else {
     complete_parameters <- parameters[1,]
   }
@@ -400,7 +414,8 @@ expand_if_necessary <- function(strategy, parameters,
   e_starting_values <- unlist(
     eval_starting_values(
       x = strategy$starting_values,
-      parameters[1, ])
+      parameters[1, ]
+      )
   )
   # e_starting_values <- 
   #   list(starting_strategy = e_starting_values_strat,

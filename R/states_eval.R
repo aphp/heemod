@@ -10,13 +10,15 @@
 #'   value and a line per cycle.
 #'   
 #' @keywords internal
-eval_state_list <- function(x, parameters) {
+eval_state_list <- function(x, parameters,
+                            top_eval_env = eval_env(), 
+                            top_caller_env = caller_env()) {
   f <- function(x, extracted) {
     x <- discount_hack(x[[extracted]])
     # update calls to dispatch_strategy()
     x <- dispatch_strategy_hack(x)
     
-    x_tidy <-x
+    x_tidy <- replace_find(x, top_eval_env, top_caller_env)
     # bottleneck!
     lapply(seq_along(x_tidy), function(i){
       #parameters[names(x)[i]] <<- eval(rlang::quo_squash(x_tidy[[i]]), parameters)

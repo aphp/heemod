@@ -236,8 +236,9 @@ test_that(
 
 test_that(
   "Discounting works", {
-    
+    f <- function(x) x    
     par1 <- define_parameters(
+      f = find(f),
       a = .1,
       b = 1 / (markov_cycle + 1),
       cte1 = 234,
@@ -254,7 +255,7 @@ test_that(
       x = discount(234, .05),
       y = discount(123, .1) * 1
     )
-    f <- function(x) x
+
     s2 <- define_state(
       x = f(discount(987, .2)),
       y = discount(r = .1, 1726)

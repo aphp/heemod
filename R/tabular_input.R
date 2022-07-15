@@ -34,6 +34,8 @@ run_model_tabular <- function(location, reference = "REFERENCE.csv",
                               save = FALSE, overwrite = FALSE) {
   
   inputs <- gather_model_info(location, reference)
+
+  
   outputs <- eval_models_from_tabular(inputs,
                                       run_dsa = run_dsa,
                                       run_psa = run_psa,
@@ -205,7 +207,9 @@ eval_models_from_tabular <- function(inputs,
       effect = inputs$model_options$effect,
       base_model = inputs$model_options$base_model,
       method = inputs$model_options$method,
-      cycles = inputs$model_options$cycles
+      cycles = inputs$model_options$cycles,
+      top_eval_env = inputs$param_info$env,
+      top_caller_env = inputs$param_info$env
     )
   )
   
@@ -704,7 +708,8 @@ create_parameters_from_tabular <- function(param_defs,
   list(
     params = parameters,
     dsa_params = dsa,
-    psa_params = psa
+    psa_params = psa,
+    env = df_env
   )
 }
 

@@ -21,8 +21,7 @@
 #' )
 #' 
 define_dsa <- function(...) {
-  .dots <- as_quosures(exprs(...), 
-                      env = as.environment("package:heemod"))
+  .dots <- quos(...)
   
   if (! length(.dots) %% 3 == 0) {
     stop("Incorrect number of elements in sensitivity definition, the correct form is A, min(A), max(A)...")

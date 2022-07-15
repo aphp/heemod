@@ -1,4 +1,4 @@
-where2 <- function(name) {
+where2 <- function(name, from) {
   n <- 0
   repeat({
     n <- n + 1
@@ -10,18 +10,19 @@ where2 <- function(name) {
   })
 }
 
-replace_find <- function(x){
+replace_find <- function(x, top_eval_env, top_caller_env){
   lapply(x, function(y){
     z <- interp(y, find = as.name("identity"))
     if (!identical(y, z)) {
-       eval_tidy(get_expr(z), env = where2(all.names(z, functions = FALSE))) %>%
-       new_quosure(env = get_env(y))
+       eval_tidy(get_expr(z), env = top_caller_env) %>%
+       new_quosure(env = top_eval_env)
     }
     else {
-      y
+      new_quosure(get_expr(y), env = top_eval_env)
     }
   }) %>% structure(class = class(x))
 }
+
 
 #' Evaluate Markov model parameters
 #' 
@@ -39,7 +40,9 @@ replace_find <- function(x){
 #'   
 #' @keywords internal
 eval_parameters <- function(x, cycles = 1,
-                            strategy_name = NA) {
+                            strategy_name = NA,
+                            top_eval_env = eval_env(),
+                            top_caller_env = caller_env()) {
   # update calls to dispatch_strategy()
   x <- dispatch_strategy_hack(x) 
   
@@ -53,16 +56,16 @@ eval_parameters <- function(x, cycles = 1,
     strategy = strategy_name,row.names = NULL,stringsAsFactors = F
   ) #%>% 
     #tibble::as_tibble()
-  x_tidy <- replace_find(x)
+  x_tidy <- replace_find(x, top_eval_env, top_caller_env)
   # other datastructure?
   res <- try({
     lapply(seq_along(x_tidy), function(i){
       #parameters[names(x)[i]] <<- eval(rlang::quo_squash(x_tidy[[i]]), parameters)
       vals <- rlang::eval_tidy(x_tidy[[i]], data = start_tibble)
-      if (!is.function(vals)) 
+      if (is.atomic(vals)) 
       start_tibble[names(x)[i]] <<- vals
       else {
-        assign(names(x_tidy)[i], vals, envir = get_env(x_tidy[[i]]))
+        assign(names(x_tidy)[i], vals, envir = top_eval_env)
       }
     })
     start_tibble

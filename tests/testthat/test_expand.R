@@ -206,6 +206,7 @@ test_that(
           transition = tm_exp,
           sA, sB
         ),
+        parameters = define_parameters(f = find(f)),
         cycles = 10,
         cost = c, effect = e
       ),
@@ -368,6 +369,7 @@ res <- run_model(
     transition = tm_exp,
     sA, sB, sC
   ),
+  parameter = define_parameters(f = find(f)),
   cycles = 2,
   cost = c, effect = e
 )
@@ -421,6 +423,7 @@ test_that(
       transition = tm_exp,
       sA, sB, sC, sD, sE
     ),
+    parameter = define_parameters(f = find(f)),
     cycles = 2,
     cost = c, effect = e
   )

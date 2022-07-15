@@ -79,16 +79,19 @@ eval_transition <- function(x, ...) {
   UseMethod("eval_transition")
 }
 
-eval_transition.uneval_matrix <- function(x, parameters) {
+eval_transition.uneval_matrix <- function(x, parameters, top_eval_env = eval_env(), 
+                                          top_caller_env = caller_env()) {
   
   # update calls to dispatch_strategy()
   x <- dispatch_strategy_hack(x)
   
-  x_tidy <- x
+  x_tidy <- replace_find(x, top_eval_env, top_caller_env)
   
   p2 <- parameters
   p2$C <- -pi
   nr <- nrow(p2)
+  
+  
   
   tab_res <- lapply(x_tidy, function(x){
     res <- rlang::eval_tidy(x, data = p2)

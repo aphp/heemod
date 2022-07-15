@@ -61,7 +61,9 @@ run_model <- function(...,
                       cost = NULL, effect = NULL,
                       state_time_limit = NULL,
                       central_strategy = NULL,
-                      inflow = rep(0L, get_state_number(get_states(list(...)[[1]])))) {
+                      inflow = rep(0L, get_state_number(get_states(list(...)[[1]]))),
+                      top_eval_env = eval_env(),
+                      top_caller_env = caller_env()) {
   
   uneval_strategy_list <- list(...)
   
@@ -78,7 +80,9 @@ run_model <- function(...,
     effect = new_quosure(substitute(effect), env = parent.frame()),
     state_time_limit = state_time_limit,
     central_strategy = central_strategy,
-    inflow = inflow
+    inflow = inflow,
+    top_eval_env = top_eval_env,
+    top_caller_env = top_caller_env
   )
 }
 
@@ -92,7 +96,10 @@ run_model_ <- function(uneval_strategy_list,
                        cost, effect,
                        state_time_limit,
                        central_strategy,
-                       inflow) {
+                       inflow,
+                       top_eval_env = eval_env(),
+                       top_caller_env = caller_env()
+                       ) {
   if (length(uneval_strategy_list) == 0) {
     stop("At least 1 strategy is needed.")
   }
@@ -145,6 +152,8 @@ run_model_ <- function(uneval_strategy_list,
     stop("State value names differ between models.")
   }
   
+  class(parameters) <- unique(c("uneval_parameters", class(parameters)))
+  
   state_time_limit <- complete_stl(
     state_time_limit,
     state_names = get_state_names(uneval_strategy_list[[1]]),
@@ -153,6 +162,7 @@ run_model_ <- function(uneval_strategy_list,
   )
   
   eval_strategy_list <- list()
+  
   
   for (n in names(uneval_strategy_list)) {
     eval_strategy_list[[n]] <- eval_strategy(
@@ -163,7 +173,9 @@ run_model_ <- function(uneval_strategy_list,
       method = method,
       expand_limit = state_time_limit[[n]],
       inflow = inflow,
-      strategy_name = n
+      strategy_name = n,
+      top_eval_env = top_eval_env,
+      top_caller_env = top_caller_env
     )
   }
   
@@ -215,7 +227,9 @@ run_model_ <- function(uneval_strategy_list,
       central_strategy = central_strategy,
       noncomparable_strategy = noncomparable_strategy,
       state_time_limit = state_time_limit,
-      frontier = if (! is.null(root_strategy)) get_frontier(res)
+      frontier = if (! is.null(root_strategy)) get_frontier(res),
+      top_eval_env = top_eval_env,
+      top_caller_env = top_caller_env
     ),
     class = c("run_model", class(res))
   )
