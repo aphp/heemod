@@ -1,3 +1,28 @@
+where2 <- function(name) {
+  n <- 0
+  repeat({
+    n <- n + 1
+    env <- caller_env(n)
+    if (rlang::env_has(env, name)) {
+      return(env)
+    } 
+    if(identical(env, globalenv())) stop("Can't find ", name, call. = FALSE)
+  })
+}
+
+replace_find <- function(x){
+  lapply(x, function(y){
+    z <- interp(y, find = as.name("identity"))
+    if (!identical(y, z)) {
+       eval_tidy(get_expr(z), env = where2(all.names(z, functions = FALSE))) %>%
+       new_quosure(env = get_env(y))
+    }
+    else {
+      y
+    }
+  }) %>% structure(class = class(x))
+}
+
 #' Evaluate Markov model parameters
 #' 
 #' Evaluate parameters specified through 
@@ -28,14 +53,17 @@ eval_parameters <- function(x, cycles = 1,
     strategy = strategy_name,row.names = NULL,stringsAsFactors = F
   ) #%>% 
     #tibble::as_tibble()
-  
-  x_tidy <- x
-  
+  x_tidy <- replace_find(x)
   # other datastructure?
   res <- try({
     lapply(seq_along(x_tidy), function(i){
       #parameters[names(x)[i]] <<- eval(rlang::quo_squash(x_tidy[[i]]), parameters)
-      start_tibble[names(x)[i]] <<- rlang::eval_tidy(x_tidy[[i]], data = start_tibble)
+      vals <- rlang::eval_tidy(x_tidy[[i]], data = start_tibble)
+      if (!is.function(vals)) 
+      start_tibble[names(x)[i]] <<- vals
+      else {
+        assign(names(x_tidy)[i], vals, envir = get_env(x_tidy[[i]]))
+      }
     })
     start_tibble
   }, silent = TRUE
@@ -47,7 +75,7 @@ eval_parameters <- function(x, cycles = 1,
   
   if ((use_fn <- options()$heemod.inf_parameter) != "ignore") {
     
-    if (any(these_are_inf <- sapply(res, is.infinite))) {
+    if (any(these_are_inf <- sapply(res, function(x)is.infinite(x)))) {
       inf_param_nums <- unique(which(these_are_inf, arr.ind = TRUE)[,2])
       inf_param_names <- names(res)[inf_param_nums]
       

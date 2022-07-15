@@ -28,7 +28,8 @@
 #'   
 define_psa <- function(...,
                        correlation) {
-  .dots <- rlang::quos(...)
+  .dots <- as_quosures(exprs(...), 
+                      env = as.environment("package:heemod"))
   define_psa_(.dots, correlation)
 }
 
@@ -154,7 +155,8 @@ define_psa_ <- function(.dots = list(), correlation) {
 #'   )
 #' 
 define_correlation <- function(...) {
-  .dots <- rlang::quos(...)
+  .dots <- as_quosures(exprs(...), 
+                      env = as.environment("package:heemod"))
   define_correlation_(.dots)
 }
 

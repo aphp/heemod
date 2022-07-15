@@ -26,7 +26,8 @@
 #' @example inst/examples/example_define_state.R
 #'   
 define_state <- function(..., starting_values = define_starting_values()) {
-  .dots <- quos(...)
+  .dots <- as_quosures(exprs(...), 
+                      env = as.environment("package:heemod"))
   define_state_(list(.dots = .dots, starting_values = starting_values))
 }
 
@@ -48,7 +49,8 @@ define_state_ <- function(x) {
 #' @export
 #' @rdname define_state
 modify.state <- function(.OBJECT, ...) {
-  .dots <- quos(...)
+  .dots <- as_quosures(exprs(...), 
+                      env = as.environment("package:heemod"))
   modify_(.OBJECT = .OBJECT, .dots = .dots)
 }
 
