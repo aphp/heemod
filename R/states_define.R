@@ -35,6 +35,7 @@ define_state <- function(..., starting_values = define_starting_values()) {
 define_state_ <- function(x) {
   .dots <- x$.dots
   check_names(names(.dots))
+  deprecated_markov_cycle(.dots)
   starting_values <- check_starting_values(
     x = x$starting_values,
     ref = names(.dots)

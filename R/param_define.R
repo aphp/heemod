@@ -49,10 +49,11 @@ define_parameters <- function(...) {
 #' @rdname define_parameters
 #' @export
 define_parameters_ <- function(.dots) {
-  
   if (length(.dots)){
     check_names(names(.dots))
+    deprecated_markov_cycle(.dots)
   }
+  
   structure(.dots,
             class = c("uneval_parameters", class(.dots)))
 }

@@ -657,3 +657,13 @@ eval_env <- function(){
     if(identical(env, globalenv())) return(new_env)
   })
 }
+
+deprecated_markov_cycle <- function(.dots){
+  if ((any(map_lgl(.dots, function(x){
+    any(
+      as.list(get_expr(x)) %>%
+        map_lgl(function(y) identical(expr(markov_cycle), y)))
+  }))))
+  stop("Since version 1.0.0, `markov_cycle` is deprecated, 
+       please use `model_time` instead")
+}

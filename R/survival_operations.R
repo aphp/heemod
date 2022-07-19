@@ -22,19 +22,6 @@ join <- function(..., at) {
   
   join_(dots, at)
 }
-#' @export
-#' @rdname join
-project <- function(...) {
-  warning("'project() is deprecated, use 'join()' instead.")
-  join(...)
-}
-
-#' @export
-#' @rdname join
-project_ <- function(...) {
-  warning("'project_() is deprecated, use 'join_()' instead.")
-  join_(...)
-}
 
 #' @export
 #' @rdname join
