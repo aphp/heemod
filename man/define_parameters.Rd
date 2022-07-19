@@ -28,7 +28,7 @@ An object of class \code{uneval_parameters}
 \description{
 Define parameters called to compute the transition matrix
 or state values for a Markov model. Parameters can be
-time dependent by using the \code{markov_cycle}
+time dependent by using the \code{model_time}
 parameter.
 }
 \details{
@@ -36,7 +36,7 @@ Parameters are defined sequentially, parameters defined
 earlier can be called in later expressions.
 
 Vector length should not be explicitly set, but should
-instead be stated relatively to \code{markov_cycle}
+instead be stated relatively to \code{model_time}
 (whose length depends on the number of simulation
 cycles). Alternatively, \code{dplyr} functions such as
 \code{\link[dplyr:context]{dplyr::n()}} or \code{\link[dplyr:ranking]{dplyr::row_number()}} can be used.
@@ -62,13 +62,13 @@ be referenced in later expressions.
 
 define_parameters(
   age_start = 60,
-  age = age_start + markov_cycle
+  age = age_start + model_time
 )
 
-# other uses of markov_cycle are possible
+# other uses of model_time are possible
 
 define_parameters(
-  top_time = ifelse(markov_cycle < 10, 1, 0)
+  top_time = ifelse(model_time < 10, 1, 0)
 )
 
 # more elaborate: risk function
@@ -83,17 +83,17 @@ define_parameters(
 # )
 
 
-# instead rely on markov_cycle or dplyr 
+# instead rely on model_time or dplyr 
 # functions such as n() or row_number()
 
 define_parameters(
   var = seq(from = 1, length.out = n(), by = 3),
-  var2 = seq(1, length(markov_cycle), 2)
+  var2 = seq(1, length(model_time), 2)
 )
 
 param <- define_parameters(
   age_start = 60,
-  age = age_start + markov_cycle
+  age = age_start + model_time
 )
 
 # modify existing parameters

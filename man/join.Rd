@@ -2,16 +2,10 @@
 % Please edit documentation in R/survival_operations.R
 \name{join}
 \alias{join}
-\alias{project}
-\alias{project_}
 \alias{join_}
 \title{Project Beyond a Survival Distribution with Another}
 \usage{
 join(..., at)
-
-project(...)
-
-project_(...)
 
 join_(dots, at)
 }
@@ -33,7 +27,7 @@ or more survival distributions using the specified cut points.
 }
 \examples{
 
-dist1 <- define_survival(distribution = "exp", rate = .5)
-dist2 <- define_survival(distribution = "gompertz", rate = .5, shape = 1)
+dist1 <- define_surv_dist(distribution = "exp", rate = .5)
+dist2 <- define_surv_dist(distribution = "gompertz", rate = .5, shape = 1)
 join_dist <- join(dist1, dist2, at=20)
 }

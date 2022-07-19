@@ -4,10 +4,10 @@ f1 <- function(x) x + 1
 test_that(
   "Current environment > caller environment for define_parameters", {
     age_init <- 25
-    res <- eval_parameters(define_parameters(age_init = 12, age = age_init + markov_cycle))
+    res <- eval_parameters(define_parameters(age_init = 12, age = age_init + model_time))
     expect_equal(res$age, 13)
-    expect_error(eval_parameters(define_parameters(age = age_init + markov_cycle)))
-    res <- eval_parameters(define_parameters(age_init = find(age_init), age = age_init + markov_cycle))
+    expect_error(eval_parameters(define_parameters(age = age_init + model_time)))
+    res <- eval_parameters(define_parameters(age_init = find(age_init), age = age_init + model_time))
     expect_equal(res$age, 26)
 })
 

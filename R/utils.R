@@ -126,7 +126,7 @@ plur_y <- function(x) {
 #' 
 #' Throws an error if any of the names are reserved.
 #' 
-#' Reserved names are `markov_cycle` and anything
+#' Reserved names are `model_time` and anything
 #' starting with `.`.
 #' 
 #' @param x A character vector of names.
@@ -145,8 +145,8 @@ check_names <- function(x) {
   if (any("" %in% x)) {
     stop("Empty string names are not allowed.")
   }
-  if (any("markov_cycle" %in% x)) {
-    stop("'markov_cycle' is a reserved name.")
+  if (any("model_time" %in% x)) {
+    stop("'model_time' is a reserved name.")
   }
   if (any("model_time" %in% x)) {
     stop("'model_time' is a reserved name.")
@@ -642,7 +642,7 @@ substitute_ <- function (x, env)
 }
 
 eval_env <- function(){
-  new_env<- rlang::new_environment(parent = as.environment("package:heemod"))
+  new_env <- rlang::new_environment(parent = as.environment("package:heemod"))
   
   n <- 0
   repeat({
@@ -650,7 +650,7 @@ eval_env <- function(){
     env <- caller_env(n)
     purrr::walk(ls(env, all.names = TRUE), function(y){
       if (!inherits(try(env[[y]], silent = TRUE), "try-error") && 
-          inherits(env[[y]], c("surv_object", "surv_model"))) {
+          inherits(env[[y]], "surv_object")) {
         if (!rlang::env_has(new_env, y)) assign(y, get(y, env), new_env)
       }
     })
@@ -662,7 +662,7 @@ deprecated_markov_cycle <- function(.dots){
   if ((any(map_lgl(.dots, function(x){
     any(
       as.list(get_expr(x)) %>%
-        map_lgl(function(y) identical(expr(markov_cycle), y)))
+        map_lgl(function(y) identical(quote(markov_cycle), y)))
   }))))
   stop("Since version 1.0.0, `markov_cycle` is deprecated, 
        please use `model_time` instead")

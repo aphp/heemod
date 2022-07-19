@@ -223,6 +223,7 @@ test_that(
             transition = tm,
             sA_exp, sB
           ),
+          parameters = define_parameters(f = find(f)),
           cycles = 10,
           cost = c, effect = e
         ),
@@ -239,6 +240,7 @@ test_that(
           transition = tm_exp,
           sA_exp, sB
         ),
+        parameters = define_parameters(f = find(f)),
         cycles = 10,
         cost = c, effect = e
       ),
@@ -255,6 +257,7 @@ test_that(
         transition = tm_exp,
         sA_exp, sB
       ),
+      parameters = define_parameters(f = find(f)),
       cycles = 10,
       cost = c, effect = e,
       state_time_limit = c(A = 3, B = 8)
@@ -269,6 +272,7 @@ test_that(
         transition = tm_exp,
         sA_exp, sB
       ),
+      parameters = define_parameters(f = find(f)),
       cycles = 10,
       cost = c, effect = e,
       state_time_limit = 5
@@ -278,6 +282,7 @@ test_that(
         transition = tm_exp,
         sA_exp, sB
       ),
+      parameters = define_parameters(f = find(f)),
       cycles = 10,
       cost = c, effect = e,
       state_time_limit = c(A = 5, B = 5)
@@ -291,6 +296,7 @@ test_that(
         transition = tm_exp,
         sA_exp, sB
       ),
+      parameters = define_parameters(f = find(f)),
       cycles = 10,
       cost = c, effect = e,
       state_time_limit = c(B = 7)
@@ -300,6 +306,7 @@ test_that(
         transition = tm_exp,
         sA_exp, sB
       ),
+      parameters = define_parameters(f = find(f)),
       cycles = 10,
       cost = c, effect = e,
       state_time_limit = c(A = 10, B = 7)
@@ -313,7 +320,7 @@ test_that(
       abs(sin(x)) / 2
     }
     mat_mc <- define_transition(
-      C, f(markov_cycle),
+      C, f(model_time),
       0, 1
     )
     mat_sc <- define_transition(
@@ -333,6 +340,7 @@ test_that(
     )
     res <- summary(run_model(
       strat_sc, strat_mc,
+      parameters = define_parameters(f = find(f)),
       cycles = 10,
       cost = c, effect = e
     ))
@@ -369,7 +377,7 @@ res <- run_model(
     transition = tm_exp,
     sA, sB, sC
   ),
-  parameter = define_parameters(f = find(f)),
+  parameters = define_parameters(f = find(f)),
   cycles = 2,
   cost = c, effect = e
 )
@@ -423,7 +431,7 @@ test_that(
       transition = tm_exp,
       sA, sB, sC, sD, sE
     ),
-    parameter = define_parameters(f = find(f)),
+    parameters = define_parameters(f = find(f)),
     cycles = 2,
     cost = c, effect = e
   )

@@ -8,7 +8,7 @@ eval_parameters(
   x,
   cycles = 1,
   strategy_name = NA,
-  top_current_env = current_env(),
+  top_eval_env = eval_env(),
   top_caller_env = caller_env()
 )
 }
@@ -29,7 +29,7 @@ Evaluate parameters specified through
 \examples{
 param <- define_parameters(
   age_start = 60,
-  age = age_start + markov_cycle
+  age = age_start + model_time
 )
 
 heemod:::eval_parameters(param, cycles = 15)

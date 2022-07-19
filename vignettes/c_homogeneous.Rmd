@@ -52,7 +52,9 @@ The probabilities to stay in the same state are equal to $1 - \sum P_{trans}$ wh
 We use the alias `C` as a convenient way to specify the probability complement, equal to $1 - \sum P_{trans}$.
 
 ```{r}
-rr <- .509
+params <- define_parameters(
+  rr = .509
+)
 
 mat_comb <- define_transition(
     C, .202*rr, .067*rr, .010*rr,
@@ -80,8 +82,10 @@ plot(mat_comb)
 The costs of lamivudine and zidovudine are defined:
 
 ```{r}
-cost_zido <- 2278
-cost_lami <- 2086
+cost_params <- define_parameters(
+  cost_zido = 2278,
+  cost_lami = 2086
+)
 ```
 
 In addition to drugs costs (called `cost_drugs` in the model), each state is associated to healthcare costs (called `cost_health`). Cost are discounted at a 6% rate with the `discount` function.
@@ -167,6 +171,7 @@ Both strategies can then be combined in a model and run for 50 years with `run_m
 res_mod <- run_model(
   mono = strat_mono,
   comb = strat_comb,
+  parameters = c(params, cost_params),
   cycles = 50,
   cost = cost_total,
   effect = life_year

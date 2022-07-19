@@ -44,10 +44,20 @@
 #' @param inflow numeric vector or result of
 #'   [define_inflow()], similar to `init`. Number of new
 #'   individuals in each state per cycle.
+#' @param top_eval_env,top_caller_env Environments, see details
 #'   
 #' @details Counting method represents where the transition should occur,
 #' based on https://journals.sagepub.com/doi/10.1177/0272989X09340585:
 #' "beginning" overestimates costs and "end" underestimates costs.
+#' 
+#' By default, each time `run_model()` gets executed, a new environment is 
+#' created and the calling environment is kept. To be available from run_model,
+#' an object (such as a variable or function) must either belong to the heemod
+#' namespace or its parent environments, or declared in define_parameters. To
+#' use the objects of the calling environment, the object must be registered with 
+#' the function `find()` within define_parameter
+#' 
+#' `define_parameters()` or in the top 
 #' @return A list of evaluated models with computed values.
 #' @export
 #' 
@@ -353,7 +363,7 @@ get_values.run_model <- function(x, ...) {
     key_col = "value_names",
     value_col = "value",
     gather_cols = names(res)[! names(res) %in% 
-                               c("markov_cycle",
+                               c("model_time",
                                  ".strategy_names")]
   )
 }
@@ -396,7 +406,7 @@ get_counts.run_model <- function(x, ...) {
         get_counts(x$eval_strategy_list[[.n]]) %>% 
           dplyr::mutate(
             .strategy_names = .n,
-            markov_cycle = row_number())
+            model_time = row_number())
       }
     )
   )
@@ -406,7 +416,7 @@ get_counts.run_model <- function(x, ...) {
     key_col = "state_names",
     value_col = "count",
     gather_cols = names(res)[! names(res) %in% 
-                               c("markov_cycle",
+                               c("model_time",
                                  ".strategy_names")]
   )
 }

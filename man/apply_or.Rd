@@ -23,6 +23,6 @@ a survival distribution.
 }
 \examples{
 
-dist1 <- define_survival(distribution = "exp", rate = .25)
+dist1 <- define_surv_dist(distribution = "exp", rate = .25)
 po_dist <- apply_or(dist1, 1.2)
 }

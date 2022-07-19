@@ -30,7 +30,7 @@
 #' @examples 
 #' 
 #' define_transition(
-#'   C, get_who_mr(age = 50 + markov_cycle, sex = "FMLE", country = "FRA"),
+#'   C, get_who_mr(age = 50 + model_time, sex = "FMLE", country = "FRA"),
 #'   0, 1
 #' )
 #' 

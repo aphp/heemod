@@ -1,6 +1,6 @@
 par1 <- define_parameters(
   a = 1,
-  b = 1 / (markov_cycle + a)
+  b = 1 / (model_time + a)
 )
 
 mat1 <- define_transition(
@@ -10,7 +10,7 @@ mat1 <- define_transition(
 mod1 <- define_strategy(
   transition = mat1,
   define_state(var = a),
-  define_state(var = a * markov_cycle)
+  define_state(var = a * model_time)
 )
 
 res1 <- run_model(

@@ -26,7 +26,7 @@ define_parameters(
   x = dispatch_strategy(
     strat_1 = 1234,
     strat_2 = 9876,
-    strat_3 = val * 2 + markov_cycle
+    strat_3 = val * 2 + model_time
   )
 )
 }

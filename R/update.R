@@ -126,7 +126,7 @@ update.run_model <- function(object, newdata, ...) {
 
 #' @export
 print.updated_model <- function(x, ...) {
-  x$summary
+  print(x$summary)
 }
 
 #' @export

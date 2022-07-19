@@ -18,7 +18,7 @@ define_part_surv_(pfs, os, state_names, cycle_length = 1)
 \arguments{
 \item{pfs, os}{Either results from
 \code{\link[flexsurv:flexsurvreg]{flexsurv::flexsurvreg()}} or
-\code{\link[=define_survival]{define_survival()}}.}
+\code{\link[=define_surv_dist]{define_surv_dist()}}.}
 
 \item{state_names}{named character vector, length 3 or 4.
 State names for progression-free state, progression,
@@ -41,8 +41,8 @@ Define a partitioned survival model with progression-free
 survival and overall survival.
 }
 \examples{
-dist_pfs <- define_survival("exp", rate = 1)
-dist_os <- define_survival("exp", rate = .5)
+dist_pfs <- define_surv_dist("exp", rate = 1)
+dist_os <- define_surv_dist("exp", rate = .5)
 
 define_part_surv(
   pfs = dist_pfs,

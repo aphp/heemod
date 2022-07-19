@@ -13,7 +13,7 @@ expand_if_necessary(
   expand_limit,
   inflow,
   strategy_name,
-  top_current_env = current_env(),
+  top_eval_env = eval_env(),
   top_caller_env = caller_env()
 )
 }
@@ -56,7 +56,7 @@ individual per state per model cycle.
 }
 \examples{
 param <- define_parameters(
-  a = markov_cycle + 1 * 2
+  a = model_time + 1 * 2
 )
 
 mat <- define_transition(

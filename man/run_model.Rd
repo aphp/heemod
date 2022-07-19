@@ -15,7 +15,9 @@ run_model(
   effect = NULL,
   state_time_limit = NULL,
   central_strategy = NULL,
-  inflow = rep(0L, get_state_number(get_states(list(...)[[1]])))
+  inflow = rep(0L, get_state_number(get_states(list(...)[[1]]))),
+  top_eval_env = eval_env(),
+  top_caller_env = caller_env()
 )
 
 run_model_(
@@ -29,7 +31,7 @@ run_model_(
   state_time_limit,
   central_strategy,
   inflow,
-  top_current_env = current_env(),
+  top_eval_env = eval_env(),
   top_caller_env = caller_env()
 )
 }
@@ -65,6 +67,8 @@ for readability.}
 \code{\link[=define_inflow]{define_inflow()}}, similar to \code{init}. Number of new
 individuals in each state per cycle.}
 
+\item{top_eval_env, top_caller_env}{Environments, see details}
+
 \item{uneval_strategy_list}{List of models, only used by
 \code{\link[=run_model_]{run_model_()}} to avoid using \code{...}.}
 }
@@ -99,6 +103,15 @@ for the given strategies.
 Counting method represents where the transition should occur,
 based on https://journals.sagepub.com/doi/10.1177/0272989X09340585:
 "beginning" overestimates costs and "end" underestimates costs.
+
+By default, each time \code{run_model()} gets executed, a new environment is
+created and the calling environment is kept. To be available from run_model,
+an object (such as a variable or function) must either belong to the heemod
+namespace or its parent environments, or declared in define_parameters. To
+use the objects of the calling environment, the object must be registered with
+the function \code{find()} within define_parameter
+
+\code{define_parameters()} or in the top
 }
 \examples{
 # running a single model

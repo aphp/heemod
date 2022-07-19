@@ -41,7 +41,7 @@ test_that(
       parameters = define_parameters(
         age_init = 60,
         cost_init = 1000,
-        age = age_init + markov_cycle
+        age = age_init + model_time
       ),
       init = 1:0,
       cycles = 10,
@@ -68,7 +68,7 @@ test_that(
     )
     
     rsp2_tidy <- define_psa_(
-      rlang::quos(
+      exprs(
         age_init ~ normal(60, 10),
         cost_init ~ normal(1000, 100)
       ),
@@ -101,7 +101,7 @@ test_that(
     )
     
     x_tidy <- define_psa_(
-      rlang::quos(
+      exprs(
         rate1 + rate2 + rate3 ~ multinomial(10, 50, 40),
         a + b ~ multinomial(15, 30)
       )
@@ -176,7 +176,7 @@ test_that(
       parameters = define_parameters(
         age_init = 60,
         cost_init = 1000,
-        age = age_init + markov_cycle
+        age = age_init + model_time
       ),
       init = 1:0,
       cycles = 10,

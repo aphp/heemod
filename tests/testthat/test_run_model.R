@@ -4,7 +4,7 @@ test_that(
   "Strange inputs generate errors", {
     par1 <- define_parameters(
       a = .1,
-      b = 1 / (markov_cycle + 1)
+      b = 1 / (model_time + 1)
     )
     mat1 <- define_transition(
       state_names = c("X1", "X2"),
@@ -149,7 +149,7 @@ test_that(
   "run_model behaves as expected", {
     par1 <- define_parameters(
       a = .1,
-      b = 1 / (markov_cycle + 1)
+      b = 1 / (model_time + 1)
     )
     mat1 <- define_transition(
       state_names = c("X1", "X2"),
@@ -185,15 +185,15 @@ test_that(
     
     expect_identical(
       run_model(mod1, mod2,
-                 parameters = par1, init = c(1000L, 0L), cost = x, effect = y),
+                 parameters = par1, init = c(1000L, 0L), cost = x, effect = y)[-15],
       run_model(mod1, mod2,
-                 parameters = par1, cost = x, effect = y)
+                 parameters = par1, cost = x, effect = y)[-15]
     )
     expect_identical(
       run_model(mod1, mod2,
-                 parameters = par1, cost = x, effect = y),
+                 parameters = par1, cost = x, effect = y)[-15],
       run_model(I = mod1, II = mod2,
-                 parameters = par1, cost = x, effect = y)
+                 parameters = par1, cost = x, effect = y)[-15]
     )
     expect_warning(
       run_model(I = mod1, mod2,
@@ -285,7 +285,7 @@ test_that("Discounting", {
   
   par1 <- define_parameters(
     a = .1,
-    b = 1 / (markov_cycle + 1),
+    b = 1 / (model_time + 1),
     c1 = 987,
     c2 = 876,
     c3 = 1726
@@ -379,7 +379,7 @@ test_that(
     
     par1 <- define_parameters(
       a = .1,
-      b = 1 / (markov_cycle + 1)
+      b = 1 / (model_time + 1)
     )
     mat1 <- define_transition(
       state_names = c("X1", "X2"),
