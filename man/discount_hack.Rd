@@ -4,7 +4,7 @@
 \alias{discount_hack}
 \title{Hack to Work Around a Discounting Issue}
 \usage{
-discount_hack(.dots)
+discount_hack(.dots, top_eval_env = current_env())
 }
 \arguments{
 \item{.dots}{A state object.}

@@ -4,7 +4,7 @@
 \alias{eval_resample}
 \title{Evaluate Resampling Definition}
 \usage{
-eval_resample(psa, N)
+eval_resample(psa, N, top_eval_env = eval_env(), top_caller_env = caller_env())
 }
 \arguments{
 \item{psa}{A \code{\link[=define_psa]{define_psa()}} object.}

@@ -112,7 +112,7 @@ eval_newdata <- function(new_parameters, strategy, old_parameters,
                          top_caller_env = caller_env()) {
   
   new_parameters <- Filter(
-    function(x) all(rlang::is_call(x) || ! is.na(x)),
+    function(x) all(rlang::is_symbolic(x) || ! is.na(x)),
     new_parameters
   )
   

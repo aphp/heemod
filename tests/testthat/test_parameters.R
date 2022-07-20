@@ -9,7 +9,7 @@ test_that(
     expect_output(
       str(par1),
       'List of 2
- $ a: language ~1234',
+ $ a: num 1234',
       fixed = TRUE
     )
     expect_output(
@@ -33,7 +33,7 @@ b = a + 543',
         )
       ),
       'List of 2
- $ a: language ~4321',
+ $ a: num 4321',
       fixed = TRUE
     )
     expect_identical(

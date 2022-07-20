@@ -7,7 +7,7 @@
 \alias{interpolate.state}
 \alias{interpolate.part_surv}
 \alias{interpolate.uneval_state_list}
-\title{Interpolate Quosures}
+\title{Interpolate Expressions}
 \usage{
 interpolate(x, ...)
 
@@ -30,10 +30,10 @@ object.}
 \item{more}{A list of expressions.}
 }
 \value{
-An interpolated quosures object.
+An interpolated expression object.
 }
 \description{
-Sequentially interpolates quosures, optionally using
+Sequentially interpolates expressions, optionally using
 external references.
 }
 \details{

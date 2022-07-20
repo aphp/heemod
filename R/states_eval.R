@@ -14,11 +14,11 @@ eval_state_list <- function(x, parameters,
                             top_eval_env = eval_env(), 
                             top_caller_env = caller_env()) {
   f <- function(x, extracted) {
-    x <- discount_hack(x[[extracted]])
+    x <- discount_hack(x[[extracted]], top_eval_env)
     # update calls to dispatch_strategy()
     x <- dispatch_strategy_hack(x)
     
-    x_tidy <- replace_find(x, top_eval_env, top_caller_env)
+    x_tidy <- prepare_for_eval(x, top_eval_env, top_caller_env)
     # bottleneck!
     lapply(seq_along(x_tidy), function(i){
       #parameters[names(x)[i]] <<- eval(rlang::quo_squash(x_tidy[[i]]), parameters)
@@ -55,18 +55,18 @@ get_state_value_names.eval_state_list <- function(x){
 #' @return A modified state object.
 #'   
 #' @keywords internal
-discount_hack <- function(.dots) {
-  f <- function (x, env) {
+discount_hack <- function(.dots, top_eval_env = current_env()) {
+  f <- function (x) {
     if (is.atomic(x) || is.name(x)) {
       x
     } else if (is.call(x)) {
-      if (discount_check(x[[1]], env)) {
+      if (discount_check(x[[1]], top_eval_env)) {
         x <- call_standardise(x)
         x$time <- substitute(model_time)
       }
-      as.call(lapply(x, f, env = env))
+      as.call(lapply(x, f))
     } else if (is.pairlist(x)) {
-      as.pairlist(lapply(x, f, env = env))
+      as.pairlist(lapply(x, f))
     } else {
       stop(sprintf(
         "Don't know how to handle type %s.",
@@ -78,10 +78,7 @@ discount_hack <- function(.dots) {
     structure,
     c(list(
       .Data = lapply(
-        .dots,
-        function(x) {
-          set_expr(x, f(get_expr(x), env = get_env(x)))
-        }
+        .dots, f
       )),
       attributes(.dots)
     )
@@ -92,13 +89,7 @@ discount_hack <- function(.dots) {
 discount_check <- function(x, env) {
   if (identical(x, quote(discount)) ||
       identical(x, quote(heemod::discount))) {
-    if (identical(environment(eval(x, envir = env)),
-                  asNamespace("heemod"))) {
       TRUE
-    } else {
-      warning("A version of 'discount()' that is not defined by heemod was found.")
-      FALSE
-    }
   } else {
     FALSE
   }

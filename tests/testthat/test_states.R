@@ -15,7 +15,7 @@ test_that(
     expect_output(
       str(s1$.dots),
       'List of 2
- $ x: language ~234',
+ $ x: num 234',
       fixed = TRUE
     )
     expect_output(
@@ -37,7 +37,7 @@ y = 123',
         )
       ),
       "List of 2
- $ x: language ~111",
+ $ x: num 111",
       fixed = TRUE
     )
     expect_error(
@@ -98,7 +98,7 @@ test_that(
       "List of 2
  $ X1:List of 2
   ..$ .dots          :List of 2
-  .. ..$ x: language ~234",
+  .. ..$ x: num 234",
       fixed = TRUE
     )
     expect_output(
@@ -120,7 +120,7 @@ y"
       "List of 2
  $ A:List of 2
   ..$ .dots          :List of 2
-  .. ..$ x: language ~234",
+  .. ..$ x: num 234",
       fixed = TRUE
     )
     expect_output(
@@ -133,7 +133,7 @@ y"
       "List of 2
  $ X1:List of 2
   ..$ .dots          :List of 2
-  .. ..$ x: language ~987",
+  .. ..$ x: num 987",
       fixed = TRUE
     )
     
@@ -147,7 +147,7 @@ y"
       "List of 3
  $ X1:List of 2
   ..$ .dots          :List of 2
-  .. ..$ x: language ~234",
+  .. ..$ x: num 234",
       fixed = TRUE
     )
     expect_error(
@@ -284,14 +284,6 @@ test_that(
     )
     expect_equal(
       summary(res)$res_comp$.icer, c(NA, NaN)
-    )
-    
-    discount <- function(x, r) x
-    expect_warning(
-      run_model(
-        mod1, mod2,
-        parameters = par1, cost = x, effect = y
-      )
     )
   }
 )

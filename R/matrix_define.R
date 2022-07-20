@@ -41,13 +41,13 @@
 #' @param .dots Used to work around non-standard evaluation.
 #'   
 #' @return An object of class `uneval_matrix` (actually a
-#'   named list of `quosures` expressions).
+#'   named list of `expressions`).
 #' @export
 #' 
 #' @example inst/examples/example_define_transition.R
 #'   
 define_transition <- function(..., state_names) {
-  .dots <- quos(...)
+  .dots <- exprs_class(...)
   
   if (missing(state_names)) {
     message("No named state -> generating names.")
@@ -116,7 +116,7 @@ get_matrix_order.uneval_matrix <- function(x){
 #' @export
 #' @rdname define_transition
 modify.uneval_matrix <- function(.OBJECT, ...){
-  .dots <- quos(...) 
+  .dots <- exprs_class(...) 
   
   modify_(.OBJECT = .OBJECT, .dots = .dots)
 }

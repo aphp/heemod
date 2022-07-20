@@ -7,10 +7,10 @@
 dispatch_strategy_hack(.dots)
 }
 \arguments{
-\item{.dots}{A \code{quosures} object.}
+\item{.dots}{An \code{expressions} object.}
 }
 \value{
-A modified \code{quosures} object.
+A modified \code{expressions} object.
 }
 \description{
 This function is a hack to automate the definition of the

@@ -11,7 +11,7 @@ test_that(
     ref <- letters[1:3]
     
     expect_identical(
-      to_text_dots(check_init.quosures(init1, ref)),
+      to_text_dots(check_init.expressions(init1, ref)),
       to_text_dots(check_init.default(init2, ref))
     )
     

@@ -13,7 +13,6 @@
 #' @param from Timeframe of the original probability.
 #' @param per Number of person-time corresponding to the
 #'   rate.
-#' @param ... For deprecated functions.
 #'   
 #' @return A probability.
 #'   
@@ -31,13 +30,6 @@ rescale_prob <- function(p, to = 1, from = 1) {
   )
   r <- - log(1 - p) / from
   rate_to_prob(r, to = to)
-}
-
-#' @export
-#' @rdname probability
-prob_to_prob <- function(...) {
-  warning("'prob_to_prob' is deprecated, use 'rescale_prob()' instead.")
-  rescale_prob(...)
 }
 
 #' @export

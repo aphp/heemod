@@ -23,7 +23,7 @@ parameters.}
 }
 \value{
 An object of class \code{uneval_parameters}
-(actually a list of quosures).
+(actually a list of expressions).
 }
 \description{
 Define parameters called to compute the transition matrix

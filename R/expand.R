@@ -27,7 +27,7 @@ has_state_time.state <- function(x, ...) {
 }
 
 substitute_dots <- function(.dots, .values) {
-  as_quosures(
+  as_expressions(
     lapply(.dots, interp, .values = .values)
   )
 }
@@ -58,7 +58,7 @@ expand_state.uneval_matrix <- function(x, state_pos,
 
   L <- length(x)
   N <- sqrt(L)
-  m <-  matrix(list(quo(0)), nrow = cycles + N, ncol = cycles + N)
+  m <-  matrix(list(0), nrow = cycles + N, ncol = cycles + N)
 
   tm <- matrix(x,
                byrow = TRUE,
@@ -105,7 +105,7 @@ expand_state.uneval_matrix <- function(x, state_pos,
   sn <- insert(sn, state_pos, sprintf(".%s_%i", state_name, seq.int(1, cycles+1L)))
   sn <- sn[-state_pos]
 
-  x <- define_transition_(as_quosures(t(m)), sn)
+  x <- define_transition_(as_expressions(t(m)), sn)
 
 
   x[get_tm_pos(state_pos+cycles, 1, N+cycles):get_tm_pos(state_pos+cycles, N+cycles, N+cycles)] <-
@@ -126,7 +126,7 @@ expand_state.uneval_state_list <- function(x, state_name, cycles) {
   state_values_names <- get_state_value_names(st)
   num_state_values <-length(state_values_names)
   revert_starting <- setNames(as.list(rep(0, num_state_values)), state_values_names) %>%
-    as_quosures()
+    as_expressions()
   
   id <- seq_len(cycles + 1)
   res <- lapply(
@@ -163,7 +163,7 @@ expand_state.uneval_init <- function(x, state_name, cycles) {
     x,
     which(names(x) == state_name),
     stats::setNames(
-      rep(list(quo(0)), cycles),
+      rep(list(0), cycles),
       sprintf(".%s_%i", state_name, seq_len(cycles) + 1))
   )
   
@@ -186,9 +186,9 @@ as_expr_list <- function(.dots) {
   )
 }
 
-#' Interpolate Quosures
+#' Interpolate Expressions
 #' 
-#' Sequentially interpolates quosures, optionally using 
+#' Sequentially interpolates expressions, optionally using 
 #' external references.
 #' 
 #' The interpolation is sequential: the second dot is 
@@ -200,7 +200,7 @@ as_expr_list <- function(.dots) {
 #' @param more A list of expressions.
 #' @param ... Addition parameters passed to methods.
 #'   
-#' @return An interpolated quosures object.
+#' @return An interpolated expression object.
 #' @keywords internal
 interpolate <- function(x, ...) {
   UseMethod("interpolate")
@@ -230,7 +230,8 @@ interpolate.default <- function(x, more = NULL, ...) {
     ), names(x)[i])
     res <- c(res, new)
   }
-  as_quosures(res)
+  if (!is.null(res))
+    structure(res, class = "expressions")
 }
 
 

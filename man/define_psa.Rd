@@ -15,7 +15,7 @@ define_psa_(.dots = list(), correlation)
 \item{correlation}{A correlation matrix for parameters or
 the output of \code{\link[=define_correlation]{define_correlation()}}.}
 
-\item{.dots}{Pair/values of expressions coercible to quosures.}
+\item{.dots}{A list of formulas.}
 }
 \value{
 An object of class \code{resamp_definition}.

@@ -17,7 +17,7 @@
 #' @param ... Formulas defining parameter distributions.
 #' @param correlation A correlation matrix for parameters or
 #'   the output of [define_correlation()].
-#' @param .dots Pair/values of expressions coercible to quosures.
+#' @param .dots A list of formulas.
 #'   
 #' @return An object of class `resamp_definition`. 
 #'   Contains `list_qdist`, a list of quantile 
@@ -28,7 +28,7 @@
 #'   
 define_psa <- function(...,
                        correlation) {
-  .dots <- quos(...) 
+  .dots <- exprs_class(...) 
   define_psa_(.dots, correlation)
 }
 
@@ -154,7 +154,7 @@ define_psa_ <- function(.dots = list(), correlation) {
 #'   )
 #' 
 define_correlation <- function(...) {
-  .dots <- quos(...)
+  .dots <- exprs_class(...)
   define_correlation_(.dots)
 }
 

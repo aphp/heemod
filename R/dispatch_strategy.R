@@ -81,25 +81,25 @@ dispatch_strategy <- function(.strategy, ...) {
 #' `dispatch_strategy(.strategy = strategy, ...)` if
 #' `.strategy_name` is not already defined.
 #' 
-#' @param .dots A `quosures` object.
+#' @param .dots An `expressions` object.
 #'   
-#' @return A modified `quosures` object.
+#' @return A modified `expressions` object.
 #'   
 #' @keywords internal
 dispatch_strategy_hack <- function(.dots) {
-  f <- function (x, env) {
+  f <- function (x) {
     if (is.atomic(x) || is.name(x)) {
       x
     } else if (is.call(x)) {
-      if (dispatch_strategy_check(x[[1]], env)) {
+      if (dispatch_strategy_check(x[[1]])) {
         x <- call_standardise(x)
         if (is.null(x$.strategy)) {
           x$.strategy <- substitute(strategy)
         }
       }
-      as.call(lapply(x, f, env = env))
+      as.call(lapply(x, f))
     } else if (is.pairlist(x)) {
-      as.pairlist(lapply(x, f, env = env))
+      as.pairlist(lapply(x, f))
     } else {
       stop(sprintf(
         "Don't know how to handle type %s.",
@@ -111,10 +111,7 @@ dispatch_strategy_hack <- function(.dots) {
     structure,
     c(list(
       .Data = lapply(
-        .dots,
-        function(x) {
-          set_expr(x, f(get_expr(x), env = get_env(x)))
-        }
+        .dots, f
       )),
       attributes(.dots)
     )
@@ -122,15 +119,9 @@ dispatch_strategy_hack <- function(.dots) {
 }
 
 # Ensure only heemod version of dispatch_strategy gets used
-dispatch_strategy_check <- function(x, env) {
+dispatch_strategy_check <- function(x) {
   if (identical(x, quote(dispatch_strategy))) {
-    if (identical(environment(eval(x, envir = env)),
-                  asNamespace("heemod"))) {
       TRUE
-    } else {
-      warning("A version of 'dispatch_strategy()' that is not defined by heemod was found.")
-      FALSE
-    }
   } else {
     FALSE
   }

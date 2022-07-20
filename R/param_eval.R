@@ -10,17 +10,23 @@ where2 <- function(name, from) {
   })
 }
 
-replace_find <- function(x, top_eval_env, top_caller_env){
-  lapply(x, function(y){
-    z <- interp(y, find = as.name("identity"))
-    if (!identical(y, z)) {
-       eval_tidy(get_expr(z), env = top_caller_env) %>%
-       new_quosure(env = top_eval_env)
-    }
-    else {
-      new_quosure(get_expr(y), env = top_eval_env)
-    }
-  }) %>% structure(class = class(x))
+prepare_for_eval <- function(x, top_eval_env, top_caller_env, 
+                             replace_find = TRUE){
+  res <- if (replace_find){
+    lapply(x, function(y){
+      z <- interp(y, find = as.name("identity"))
+      if (!identical(y, z)) {
+        eval_tidy(get_expr(z), env = top_caller_env) %>%
+          new_quosure(env = top_eval_env)
+      }
+      else {
+        new_quosure(get_expr(y), env = top_eval_env)
+      }
+    }) 
+  } else {
+    new_quosure(get_expr(x), env = top_eval_env)
+  }
+  as_quosures(res)
 }
 
 
@@ -55,7 +61,7 @@ eval_parameters <- function(x, cycles = 1,
     strategy = strategy_name,row.names = NULL,stringsAsFactors = F
   ) #%>% 
     #tibble::as_tibble()
-  x_tidy <- replace_find(x, top_eval_env, top_caller_env)
+  x_tidy <- prepare_for_eval(x, top_eval_env, top_caller_env)
   # other datastructure?
   res <- try({
     lapply(seq_along(x_tidy), function(i){

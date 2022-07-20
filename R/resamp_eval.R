@@ -3,8 +3,6 @@
 #' @param model The result of [run_model()].
 #' @param psa Resampling distribution for parameters defined
 #'   by [define_psa()].
-#' @param resample Deprecated. Resampling distribution for
-#'   parameters defined by [define_psa()].
 #' @param N &gt; 0. Number of simulation to run.
 #'   
 #' @return A list with one `data.frame` per model.
@@ -12,12 +10,7 @@
 #' 
 #' @example inst/examples/example_run_psa.R
 #'   
-run_psa <- function(model, psa, N, resample) {
-  if (! missing(resample)) {
-    warning("Argument 'resample' is deprecated, use 'psa' instead.")
-    psa <- resample
-  }
-  
+run_psa <- function(model, psa, N) {
   stopifnot(
     N > 0,
     ! is.null(N)
@@ -27,7 +20,9 @@ run_psa <- function(model, psa, N, resample) {
     stop("No cost and/or effect defined, probabilistic analysis unavailable.")
   }
   
-  newdata <- eval_resample(psa, N)
+  newdata <- eval_resample(psa, N, 
+                           top_eval_env = model$top_eval_env,
+                           top_caller_env = model$top_caller_env)
   
   list_res <- list()
   
@@ -138,7 +133,8 @@ eval_correlation <- function(x, var_names) {
 #'   column per parameter and `N` rows.
 #'   
 #' @keywords internal
-eval_resample <- function(psa, N) {
+eval_resample <- function(psa, N, top_eval_env = eval_env(),
+                          top_caller_env = caller_env()) {
   mat_p <- stats::pnorm(
     mvnfast::rmvn(
       n = N,
@@ -162,16 +158,26 @@ eval_resample <- function(psa, N) {
   
   for (m in psa$multinom) {
     call_denom <- make_call(m, "+")
-    list_expr <- as_quosures(
+    list_expr <- as_expressions(
       c(list(
         .denom = call_denom),
       stats::setNames(
         lapply(
           m,
           function(x) as.call(list(as.name("/"), as.name(x), as.name(".denom")))),
-        m)), env = parent.frame()) 
-    res <- dplyr::mutate(res, !!!list_expr) %>% 
-      dplyr::select(-.data$.denom)
+        m)))
+    
+    x_tidy <- prepare_for_eval(list_expr, top_eval_env, top_caller_env)
+    
+    lapply(seq_along(x_tidy), function(i){
+      vals <- rlang::eval_tidy(x_tidy[[i]], data = res)
+      if (is.atomic(vals)) 
+        res[names(list_expr)[i]] <<- vals
+      else {
+        assign(names(x_tidy)[i], vals, envir = top_eval_env)
+      }
+    })
   }
+  res$.denom <- NULL
   res
 }

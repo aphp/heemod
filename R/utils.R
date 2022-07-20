@@ -340,7 +340,8 @@ to_text_dots <- function(x, name = TRUE) {
   } else {
     unlist(lapply(
       x,
-       function(y) if (!rlang::is_call(y) && any(is.na(y))) NA else
+       function(y) if (!rlang::is_symbolic(y) && 
+                       any(is.na(y))) NA else
          as_label(y)
     ))
   }
@@ -440,22 +441,14 @@ to_dots <- function(x) {
 }
 
 to_dots.default <- function(x) {
-  as_quosures(lapply(
+  as_expressions(lapply(
     x, function(x) x
   ))
 }
 
 to_dots.list <- function(x) {
-  f <- function(x) {
-    if (inherits(x, "character") || inherits(x, "factor")) {
-      as_quosure(as.character(x), env = globalenv())
-    } else {
-      x
-    }
-  }
-  
-  as_quosures(
-    lapply(x, f)
+  as_expressions(
+    x
   )
 }
 
@@ -666,4 +659,12 @@ deprecated_markov_cycle <- function(.dots){
   }))))
   stop("Since version 1.0.0, `markov_cycle` is deprecated, 
        please use `model_time` instead")
+}
+
+as_expressions <- function(x){
+  structure(x, class = c("expressions", "list"))
+}
+
+exprs_class <- function(...){
+  as_expressions(exprs(...))
 }

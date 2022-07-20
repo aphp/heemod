@@ -14,10 +14,6 @@ test_that(
       se1$dsa$a,
       "list"
     )
-    expect_s3_class(
-      se1$dsa$a[[1]],
-      "quosure"
-    )
     expect_error(
       define_dsa(
         a, 10, 45, 20,

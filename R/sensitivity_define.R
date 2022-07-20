@@ -21,15 +21,15 @@
 #' )
 #' 
 define_dsa <- function(...) {
-  .dots <- quos(...)
+  .dots <- exprs_class(...)
   
   if (! length(.dots) %% 3 == 0) {
     stop("Incorrect number of elements in sensitivity definition, the correct form is A, min(A), max(A)...")
   }
   
   par_names <- character()
-  low_dots <- quos()
-  high_dots <- quos()
+  low_dots <- exprs()
+  high_dots <- exprs()
   
   for (i in seq_along(.dots)) {
     if (i %% 3 == 1) {
