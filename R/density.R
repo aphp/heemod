@@ -75,10 +75,7 @@ r_lognormal <- function(meanlog, sdlog) {
 gamma <- function(mean, sd) {
   list(r_gamma(mean^2/sd^2, sd^2/mean))
 }
-make_gamma <- function(...) {
-  warning("'make_gamma()' is deprecated, use 'gamma()' instead.")
-  gamma(...)
-}
+
 r_gamma <- function(shape, scale) {
   function(x) stats::qgamma(p = x, shape = shape, scale = scale)
 }
@@ -87,10 +84,7 @@ r_gamma <- function(shape, scale) {
 binomial <- function(prob, size) {
   list(r_binomial(prob, size))
 }
-prop <- function(...) {
-  warning("'prop() is deprecated, use 'binomial()' instead.")
-  binomial(...)
-}
+
 r_binomial <- function(prob, size) {
   function(x) stats::qbinom(p = x, size = size, prob = prob) / size
 }
@@ -104,10 +98,7 @@ multinomial <- function(...) {
     class = "multinom_param"
   )
 }
-multinom <- function(...) {
-  warning("'multinom()' is deprecated, use 'multinomial()' instead.")
-  multinomial(...)
-}
+
 r_multinomial <- function(n) {
   function(x) stats::qgamma(x, shape = n, scale = 1)
 }
@@ -117,9 +108,9 @@ logitnormal <- function(mu, sigma) {
   if (! requireNamespace("logitnorm")) {
     stop("'logitnorm' package required for logitnormal distributions.")
   }
-  
   list(r_logitnormal(mu, sigma))
 }
+
 r_logitnormal <- function(mu, sigma) {
   function(x) logitnorm::qlogitnorm(p = x, mu = mu, sigma = sigma)
 }
@@ -128,6 +119,7 @@ r_logitnormal <- function(mu, sigma) {
 beta <- function(shape1, shape2){
   list(r_beta(shape1, shape2))
 }
+
 r_beta <- function(shape1, shape2){
   function(x){stats::qbeta(p = x, shape1 = shape1, shape2 = shape2)}
 }
