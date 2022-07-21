@@ -167,16 +167,9 @@ eval_resample <- function(psa, N, top_eval_env = eval_env(),
           function(x) as.call(list(as.name("/"), as.name(x), as.name(".denom")))),
         m)))
     
-    x_tidy <- prepare_for_eval(list_expr, top_eval_env, top_caller_env)
     
-    lapply(seq_along(x_tidy), function(i){
-      vals <- rlang::eval_tidy(x_tidy[[i]], data = res)
-      if (is.atomic(vals)) 
-        res[names(list_expr)[i]] <<- vals
-      else {
-        assign(names(x_tidy)[i], vals, envir = top_eval_env)
-      }
-    })
+    res <- eval_list_expr(list_expr, data = res, 
+                              top_eval_env, top_caller_env) 
   }
   res$.denom <- NULL
   res

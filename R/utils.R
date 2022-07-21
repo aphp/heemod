@@ -601,20 +601,25 @@ matrix_expand_grid <- function(...){
 }
 
 interp <-  function (x, ..., .values) {
-  .dots <- enexprs(...)
-  values <- all_values(.values, .dots)
+  .dots <- exprs(...)
+  if (missing(.values)) {
+    values <- lapply(.dots,function(x) eval_tidy(x, env = rlang::caller_env(3)))
+  }  else {
+    values <- c(.values, lapply(.dots, function(x) eval_tidy(x,  env = rlang::caller_env(3))))
+  }
+  if (!any(all.names(get_expr(x), functions = TRUE) %in% 
+           names(values), na.rm = TRUE)) {
+    return(x)
+  }
+  values <- all_values(values, .dots)
   expr <- substitute_(get_expr(x), values)
   x <- set_expr(x, expr)
   x
 }
 
-all_values <- function (.values, .dots) 
+all_values <- function (values, .dots) 
 {
-  if (missing(.values)) {
-    values <- lapply(.dots,function(x) eval_tidy(x, env = rlang::caller_env(4)))
-  }  else {
-    values <- c(.values, lapply(.dots, function(x) eval_tidy(x,  env = rlang::caller_env(4))))
-  }
+
   if (is.list(values)) {
     find_quosure <- vapply(values, is_quosure, logical(1))
     values[find_quosure] <- lapply(values[find_quosure], get_expr)
@@ -668,3 +673,39 @@ as_expressions <- function(x){
 exprs_class <- function(...){
   as_expressions(exprs(...))
 }
+
+
+eval_list_expr <- function(x, data, top_eval_env, top_caller_env, 
+                           replace_find = FALSE){
+  x_tidy <- prepare_for_eval(x, top_eval_env, top_caller_env, replace_find)
+  lapply(seq_along(x_tidy), function(i){
+    vals <- rlang::eval_tidy(x_tidy[[i]], data = data)
+    if (is.atomic(vals)) 
+      data[names(x)[i]] <<- vals
+    else {
+      assign(names(x_tidy)[i], vals, envir = top_eval_env)
+    }
+  })
+  data
+}
+
+prepare_for_eval <- function(x, top_eval_env, top_caller_env, 
+                             replace_find = FALSE){
+  res <- if (replace_find){
+    lapply(x, function(y){
+      z <- interp(y, find = as.name("identity"))
+      if (!identical(y, z)) {
+        eval_tidy(get_expr(z), env = top_caller_env) %>%
+          new_quosure(env = top_eval_env)
+      }
+      else {
+        new_quosure(get_expr(y), env = top_eval_env)
+      }
+    }) 
+  } else {
+    lapply(x, function(y) new_quosure(get_expr(y), env = top_eval_env))
+  }
+  as_quosures(res, env = top_eval_env)
+}
+
+

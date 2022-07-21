@@ -210,7 +210,9 @@ interpolate <- function(x, ...) {
 #' @rdname interpolate
 interpolate.default <- function(x, more = NULL, ...) {
   res <- NULL
-  
+  more <- lapply(more, function(x){
+    interp(x, find = as.name("identity"))
+  })
   for (i in seq_along(x)) {
     to_interp <- x[[i]]
     for_interp <- c(more, as_expr_list(res))

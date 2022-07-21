@@ -18,14 +18,9 @@ eval_state_list <- function(x, parameters,
     # update calls to dispatch_strategy()
     x <- dispatch_strategy_hack(x)
     
-    x_tidy <- prepare_for_eval(x, top_eval_env, top_caller_env)
-    # bottleneck!
-    lapply(seq_along(x_tidy), function(i){
-      #parameters[names(x)[i]] <<- eval(rlang::quo_squash(x_tidy[[i]]), parameters)
-      parameters[names(x)[i]] <<- rlang::eval_tidy(x_tidy[[i]], data = parameters)
-    })
-    parameters[c("model_time", names(x))]
-    #dplyr::mutate(parameters, !!!x_tidy)[c("model_time", names(x))]
+    
+    eval_list_expr(x, data = parameters, 
+                          top_eval_env, top_caller_env) [c("model_time", names(x))]
     
   }
   

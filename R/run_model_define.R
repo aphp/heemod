@@ -197,17 +197,8 @@ run_model_ <- function(uneval_strategy_list,
   
   
   p <- dplyr::bind_rows(list_res) 
-  nr <- nrow(p)
   
-  tab_res <- lapply(ce, function(x){
-    res <- rlang::eval_tidy(x, data = p)
-    if (length(res) == 1){
-      return(rep(res, nr))
-    }
-    res
-  }) 
-  
-  res <- dplyr::bind_cols(p, tab_res)
+  res <- eval_list_expr(ce, p, top_eval_env, top_caller_env)
   
   root_strategy <- get_root_strategy(res)
   noncomparable_strategy <- get_noncomparable_strategy(res)

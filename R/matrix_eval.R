@@ -85,24 +85,12 @@ eval_transition.uneval_matrix <- function(x, parameters, top_eval_env = eval_env
   # update calls to dispatch_strategy()
   x <- dispatch_strategy_hack(x)
   
-  x_tidy <- prepare_for_eval(x, top_eval_env, top_caller_env)
-  
   p2 <- parameters
   p2$C <- -pi
   nr <- nrow(p2)
   
-  
-  tab_res <- lapply(x_tidy, function(x){
-    res <- rlang::eval_tidy(x, data = p2)
-    if (length(res) == 1){
-      return(rep(res, nr))
-    }
-    res
-    }) 
-
-  # tab_res <- lapply(x_tidy, rlang::eval_tidy, p2) %>%
-  #   as_tibble(.rows = nrow(p2))
-
+  tab_res <- eval_list_expr(x, data = p2, 
+                            top_eval_env, top_caller_env)[names(x)]
   
   n <- get_matrix_order(x)
   

@@ -273,5 +273,5 @@ check_starting_values <- function(x, ...) {
   res <- check_init(x, ...)
   structure(
     res,
-    class = c("starting_values", class(res)))
+    class = unique(c("starting_values", class(res))))
 }

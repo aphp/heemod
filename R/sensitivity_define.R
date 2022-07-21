@@ -33,7 +33,7 @@ define_dsa <- function(...) {
   
   for (i in seq_along(.dots)) {
     if (i %% 3 == 1) {
-      par_names <- c(par_names, deparse(get_expr(.dots[[i]])))
+      par_names <- c(par_names, deparse(.dots[[i]]))
     } else if (i %% 3 == 2) {
       low_dots <- c(low_dots, list(.dots[[i]]))
     } else {
