@@ -11,17 +11,15 @@
 #' Vector length should not be explicitly set, but should 
 #' instead be stated relatively to `model_time` 
 #' (whose length depends on the number of simulation 
-#' cycles). Alternatively, `dplyr` functions such as 
-#' [dplyr::n()] or [dplyr::row_number()] can be used.
-#' 
-#' This function relies heavily on the `dplyr` package.
-#' Parameter definitions should thus mimic the use of 
-#' functions such as [dplyr::mutate()].
-#' 
+#' cycles). 
+#' #' 
 #' Variable names are searched first in the parameter 
 #' definition (only parameters defined earlier are visible) 
 #' then in the environment where `define_parameters` 
 #' was called.
+#' 
+#' To use global variables, you need to inject the variable with 
+#' the function `find` (see examples).
 #' 
 #' For the `modify` function, existing parameters are 
 #' modified, but no new parameter can be added. Parameter 
@@ -40,6 +38,7 @@
 #' 
 #' @importFrom dplyr n row_number
 #' @example inst/examples/example_define_parameters.R
+#' @seealso prepare_for_eval
 #'   
 define_parameters <- function(...) {
   .dots <- exprs_class(...)
@@ -274,4 +273,55 @@ check_starting_values <- function(x, ...) {
   structure(
     res,
     class = unique(c("starting_values", class(res))))
+}
+
+
+#' Create Quosures Ready to Be Evaluated
+#' If an expression contains the symbol `find`, the symbol is replaced by its
+#' value by evaluating it in the `top_caller_env`.
+#' 
+#' @param x a list of expressions or quosures
+#' @param top_eval_env the main environment where objects are evaluated
+#' @param top_caller_env the caller environment, usually the global environment
+#' @param replace_find logical, should it search and replace the `find` symbol in
+#' the expressions?
+#' 
+#' @details Note that you cannot create a call different from `y = find(x)`. 
+#' @returns A list of quosures with the environment `top_eval_environment`
+#' 
+#' @examples 
+#'  age <- 12
+#'  params <- define_parameters(
+#'   age_init = find(age),
+#'   age = age_init + model_time
+#'  )
+#'  prepare_for_eval(params, replace_find = TRUE)
+#'  
+#' \dontrun{
+#'  ## The following code leads to an error
+#'   params <- define_parameters(
+#'    age = find(age) + model_time
+#'   )
+#'   prepare_for_eval(params, replace_find = TRUE)
+#'  }
+#'  
+#' @seealso define_parameters
+prepare_for_eval <- function(x, top_eval_env = eval_env(), 
+                             top_caller_env = caller_env(), 
+                             replace_find = FALSE){
+  res <- if (replace_find){
+    lapply(x, function(y){
+      z <- interp(y, find = as.name("identity"))
+      if (!identical(y, z)) {
+        eval_tidy(get_expr(z), env = top_caller_env) %>%
+          new_quosure(env = top_eval_env)
+      }
+      else {
+        new_quosure(get_expr(y), env = top_eval_env)
+      }
+    }) 
+  } else {
+    lapply(x, function(y) new_quosure(get_expr(y), env = top_eval_env))
+  }
+  as_quosures(res, env = top_eval_env)
 }

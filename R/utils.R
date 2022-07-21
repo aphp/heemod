@@ -619,7 +619,6 @@ interp <-  function (x, ..., .values) {
 
 all_values <- function (values, .dots) 
 {
-
   if (is.list(values)) {
     find_quosure <- vapply(values, is_quosure, logical(1))
     values[find_quosure] <- lapply(values[find_quosure], get_expr)
@@ -689,23 +688,7 @@ eval_list_expr <- function(x, data, top_eval_env, top_caller_env,
   data
 }
 
-prepare_for_eval <- function(x, top_eval_env, top_caller_env, 
-                             replace_find = FALSE){
-  res <- if (replace_find){
-    lapply(x, function(y){
-      z <- interp(y, find = as.name("identity"))
-      if (!identical(y, z)) {
-        eval_tidy(get_expr(z), env = top_caller_env) %>%
-          new_quosure(env = top_eval_env)
-      }
-      else {
-        new_quosure(get_expr(y), env = top_eval_env)
-      }
-    }) 
-  } else {
-    lapply(x, function(y) new_quosure(get_expr(y), env = top_eval_env))
-  }
-  as_quosures(res, env = top_eval_env)
-}
+
+
 
 

@@ -53,3 +53,12 @@ modify(
 #   age_2 = age ^ 2
 # )
 
+# But can inject parameters
+age <- 12
+modify(
+  param,
+  find(age)
+  const = 4.4,
+  age_2 = age ^ 2
+)
+

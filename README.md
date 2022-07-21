@@ -1,6 +1,8 @@
 # heemod - Health Economic Evaluation MODelling
 
 [![](https://www.r-pkg.org/badges/version/heemod)](https://www.r-pkg.org/pkg/heemod) 
+[![R-CMD-check](https://github.com/aphp/heemod/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/aphp/heemod/actions/workflows/R-CMD-check.yaml)
+  
 
 Markov Models for Health Economic Evaluations. An implementation of the modelling and reporting features described in reference textbooks and guidelines: deterministic and probabilistic sensitivity analysis, heterogeneity analysis, time dependency on state-time and model-time (semi-Markov and non-homogeneous Markov models), etc.
 

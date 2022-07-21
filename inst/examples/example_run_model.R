@@ -43,7 +43,6 @@ mod2 <-
     
   )
 
-
 res2 <- run_model(
   mod1, mod2,
   init = c(100, 0),

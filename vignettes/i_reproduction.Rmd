@@ -167,7 +167,7 @@ death_prob
 ```
 
 It is important to inject the variables defined globally within the function 
-`define_parameters()` with the argument `find`
+`define_parameters()` with the argument `find`.
 
 ```{r}
 param <- define_parameters(

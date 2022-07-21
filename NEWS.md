@@ -4,7 +4,7 @@
  * Previously, heemod was very loose regarding the environments, which led to 
  errors difficult to spot. At present you need to inject an object defined in an
  environment (typically the global environment) with the use of function `find`,
- except is the object's class is `surv_object`
+ except is the object's class is `surv_object`. See `?prepare_for_eval` .
  * `markov_cycle` is now deprecated in favor of `model_time`
  * `define_survival` has been renamed `define_surv_dist` for naming consistency
  * It is now necessary to use `define_surv_fit` to specify a survival fit created

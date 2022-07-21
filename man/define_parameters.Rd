@@ -38,17 +38,15 @@ earlier can be called in later expressions.
 Vector length should not be explicitly set, but should
 instead be stated relatively to \code{model_time}
 (whose length depends on the number of simulation
-cycles). Alternatively, \code{dplyr} functions such as
-\code{\link[dplyr:context]{dplyr::n()}} or \code{\link[dplyr:ranking]{dplyr::row_number()}} can be used.
-
-This function relies heavily on the \code{dplyr} package.
-Parameter definitions should thus mimic the use of
-functions such as \code{\link[dplyr:mutate]{dplyr::mutate()}}.
-
+cycles).
+#'
 Variable names are searched first in the parameter
 definition (only parameters defined earlier are visible)
 then in the environment where \code{define_parameters}
 was called.
+
+To use global variables, you need to inject the variable with
+the function \code{find} (see examples).
 
 For the \code{modify} function, existing parameters are
 modified, but no new parameter can be added. Parameter
@@ -111,4 +109,16 @@ modify(
 #   age_2 = age ^ 2
 # )
 
+# But can inject parameters
+age <- 12
+modify(
+  param,
+  find(age)
+  const = 4.4,
+  age_2 = age ^ 2
+)
+
+}
+\seealso{
+prepare_for_eval
 }
