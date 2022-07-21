@@ -1,5 +1,23 @@
 ## heemod 1.0.0
+
+### Breaking changes
+ * Previously, heemod was very loose regarding the environments, which led to 
+ errors difficult to spot. At present you need to inject an object defined in an
+ environment (typically the global environment) with the use of function `find`,
+ except is the object's class is `surv_object`
+ * `markov_cycle` is now deprecated in favor of `model_time`
+ * `define_survival` has been renamed `define_surv_dist` for naming consistency
+ * It is now necessary to use `define_surv_fit` to specify a survival fit created
+ with `survfit`, `flexsurvreg` or `flexsurvspline`
+ * `prop`, `multinom` and `make_gamma`, deprecated since a long time are now unavailable,
+ to be replaced with `binomial`, `multinomial` and `gamma`, respectively.
+
+### Internal Changes
  * remove lazyeval, plyr and pryr dependencies
+ * all operation functions on survival objects are now of class `surv_object`
+ 
+### Fixes and features
+  * parameters can be combined in `run_model` within a list with the `c` function 
 
 ## heemod 0.15.0
   * Performance improvements: using state_time is much faster now, as well as
@@ -157,14 +175,14 @@ Package heemod.” _ArXiv e-prints_. R package version
   * Counting method `"half-cycle"` is deprecated.
   * `resample` argument in `run_psa()` renamed to `psa`.
   * Probability distributions for PSA were renamed, see `?distributions`.
-  * `state_cycle` renamed to `state_time`, added a `model_time` alias to `markov_cycle`.
+  * `state_cycle` renamed to `state_time`, added a `model_time` alias to `model_time`.
   * The `inflow` argument for budget impact analysis is specified with `define_inflow()`.
   * `prob_to_prob()`=>`rescale_prob()`.
 
 ### New features
 
   * Transition probabilities from survival models with `get_probs_from_surv()`:
-    * Parametrically defined by `define_survival()`.
+    * Parametrically defined by `define_surv_dist()`.
     * Or fitted on data by the `flexsurv` package.
   * Support for partitioned survival models with `define_part_surv()`.
   * Plot EVPI.

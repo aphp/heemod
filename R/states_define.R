@@ -26,7 +26,8 @@
 #' @example inst/examples/example_define_state.R
 #'   
 define_state <- function(..., starting_values = define_starting_values()) {
-  .dots <- exprs_class(...) 
+  .dots <- exprs_class(...)
+  deprecated_markov_cycle(.dots)
   define_state_(list(.dots = .dots, starting_values = starting_values))
 }
 
@@ -35,7 +36,6 @@ define_state <- function(..., starting_values = define_starting_values()) {
 define_state_ <- function(x) {
   .dots <- x$.dots
   check_names(names(.dots))
-  deprecated_markov_cycle(.dots)
   starting_values <- check_starting_values(
     x = x$starting_values,
     ref = names(.dots)

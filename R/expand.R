@@ -216,7 +216,7 @@ interpolate.default <- function(x, more = NULL, ...) {
   for (i in seq_along(x)) {
     to_interp <- x[[i]]
     for_interp <- c(more, as_expr_list(res))
-    funs <- all.funs(get_expr(to_interp))
+    #funs <- all.funs(get_expr(to_interp))
     # 
     # if (any(pb <- funs %in% names(for_interp))) {
     #   stop(sprintf(

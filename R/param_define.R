@@ -43,6 +43,7 @@
 #'   
 define_parameters <- function(...) {
   .dots <- exprs_class(...)
+  deprecated_markov_cycle(.dots)
   define_parameters_(.dots)
 }
 
@@ -51,7 +52,6 @@ define_parameters <- function(...) {
 define_parameters_ <- function(.dots) {
   if (length(.dots)){
     check_names(names(.dots))
-    deprecated_markov_cycle(.dots)
   }
   
   structure(.dots,

@@ -61,6 +61,11 @@ define_surv_dist <- function(distribution = c("exp", "weibull",
   )
 }
 
+define_survival <- function(...){
+  warning("'define_survival()' is deprecated, use 'gamma()' instead.")
+  define_surv_dist(...)
+}
+
 #' Define a Restricted Cubic Spline Survival Distribution
 #' 
 #' Define a restricted cubic spline parametric survival
