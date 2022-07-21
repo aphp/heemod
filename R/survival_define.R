@@ -62,7 +62,7 @@ define_surv_dist <- function(distribution = c("exp", "weibull",
 }
 
 define_survival <- function(...){
-  warning("'define_survival()' is deprecated, use 'gamma()' instead.")
+  .Deprecated("define_surv_dist")
   define_surv_dist(...)
 }
 

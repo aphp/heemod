@@ -41,6 +41,7 @@ reference:
   - title: Survival data
     contents:
     - define_surv_dist
+    - define_surv_fit
     - define_surv_spline
     - compute_surv
     - apply_af

@@ -1,7 +1,11 @@
 #' Use WHO Mortality Rate
 #' 
+#' 
 #' Returns age and sex-specific mortality probabilities for 
 #' a given country.
+#' 
+#' Note that you will need the latest version of the `rgho` package: 
+#' `devtools::install_github("KZARCA/rgho`)
 #' 
 #' Locally cached data is used in case of connection 
 #' problems, of if `local = TRUE`. For memory space reasons
@@ -11,6 +15,7 @@
 #' The results of `get_who_mr` are memoised for 
 #' `options("heemod.memotime")` (default: 1 hour) to 
 #' increase resampling performance.
+#' 
 #' 
 #' @name who_mortality
 #' @param age age as a continuous variable.

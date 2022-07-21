@@ -40,17 +40,18 @@ Note that you cannot create a call different from \code{y = find(x)}.
   age_init = find(age),
   age = age_init + model_time
  )
- prepare_for_eval(params, replace_find = TRUE)
+ heemod:::prepare_for_eval(params, replace_find = TRUE)
  
 \dontrun{
  ## The following code leads to an error
   params <- define_parameters(
    age = find(age) + model_time
   )
-  prepare_for_eval(params, replace_find = TRUE)
+  heemod:::prepare_for_eval(params, replace_find = TRUE)
  }
  
 }
 \seealso{
 define_parameters
 }
+\keyword{internal}

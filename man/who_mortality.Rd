@@ -50,6 +50,9 @@ Returns age and sex-specific mortality probabilities for
 a given country.
 }
 \details{
+Note that you will need the latest version of the \code{rgho} package:
+\verb{devtools::install_github("KZARCA/rgho})
+
 Locally cached data is used in case of connection
 problems, of if \code{local = TRUE}. For memory space reasons
 local data is only available for WHO high-income

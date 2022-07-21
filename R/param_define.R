@@ -306,6 +306,7 @@ check_starting_values <- function(x, ...) {
 #'  }
 #'  
 #' @seealso define_parameters
+#' @keywords internal
 prepare_for_eval <- function(x, top_eval_env = eval_env(), 
                              top_caller_env = caller_env(), 
                              replace_find = FALSE){
