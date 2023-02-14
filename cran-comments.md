@@ -5,6 +5,4 @@
 
 ## R CMD check results
 
-There were no ERRORs or WARNINGs. 
-1 NOTE:
-- there are ::: calls to the package's namespace in its code. I could not fix this note as it is used as argument in `substitute` function, and I do not want to export the function.
+There were no ERRORs, WARNINGs or NOTEs
