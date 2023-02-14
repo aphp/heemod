@@ -271,78 +271,12 @@ hand summary results do.</p>
 <span class="r-in"><span>  age_init <span class="op">=</span> <span class="fl">40</span><span class="op">:</span><span class="fl">45</span>,</span></span>
 <span class="r-in"><span>  .weights <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/Uniform.html" class="external-link">runif</a></span><span class="op">(</span><span class="fl">6</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="op">)</span></span></span>
-<span class="r-in"><span><span class="va">ndt2</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/update.html" class="external-link">update</a></span><span class="op">(</span><span class="va">res</span>, newdata <span class="op">=</span> <span class="va">new_tab2</span><span class="op">)</span></span></span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Updating strategy 'I'...</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Updating strategy 'II'...</span>
 <span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">ndt2</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> An analysis re-run on 6 parameter sets.</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> * Weigths distribution:</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  0.3100  0.5211  0.7275  0.6639  0.8102  0.9287 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Total weight: 3.983669</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> * Values distribution:</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                            Min.       1st Qu.        Median          Mean</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> II - Cost          24622.032937  25366.320186  26145.806152  26085.192386</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> II - Effect            4.332100      4.382469      4.435220      4.431118</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> II - Cost Diff.               -             -             -             -</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> II - Effect Diff.             -             -             -             -</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> II - Icer                     -             -             -             -</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> I - Cost            5533.254653   5561.384333   5590.844318   5588.553474</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> I - Effect             6.025414      6.126152      6.231654      6.223450</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> I - Cost Diff.    -21705.360572 -21105.252202 -20554.961835 -20496.638912</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> I - Effect Diff.       1.693313      1.743682      1.796433      1.792331</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> I - Icer          -11561.740443 -11500.504366 -11441.907045 -11432.501147</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                         3rd Qu.          Max.</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> II - Cost          26717.711166  27341.390963</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> II - Effect            4.473924      4.516131</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> II - Cost Diff.               -             -</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> II - Effect Diff.             -             -</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> II - Icer                     -             -</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> I - Cost            5612.458963   5636.030391</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> I - Effect             6.309060      6.393474</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> I - Cost Diff.    -19804.935853 -19088.778285</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> I - Effect Diff.       1.835137      1.877344</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> I - Icer          -11357.814668 -11273.033445</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> * Combined result:</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2 strategies run for 10 cycles.</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Initial state counts:</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> A = 1L</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> B = 0L</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Counting method: 'life-table'.</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Counting method: 'beginning'.</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Counting method: 'end'.</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Values:</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>         cost       ly</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> I   5588.553 6.223450</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> II 26085.192 4.431118</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Efficiency frontier:</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> I</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Differences:</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   Cost Diff. Effect Diff.      ICER Ref.</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> I  -20496.64     1.792331 -11435.74   II</span>
+<span class="r-in"><span><span class="co">#'\dontrun{</span></span></span>
+<span class="r-in"><span><span class="co">#'ndt2 &lt;- update(res, newdata = new_tab2)</span></span></span>
+<span class="r-in"><span><span class="co">#'</span></span></span>
+<span class="r-in"><span><span class="co">#'summary(ndt2)</span></span></span>
+<span class="r-in"><span><span class="co">#'}</span></span></span>
 </code></pre></div>
     </div>
   </div>

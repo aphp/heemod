@@ -172,19 +172,16 @@ if desired.</p>
 <span class="r-in"><span><span class="fu">f</span><span class="op">(</span><span class="va">res_mod</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] 107.3742</span>
 <span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="fu">calibrate_model</span><span class="op">(</span></span></span>
-<span class="r-in"><span>  <span class="va">res_mod</span>,</span></span>
-<span class="r-in"><span>  parameter_names <span class="op">=</span> <span class="st">"p"</span>,</span></span>
-<span class="r-in"><span>  fn_values <span class="op">=</span> <span class="va">f</span>,</span></span>
-<span class="r-in"><span>  target_values <span class="op">=</span> <span class="fl">130</span>,</span></span>
-<span class="r-in"><span>  initial_values <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span>p <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0.5</span>, <span class="fl">0.9</span><span class="op">)</span><span class="op">)</span>,</span></span>
-<span class="r-in"><span>  lower <span class="op">=</span> <span class="fl">0</span>, upper <span class="op">=</span> <span class="fl">1</span></span></span>
-<span class="r-in"><span><span class="op">)</span></span></span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Running calibration with initial values #1.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Running calibration with initial values #2.</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>           p        value convcode</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1 0.8154443 1.766351e-08       NA</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2 0.8154443 1.766351e-08       NA</span>
+<span class="r-in"><span><span class="co">#'\dontrun{</span></span></span>
+<span class="r-in"><span><span class="co">#'calibrate_model(</span></span></span>
+<span class="r-in"><span><span class="co">#'  res_mod,</span></span></span>
+<span class="r-in"><span><span class="co">#'  parameter_names = "p",</span></span></span>
+<span class="r-in"><span><span class="co">#'  fn_values = f,</span></span></span>
+<span class="r-in"><span><span class="co">#'  target_values = 130,</span></span></span>
+<span class="r-in"><span><span class="co">#'  initial_values = data.frame(p = c(0.5, 0.9)),</span></span></span>
+<span class="r-in"><span><span class="co">#'  lower = 0, upper = 1</span></span></span>
+<span class="r-in"><span><span class="co">#')</span></span></span>
+<span class="r-in"><span><span class="co">#'}</span></span></span>
 </code></pre></div>
     </div>
   </div>
