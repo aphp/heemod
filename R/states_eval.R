@@ -61,7 +61,7 @@ discount_hack <- function(.dots) {
       if (discount_check(x[[1]], env)) {
         x <- pryr::standardise_call(x)
         #x$x <- substitute((.x * rep(x = 1, times = dplyr::n())), list(.x = x$x))
-        x[[1]] <- substitute(discount2)
+        x[[1]] <- substitute(heemod:::discount2)
         x$time <- substitute(model_time)
       }
       as.call(lapply(x, f, env = env))
@@ -73,6 +73,7 @@ discount_hack <- function(.dots) {
         typeof(x)))
     }
   }
+
   
   do.call(
     structure,

@@ -36,10 +36,10 @@ plot.psa <- function(x, type = c("ce", "ac", "cov", "evpi"),
     ce = {
       tab <- scale(x)
       res <- ggplot2::ggplot(data = tab,
-                             ggplot2::aes_string(
-                               x = ".effect",
-                               y = ".cost",
-                               colour = ".strategy_names")) +
+                             ggplot2::aes(
+                               x = .effect,
+                               y = .cost,
+                               colour = .strategy_names)) +
         ggplot2::geom_point() +
         ggplot2::scale_colour_hue(name = "Model") +
         ggplot2::xlab("Incremental effect") +
@@ -60,10 +60,10 @@ plot.psa <- function(x, type = c("ce", "ac", "cov", "evpi"),
       tab <- acceptability_curve(x$psa, values)
       
       res <- ggplot2::ggplot(tab, 
-                             ggplot2::aes_string(
-                               x = ".ceac",
-                               y = ".p",
-                               colour = ".strategy_names")) +
+                             ggplot2::aes(
+                               x = .ceac,
+                               y = .p,
+                               colour = .strategy_names)) +
         ggplot2::geom_line() +
         ggplot2::ylim(0, 1) +
         ggplot2::scale_colour_hue(name = "Strategy") +
@@ -90,9 +90,9 @@ plot.psa <- function(x, type = c("ce", "ac", "cov", "evpi"),
       tab <- compute_evpi(x, values)
       
       res <- ggplot2::ggplot(tab,
-                             ggplot2::aes_string(
-                               x = ".ceac",
-                               y = ".evpi"
+                             ggplot2::aes(
+                               x = .ceac,
+                               y = .evpi
                              )) +
         ggplot2::geom_line() +
         ggplot2::xlab("Willingness to pay") +
@@ -114,7 +114,7 @@ plot.psa <- function(x, type = c("ce", "ac", "cov", "evpi"),
       
       ggplot2::ggplot(
         tab,
-        ggplot2::aes_string(".par_names", ".prop")) +
+        ggplot2::aes(.par_names, .prop)) +
         ggplot2::geom_col() +
         ggplot2::facet_grid(.result ~ .strategy_names) +
         ggplot2::xlab("Parameter") +

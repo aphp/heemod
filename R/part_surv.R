@@ -386,7 +386,7 @@ construct_part_surv_tib <-
     surv_def_5 <-
       surv_def_4 %>%
       dplyr::group_by(.data$.strategy) %>%
-      dplyr::rename(type = .data$.type) %>%
+      dplyr::rename(type = .type) %>%
       dplyr::do(part_surv = make_part_surv_from_small_tibble(.data,
                                                                 state_names = state_names))
     surv_def_5

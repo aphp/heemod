@@ -25,6 +25,8 @@
 <![endif]-->
 </head>
 <body data-spy="scroll" data-target="#toc">
+    
+
     <div class="container template-home">
       <header><div class="navbar navbar-default navbar-fixed-top" role="navigation">
   <div class="container">
@@ -37,18 +39,12 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="index.html">heemod</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.14.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.15.0</span>
       </span>
     </div>
 
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
-<li>
-  <a href="index.html">
-    <span class="fas fa fas fa-home fa-lg"></span>
-     
-  </a>
-</li>
 <li>
   <a href="reference/index.html">Reference</a>
 </li>
@@ -61,8 +57,8 @@
       </ul>
 <ul class="nav navbar-nav navbar-right">
 <li>
-  <a href="https://github.com/pierucci/heemod/">
-    <span class="fab fa fab fa-github fa-lg"></span>
+  <a href="https://github.com/pierucci/heemod/" class="external-link">
+    <span class="fab fa-github fa-lg"></span>
      
   </a>
 </li>
@@ -78,48 +74,25 @@
 
       </header><div class="row">
   <div class="contents col-md-9">
-<div id="heemod---health-economic-evaluation-modelling" class="section level1">
-<div class="page-header"><h1 class="hasAnchor">
-<a href="#heemod---health-economic-evaluation-modelling" class="anchor"></a>heemod - Health Economic Evaluation MODelling</h1></div>
-
+<div class="section level1">
+<div class="page-header"><h1 id="heemod---health-economic-evaluation-modelling">heemod - Health Economic Evaluation MODelling<a class="anchor" aria-label="anchor" href="#heemod---health-economic-evaluation-modelling"></a>
+</h1></div>
+<p><a href="https://travis-ci.org/pierucci/heemod" class="external-link"><img src="https://travis-ci.org/pierucci/heemod.svg?branch=devel" alt="Travis-CI Build Status"></a> <a href="https://www.r-pkg.org/pkg/heemod" class="external-link"><img src="https://www.r-pkg.org/badges/version/heemod"></a></p>
 <p>Markov Models for Health Economic Evaluations. An implementation of the modelling and reporting features described in reference textbooks and guidelines: deterministic and probabilistic sensitivity analysis, heterogeneity analysis, time dependency on state-time and model-time (semi-Markov and non-homogeneous Markov models), etc.</p>
 <p>You can install:</p>
-<ul>
-<li>the latest released version from CRAN with:</li>
-</ul>
+<ul><li>the latest released version from CRAN with:</li></ul>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html">install.packages</a></span><span class="op">(</span><span class="st">"heemod"</span><span class="op">)</span></code></pre></div>
-<ul>
-<li>the latest development version from github with:</li>
-</ul>
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"heemod"</span><span class="op">)</span></span></code></pre></div>
+<ul><li>the latest development version from github with:</li></ul>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu">devtools</span><span class="fu">::</span><span class="fu"><a href="https://devtools.r-lib.org//reference/remote-reexports.html">install_github</a></span><span class="op">(</span><span class="st">"pierucci/heemod"</span><span class="op">)</span></code></pre></div>
-<ul>
-<li>
-<code>heemod</code> can be cited with:</li>
-</ul>
-<p>Filipović-Pierucci A, Zarca K and Durand-Zaleski I (2017). <a href="https://arxiv.org/abs/1702.03252">“Markov Models for Health Economic Evaluation: The R Package heemod.”</a> <em>ArXiv e-prints</em>. R package version 0.8.0, 1702.03252</p>
-<div id="features" class="section level2">
-<h2 class="hasAnchor">
-<a href="#features" class="anchor"></a>Features</h2>
-<p>Main features:</p>
-<ul>
-<li>Accounting for time-dependency:
-<ul>
-<li>For both model time and state time.</li>
-<li>Time-varying transition probabilities.</li>
-<li>Time-varying values attached to states.</li>
-</ul>
-</li>
-<li>Probabilistic uncertainty analysis (PSA).
-<ul>
-<li>With correlated resampling.</li>
-<li>Covariance analysis for PSA.</li>
-<li>Expected value of perfect information (EVPI).</li>
-</ul>
-</li>
-<li>Deterministic sensitivity analysis (DSA).</li>
-</ul>
+<code class="sourceCode R"><span><span class="fu">devtools</span><span class="fu">::</span><span class="fu"><a href="https://remotes.r-lib.org/reference/install_github.html" class="external-link">install_github</a></span><span class="op">(</span><span class="st">"pierucci/heemod"</span><span class="op">)</span></span></code></pre></div>
+<ul><li>
+<code>heemod</code> can be cited with:</li></ul>
+<p>Filipović-Pierucci A, Zarca K and Durand-Zaleski I (2017). <a href="https://arxiv.org/abs/1702.03252" class="external-link">“Markov Models for Health Economic Evaluation: The R Package heemod.”</a> <em>ArXiv e-prints</em>. R package version 0.8.0, 1702.03252</p>
+<div class="section level2">
+<h2 id="features">Features<a class="anchor" aria-label="anchor" href="#features"></a>
+</h2>
+<p>Main features: * Accounting for time-dependency: * For both model time and state time. * Time-varying transition probabilities. * Time-varying values attached to states. * Probabilistic uncertainty analysis (PSA). * With correlated resampling. * Covariance analysis for PSA. * Expected value of perfect information (EVPI). * Deterministic sensitivity analysis (DSA).</p>
 <p>Other features:</p>
 <ul>
 <li>Multiple state membership correction methods (life-table, custom method, etc.).</li>
@@ -127,30 +100,30 @@
 <li>Heterogeneity analysis.</li>
 <li>Parallel computing support.</li>
 <li>Features for budget impact analysis.</li>
-<li>Interface with <a href="https://savi.shef.ac.uk/SAVI/">SAVI</a> and <a href="https://sites.google.com/a/statistica.it/gianluca/bcea">BCEA</a>.</li>
+<li>Interface with <a href="https://savi.shef.ac.uk/SAVI/" class="external-link">SAVI</a> and <a href="https://sites.google.com/a/statistica.it/gianluca/bcea" class="external-link">BCEA</a>.</li>
 </ul>
-<p>Most of the analyses presented in <a href="https://ukcatalogue.oup.com/product/9780198526629.do">Decision Modelling for Health Economic Evaluation</a> can be performed with <code>heemod</code>. See the <em>Reproducing Exact Results from DMHEE</em> vignette for an exact reproduction of the analyses from the book.</p>
+<p>Most of the analyses presented in <a href="https://global.oup.com/academic/product/decision-modelling-for-health-economic-evaluation-9780198526629" class="external-link">Decision Modelling for Health Economic Evaluation</a> can be performed with <code>heemod</code>. See the <em>Reproducing Exact Results from DMHEE</em> vignette for an exact reproduction of the analyses from the book.</p>
 </div>
-<div id="learning-heemod" class="section level2">
-<h2 class="hasAnchor">
-<a href="#learning-heemod" class="anchor"></a>Learning heemod</h2>
-<p>To get started read the <em>An Introduction to <code>heemod</code></em> vignette. Specific analysis examples (mostly inspired from <a href="https://ukcatalogue.oup.com/product/9780198526629.do">Decision Modelling for Health Economic Evaluation</a>) can be found in the package vignettes.</p>
+<div class="section level2">
+<h2 id="learning-heemod">Learning heemod<a class="anchor" aria-label="anchor" href="#learning-heemod"></a>
+</h2>
+<p>To get started read the <em>An Introduction to <code>heemod</code></em> vignette. Specific analysis examples (mostly inspired from <a href="https://global.oup.com/academic/product/decision-modelling-for-health-economic-evaluation-9780198526629" class="external-link">Decision Modelling for Health Economic Evaluation</a>) can be found in the package vignettes.</p>
 </div>
-<div id="devs" class="section level2">
-<h2 class="hasAnchor">
-<a href="#devs" class="anchor"></a>Devs</h2>
+<div class="section level2">
+<h2 id="devs">Devs<a class="anchor" aria-label="anchor" href="#devs"></a>
+</h2>
 <p>Kevin Zarca and Antoine Filipović-Pierucci.</p>
 </div>
-<div id="contributors" class="section level2">
-<h2 class="hasAnchor">
-<a href="#contributors" class="anchor"></a>Contributors</h2>
+<div class="section level2">
+<h2 id="contributors">Contributors<a class="anchor" aria-label="anchor" href="#contributors"></a>
+</h2>
 <ul>
-<li><a href="https://github.com/MattWiener">Matthew Wiener</a></li>
-<li><a href="https://github.com/zkabat">Zdenek Kabat</a></li>
-<li><a href="https://github.com/vojtech-filipec">Vojtech Filipec</a></li>
-<li><a href="https://github.com/jrdnmdhl">Jordan Amdahl</a></li>
-<li><a href="https://github.com/salmuz">Yonatan Carranza Alarcon</a></li>
-<li><a href="https://github.com/daniels4321">Vince Daniels</a></li>
+<li><a href="https://github.com/MattWiener" class="external-link">Matthew Wiener</a></li>
+<li><a href="https://github.com/zkabat" class="external-link">Zdenek Kabat</a></li>
+<li><a href="https://github.com/vojtech-filipec" class="external-link">Vojtech Filipec</a></li>
+<li><a href="https://github.com/jrdnmdhl" class="external-link">Jordan Amdahl</a></li>
+<li><a href="https://github.com/salmuz" class="external-link">Yonatan Carranza Alarcon</a></li>
+<li><a href="https://github.com/daniels4321" class="external-link">Vince Daniels</a></li>
 </ul>
 </div>
 </div>
@@ -158,54 +131,52 @@
 
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <div class="links">
-<h2>Links</h2>
+<h2 data-toc-skip>Links</h2>
 <ul class="list-unstyled">
-<li>Download from CRAN at <br><a href="https://cloud.r-project.org/package=heemod">https://​cloud.r-project.org/​package=heemod</a>
-</li>
-<li>Browse source code at <br><a href="https://github.com/pierucci/heemod/">https://​github.com/​pierucci/​heemod/​</a>
-</li>
-<li>Report a bug at <br><a href="https://github.com/pierucci/heemod/issues">https://​github.com/​pierucci/​heemod/​issues</a>
-</li>
+<li><a href="https://cloud.r-project.org/package=heemod" class="external-link">View on CRAN</a></li>
+<li><a href="https://github.com/pierucci/heemod/" class="external-link">Browse source code</a></li>
+<li><a href="https://github.com/pierucci/heemod/issues" class="external-link">Report a bug</a></li>
 </ul>
 </div>
+
 <div class="license">
-<h2>License</h2>
+<h2 data-toc-skip>License</h2>
 <ul class="list-unstyled">
 <li>GPL (&gt;= 3)</li>
 </ul>
 </div>
+
+
 <div class="citation">
-<h2>Citation</h2>
+<h2 data-toc-skip>Citation</h2>
 <ul class="list-unstyled">
-<li><a href="authors.html">Citing heemod</a></li>
-</ul>
-</div>
-<div class="developers">
-<h2>Developers</h2>
-<ul class="list-unstyled">
-<li>Kevin Zarca <br><small class="roles"> Author, maintainer </small>  </li>
-<li>Antoine Filipovic-Pierucci <br><small class="roles"> Author </small>  </li>
-<li><a href="authors.html">All authors...</a></li>
+<li><a href="authors.html#citation">Citing heemod</a></li>
 </ul>
 </div>
 
-  <div class="dev-status">
-<h2>Dev status</h2>
+<div class="developers">
+<h2 data-toc-skip>Developers</h2>
 <ul class="list-unstyled">
-<li><a href="https://travis-ci.org/pierucci/heemod"><img src="https://travis-ci.org/pierucci/heemod.svg?branch=devel" alt="Travis-CI Build Status"></a></li>
-<li><a href="https://www.r-pkg.org/pkg/heemod"><img src="https://www.r-pkg.org/badges/version/heemod"></a></li>
+<li>Kevin Zarca <br><small class="roles"> Author, maintainer </small>  </li>
+<li>Antoine Filipovic-Pierucci <br><small class="roles"> Author </small>  </li>
+<li><a href="authors.html">More about authors...</a></li>
 </ul>
 </div>
-</div>
+
+
+
+  </div>
 </div>
 
 
       <footer><div class="copyright">
-  <p>Developed by Kevin Zarca, Antoine Filipovic-Pierucci.</p>
+  <p></p>
+<p>Developed by Kevin Zarca, Antoine Filipovic-Pierucci.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
+  <p></p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.7.</p>
 </div>
 
       </footer>
@@ -213,6 +184,8 @@
 
   
 
+
+  
 
   </body>
 </html>

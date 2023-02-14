@@ -19,6 +19,8 @@
 <![endif]-->
 </head>
 <body data-spy="scroll" data-target="#toc">
+    
+
     <div class="container template-article">
       <header><div class="navbar navbar-default navbar-fixed-top" role="navigation">
   <div class="container">
@@ -31,18 +33,12 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">heemod</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.14.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.15.0</span>
       </span>
     </div>
 
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
-<li>
-  <a href="../index.html">
-    <span class="fas fa fas fa-home fa-lg"></span>
-     
-  </a>
-</li>
 <li>
   <a href="../reference/index.html">Reference</a>
 </li>
@@ -55,8 +51,8 @@
       </ul>
 <ul class="nav navbar-nav navbar-right">
 <li>
-  <a href="https://github.com/pierucci/heemod/">
-    <span class="fab fa fab fa-github fa-lg"></span>
+  <a href="https://github.com/pierucci/heemod/" class="external-link">
+    <span class="fab fa-github fa-lg"></span>
      
   </a>
 </li>
@@ -70,15 +66,14 @@
 
       
 
-      </header><script src="e_probabilistic_files/accessible-code-block-0.0.1/empty-anchor.js"></script><link href="e_probabilistic_files/anchor-sections-1.0/anchor-sections.css" rel="stylesheet">
-<script src="e_probabilistic_files/anchor-sections-1.0/anchor-sections.js"></script><div class="row">
+      </header><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>Probabilistic Uncertainty Analysis</h1>
             
-            <h4 class="date">2020-12-07</h4>
+            <h4 data-toc-skip class="date">2023-02-03</h4>
       
-      <small class="dont-index">Source: <a href="https://github.com/pierucci/heemod/blob/master/vignettes/e_probabilistic.Rmd"><code>vignettes/e_probabilistic.Rmd</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/pierucci/heemod/blob/HEAD/vignettes/e_probabilistic.Rmd" class="external-link"><code>vignettes/e_probabilistic.Rmd</code></a></small>
       <div class="hidden name"><code>e_probabilistic.Rmd</code></div>
 
     </div>
@@ -86,129 +81,124 @@
     
     
 <p>This vignette shows how to transform the deterministic Markov model presented in <code>vignette("c-homogeneous", "heemod")</code> in a probabilistic model.</p>
-<div id="model-definition" class="section level2">
-<h2 class="hasAnchor">
-<a href="#model-definition" class="anchor"></a>Model definition</h2>
+<div class="section level2">
+<h2 id="model-definition">Model definition<a class="anchor" aria-label="anchor" href="#model-definition"></a>
+</h2>
 <p>We will start by re-specifying the deterministic model of HIV therapy described previously (a monotherapy strategy <code>mono</code> and combined therapy strategy <code>comb</code>).</p>
 <p>But instead of defining transition probabilities and state values directly in <code><a href="../reference/define_transition.html">define_transition()</a></code> or <code><a href="../reference/define_state.html">define_state()</a></code> (as in the previous vignette), parameters will be defined first in a <code><a href="../reference/define_parameters.html">define_parameters()</a></code> step. This is because only parameters defined this way can be resampled in a probabilistic analysis.</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">param</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/define_parameters.html">define_parameters</a></span><span class="op">(</span>
-  rr <span class="op">=</span> <span class="fl">.509</span>,
-  
-  p_AA_mono <span class="op">=</span> <span class="fl">.721</span>,
-  p_AB_mono <span class="op">=</span> <span class="fl">.202</span>,
-  p_AC_mono <span class="op">=</span> <span class="fl">.067</span>,
-  p_AD_mono <span class="op">=</span> <span class="fl">.010</span>,
-  
-  p_BC_mono <span class="op">=</span> <span class="fl">.407</span>,
-  p_BD_mono <span class="op">=</span> <span class="fl">.012</span>,
-  
-  p_CD_mono <span class="op">=</span> <span class="fl">.250</span>,
-  
-  
-  p_AB_comb <span class="op">=</span> <span class="va">p_AB_mono</span> <span class="op">*</span> <span class="va">rr</span>,
-  p_AC_comb <span class="op">=</span> <span class="va">p_AC_mono</span> <span class="op">*</span> <span class="va">rr</span>,
-  p_AD_comb <span class="op">=</span> <span class="va">p_AD_mono</span> <span class="op">*</span> <span class="va">rr</span>,
-  
-  p_BC_comb <span class="op">=</span> <span class="va">p_BC_mono</span> <span class="op">*</span> <span class="va">rr</span>,
-  p_BD_comb <span class="op">=</span> <span class="va">p_BD_mono</span> <span class="op">*</span> <span class="va">rr</span>,
-  
-  p_CD_comb <span class="op">=</span> <span class="va">p_CD_mono</span> <span class="op">*</span> <span class="va">rr</span>,
-  
-  p_AA_comb <span class="op">=</span> <span class="fl">1</span> <span class="op">-</span> <span class="op">(</span><span class="va">p_AB_comb</span> <span class="op">+</span> <span class="va">p_AC_comb</span> <span class="op">+</span> <span class="va">p_AD_comb</span><span class="op">)</span>,
-  
-  
-  cost_zido <span class="op">=</span> <span class="fl">2278</span>,
-  cost_lami <span class="op">=</span> <span class="fl">2086</span>,
-  
-  cost_A <span class="op">=</span> <span class="fl">2756</span>,
-  cost_B <span class="op">=</span> <span class="fl">3052</span>,
-  cost_C <span class="op">=</span> <span class="fl">9007</span>
-<span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">param</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/define_parameters.html">define_parameters</a></span><span class="op">(</span></span>
+<span>  rr <span class="op">=</span> <span class="fl">.509</span>,</span>
+<span>  </span>
+<span>  p_AA_mono <span class="op">=</span> <span class="fl">.721</span>,</span>
+<span>  p_AB_mono <span class="op">=</span> <span class="fl">.202</span>,</span>
+<span>  p_AC_mono <span class="op">=</span> <span class="fl">.067</span>,</span>
+<span>  p_AD_mono <span class="op">=</span> <span class="fl">.010</span>,</span>
+<span>  </span>
+<span>  p_BC_mono <span class="op">=</span> <span class="fl">.407</span>,</span>
+<span>  p_BD_mono <span class="op">=</span> <span class="fl">.012</span>,</span>
+<span>  </span>
+<span>  p_CD_mono <span class="op">=</span> <span class="fl">.250</span>,</span>
+<span>  </span>
+<span>  </span>
+<span>  p_AB_comb <span class="op">=</span> <span class="va">p_AB_mono</span> <span class="op">*</span> <span class="va">rr</span>,</span>
+<span>  p_AC_comb <span class="op">=</span> <span class="va">p_AC_mono</span> <span class="op">*</span> <span class="va">rr</span>,</span>
+<span>  p_AD_comb <span class="op">=</span> <span class="va">p_AD_mono</span> <span class="op">*</span> <span class="va">rr</span>,</span>
+<span>  </span>
+<span>  p_BC_comb <span class="op">=</span> <span class="va">p_BC_mono</span> <span class="op">*</span> <span class="va">rr</span>,</span>
+<span>  p_BD_comb <span class="op">=</span> <span class="va">p_BD_mono</span> <span class="op">*</span> <span class="va">rr</span>,</span>
+<span>  </span>
+<span>  p_CD_comb <span class="op">=</span> <span class="va">p_CD_mono</span> <span class="op">*</span> <span class="va">rr</span>,</span>
+<span>  </span>
+<span>  p_AA_comb <span class="op">=</span> <span class="fl">1</span> <span class="op">-</span> <span class="op">(</span><span class="va">p_AB_comb</span> <span class="op">+</span> <span class="va">p_AC_comb</span> <span class="op">+</span> <span class="va">p_AD_comb</span><span class="op">)</span>,</span>
+<span>  </span>
+<span>  </span>
+<span>  cost_zido <span class="op">=</span> <span class="fl">2278</span>,</span>
+<span>  cost_lami <span class="op">=</span> <span class="fl">2086</span>,</span>
+<span>  </span>
+<span>  cost_A <span class="op">=</span> <span class="fl">2756</span>,</span>
+<span>  cost_B <span class="op">=</span> <span class="fl">3052</span>,</span>
+<span>  cost_C <span class="op">=</span> <span class="fl">9007</span></span>
+<span><span class="op">)</span></span></code></pre></div>
 <p>We need to define <code>p_AA_mono</code> and <code>p_AA_comb</code> in <code><a href="../reference/define_parameters.html">define_parameters()</a></code> because we will need to resample that value. Only values defined with <code><a href="../reference/define_parameters.html">define_parameters()</a></code> can be resampled. So we cannot use the complement alias <code>C</code> to specify <code>p_AA_comb</code> in <code><a href="../reference/define_transition.html">define_transition()</a></code>, as we did before.</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">mat_trans_mono</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/define_transition.html">define_transition</a></span><span class="op">(</span>
-  <span class="va">p_AA_mono</span>, <span class="va">p_AB_mono</span>, <span class="va">p_AC_mono</span>, <span class="va">p_AD_mono</span>,
-  <span class="fl">0</span>,         <span class="va">C</span>,         <span class="va">p_BC_mono</span>, <span class="va">p_BD_mono</span>,
-  <span class="fl">0</span>,         <span class="fl">0</span>,         <span class="va">C</span>,         <span class="va">p_CD_mono</span>,
-  <span class="fl">0</span>,         <span class="fl">0</span>,         <span class="fl">0</span>,         <span class="fl">1</span>
-<span class="op">)</span></code></pre></div>
-<pre><code>## No named state -&gt; generating names.</code></pre>
-<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">mat_trans_comb</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/define_transition.html">define_transition</a></span><span class="op">(</span>
-  <span class="va">p_AA_comb</span>, <span class="va">p_AB_comb</span>, <span class="va">p_AC_comb</span>, <span class="va">p_AD_comb</span>,
-  <span class="fl">0</span>,         <span class="va">C</span>,         <span class="va">p_BC_comb</span>, <span class="va">p_BD_comb</span>,
-  <span class="fl">0</span>,         <span class="fl">0</span>,         <span class="va">C</span>,         <span class="va">p_CD_comb</span>,
-  <span class="fl">0</span>,         <span class="fl">0</span>,         <span class="fl">0</span>,         <span class="fl">1</span>
-<span class="op">)</span></code></pre></div>
-<pre><code>## No named state -&gt; generating names.</code></pre>
+<code class="sourceCode R"><span><span class="va">mat_trans_mono</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/define_transition.html">define_transition</a></span><span class="op">(</span></span>
+<span>  <span class="va">p_AA_mono</span>, <span class="va">p_AB_mono</span>, <span class="va">p_AC_mono</span>, <span class="va">p_AD_mono</span>,</span>
+<span>  <span class="fl">0</span>,         <span class="va">C</span>,         <span class="va">p_BC_mono</span>, <span class="va">p_BD_mono</span>,</span>
+<span>  <span class="fl">0</span>,         <span class="fl">0</span>,         <span class="va">C</span>,         <span class="va">p_CD_mono</span>,</span>
+<span>  <span class="fl">0</span>,         <span class="fl">0</span>,         <span class="fl">0</span>,         <span class="fl">1</span></span>
+<span><span class="op">)</span></span>
+<span><span class="va">mat_trans_comb</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/define_transition.html">define_transition</a></span><span class="op">(</span></span>
+<span>  <span class="va">p_AA_comb</span>, <span class="va">p_AB_comb</span>, <span class="va">p_AC_comb</span>, <span class="va">p_AD_comb</span>,</span>
+<span>  <span class="fl">0</span>,         <span class="va">C</span>,         <span class="va">p_BC_comb</span>, <span class="va">p_BD_comb</span>,</span>
+<span>  <span class="fl">0</span>,         <span class="fl">0</span>,         <span class="va">C</span>,         <span class="va">p_CD_comb</span>,</span>
+<span>  <span class="fl">0</span>,         <span class="fl">0</span>,         <span class="fl">0</span>,         <span class="fl">1</span></span>
+<span><span class="op">)</span></span></code></pre></div>
 <p>State definition remains the same in this example.</p>
-<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">state_A</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/define_state.html">define_state</a></span><span class="op">(</span>
-    cost_health <span class="op">=</span> <span class="fl">2756</span>,
-    cost_drugs <span class="op">=</span> <span class="fu"><a href="../reference/dispatch_strategy.html">dispatch_strategy</a></span><span class="op">(</span>
-      mono <span class="op">=</span> <span class="va">cost_zido</span>,
-      comb <span class="op">=</span> <span class="va">cost_zido</span> <span class="op">+</span> <span class="va">cost_lami</span>
-    <span class="op">)</span>,
-    cost_total <span class="op">=</span> <span class="fu"><a href="../reference/discount.html">discount</a></span><span class="op">(</span><span class="va">cost_health</span> <span class="op">+</span> <span class="va">cost_drugs</span>, <span class="fl">.06</span><span class="op">)</span>,
-    life_year <span class="op">=</span> <span class="fl">1</span>
-  <span class="op">)</span>
-<span class="va">state_B</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/define_state.html">define_state</a></span><span class="op">(</span>
-    cost_health <span class="op">=</span> <span class="fl">3052</span>,
-    cost_drugs <span class="op">=</span> <span class="fu"><a href="../reference/dispatch_strategy.html">dispatch_strategy</a></span><span class="op">(</span>
-      mono <span class="op">=</span> <span class="va">cost_zido</span>,
-      comb <span class="op">=</span> <span class="va">cost_zido</span> <span class="op">+</span> <span class="va">cost_lami</span>
-    <span class="op">)</span>,
-    cost_total <span class="op">=</span> <span class="fu"><a href="../reference/discount.html">discount</a></span><span class="op">(</span><span class="va">cost_health</span> <span class="op">+</span> <span class="va">cost_drugs</span>, <span class="fl">.06</span><span class="op">)</span>,
-    life_year <span class="op">=</span> <span class="fl">1</span>
-  <span class="op">)</span>
-<span class="va">state_C</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/define_state.html">define_state</a></span><span class="op">(</span>
-    cost_health <span class="op">=</span> <span class="fl">9007</span>,
-    cost_drugs <span class="op">=</span> <span class="fu"><a href="../reference/dispatch_strategy.html">dispatch_strategy</a></span><span class="op">(</span>
-      mono <span class="op">=</span> <span class="va">cost_zido</span>,
-      comb <span class="op">=</span> <span class="va">cost_zido</span> <span class="op">+</span> <span class="va">cost_lami</span>
-    <span class="op">)</span>,
-    cost_total <span class="op">=</span> <span class="fu"><a href="../reference/discount.html">discount</a></span><span class="op">(</span><span class="va">cost_health</span> <span class="op">+</span> <span class="va">cost_drugs</span>, <span class="fl">.06</span><span class="op">)</span>,
-    life_year <span class="op">=</span> <span class="fl">1</span>
-  <span class="op">)</span>
-<span class="va">state_D</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/define_state.html">define_state</a></span><span class="op">(</span>
-    cost_health <span class="op">=</span> <span class="fl">0</span>,
-    cost_drugs <span class="op">=</span> <span class="fl">0</span>,
-    cost_total <span class="op">=</span> <span class="fu"><a href="../reference/discount.html">discount</a></span><span class="op">(</span><span class="va">cost_health</span> <span class="op">+</span> <span class="va">cost_drugs</span>, <span class="fl">.06</span><span class="op">)</span>,
-    life_year <span class="op">=</span> <span class="fl">0</span>
-  <span class="op">)</span></code></pre></div>
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">state_A</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/define_state.html">define_state</a></span><span class="op">(</span></span>
+<span>    cost_health <span class="op">=</span> <span class="fl">2756</span>,</span>
+<span>    cost_drugs <span class="op">=</span> <span class="fu"><a href="../reference/dispatch_strategy.html">dispatch_strategy</a></span><span class="op">(</span></span>
+<span>      mono <span class="op">=</span> <span class="va">cost_zido</span>,</span>
+<span>      comb <span class="op">=</span> <span class="va">cost_zido</span> <span class="op">+</span> <span class="va">cost_lami</span></span>
+<span>    <span class="op">)</span>,</span>
+<span>    cost_total <span class="op">=</span> <span class="fu"><a href="../reference/discount.html">discount</a></span><span class="op">(</span><span class="va">cost_health</span> <span class="op">+</span> <span class="va">cost_drugs</span>, <span class="fl">.06</span><span class="op">)</span>,</span>
+<span>    life_year <span class="op">=</span> <span class="fl">1</span></span>
+<span>  <span class="op">)</span></span>
+<span><span class="va">state_B</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/define_state.html">define_state</a></span><span class="op">(</span></span>
+<span>    cost_health <span class="op">=</span> <span class="fl">3052</span>,</span>
+<span>    cost_drugs <span class="op">=</span> <span class="fu"><a href="../reference/dispatch_strategy.html">dispatch_strategy</a></span><span class="op">(</span></span>
+<span>      mono <span class="op">=</span> <span class="va">cost_zido</span>,</span>
+<span>      comb <span class="op">=</span> <span class="va">cost_zido</span> <span class="op">+</span> <span class="va">cost_lami</span></span>
+<span>    <span class="op">)</span>,</span>
+<span>    cost_total <span class="op">=</span> <span class="fu"><a href="../reference/discount.html">discount</a></span><span class="op">(</span><span class="va">cost_health</span> <span class="op">+</span> <span class="va">cost_drugs</span>, <span class="fl">.06</span><span class="op">)</span>,</span>
+<span>    life_year <span class="op">=</span> <span class="fl">1</span></span>
+<span>  <span class="op">)</span></span>
+<span><span class="va">state_C</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/define_state.html">define_state</a></span><span class="op">(</span></span>
+<span>    cost_health <span class="op">=</span> <span class="fl">9007</span>,</span>
+<span>    cost_drugs <span class="op">=</span> <span class="fu"><a href="../reference/dispatch_strategy.html">dispatch_strategy</a></span><span class="op">(</span></span>
+<span>      mono <span class="op">=</span> <span class="va">cost_zido</span>,</span>
+<span>      comb <span class="op">=</span> <span class="va">cost_zido</span> <span class="op">+</span> <span class="va">cost_lami</span></span>
+<span>    <span class="op">)</span>,</span>
+<span>    cost_total <span class="op">=</span> <span class="fu"><a href="../reference/discount.html">discount</a></span><span class="op">(</span><span class="va">cost_health</span> <span class="op">+</span> <span class="va">cost_drugs</span>, <span class="fl">.06</span><span class="op">)</span>,</span>
+<span>    life_year <span class="op">=</span> <span class="fl">1</span></span>
+<span>  <span class="op">)</span></span>
+<span><span class="va">state_D</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/define_state.html">define_state</a></span><span class="op">(</span></span>
+<span>    cost_health <span class="op">=</span> <span class="fl">0</span>,</span>
+<span>    cost_drugs <span class="op">=</span> <span class="fl">0</span>,</span>
+<span>    cost_total <span class="op">=</span> <span class="fu"><a href="../reference/discount.html">discount</a></span><span class="op">(</span><span class="va">cost_health</span> <span class="op">+</span> <span class="va">cost_drugs</span>, <span class="fl">.06</span><span class="op">)</span>,</span>
+<span>    life_year <span class="op">=</span> <span class="fl">0</span></span>
+<span>  <span class="op">)</span></span></code></pre></div>
 <p>Strategies must be first defined and run as in a standard deterministic analysis.</p>
-<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">strat_mono</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/define_strategy.html">define_strategy</a></span><span class="op">(</span>
-  transition <span class="op">=</span> <span class="va">mat_trans_mono</span>,
-  <span class="va">state_A</span>,
-  <span class="va">state_B</span>,
-  <span class="va">state_C</span>,
-  <span class="va">state_D</span>
-<span class="op">)</span></code></pre></div>
-<pre><code>## No named state -&gt; generating names.</code></pre>
-<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">strat_comb</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/define_strategy.html">define_strategy</a></span><span class="op">(</span>
-  transition <span class="op">=</span> <span class="va">mat_trans_comb</span>,
-  <span class="va">state_A</span>,
-  <span class="va">state_B</span>,
-  <span class="va">state_C</span>,
-  <span class="va">state_D</span>
-<span class="op">)</span></code></pre></div>
-<pre><code>## No named state -&gt; generating names.</code></pre>
-<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">res_mod</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/run_model.html">run_model</a></span><span class="op">(</span>
-  mono <span class="op">=</span> <span class="va">strat_mono</span>,
-  comb <span class="op">=</span> <span class="va">strat_comb</span>,
-  parameters <span class="op">=</span> <span class="va">param</span>,
-  cycles <span class="op">=</span> <span class="fl">50</span>,
-  cost <span class="op">=</span> <span class="va">cost_total</span>,
-  effect <span class="op">=</span> <span class="va">life_year</span>
-<span class="op">)</span></code></pre></div>
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">strat_mono</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/define_strategy.html">define_strategy</a></span><span class="op">(</span></span>
+<span>  transition <span class="op">=</span> <span class="va">mat_trans_mono</span>,</span>
+<span>  <span class="va">state_A</span>,</span>
+<span>  <span class="va">state_B</span>,</span>
+<span>  <span class="va">state_C</span>,</span>
+<span>  <span class="va">state_D</span></span>
+<span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">strat_comb</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/define_strategy.html">define_strategy</a></span><span class="op">(</span></span>
+<span>  transition <span class="op">=</span> <span class="va">mat_trans_comb</span>,</span>
+<span>  <span class="va">state_A</span>,</span>
+<span>  <span class="va">state_B</span>,</span>
+<span>  <span class="va">state_C</span>,</span>
+<span>  <span class="va">state_D</span></span>
+<span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">res_mod</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/run_model.html">run_model</a></span><span class="op">(</span></span>
+<span>  mono <span class="op">=</span> <span class="va">strat_mono</span>,</span>
+<span>  comb <span class="op">=</span> <span class="va">strat_comb</span>,</span>
+<span>  parameters <span class="op">=</span> <span class="va">param</span>,</span>
+<span>  cycles <span class="op">=</span> <span class="fl">50</span>,</span>
+<span>  cost <span class="op">=</span> <span class="va">cost_total</span>,</span>
+<span>  effect <span class="op">=</span> <span class="va">life_year</span></span>
+<span><span class="op">)</span></span></code></pre></div>
 </div>
-<div id="resampling-distributions" class="section level2">
-<h2 class="hasAnchor">
-<a href="#resampling-distributions" class="anchor"></a>Resampling distributions</h2>
+<div class="section level2">
+<h2 id="resampling-distributions">Resampling distributions<a class="anchor" aria-label="anchor" href="#resampling-distributions"></a>
+</h2>
 <p>Now we can define the resampling distributions. The following parameters will be resampled:</p>
 <ul>
 <li>Relative risk.</li>
@@ -219,171 +209,95 @@
 <p>Since the log of a relative risk follows a lognormal distribution, relative risk follows a lognormal distribution whose mean is <code>rr</code> and standard deviation on the log scale can be deduced from the relative risk confidence interval.</p>
 <p><span class="math display">\[rr \sim lognormal(\mu = .509, \sigma = .173)\]</span></p>
 <p>Programmed as:</p>
-<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">rr</span> <span class="op">~</span> <span class="fu"><a href="../reference/distributions.html">lognormal</a></span><span class="op">(</span>mean <span class="op">=</span> <span class="fl">.509</span>, sdlog <span class="op">=</span> <span class="fl">.173</span><span class="op">)</span></code></pre></div>
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">rr</span> <span class="op">~</span> <span class="fu"><a href="../reference/distributions.html">lognormal</a></span><span class="op">(</span>mean <span class="op">=</span> <span class="fl">.509</span>, sdlog <span class="op">=</span> <span class="fl">.173</span><span class="op">)</span></span></code></pre></div>
 <p>Usually costs are resampled on a gamma distribution, which has the property of being always positive. Shape and scale parameters of the gamma distribution can be calculated from the mean and standard deviation desired in the distribution. Here we assume that <em>mean = variance</em>.</p>
 <p><span class="math display">\[cost_A \sim \Gamma(\mu = 2756, \sigma = \sqrt{2756})\]</span></p>
 <p>This can be programmed as:</p>
-<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">cost_A</span> <span class="op">~</span> <span class="fu">make_gamma</span><span class="op">(</span>mean <span class="op">=</span> <span class="fl">2756</span>, sd <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/MathFun.html">sqrt</a></span><span class="op">(</span><span class="fl">2756</span><span class="op">)</span><span class="op">)</span></code></pre></div>
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">cost_A</span> <span class="op">~</span> <span class="fu">make_gamma</span><span class="op">(</span>mean <span class="op">=</span> <span class="fl">2756</span>, sd <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/MathFun.html" class="external-link">sqrt</a></span><span class="op">(</span><span class="fl">2756</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <p>Proportions follow a binomial distribution that can be estimated by giving the mean proportion and the size of the sample used to estimate that proportion with <code>p_CD ~ prop(prob = .25, size = 40)</code>.</p>
 <p>Finally multinomial distributions are declared with the number of individuals in each group in the sample used to estimate the proportions. These proportions follow a Dirichlet distribution:</p>
 <ul>
 <li><code>p_AA + p_AB + p_AC + p_AD ~ multinomial(721, 202, 67, 10)</code></li>
 </ul>
-<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">rsp</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/define_psa.html">define_psa</a></span><span class="op">(</span>
-  <span class="va">rr</span> <span class="op">~</span> <span class="fu"><a href="../reference/distributions.html">lognormal</a></span><span class="op">(</span>mean <span class="op">=</span> <span class="fl">.509</span>, sdlog <span class="op">=</span> <span class="fl">.173</span><span class="op">)</span>,
-  
-  <span class="va">cost_A</span> <span class="op">~</span> <span class="fu"><a href="../reference/distributions.html">gamma</a></span><span class="op">(</span>mean <span class="op">=</span> <span class="fl">2756</span>, sd <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/MathFun.html">sqrt</a></span><span class="op">(</span><span class="fl">2756</span><span class="op">)</span><span class="op">)</span>,
-  <span class="va">cost_B</span> <span class="op">~</span> <span class="fu"><a href="../reference/distributions.html">gamma</a></span><span class="op">(</span>mean <span class="op">=</span> <span class="fl">3052</span>, sd <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/MathFun.html">sqrt</a></span><span class="op">(</span><span class="fl">3052</span><span class="op">)</span><span class="op">)</span>,
-  <span class="va">cost_C</span> <span class="op">~</span> <span class="fu"><a href="../reference/distributions.html">gamma</a></span><span class="op">(</span>mean <span class="op">=</span> <span class="fl">9007</span>, sd <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/MathFun.html">sqrt</a></span><span class="op">(</span><span class="fl">9007</span><span class="op">)</span><span class="op">)</span>,
-  
-  <span class="va">p_CD_mono</span> <span class="op">~</span> <span class="fu"><a href="../reference/distributions.html">binomial</a></span><span class="op">(</span>prob <span class="op">=</span> <span class="fl">.25</span>, size <span class="op">=</span> <span class="fl">40</span><span class="op">)</span>,
-  
-  <span class="va">p_AA_mono</span> <span class="op">+</span> <span class="va">p_AB_mono</span> <span class="op">+</span> <span class="va">p_AC_mono</span> <span class="op">+</span> <span class="va">p_AD_mono</span> <span class="op">~</span> <span class="fu"><a href="../reference/distributions.html">multinomial</a></span><span class="op">(</span><span class="fl">721</span>, <span class="fl">202</span>, <span class="fl">67</span>, <span class="fl">10</span><span class="op">)</span>
-<span class="op">)</span></code></pre></div>
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">rsp</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/define_psa.html">define_psa</a></span><span class="op">(</span></span>
+<span>  <span class="va">rr</span> <span class="op">~</span> <span class="fu"><a href="../reference/distributions.html">lognormal</a></span><span class="op">(</span>mean <span class="op">=</span> <span class="fl">.509</span>, sdlog <span class="op">=</span> <span class="fl">.173</span><span class="op">)</span>,</span>
+<span>  </span>
+<span>  <span class="va">cost_A</span> <span class="op">~</span> <span class="fu"><a href="../reference/distributions.html">gamma</a></span><span class="op">(</span>mean <span class="op">=</span> <span class="fl">2756</span>, sd <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/MathFun.html" class="external-link">sqrt</a></span><span class="op">(</span><span class="fl">2756</span><span class="op">)</span><span class="op">)</span>,</span>
+<span>  <span class="va">cost_B</span> <span class="op">~</span> <span class="fu"><a href="../reference/distributions.html">gamma</a></span><span class="op">(</span>mean <span class="op">=</span> <span class="fl">3052</span>, sd <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/MathFun.html" class="external-link">sqrt</a></span><span class="op">(</span><span class="fl">3052</span><span class="op">)</span><span class="op">)</span>,</span>
+<span>  <span class="va">cost_C</span> <span class="op">~</span> <span class="fu"><a href="../reference/distributions.html">gamma</a></span><span class="op">(</span>mean <span class="op">=</span> <span class="fl">9007</span>, sd <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/MathFun.html" class="external-link">sqrt</a></span><span class="op">(</span><span class="fl">9007</span><span class="op">)</span><span class="op">)</span>,</span>
+<span>  </span>
+<span>  <span class="va">p_CD_mono</span> <span class="op">~</span> <span class="fu"><a href="../reference/distributions.html">binomial</a></span><span class="op">(</span>prob <span class="op">=</span> <span class="fl">.25</span>, size <span class="op">=</span> <span class="fl">40</span><span class="op">)</span>,</span>
+<span>  </span>
+<span>  <span class="va">p_AA_mono</span> <span class="op">+</span> <span class="va">p_AB_mono</span> <span class="op">+</span> <span class="va">p_AC_mono</span> <span class="op">+</span> <span class="va">p_AD_mono</span> <span class="op">~</span> <span class="fu"><a href="../reference/distributions.html">multinomial</a></span><span class="op">(</span><span class="fl">721</span>, <span class="fl">202</span>, <span class="fl">67</span>, <span class="fl">10</span><span class="op">)</span></span>
+<span><span class="op">)</span></span></code></pre></div>
 </div>
-<div id="run-probabilistic-model" class="section level2">
-<h2 class="hasAnchor">
-<a href="#run-probabilistic-model" class="anchor"></a>Run probabilistic model</h2>
+<div class="section level2">
+<h2 id="run-probabilistic-model">Run probabilistic model<a class="anchor" aria-label="anchor" href="#run-probabilistic-model"></a>
+</h2>
 <p>Now that the distributions of parameters are set we can simply run the probabilistic model as follow:</p>
-<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">pm</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/run_psa.html">run_psa</a></span><span class="op">(</span>
-  model <span class="op">=</span> <span class="va">res_mod</span>,
-  psa <span class="op">=</span> <span class="va">rsp</span>,
-  N <span class="op">=</span> <span class="fl">100</span>
-<span class="op">)</span></code></pre></div>
-<pre><code>## Resampling strategy 'mono'...</code></pre>
-<pre><code>## Resampling strategy 'comb'...</code></pre>
-<p>The average results are computed. In theory these values are more accurate than simple estimates because of non-linearities. An optional <code>threshold</code> can be passed to <code><a href="https://rdrr.io/r/base/summary.html">summary()</a></code> to compute net monetary benefit.</p>
-<div class="sourceCode" id="cb18"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span>
-  <span class="va">pm</span>, 
-  threshold <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">1000</span>, <span class="fl">5000</span>, <span class="fl">6000</span>, <span class="fl">1e4</span><span class="op">)</span><span class="op">)</span></code></pre></div>
-<pre><code>## 2 strategies run for 50 cycles.
-## 
-## Initial state counts:
-## 
-## A = 1000L
-## B = 0L
-## C = 0L
-## D = 0L
-## 
-## Counting method: 'life-table'.
-## 
-##  
-## 
-## Counting method: 'beginning'.
-## 
-##  
-## 
-## Counting method: 'end'.
-## 
-## Values:
-## 
-##      cost_health cost_drugs cost_total life_year
-## comb   100155896   78914852   94582460 18083.147
-## mono    50207708   20156028   49908189  8848.125
-## 
-## Net monetary benefit difference:
-## 
-##          1000    5000     6000    10000
-## mono 35439.25    0.00     0.00     0.00
-## comb     0.00 1500.84 10735.86 47675.95
-## 
-## Efficiency frontier:
-## 
-## mono -&gt; comb
-## 
-## Differences:
-## 
-##      Cost Diff. Effect Diff.     ICER Ref.
-## comb   44674.27     9.235022 4837.484 mono</code></pre>
+<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">pm</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/run_psa.html">run_psa</a></span><span class="op">(</span></span>
+<span>  model <span class="op">=</span> <span class="va">res_mod</span>,</span>
+<span>  psa <span class="op">=</span> <span class="va">rsp</span>,</span>
+<span>  N <span class="op">=</span> <span class="fl">100</span></span>
+<span><span class="op">)</span></span></code></pre></div>
+<p>The average results are computed. In theory these values are more accurate than simple estimates because of non-linearities. An optional <code>threshold</code> can be passed to <code><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary()</a></code> to compute net monetary benefit.</p>
+<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span></span>
+<span>  <span class="va">pm</span>, </span>
+<span>  threshold <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1000</span>, <span class="fl">5000</span>, <span class="fl">6000</span>, <span class="fl">1e4</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 </div>
-<div id="result-interpretation" class="section level2">
-<h2 class="hasAnchor">
-<a href="#result-interpretation" class="anchor"></a>Result interpretation</h2>
+<div class="section level2">
+<h2 id="result-interpretation">Result interpretation<a class="anchor" aria-label="anchor" href="#result-interpretation"></a>
+</h2>
 <p>The results of the analysis can be plotted on the cost-effectiveness plane. We can see there seem to be little uncertainty on the costs compared to the uncertainty on the effects, resulting in an uncertainty cloud that looks like a line.</p>
-<div class="sourceCode" id="cb20"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="va">pm</span>, type <span class="op">=</span> <span class="st">"ce"</span><span class="op">)</span></code></pre></div>
-<p><img src="e_probabilistic_files/figure-html/unnamed-chunk-9-1.png" width="576" style="display: block; margin: auto;"></p>
+<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">pm</span>, type <span class="op">=</span> <span class="st">"ce"</span><span class="op">)</span></span></code></pre></div>
 <p>And as cost-effectiveness acceptability curves or EVPI:</p>
-<div class="sourceCode" id="cb21"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="va">pm</span>, type <span class="op">=</span> <span class="st">"ac"</span>, max_wtp <span class="op">=</span> <span class="fl">10000</span>, log_scale <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></code></pre></div>
-<p><img src="e_probabilistic_files/figure-html/unnamed-chunk-10-1.png" width="576" style="display: block; margin: auto;"></p>
-<div class="sourceCode" id="cb22"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="va">pm</span>, type <span class="op">=</span> <span class="st">"evpi"</span>, max_wtp <span class="op">=</span> <span class="fl">10000</span>, log_scale <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></code></pre></div>
-<p><img src="e_probabilistic_files/figure-html/unnamed-chunk-10-2.png" width="576" style="display: block; margin: auto;"></p>
+<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">pm</span>, type <span class="op">=</span> <span class="st">"ac"</span>, max_wtp <span class="op">=</span> <span class="fl">10000</span>, log_scale <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">pm</span>, type <span class="op">=</span> <span class="st">"evpi"</span>, max_wtp <span class="op">=</span> <span class="fl">10000</span>, log_scale <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></code></pre></div>
 <p>A covariance analysis can be performed on strategy results:</p>
-<div class="sourceCode" id="cb23"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="va">pm</span>, type <span class="op">=</span> <span class="st">"cov"</span><span class="op">)</span></code></pre></div>
-<pre><code>## Le chargement a nécessité le package : mgcv</code></pre>
-<p><img src="e_probabilistic_files/figure-html/unnamed-chunk-11-1.png" width="576" style="display: block; margin: auto;"></p>
+<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">pm</span>, type <span class="op">=</span> <span class="st">"cov"</span><span class="op">)</span></span></code></pre></div>
 <p>Or on the difference between strategies:</p>
-<div class="sourceCode" id="cb25"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="va">pm</span>, type <span class="op">=</span> <span class="st">"cov"</span>, diff <span class="op">=</span> <span class="cn">TRUE</span>, threshold <span class="op">=</span> <span class="fl">5000</span><span class="op">)</span></code></pre></div>
-<pre><code>## Warning in compute_prop_var(mgcv::gam(formula = form_nmb, data = .data)): Only
-## 99% of variance explained, results may be inaccurate.</code></pre>
-<p><img src="e_probabilistic_files/figure-html/unnamed-chunk-12-1.png" width="384" style="display: block; margin: auto;"></p>
+<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">pm</span>, type <span class="op">=</span> <span class="st">"cov"</span>, diff <span class="op">=</span> <span class="cn">TRUE</span>, threshold <span class="op">=</span> <span class="fl">5000</span><span class="op">)</span></span></code></pre></div>
 <p>As usual plots can be modified with the standard <code>ggplot2</code> syntax.</p>
-<div class="sourceCode" id="cb27"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://ggplot2.tidyverse.org">ggplot2</a></span><span class="op">)</span>
-
-<span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="va">pm</span>, type <span class="op">=</span> <span class="st">"ce"</span><span class="op">)</span> <span class="op">+</span>
-  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">xlab</a></span><span class="op">(</span><span class="st">"Life-years gained"</span><span class="op">)</span> <span class="op">+</span>
-  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">ylab</a></span><span class="op">(</span><span class="st">"Additional cost"</span><span class="op">)</span> <span class="op">+</span>
-  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_brewer.html">scale_color_brewer</a></span><span class="op">(</span>
-    name <span class="op">=</span> <span class="st">"Strategy"</span>,
-    palette <span class="op">=</span> <span class="st">"Set1"</span>
-  <span class="op">)</span> <span class="op">+</span>
-  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html">theme_minimal</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
-<p><img src="e_probabilistic_files/figure-html/unnamed-chunk-13-1.png" width="576" style="display: block; margin: auto;"></p>
+<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://ggplot2.tidyverse.org" class="external-link">ggplot2</a></span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">pm</span>, type <span class="op">=</span> <span class="st">"ce"</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">xlab</a></span><span class="op">(</span><span class="st">"Life-years gained"</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">ylab</a></span><span class="op">(</span><span class="st">"Additional cost"</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_brewer.html" class="external-link">scale_color_brewer</a></span><span class="op">(</span></span>
+<span>    name <span class="op">=</span> <span class="st">"Strategy"</span>,</span>
+<span>    palette <span class="op">=</span> <span class="st">"Set1"</span></span>
+<span>  <span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html" class="external-link">theme_minimal</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
 </div>
-<div id="parallel-computing" class="section level2">
-<h2 class="hasAnchor">
-<a href="#parallel-computing" class="anchor"></a>Parallel computing</h2>
+<div class="section level2">
+<h2 id="parallel-computing">Parallel computing<a class="anchor" aria-label="anchor" href="#parallel-computing"></a>
+</h2>
 <p>Resampling can be significantly sped up by using parallel computing. This can be done in the following way:</p>
 <ul>
-<li>Define a cluster with the <code><a href="../reference/cluster.html">use_cluster()</a></code> functions (i.e. <code><a href="../reference/cluster.html">use_cluster(4)</a></code> to use 4 cores).</li>
+<li>Define a cluster with the <code><a href="../reference/cluster.html">use_cluster()</a></code> functions (i.e. <code>use_cluster(4)</code> to use 4 cores).</li>
 <li>Run the analysis as usual.</li>
 <li>To stop using parallel computing use the <code><a href="../reference/cluster.html">close_cluster()</a></code> function.</li>
 </ul>
 <p>Results may vary depending on the machine, but we found speed gains to be quite limited beyond 4 cores.</p>
 </div>
-<div id="interface-with-bcea-and-savi" class="section level2">
-<h2 class="hasAnchor">
-<a href="#interface-with-bcea-and-savi" class="anchor"></a>Interface with BCEA and SAVI</h2>
-<p>To compute EVPPI the results can also be exported with <code><a href="../reference/export_savi.html">export_savi()</a></code> in a format compatible with the <a href="https://savi.shef.ac.uk/SAVI/">SAVI</a> software (Sheffield Accelerated Value of Information).</p>
+<div class="section level2">
+<h2 id="interface-with-bcea-and-savi">Interface with BCEA and SAVI<a class="anchor" aria-label="anchor" href="#interface-with-bcea-and-savi"></a>
+</h2>
+<p>To compute EVPPI the results can also be exported with <code><a href="../reference/export_savi.html">export_savi()</a></code> in a format compatible with the <a href="https://savi.shef.ac.uk/SAVI/" class="external-link">SAVI</a> software (Sheffield Accelerated Value of Information).</p>
 <p>The results can be post-processed by the <code>BCEA</code> package with the <code><a href="../reference/run_bcea.html">run_bcea()</a></code> function.</p>
-<div class="sourceCode" id="cb28"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">bcea</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/run_bcea.html">run_bcea</a></span><span class="op">(</span><span class="va">pm</span>, plot <span class="op">=</span> <span class="cn">TRUE</span>, Kmax <span class="op">=</span> <span class="fl">10000</span><span class="op">)</span></code></pre></div>
-<pre><code>## Le chargement a nécessité le package : BCEA</code></pre>
-<p><img src="e_probabilistic_files/figure-html/unnamed-chunk-14-1.png" width="576"></p>
-<div class="sourceCode" id="cb30"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="va">bcea</span><span class="op">)</span></code></pre></div>
-<pre><code>## NB: k (wtp) is defined in the interval [0 - 10000]
-## 
-## Cost-effectiveness analysis summary 
-## 
-## Reference intervention:  comb
-## Comparator intervention: mono
-## 
-## Optimal decision: choose comb for k&lt;4840 and mono for k&gt;=4840
-## 
-## 
-## Analysis for willingness to pay parameter k = 10000
-## 
-##      Expected utility
-## comb         38573057
-## mono         86249008
-## 
-##                    EIB CEAC   ICER
-## comb vs mono -47675951 0.01 4837.5
-## 
-## Optimal intervention (max expected utility) for k=10000: mono
-##           
-## EVPI 50633</code></pre>
+<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">bcea</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/run_bcea.html">run_bcea</a></span><span class="op">(</span><span class="va">pm</span>, plot <span class="op">=</span> <span class="cn">TRUE</span>, Kmax <span class="op">=</span> <span class="fl">10000</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">bcea</span><span class="op">)</span></span></code></pre></div>
 </div>
   </div>
 
@@ -398,11 +312,13 @@
 
 
       <footer><div class="copyright">
-  <p>Developed by Kevin Zarca, Antoine Filipovic-Pierucci.</p>
+  <p></p>
+<p>Developed by Kevin Zarca, Antoine Filipovic-Pierucci.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
+  <p></p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.7.</p>
 </div>
 
       </footer>
@@ -410,6 +326,8 @@
 
   
 
+
+  
 
   </body>
 </html>

@@ -49,3 +49,8 @@ generate_wtp <- function(max_wtp,
     seq(from = 0, to = max_wtp, length.out = n)
   }
 }
+
+
+globalVariables(c(     ".ceac", ".cost", ".dcost", ".deffect", ".denom", ".dref", ".effect", ".evpi", ".hjust", ".icer",
+                       ".index", ".mod", ".n_indiv", ".p", ".par_names", ".par_value", ".prop", ".strategy_names",
+                       ".type", ".weights", "Model", "Value", "count", "markov_cycle", "res", "value"))

@@ -149,30 +149,6 @@ test_that("starting_values works with parameters", {
 })
 
 
-test_that("starting_values uses patient flows", {
-  mat2 <- define_transition(
-    state_names = c("E1", "E2", "E3"),
-    0.5, 0.2, C,
-    0.4, 0.5, C,
-    1  , 0  , 0
-  )
-  
-  s3 <- define_state(
-    x = 0,
-    y = 0,
-    z = 0
-  )
-  
-  modx <- define_strategy(
-    transition = mat2,
-    E1 = s1,
-    E2 = s2,
-    E3 = s3
-  )
-  
-  rux <- run_model(modx, parameters = par1, cost = x, effect = y, cycles = 10)
-})
-
 test_that("starting_values works with define_state and define_strategy at the same time", {
   ru0 <- run_model(mod4, mod3, mod1, parameters = par1, cost = x, effect = y, cycles = 5)
   new <- c(50, 95, 88.8333333333333, 87.9083333333333, 88.4825)

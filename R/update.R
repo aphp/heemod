@@ -54,7 +54,7 @@ update.run_model <- function(object, newdata, ...) {
   
   if (has_weights) {
     weights <- newdata$.weights
-    newdata <- dplyr::select(newdata, -.data$.weights)
+    newdata <- dplyr::select(newdata, -.weights)
     
   } else {
     message("No weights specified in update, using equal weights.")
@@ -91,7 +91,7 @@ update.run_model <- function(object, newdata, ...) {
     res_total <- res %>% 
       dplyr::rowwise() %>% 
       dplyr::do(get_total_state_values(.data$.mod)) %>% 
-      dplyr::bind_cols(res %>% dplyr::select(-.data$.mod)) %>% 
+      dplyr::bind_cols(res %>% dplyr::select(-.mod)) %>% 
       dplyr::ungroup() %>% 
       dplyr::mutate(!!!ce) %>% 
       dplyr::left_join(
@@ -194,7 +194,7 @@ plot.updated_model <- function(x, type = c("simple", "difference",
     dplyr::filter(
       .data$.strategy_names %in% strategy
     ) %>% 
-    ggplot2::ggplot(ggplot2::aes_string(x = x_var)) +
+    ggplot2::ggplot(ggplot2::aes(x = !!sym(x_var))) +
     ggplot2::geom_histogram(...) +
     ggplot2::xlab(x_lab)+
     ggplot2::facet_grid(.strategy_names ~ .)
@@ -290,8 +290,8 @@ summary.updated_model <- function(object, ...) {
   
   mat_res <- dplyr::select(
     tab_res,
-    -.data$Model,
-    -.data$Value
+    -Model,
+    -Value
   ) %>% 
     as.matrix()
   

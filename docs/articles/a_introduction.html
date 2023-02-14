@@ -19,6 +19,8 @@
 <![endif]-->
 </head>
 <body data-spy="scroll" data-target="#toc">
+    
+
     <div class="container template-article">
       <header><div class="navbar navbar-default navbar-fixed-top" role="navigation">
   <div class="container">
@@ -31,18 +33,12 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">heemod</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.14.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.15.0</span>
       </span>
     </div>
 
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
-<li>
-  <a href="../index.html">
-    <span class="fas fa fas fa-home fa-lg"></span>
-     
-  </a>
-</li>
 <li>
   <a href="../reference/index.html">Reference</a>
 </li>
@@ -55,8 +51,8 @@
       </ul>
 <ul class="nav navbar-nav navbar-right">
 <li>
-  <a href="https://github.com/pierucci/heemod/">
-    <span class="fab fa fab fa-github fa-lg"></span>
+  <a href="https://github.com/pierucci/heemod/" class="external-link">
+    <span class="fab fa-github fa-lg"></span>
      
   </a>
 </li>
@@ -70,16 +66,15 @@
 
       
 
-      </header><script src="a_introduction_files/accessible-code-block-0.0.1/empty-anchor.js"></script><link href="a_introduction_files/anchor-sections-1.0/anchor-sections.css" rel="stylesheet">
-<script src="a_introduction_files/anchor-sections-1.0/anchor-sections.js"></script><div class="row">
+      </header><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>An Introduction to <code>heemod</code>
 </h1>
             
-            <h4 class="date">2020-12-07</h4>
+            <h4 data-toc-skip class="date">2023-02-03</h4>
       
-      <small class="dont-index">Source: <a href="https://github.com/pierucci/heemod/blob/master/vignettes/a_introduction.Rmd"><code>vignettes/a_introduction.Rmd</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/pierucci/heemod/blob/HEAD/vignettes/a_introduction.Rmd" class="external-link"><code>vignettes/a_introduction.Rmd</code></a></small>
       <div class="hidden name"><code>a_introduction.Rmd</code></div>
 
     </div>
@@ -93,9 +88,9 @@
 <li>Specify values attached to states (costs, utilities, etc.).</li>
 <li>Combine this information and run the model.</li>
 </ul>
-<div id="transition-probabilities" class="section level2">
-<h2 class="hasAnchor">
-<a href="#transition-probabilities" class="anchor"></a>Transition probabilities</h2>
+<div class="section level2">
+<h2 id="transition-probabilities">Transition probabilities<a class="anchor" aria-label="anchor" href="#transition-probabilities"></a>
+</h2>
 <p>The probability to transition from one state to another during a time period is called a <em>transition probability</em>. Said time period is called a <em>cycle</em>.</p>
 <p>Transition probabilities between states can be described through a 2-way table where the lines correspond to the states at the beginning of a cycle and the columns to the states at the end of a cycle. Consider a model with 2 states <code>A</code> and <code>B</code>:</p>
 <table class="table">
@@ -141,22 +136,22 @@
 </table>
 <p>That transition matrix can be defined with the following command:</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">mat_trans</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/define_transition.html">define_transition</a></span><span class="op">(</span>
-  <span class="fl">.9</span>, <span class="fl">.1</span>,
-  <span class="fl">.2</span>, <span class="fl">.8</span>
-<span class="op">)</span></code></pre></div>
-<pre><code>## No named state -&gt; generating names.</code></pre>
+<code class="sourceCode R"><span><span class="va">mat_trans</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/define_transition.html">define_transition</a></span><span class="op">(</span></span>
+<span>  <span class="fl">.9</span>, <span class="fl">.1</span>,</span>
+<span>  <span class="fl">.2</span>, <span class="fl">.8</span></span>
+<span><span class="op">)</span></span></code></pre></div>
+<pre><code><span><span class="co">## No named state -&gt; generating names.</span></span></code></pre>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">mat_trans</span></code></pre></div>
-<pre><code>## A transition matrix, 2 states.
-## 
-##   A   B  
-## A 0.9 0.1
-## B 0.2 0.8</code></pre>
+<code class="sourceCode R"><span><span class="va">mat_trans</span></span></code></pre></div>
+<pre><code><span><span class="co">## A transition matrix, 2 states.</span></span>
+<span><span class="co">## </span></span>
+<span><span class="co">##   A   B  </span></span>
+<span><span class="co">## A 0.9 0.1</span></span>
+<span><span class="co">## B 0.2 0.8</span></span></code></pre>
 </div>
-<div id="attach-values-to-states" class="section level2">
-<h2 class="hasAnchor">
-<a href="#attach-values-to-states" class="anchor"></a>Attach values to states</h2>
+<div class="section level2">
+<h2 id="attach-values-to-states">Attach values to states<a class="anchor" aria-label="anchor" href="#attach-values-to-states"></a>
+</h2>
 <p>Values are attached to states. Cost and utility are classical examples of such values. To continue with the previous example, the following values can be attachd to state <strong>A</strong> and <strong>B</strong>:</p>
 <ul>
 <li>State <strong>A</strong> has a cost of <em>1234</em> per cycle and an utility of <em>0.85</em>.</li>
@@ -164,173 +159,173 @@
 </ul>
 <p>A state and its values can be defined with <code><a href="../reference/define_state.html">define_state()</a></code>:</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">state_A</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/define_state.html">define_state</a></span><span class="op">(</span>
-  cost <span class="op">=</span> <span class="fl">1234</span>,
-  utility <span class="op">=</span> <span class="fl">0.85</span>
-<span class="op">)</span>
-<span class="va">state_A</span></code></pre></div>
-<pre><code>## A state with 2 values.
-## 
-## cost = 1234
-## utility = 0.85</code></pre>
+<code class="sourceCode R"><span><span class="va">state_A</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/define_state.html">define_state</a></span><span class="op">(</span></span>
+<span>  cost <span class="op">=</span> <span class="fl">1234</span>,</span>
+<span>  utility <span class="op">=</span> <span class="fl">0.85</span></span>
+<span><span class="op">)</span></span>
+<span><span class="va">state_A</span></span></code></pre></div>
+<pre><code><span><span class="co">## A state with 2 values.</span></span>
+<span><span class="co">## </span></span>
+<span><span class="co">## cost = 1234</span></span>
+<span><span class="co">## utility = 0.85</span></span></code></pre>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">state_B</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/define_state.html">define_state</a></span><span class="op">(</span>
-  cost <span class="op">=</span> <span class="fl">4321</span>,
-  utility <span class="op">=</span> <span class="fl">0.50</span>
-<span class="op">)</span>
-<span class="va">state_B</span></code></pre></div>
-<pre><code>## A state with 2 values.
-## 
-## cost = 4321
-## utility = 0.5</code></pre>
+<code class="sourceCode R"><span><span class="va">state_B</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/define_state.html">define_state</a></span><span class="op">(</span></span>
+<span>  cost <span class="op">=</span> <span class="fl">4321</span>,</span>
+<span>  utility <span class="op">=</span> <span class="fl">0.50</span></span>
+<span><span class="op">)</span></span>
+<span><span class="va">state_B</span></span></code></pre></div>
+<pre><code><span><span class="co">## A state with 2 values.</span></span>
+<span><span class="co">## </span></span>
+<span><span class="co">## cost = 4321</span></span>
+<span><span class="co">## utility = 0.5</span></span></code></pre>
 </div>
-<div id="combine-information-in-a-model" class="section level2">
-<h2 class="hasAnchor">
-<a href="#combine-information-in-a-model" class="anchor"></a>Combine information in a model</h2>
+<div class="section level2">
+<h2 id="combine-information-in-a-model">Combine information in a model<a class="anchor" aria-label="anchor" href="#combine-information-in-a-model"></a>
+</h2>
 <p>Now that the transition matrix and the state values are defined for a given strategy, we can combine them with <code><a href="../reference/define_strategy.html">define_strategy()</a></code>:</p>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">strat</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/define_strategy.html">define_strategy</a></span><span class="op">(</span>
-  transition <span class="op">=</span> <span class="va">mat_trans</span>,
-  <span class="va">state_A</span>,
-  <span class="va">state_B</span>
-<span class="op">)</span></code></pre></div>
-<pre><code>## No named state -&gt; generating names.</code></pre>
+<code class="sourceCode R"><span><span class="va">strat</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/define_strategy.html">define_strategy</a></span><span class="op">(</span></span>
+<span>  transition <span class="op">=</span> <span class="va">mat_trans</span>,</span>
+<span>  <span class="va">state_A</span>,</span>
+<span>  <span class="va">state_B</span></span>
+<span><span class="op">)</span></span></code></pre></div>
+<pre><code><span><span class="co">## No named state -&gt; generating names.</span></span></code></pre>
 <div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">strat</span></code></pre></div>
-<pre><code>## A Markov model strategy:
-## 
-##     2 states,
-##     2 state values</code></pre>
+<code class="sourceCode R"><span><span class="va">strat</span></span></code></pre></div>
+<pre><code><span><span class="co">## A Markov model strategy:</span></span>
+<span><span class="co">## </span></span>
+<span><span class="co">##     2 states,</span></span>
+<span><span class="co">##     2 state values</span></span></code></pre>
 </div>
-<div id="run-the-model" class="section level2">
-<h2 class="hasAnchor">
-<a href="#run-the-model" class="anchor"></a>Run the model</h2>
+<div class="section level2">
+<h2 id="run-the-model">Run the model<a class="anchor" aria-label="anchor" href="#run-the-model"></a>
+</h2>
 <p>A model is a made of one or more strategy, run with <code><a href="../reference/run_model.html">run_model()</a></code> for a given number of cycles. Here we run only one strategy, so no comparison of the cost-effectiveness of the different strategies will be made. The variables corresponding to valuation of cost and effect must be given at that point.</p>
 <div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">res_mod</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/run_model.html">run_model</a></span><span class="op">(</span>
-  <span class="va">strat</span>,
-  cycles <span class="op">=</span> <span class="fl">10</span>,
-  cost <span class="op">=</span> <span class="va">cost</span>,
-  effect <span class="op">=</span> <span class="va">utility</span>
-<span class="op">)</span></code></pre></div>
-<pre><code>## No named model -&gt; generating names.</code></pre>
+<code class="sourceCode R"><span><span class="va">res_mod</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/run_model.html">run_model</a></span><span class="op">(</span></span>
+<span>  <span class="va">strat</span>,</span>
+<span>  cycles <span class="op">=</span> <span class="fl">10</span>,</span>
+<span>  cost <span class="op">=</span> <span class="va">cost</span>,</span>
+<span>  effect <span class="op">=</span> <span class="va">utility</span></span>
+<span><span class="op">)</span></span></code></pre></div>
+<pre><code><span><span class="co">## No named model -&gt; generating names.</span></span></code></pre>
 <div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">res_mod</span></code></pre></div>
-<pre><code>## 1 strategy run for 10 cycles.
-## 
-## Initial state counts:
-## 
-## A = 1000L
-## B = 0L
-## 
-## Counting method: 'life-table'.
-## 
-##  
-## 
-## Counting method: 'beginning'.
-## 
-##  
-## 
-## Counting method: 'end'.
-## 
-## Values:
-## 
-##       cost  utility
-## I 19796856 7654.552</code></pre>
+<code class="sourceCode R"><span><span class="va">res_mod</span></span></code></pre></div>
+<pre><code><span><span class="co">## 1 strategy run for 10 cycles.</span></span>
+<span><span class="co">## </span></span>
+<span><span class="co">## Initial state counts:</span></span>
+<span><span class="co">## </span></span>
+<span><span class="co">## A = 1000L</span></span>
+<span><span class="co">## B = 0L</span></span>
+<span><span class="co">## </span></span>
+<span><span class="co">## Counting method: 'life-table'.</span></span>
+<span><span class="co">## </span></span>
+<span><span class="co">##  </span></span>
+<span><span class="co">## </span></span>
+<span><span class="co">## Counting method: 'beginning'.</span></span>
+<span><span class="co">## </span></span>
+<span><span class="co">##  </span></span>
+<span><span class="co">## </span></span>
+<span><span class="co">## Counting method: 'end'.</span></span>
+<span><span class="co">## </span></span>
+<span><span class="co">## Values:</span></span>
+<span><span class="co">## </span></span>
+<span><span class="co">##       cost  utility</span></span>
+<span><span class="co">## I 19796856 7654.552</span></span></code></pre>
 <p>By default the model is run for <em>1000</em> persons starting in the first state (here state <strong>A</strong>).</p>
 </div>
-<div id="analyse-results" class="section level2">
-<h2 class="hasAnchor">
-<a href="#analyse-results" class="anchor"></a>Analyse results</h2>
+<div class="section level2">
+<h2 id="analyse-results">Analyse results<a class="anchor" aria-label="anchor" href="#analyse-results"></a>
+</h2>
 <p>We can plot the state membership counts over time. Other plot types are available.</p>
 <div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="va">res_mod</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">res_mod</span><span class="op">)</span></span></code></pre></div>
 <p><img src="a_introduction_files/figure-html/unnamed-chunk-6-1.png" width="576" style="display: block; margin: auto;"></p>
 <p>Plots can be modified using <code>ggplot2</code> syntax.</p>
 <div class="sourceCode" id="cb18"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://ggplot2.tidyverse.org">ggplot2</a></span><span class="op">)</span>
-
-<span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="va">res_mod</span><span class="op">)</span> <span class="op">+</span>
-  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">xlab</a></span><span class="op">(</span><span class="st">"Time"</span><span class="op">)</span> <span class="op">+</span>
-  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">ylab</a></span><span class="op">(</span><span class="st">"N"</span><span class="op">)</span> <span class="op">+</span>
-  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html">theme_minimal</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span>
-  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_brewer.html">scale_color_brewer</a></span><span class="op">(</span>
-    name <span class="op">=</span> <span class="st">"State"</span>,
-    palette <span class="op">=</span> <span class="st">"Set1"</span>
-  <span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://ggplot2.tidyverse.org" class="external-link">ggplot2</a></span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">res_mod</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">xlab</a></span><span class="op">(</span><span class="st">"Time"</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">ylab</a></span><span class="op">(</span><span class="st">"N"</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html" class="external-link">theme_minimal</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_brewer.html" class="external-link">scale_color_brewer</a></span><span class="op">(</span></span>
+<span>    name <span class="op">=</span> <span class="st">"State"</span>,</span>
+<span>    palette <span class="op">=</span> <span class="st">"Set1"</span></span>
+<span>  <span class="op">)</span></span></code></pre></div>
 <p><img src="a_introduction_files/figure-html/unnamed-chunk-7-1.png" width="576" style="display: block; margin: auto;"></p>
 <p>And black &amp; white plots for publication are available with the <code>bw</code> plot option</p>
 <div class="sourceCode" id="cb19"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://ggplot2.tidyverse.org">ggplot2</a></span><span class="op">)</span>
-
-<span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="va">res_mod</span>, bw <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://ggplot2.tidyverse.org" class="external-link">ggplot2</a></span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">res_mod</span>, bw <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
 <p><img src="a_introduction_files/figure-html/unnamed-chunk-8-1.png" width="576" style="display: block; margin: auto;"></p>
-<p>The state membership counts and the values can be accessed with <code><a href="../reference/get_counts.updated_model.html">get_counts()</a></code> and <code><a href="../reference/get_values.updated_model.html">get_values()</a></code> respectively.</p>
+<p>The state membership counts and the values can be accessed with <code><a href="../reference/get_counts.html">get_counts()</a></code> and <code><a href="../reference/get_values.html">get_values()</a></code> respectively.</p>
 <div class="sourceCode" id="cb20"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="fu"><a href="../reference/get_counts.updated_model.html">get_counts</a></span><span class="op">(</span><span class="va">res_mod</span><span class="op">)</span><span class="op">)</span></code></pre></div>
-<pre><code>##   .strategy_names markov_cycle state_names    count
-## 1               I            1           A 950.0000
-## 2               I            2           A 865.0000
-## 3               I            3           A 805.5000
-## 4               I            4           A 763.8500
-## 5               I            5           A 734.6950
-## 6               I            6           A 714.2865</code></pre>
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="fu"><a href="../reference/get_counts.html">get_counts</a></span><span class="op">(</span><span class="va">res_mod</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
+<pre><code><span><span class="co">##   .strategy_names markov_cycle state_names    count</span></span>
+<span><span class="co">## 1               I            1           A 950.0000</span></span>
+<span><span class="co">## 2               I            2           A 865.0000</span></span>
+<span><span class="co">## 3               I            3           A 805.5000</span></span>
+<span><span class="co">## 4               I            4           A 763.8500</span></span>
+<span><span class="co">## 5               I            5           A 734.6950</span></span>
+<span><span class="co">## 6               I            6           A 714.2865</span></span></code></pre>
 <div class="sourceCode" id="cb22"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="fu"><a href="../reference/get_values.updated_model.html">get_values</a></span><span class="op">(</span><span class="va">res_mod</span><span class="op">)</span><span class="op">)</span></code></pre></div>
-<pre><code>##   markov_cycle .strategy_names value_names   value
-## 1            1               I        cost 1388350
-## 2            2               I        cost 1650745
-## 3            3               I        cost 1834422
-## 4            4               I        cost 1962995
-## 5            5               I        cost 2052997
-## 6            6               I        cost 2115998</code></pre>
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="fu"><a href="../reference/get_values.html">get_values</a></span><span class="op">(</span><span class="va">res_mod</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
+<pre><code><span><span class="co">##   markov_cycle .strategy_names value_names   value</span></span>
+<span><span class="co">## 1            1               I        cost 1388350</span></span>
+<span><span class="co">## 2            2               I        cost 1650745</span></span>
+<span><span class="co">## 3            3               I        cost 1834422</span></span>
+<span><span class="co">## 4            4               I        cost 1962995</span></span>
+<span><span class="co">## 5            5               I        cost 2052997</span></span>
+<span><span class="co">## 6            6               I        cost 2115998</span></span></code></pre>
 </div>
-<div id="convenience-functions" class="section level2">
-<h2 class="hasAnchor">
-<a href="#convenience-functions" class="anchor"></a>Convenience functions</h2>
+<div class="section level2">
+<h2 id="convenience-functions">Convenience functions<a class="anchor" aria-label="anchor" href="#convenience-functions"></a>
+</h2>
 <p>Convenience functions are available to easily compute transition probabilities from indidence rates, OR, RR, or probabilities estimated on a different timeframe.</p>
 <p>Example : convert an incidence rate of <em>162</em> cases per <em>1,000</em> person-years to a 5-year probability.</p>
 <div class="sourceCode" id="cb24"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="../reference/probability.html">rate_to_prob</a></span><span class="op">(</span>r <span class="op">=</span> <span class="fl">162</span>, per <span class="op">=</span> <span class="fl">1000</span>, to <span class="op">=</span> <span class="fl">5</span><span class="op">)</span></code></pre></div>
-<pre><code>## [1] 0.5551419</code></pre>
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/probability.html">rate_to_prob</a></span><span class="op">(</span>r <span class="op">=</span> <span class="fl">162</span>, per <span class="op">=</span> <span class="fl">1000</span>, to <span class="op">=</span> <span class="fl">5</span><span class="op">)</span></span></code></pre></div>
+<pre><code><span><span class="co">## [1] 0.5551419</span></span></code></pre>
 <p>See <code><a href="../reference/probability.html">?probability</a></code> to see a list of the convenience functions available.</p>
 </div>
-<div id="external-data" class="section level2">
-<h2 class="hasAnchor">
-<a href="#external-data" class="anchor"></a>External data</h2>
+<div class="section level2">
+<h2 id="external-data">External data<a class="anchor" aria-label="anchor" href="#external-data"></a>
+</h2>
 <p>Mortality rates by age and sex (often used as transition probabilities) can be downloaded from the WHO online database with the function <code><a href="../reference/who_mortality.html">get_who_mr()</a></code>.</p>
 <p>External data contained in user-defined data frames can be referenced in a model with the function <code><a href="../reference/look_up.html">look_up()</a></code>.</p>
 </div>
-<div id="compare-strategies" class="section level2">
-<h2 class="hasAnchor">
-<a href="#compare-strategies" class="anchor"></a>Compare strategies</h2>
+<div class="section level2">
+<h2 id="compare-strategies">Compare strategies<a class="anchor" aria-label="anchor" href="#compare-strategies"></a>
+</h2>
 <p>In order to compare different strategies it is possible to run a model with multiple strategies in parallel, examples are provided in <code>vignette("c-homogeneous", "heemod")</code> or <code>vignette("d-non-homogeneous", "heemod")</code>.</p>
 </div>
-<div id="time-variability" class="section level2">
-<h2 class="hasAnchor">
-<a href="#time-variability" class="anchor"></a>Time-variability</h2>
+<div class="section level2">
+<h2 id="time-variability">Time-variability<a class="anchor" aria-label="anchor" href="#time-variability"></a>
+</h2>
 <p>Time varying transition probabilities and state values are available through the <code>markov_cycle</code> and <code>state_cycle</code> variables. Time-varying probabilities and values are explained in <code>vignette("b-time-dependency", "heemod")</code>.</p>
 </div>
-<div id="transition-costs" class="section level2">
-<h2 class="hasAnchor">
-<a href="#transition-costs" class="anchor"></a>Transition costs</h2>
+<div class="section level2">
+<h2 id="transition-costs">Transition costs<a class="anchor" aria-label="anchor" href="#transition-costs"></a>
+</h2>
 <p>Transition costs between states can be defined by adding an additional state called a transition state. This is a special case of a tunnel state. A situation where the transtion from <code>A</code> to <code>B</code> (noted <code>A-&gt;B</code>) costs $100 and reduces utility by 0.1 points compared to the usual values of <code>B</code> can be modelled by adding a state <code>B_trans</code>.</p>
 <p>The cost and utility of <code>B_trans</code> are the same as those of <code>B</code> +$100 and -0.1 QALY respectively. <code>A-&gt;B_trans</code> is equal to the former value of <code>A-&gt;B</code>. <code>A-&gt;B</code> is set to 0 (all transitions from <code>A</code> to <code>B</code> must pass through <code>B_trans</code> from now on). The probability to stay in <code>B_trans</code> is 0, <code>B_trans-&gt;B</code> is equal to <code>B-&gt;B</code> and similarly all <code>B_trans-&gt;*</code> are equal to <code>B-&gt;*</code>.</p>
 </div>
-<div id="parallel-computing" class="section level2">
-<h2 class="hasAnchor">
-<a href="#parallel-computing" class="anchor"></a>Parallel computing</h2>
+<div class="section level2">
+<h2 id="parallel-computing">Parallel computing<a class="anchor" aria-label="anchor" href="#parallel-computing"></a>
+</h2>
 <p>Some operation such as PSA can be significantly sped up using parallel computing. This can be done in the following way:</p>
 <ul>
-<li>Define a cluster with the <code><a href="../reference/cluster.html">use_cluster()</a></code> functions (i.e. <code><a href="../reference/cluster.html">use_cluster(4)</a></code> to use 4 cores).</li>
+<li>Define a cluster with the <code><a href="../reference/cluster.html">use_cluster()</a></code> functions (i.e. <code>use_cluster(4)</code> to use 4 cores).</li>
 <li>Run the analysis as usual.</li>
 <li>To stop using parallel computing use the <code><a href="../reference/cluster.html">close_cluster()</a></code> function.</li>
 </ul>
 <p>Results may vary depending on the machine, but we found speed gains to be quite limited beyond 4 cores.</p>
 </div>
-<div id="going-further" class="section level2">
-<h2 class="hasAnchor">
-<a href="#going-further" class="anchor"></a>Going further</h2>
+<div class="section level2">
+<h2 id="going-further">Going further<a class="anchor" aria-label="anchor" href="#going-further"></a>
+</h2>
 <p>Probabilistic uncertainty analysis <code>vignette("e-probabilistic", "heemod")</code> and deterministic sensitivity analysis <code>vignette("f-sensitivity", "heemod")</code> can be performed. Population-level estimates and heterogeneity can be computed : <code>vignette("g-heterogeneity", "heemod")</code>.</p>
 </div>
   </div>
@@ -346,11 +341,13 @@
 
 
       <footer><div class="copyright">
-  <p>Developed by Kevin Zarca, Antoine Filipovic-Pierucci.</p>
+  <p></p>
+<p>Developed by Kevin Zarca, Antoine Filipovic-Pierucci.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
+  <p></p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.7.</p>
 </div>
 
       </footer>
@@ -358,6 +355,8 @@
 
   
 
+
+  
 
   </body>
 </html>

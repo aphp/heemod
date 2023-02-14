@@ -100,8 +100,8 @@ plot.run_model <- function(x, type = c("counts", "ce", "values"),
                           n = min(max(tab$markov_cycle), 10))
       res <- ggplot2::ggplot(
         tab,
-        ggplot2::aes_string(x = "markov_cycle", y = "count",
-                            colour = colour_var)) +
+        ggplot2::aes(x = markov_cycle, y = count,
+                            colour = !!sym(colour_var))) +
         ggplot2::geom_point() +
         ggplot2::geom_line() +
         ggplot2::facet_grid(stats::as.formula(paste(panel_var, "~ .")),
@@ -126,10 +126,10 @@ plot.run_model <- function(x, type = c("counts", "ce", "values"),
       ef <- get_frontier(get_model_results(x))
       
       ggplot2::ggplot(tab_ce,
-                      ggplot2::aes_string(
-                        x = ".effect",
-                        y = ".cost",
-                        label = ".strategy_names")) +
+                      ggplot2::aes(
+                        x = .effect,
+                        y = .cost,
+                        label = .strategy_names)) +
         ggplot2::geom_line(data = tab_ce[tab_ce$.strategy_names %in% ef, ]) +
         ggplot2::geom_label() +
         ggplot2::xlab("Effect") +
@@ -175,8 +175,8 @@ plot.run_model <- function(x, type = c("counts", "ce", "values"),
       
       res <- ggplot2::ggplot(
         tab,
-        ggplot2::aes_string(x = "markov_cycle", y = "value",
-                            colour = colour_var)) +
+        ggplot2::aes(x = markov_cycle, y = value,
+                            colour = !!sym(colour_var))) +
         ggplot2::geom_point() +
         ggplot2::geom_line() +
         ggplot2::facet_grid(as.formula(paste(panel_var, "~ .")),

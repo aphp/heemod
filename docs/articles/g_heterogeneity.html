@@ -19,6 +19,8 @@
 <![endif]-->
 </head>
 <body data-spy="scroll" data-target="#toc">
+    
+
     <div class="container template-article">
       <header><div class="navbar navbar-default navbar-fixed-top" role="navigation">
   <div class="container">
@@ -31,18 +33,12 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">heemod</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.14.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.15.0</span>
       </span>
     </div>
 
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
-<li>
-  <a href="../index.html">
-    <span class="fas fa fas fa-home fa-lg"></span>
-     
-  </a>
-</li>
 <li>
   <a href="../reference/index.html">Reference</a>
 </li>
@@ -55,8 +51,8 @@
       </ul>
 <ul class="nav navbar-nav navbar-right">
 <li>
-  <a href="https://github.com/pierucci/heemod/">
-    <span class="fab fa fab fa-github fa-lg"></span>
+  <a href="https://github.com/pierucci/heemod/" class="external-link">
+    <span class="fab fa-github fa-lg"></span>
      
   </a>
 </li>
@@ -70,247 +66,246 @@
 
       
 
-      </header><script src="g_heterogeneity_files/accessible-code-block-0.0.1/empty-anchor.js"></script><link href="g_heterogeneity_files/anchor-sections-1.0/anchor-sections.css" rel="stylesheet">
-<script src="g_heterogeneity_files/anchor-sections-1.0/anchor-sections.js"></script><div class="row">
+      </header><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>Heterogeneity &amp; Demographic Analysis</h1>
             
-            <h4 class="date">2020-12-07</h4>
+            <h4 data-toc-skip class="date">2023-02-03</h4>
       
-      <small class="dont-index">Source: <a href="https://github.com/pierucci/heemod/blob/master/vignettes/g_heterogeneity.Rmd"><code>vignettes/g_heterogeneity.Rmd</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/pierucci/heemod/blob/HEAD/vignettes/g_heterogeneity.Rmd" class="external-link"><code>vignettes/g_heterogeneity.Rmd</code></a></small>
       <div class="hidden name"><code>g_heterogeneity.Rmd</code></div>
 
     </div>
 
     
     
-<div id="introduction" class="section level2">
-<h2 class="hasAnchor">
-<a href="#introduction" class="anchor"></a>Introduction</h2>
+<div class="section level2">
+<h2 id="introduction">Introduction<a class="anchor" aria-label="anchor" href="#introduction"></a>
+</h2>
 <p>Heterogeneity analysis is a way to explore how the results of a model can vary depending on the characteristics of individuals in a population, and demographic analysis estimates the average values of a model over an entire population.</p>
 <p>In practice these two analyses naturally complement each other: heterogeneity analysis runs the model on multiple sets of parameters (reflecting differents characteristics found in the target population), and demographic analysis combines the results.</p>
 <p>For this example we will use the result from the assessment of a new total hip replacement previously described in <code>vignette("d-non-homogeneous", "heemod")</code>.</p>
 </div>
-<div id="population-characteristics" class="section level2">
-<h2 class="hasAnchor">
-<a href="#population-characteristics" class="anchor"></a>Population characteristics</h2>
+<div class="section level2">
+<h2 id="population-characteristics">Population characteristics<a class="anchor" aria-label="anchor" href="#population-characteristics"></a>
+</h2>
 <p>The characteristics of the population are input from a table, with one column per parameter and one row per individual. Those may be for example the characteristics of the indiviuals included in the original trial data.</p>
 <p>For this example we will use the characteristics of 100 individuals, with varying sex and age, specified in the data frame <code>tab_indiv</code>:</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">tab_indiv</span></code></pre></div>
-<pre><code>## # A tibble: 100 x 2
-##      age   sex
-##    &lt;dbl&gt; &lt;int&gt;
-##  1    72     0
-##  2    57     1
-##  3    47     1
-##  4    79     1
-##  5    64     1
-##  6    59     0
-##  7    56     1
-##  8    51     1
-##  9    55     1
-## 10    48     1
-## # … with 90 more rows</code></pre>
+<code class="sourceCode R"><span><span class="va">tab_indiv</span></span></code></pre></div>
+<pre><code><span><span class="co">## <span style="color: #949494;"># A tibble: 100 × 2</span></span></span>
+<span><span class="co">##      age   sex</span></span>
+<span><span class="co">##    <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;int&gt;</span></span></span>
+<span><span class="co">## <span style="color: #BCBCBC;"> 1</span>    62     1</span></span>
+<span><span class="co">## <span style="color: #BCBCBC;"> 2</span>    71     1</span></span>
+<span><span class="co">## <span style="color: #BCBCBC;"> 3</span>    73     0</span></span>
+<span><span class="co">## <span style="color: #BCBCBC;"> 4</span>    59     0</span></span>
+<span><span class="co">## <span style="color: #BCBCBC;"> 5</span>    65     0</span></span>
+<span><span class="co">## <span style="color: #BCBCBC;"> 6</span>    54     1</span></span>
+<span><span class="co">## <span style="color: #BCBCBC;"> 7</span>    61     1</span></span>
+<span><span class="co">## <span style="color: #BCBCBC;"> 8</span>    56     0</span></span>
+<span><span class="co">## <span style="color: #BCBCBC;"> 9</span>    64     1</span></span>
+<span><span class="co">## <span style="color: #BCBCBC;">10</span>    66     0</span></span>
+<span><span class="co">## <span style="color: #949494;"># … with 90 more rows</span></span></span></code></pre>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://ggplot2.tidyverse.org">ggplot2</a></span><span class="op">)</span>
-<span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="va">tab_indiv</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">age</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
-  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_histogram.html">geom_histogram</a></span><span class="op">(</span>binwidth <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></code></pre></div>
-<p><img src="g_heterogeneity_files/figure-html/unnamed-chunk-4-1.png" width="576" style="display: block; margin: auto;"></p>
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://ggplot2.tidyverse.org" class="external-link">ggplot2</a></span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="va">tab_indiv</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">age</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_histogram.html" class="external-link">geom_histogram</a></span><span class="op">(</span>binwidth <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></span></code></pre></div>
+<p><img src="g_heterogeneity_files/figure-html/unnamed-chunk-5-1.png" width="576" style="display: block; margin: auto;"></p>
 </div>
-<div id="running-the-analysis" class="section level2">
-<h2 class="hasAnchor">
-<a href="#running-the-analysis" class="anchor"></a>Running the analysis</h2>
-<p><code>res_mod</code>, the result we obtained from <code><a href="../reference/run_model.html">run_model()</a></code> in the <em>Time-varying Markov models</em> vignette, can be passed to <code><a href="https://rdrr.io/r/stats/update.html">update()</a></code> to update the model with the new data and perform the heterogeneity analysis.</p>
+<div class="section level2">
+<h2 id="running-the-analysis">Running the analysis<a class="anchor" aria-label="anchor" href="#running-the-analysis"></a>
+</h2>
+<p><code>res_mod</code>, the result we obtained from <code><a href="../reference/run_model.html">run_model()</a></code> in the <em>Time-varying Markov models</em> vignette, can be passed to <code><a href="https://rdrr.io/r/stats/update.html" class="external-link">update()</a></code> to update the model with the new data and perform the heterogeneity analysis.</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">res_h</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/update.html">update</a></span><span class="op">(</span><span class="va">res_mod</span>, newdata <span class="op">=</span> <span class="va">tab_indiv</span><span class="op">)</span></code></pre></div>
-<pre><code>## No weights specified in update, using equal weights.</code></pre>
-<pre><code>## Updating strategy 'standard'...</code></pre>
-<pre><code>## Updating strategy 'np1'...</code></pre>
+<code class="sourceCode R"><span><span class="va">res_h</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/update.html" class="external-link">update</a></span><span class="op">(</span><span class="va">res_mod</span>, newdata <span class="op">=</span> <span class="va">tab_indiv</span><span class="op">)</span></span></code></pre></div>
+<pre><code><span><span class="co">## No weights specified in update, using equal weights.</span></span></code></pre>
+<pre><code><span><span class="co">## Updating strategy 'standard'...</span></span></code></pre>
+<pre><code><span><span class="co">## Updating strategy 'np1'...</span></span></code></pre>
 </div>
-<div id="interpreting-results" class="section level2">
-<h2 class="hasAnchor">
-<a href="#interpreting-results" class="anchor"></a>Interpreting results</h2>
-<p>The <code><a href="https://rdrr.io/r/base/summary.html">summary()</a></code> method reports summary statistics for cost, effect and ICER, as well as the result from the combined model.</p>
+<div class="section level2">
+<h2 id="interpreting-results">Interpreting results<a class="anchor" aria-label="anchor" href="#interpreting-results"></a>
+</h2>
+<p>The <code><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary()</a></code> method reports summary statistics for cost, effect and ICER, as well as the result from the combined model.</p>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="va">res_h</span><span class="op">)</span></code></pre></div>
-<pre><code>## An analysis re-run on 100 parameter sets.
-## 
-## * Unweighted analysis.
-## 
-## * Values distribution:
-## 
-##                                  Min.      1st Qu.      Median        Mean
-## standard - Cost          485.85297365  605.0062810 665.3485485 709.3246985
-## standard - Effect          9.32287610   25.5696426  27.3769142  25.9223698
-## standard - Cost Diff.               -            -           -           -
-## standard - Effect Diff.             -            -           -           -
-## standard - Icer                     -            -           -           -
-## np1 - Cost               603.34263272  635.5509751 652.9595311 665.2789877
-## np1 - Effect               9.38064927   25.8299343  27.7656911  26.1991126
-## np1 - Cost Diff.        -164.88137326 -129.4829089 -12.3890174 -44.0457108
-## np1 - Effect Diff.         0.04405769    0.1948185   0.2294328   0.2767428
-## np1 - Icer              -354.32431375 -333.0519971 -57.5010098 -14.4804811
-##                             3rd Qu.         Max.
-## standard - Cost         828.5434528  878.0433890
-## standard - Effect        29.0749005   30.9442824
-## standard - Cost Diff.             -            -
-## standard - Effect Diff.           -            -
-## standard - Icer                   -            -
-## np1 - Cost              699.0605439  713.1620157
-## np1 - Effect             29.5008365   31.3132009
-## np1 - Cost Diff.         30.5446941  117.4896591
-## np1 - Effect Diff.        0.3887769    0.4653403
-## np1 - Icer              156.7853582 2666.7229585
-## 
-## * Combined result:
-## 
-## 2 strategies run for 60 cycles.
-## 
-## Initial state counts:
-## 
-## PrimaryTHR = 1000L
-## SuccessP = 0L
-## RevisionTHR = 0L
-## SuccessR = 0L
-## Death = 0L
-## 
-## Counting method: 'beginning'.
-## 
-## Values:
-## 
-##           utility     cost
-## standard 25922.37 709324.7
-## np1      26199.11 665279.0
-## 
-## Efficiency frontier:
-## 
-## np1
-## 
-## Differences:
-## 
-##     Cost Diff. Effect Diff.      ICER     Ref.
-## np1  -44.04571    0.2767428 -159.1576 standard</code></pre>
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">res_h</span><span class="op">)</span></span></code></pre></div>
+<pre><code><span><span class="co">## An analysis re-run on 100 parameter sets.</span></span>
+<span><span class="co">## </span></span>
+<span><span class="co">## * Unweighted analysis.</span></span>
+<span><span class="co">## </span></span>
+<span><span class="co">## * Values distribution:</span></span>
+<span><span class="co">## </span></span>
+<span><span class="co">##                                  Min.      1st Qu.      Median        Mean</span></span>
+<span><span class="co">## standard - Cost          530.94590166  605.0062810 628.2200194 693.1098201</span></span>
+<span><span class="co">## standard - Effect          9.32287610   25.5696426  27.3769142  26.0820081</span></span>
+<span><span class="co">## standard - Cost Diff.               -            -           -           -</span></span>
+<span><span class="co">## standard - Effect Diff.             -            -           -           -</span></span>
+<span><span class="co">## standard - Icer                     -            -           -           -</span></span>
+<span><span class="co">## np1 - Cost               615.48340627  635.5509751 641.8625136 660.6277379</span></span>
+<span><span class="co">## np1 - Effect               9.38064927   25.8299343  27.7656911  26.3432364</span></span>
+<span><span class="co">## np1 - Cost Diff.        -146.89567206 -110.7286273  13.8254937 -32.4820823</span></span>
+<span><span class="co">## np1 - Effect Diff.         0.05777317    0.1948185   0.2122929   0.2612282</span></span>
+<span><span class="co">## np1 - Icer              -344.87736621 -316.4394659  82.0897023 -24.0306738</span></span>
+<span><span class="co">##                             3rd Qu.        Max.</span></span>
+<span><span class="co">## standard - Cost         802.3426777  852.885675</span></span>
+<span><span class="co">## standard - Effect        29.0459530   31.307102</span></span>
+<span><span class="co">## standard - Cost Diff.             -           -</span></span>
+<span><span class="co">## standard - Effect Diff.           -           -</span></span>
+<span><span class="co">## standard - Icer                   -           -</span></span>
+<span><span class="co">## np1 - Cost              691.6140504  705.990003</span></span>
+<span><span class="co">## np1 - Effect             29.2544960   31.540565</span></span>
+<span><span class="co">## np1 - Cost Diff.         30.5446941   84.537505</span></span>
+<span><span class="co">## np1 - Effect Diff.        0.3499204    0.425936</span></span>
+<span><span class="co">## np1 - Icer              156.7853582 1275.235008</span></span>
+<span><span class="co">## </span></span>
+<span><span class="co">## * Combined result:</span></span>
+<span><span class="co">## </span></span>
+<span><span class="co">## 2 strategies run for 60 cycles.</span></span>
+<span><span class="co">## </span></span>
+<span><span class="co">## Initial state counts:</span></span>
+<span><span class="co">## </span></span>
+<span><span class="co">## PrimaryTHR = 1000L</span></span>
+<span><span class="co">## SuccessP = 0L</span></span>
+<span><span class="co">## RevisionTHR = 0L</span></span>
+<span><span class="co">## SuccessR = 0L</span></span>
+<span><span class="co">## Death = 0L</span></span>
+<span><span class="co">## </span></span>
+<span><span class="co">## Counting method: 'beginning'.</span></span>
+<span><span class="co">## </span></span>
+<span><span class="co">## Values:</span></span>
+<span><span class="co">## </span></span>
+<span><span class="co">##           utility     cost</span></span>
+<span><span class="co">## standard 26082.01 693109.8</span></span>
+<span><span class="co">## np1      26343.24 660627.7</span></span>
+<span><span class="co">## </span></span>
+<span><span class="co">## Efficiency frontier:</span></span>
+<span><span class="co">## </span></span>
+<span><span class="co">## np1</span></span>
+<span><span class="co">## </span></span>
+<span><span class="co">## Differences:</span></span>
+<span><span class="co">## </span></span>
+<span><span class="co">##     Cost Diff. Effect Diff.      ICER     Ref.</span></span>
+<span><span class="co">## np1  -32.48208    0.2612282 -124.3437 standard</span></span></code></pre>
 <p>The variation of cost or effect can then be plotted.</p>
 <div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="va">res_h</span>, result <span class="op">=</span> <span class="st">"effect"</span>, binwidth <span class="op">=</span> <span class="fl">5</span><span class="op">)</span></code></pre></div>
-<p><img src="g_heterogeneity_files/figure-html/unnamed-chunk-7-1.png" width="576" style="display: block; margin: auto;"></p>
-<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="va">res_h</span>, result <span class="op">=</span> <span class="st">"cost"</span>, binwidth <span class="op">=</span> <span class="fl">50</span><span class="op">)</span></code></pre></div>
-<p><img src="g_heterogeneity_files/figure-html/unnamed-chunk-7-2.png" width="576" style="display: block; margin: auto;"></p>
-<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="va">res_h</span>, result <span class="op">=</span> <span class="st">"icer"</span>, type <span class="op">=</span> <span class="st">"difference"</span>,
-     binwidth <span class="op">=</span> <span class="fl">500</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">res_h</span>, result <span class="op">=</span> <span class="st">"effect"</span>, binwidth <span class="op">=</span> <span class="fl">5</span><span class="op">)</span></span></code></pre></div>
 <p><img src="g_heterogeneity_files/figure-html/unnamed-chunk-8-1.png" width="576" style="display: block; margin: auto;"></p>
-<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="va">res_h</span>, result <span class="op">=</span> <span class="st">"effect"</span>, type <span class="op">=</span> <span class="st">"difference"</span>,
-     binwidth <span class="op">=</span> <span class="fl">.1</span><span class="op">)</span></code></pre></div>
+<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">res_h</span>, result <span class="op">=</span> <span class="st">"cost"</span>, binwidth <span class="op">=</span> <span class="fl">50</span><span class="op">)</span></span></code></pre></div>
 <p><img src="g_heterogeneity_files/figure-html/unnamed-chunk-8-2.png" width="576" style="display: block; margin: auto;"></p>
+<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">res_h</span>, result <span class="op">=</span> <span class="st">"icer"</span>, type <span class="op">=</span> <span class="st">"difference"</span>,</span>
+<span>     binwidth <span class="op">=</span> <span class="fl">500</span><span class="op">)</span></span></code></pre></div>
+<p><img src="g_heterogeneity_files/figure-html/unnamed-chunk-9-1.png" width="576" style="display: block; margin: auto;"></p>
+<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">res_h</span>, result <span class="op">=</span> <span class="st">"effect"</span>, type <span class="op">=</span> <span class="st">"difference"</span>,</span>
+<span>     binwidth <span class="op">=</span> <span class="fl">.1</span><span class="op">)</span></span></code></pre></div>
+<p><img src="g_heterogeneity_files/figure-html/unnamed-chunk-9-2.png" width="576" style="display: block; margin: auto;"></p>
 <div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="va">res_h</span>, result <span class="op">=</span> <span class="st">"cost"</span>, type <span class="op">=</span> <span class="st">"difference"</span>,
-     binwidth <span class="op">=</span> <span class="fl">30</span><span class="op">)</span></code></pre></div>
-<p><img src="g_heterogeneity_files/figure-html/unnamed-chunk-8-3.png" width="576" style="display: block; margin: auto;"></p>
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">res_h</span>, result <span class="op">=</span> <span class="st">"cost"</span>, type <span class="op">=</span> <span class="st">"difference"</span>,</span>
+<span>     binwidth <span class="op">=</span> <span class="fl">30</span><span class="op">)</span></span></code></pre></div>
+<p><img src="g_heterogeneity_files/figure-html/unnamed-chunk-9-3.png" width="576" style="display: block; margin: auto;"></p>
 <p>The results from the combined model can be plotted similarly to the results from <code><a href="../reference/run_model.html">run_model()</a></code>.</p>
 <div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="va">res_h</span>, type <span class="op">=</span> <span class="st">"counts"</span><span class="op">)</span></code></pre></div>
-<p><img src="g_heterogeneity_files/figure-html/unnamed-chunk-9-1.png" width="576" style="display: block; margin: auto;"></p>
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">res_h</span>, type <span class="op">=</span> <span class="st">"counts"</span><span class="op">)</span></span></code></pre></div>
+<p><img src="g_heterogeneity_files/figure-html/unnamed-chunk-10-1.png" width="576" style="display: block; margin: auto;"></p>
 </div>
-<div id="weighted-results" class="section level2">
-<h2 class="hasAnchor">
-<a href="#weighted-results" class="anchor"></a>Weighted results</h2>
+<div class="section level2">
+<h2 id="weighted-results">Weighted results<a class="anchor" aria-label="anchor" href="#weighted-results"></a>
+</h2>
 <p>Weights can be used in the analysis by including an optional column <code>.weights</code> in the new data to specify the respective weights of each strata in the target population.</p>
 <div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">tab_indiv_w</span></code></pre></div>
-<pre><code>## # A tibble: 100 x 3
-##      age   sex .weights
-##    &lt;dbl&gt; &lt;int&gt;    &lt;dbl&gt;
-##  1    49     0   0.349 
-##  2    43     1   0.496 
-##  3    46     0   0.464 
-##  4    50     1   0.140 
-##  5    60     0   0.689 
-##  6    72     1   0.701 
-##  7    76     0   0.310 
-##  8    32     0   0.606 
-##  9    66     1   0.995 
-## 10    52     0   0.0830
-## # … with 90 more rows</code></pre>
+<code class="sourceCode R"><span><span class="va">tab_indiv_w</span></span></code></pre></div>
+<pre><code><span><span class="co">## <span style="color: #949494;"># A tibble: 100 × 3</span></span></span>
+<span><span class="co">##      age   sex .weights</span></span>
+<span><span class="co">##    <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;int&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span></span>
+<span><span class="co">## <span style="color: #BCBCBC;"> 1</span>    55     1  0.642  </span></span>
+<span><span class="co">## <span style="color: #BCBCBC;"> 2</span>    57     1  0.519  </span></span>
+<span><span class="co">## <span style="color: #BCBCBC;"> 3</span>    75     1  0.420  </span></span>
+<span><span class="co">## <span style="color: #BCBCBC;"> 4</span>    73     0  0.070<span style="text-decoration: underline;">6</span> </span></span>
+<span><span class="co">## <span style="color: #BCBCBC;"> 5</span>    53     0  0.811  </span></span>
+<span><span class="co">## <span style="color: #BCBCBC;"> 6</span>    52     1  0.738  </span></span>
+<span><span class="co">## <span style="color: #BCBCBC;"> 7</span>    54     1  0.005<span style="text-decoration: underline;">68</span></span></span>
+<span><span class="co">## <span style="color: #BCBCBC;"> 8</span>    53     1  0.572  </span></span>
+<span><span class="co">## <span style="color: #BCBCBC;"> 9</span>    57     1  0.728  </span></span>
+<span><span class="co">## <span style="color: #BCBCBC;">10</span>    59     0  0.462  </span></span>
+<span><span class="co">## <span style="color: #949494;"># … with 90 more rows</span></span></span></code></pre>
 <div class="sourceCode" id="cb18"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">res_w</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/update.html">update</a></span><span class="op">(</span><span class="va">res_mod</span>, newdata <span class="op">=</span> <span class="va">tab_indiv_w</span><span class="op">)</span></code></pre></div>
-<pre><code>## Updating strategy 'standard'...</code></pre>
-<pre><code>## Updating strategy 'np1'...</code></pre>
+<code class="sourceCode R"><span><span class="va">res_w</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/update.html" class="external-link">update</a></span><span class="op">(</span><span class="va">res_mod</span>, newdata <span class="op">=</span> <span class="va">tab_indiv_w</span><span class="op">)</span></span></code></pre></div>
+<pre><code><span><span class="co">## Updating strategy 'standard'...</span></span></code></pre>
+<pre><code><span><span class="co">## Updating strategy 'np1'...</span></span></code></pre>
 <div class="sourceCode" id="cb21"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">res_w</span></code></pre></div>
-<pre><code>## An analysis re-run on 100 parameter sets.
-## 
-## * Weigths distribution:
-## 
-##     Min.  1st Qu.   Median     Mean  3rd Qu.     Max. 
-## 0.001646 0.225811 0.494941 0.481800 0.688243 0.995432 
-## 
-## Total weight: 48.18
-## 
-## * Values distribution:
-## 
-##                                  Min.      1st Qu.      Median        Mean
-## standard - Cost          450.15881156  590.0441537 626.9720129 674.9746646
-## standard - Effect          4.02754331   22.2194037  25.6577436  24.7544752
-## standard - Cost Diff.               -            -           -           -
-## standard - Effect Diff.             -            -           -           -
-## standard - Icer                     -            -           -           -
-## np1 - Cost               593.80297968  631.4875810 641.5229814 655.5881348
-## np1 - Effect               4.03810992   22.3561826  25.8893365  24.9948520
-## np1 - Cost Diff.        -164.88137326  -81.4171250  14.5509685 -19.3865298
-## np1 - Effect Diff.         0.01056661    0.1721907   0.2122929   0.2403767
-## np1 - Icer              -354.32431375 -278.9894047  82.0897023 233.3046246
-##                             3rd Qu.         Max.
-## standard - Cost         761.4317051 8.780434e+02
-## standard - Effect        29.0459530 3.176922e+01
-## standard - Cost Diff.             -            -
-## standard - Effect Diff.           -            -
-## standard - Icer                   -            -
-## np1 - Cost              680.0145801 7.131620e+02
-## np1 - Effect             29.2544960 3.200783e+01
-## np1 - Cost Diff.         41.4434274 1.436442e+02
-## np1 - Effect Diff.        0.2918287 4.653403e-01
-## np1 - Icer              240.6833019 1.347275e+04
-## 
-## * Combined result:
-## 
-## 2 strategies run for 60 cycles.
-## 
-## Initial state counts:
-## 
-## PrimaryTHR = 1000L
-## SuccessP = 0L
-## RevisionTHR = 0L
-## SuccessR = 0L
-## Death = 0L
-## 
-## Counting method: 'beginning'.
-## 
-## Values:
-## 
-##           utility     cost
-## standard 24754.48 674974.7
-## np1      24994.85 655588.1
-## 
-## Efficiency frontier:
-## 
-## np1
-## 
-## Differences:
-## 
-##     Cost Diff. Effect Diff.      ICER     Ref.
-## np1  -19.38653    0.2403767 -80.65061 standard</code></pre>
+<code class="sourceCode R"><span><span class="va">res_w</span></span></code></pre></div>
+<pre><code><span><span class="co">## An analysis re-run on 100 parameter sets.</span></span>
+<span><span class="co">## </span></span>
+<span><span class="co">## * Weigths distribution:</span></span>
+<span><span class="co">## </span></span>
+<span><span class="co">##     Min.  1st Qu.   Median     Mean  3rd Qu.     Max. </span></span>
+<span><span class="co">## 0.004701 0.249937 0.536865 0.509700 0.755525 0.988857 </span></span>
+<span><span class="co">## </span></span>
+<span><span class="co">## Total weight: 50.96997</span></span>
+<span><span class="co">## </span></span>
+<span><span class="co">## * Values distribution:</span></span>
+<span><span class="co">## </span></span>
+<span><span class="co">##                                  Min.      1st Qu.       Median        Mean</span></span>
+<span><span class="co">## standard - Cost          450.15881156  621.9893893  782.8397103 728.5836999</span></span>
+<span><span class="co">## standard - Effect          7.47256790   25.5696426   27.3769142  26.1050429</span></span>
+<span><span class="co">## standard - Cost Diff.               -            -            -           -</span></span>
+<span><span class="co">## standard - Effect Diff.             -            -            -           -</span></span>
+<span><span class="co">## standard - Icer                     -            -            -           -</span></span>
+<span><span class="co">## np1 - Cost               593.80297968  640.1676766  686.0843825 670.7271222</span></span>
+<span><span class="co">## np1 - Effect               7.49009703   25.9195630   27.7656911  26.3992337</span></span>
+<span><span class="co">## np1 - Cost Diff.        -160.47985885 -129.4829089  -81.4171250 -57.8565777</span></span>
+<span><span class="co">## np1 - Effect Diff.         0.01752913    0.2122929    0.3222271   0.2941908</span></span>
+<span><span class="co">## np1 - Icer              -352.23489020 -333.0519971 -278.9894047  53.2520939</span></span>
+<span><span class="co">##                             3rd Qu.         Max.</span></span>
+<span><span class="co">## standard - Cost         828.5434528  871.8854128</span></span>
+<span><span class="co">## standard - Effect        29.0749005   31.3071020</span></span>
+<span><span class="co">## standard - Cost Diff.             -            -</span></span>
+<span><span class="co">## standard - Effect Diff.           -            -</span></span>
+<span><span class="co">## standard - Icer                   -            -</span></span>
+<span><span class="co">## np1 - Cost              699.0605439  711.4055539</span></span>
+<span><span class="co">## np1 - Effect             29.5008365   31.5405654</span></span>
+<span><span class="co">## np1 - Cost Diff.         18.1782873  143.6441681</span></span>
+<span><span class="co">## np1 - Effect Diff.        0.3887769    0.4556047</span></span>
+<span><span class="co">## np1 - Icer               82.0897023 8194.5991768</span></span>
+<span><span class="co">## </span></span>
+<span><span class="co">## * Combined result:</span></span>
+<span><span class="co">## </span></span>
+<span><span class="co">## 2 strategies run for 60 cycles.</span></span>
+<span><span class="co">## </span></span>
+<span><span class="co">## Initial state counts:</span></span>
+<span><span class="co">## </span></span>
+<span><span class="co">## PrimaryTHR = 1000L</span></span>
+<span><span class="co">## SuccessP = 0L</span></span>
+<span><span class="co">## RevisionTHR = 0L</span></span>
+<span><span class="co">## SuccessR = 0L</span></span>
+<span><span class="co">## Death = 0L</span></span>
+<span><span class="co">## </span></span>
+<span><span class="co">## Counting method: 'beginning'.</span></span>
+<span><span class="co">## </span></span>
+<span><span class="co">## Values:</span></span>
+<span><span class="co">## </span></span>
+<span><span class="co">##           utility     cost</span></span>
+<span><span class="co">## standard 26105.04 728583.7</span></span>
+<span><span class="co">## np1      26399.23 670727.1</span></span>
+<span><span class="co">## </span></span>
+<span><span class="co">## Efficiency frontier:</span></span>
+<span><span class="co">## </span></span>
+<span><span class="co">## np1</span></span>
+<span><span class="co">## </span></span>
+<span><span class="co">## Differences:</span></span>
+<span><span class="co">## </span></span>
+<span><span class="co">##     Cost Diff. Effect Diff.      ICER     Ref.</span></span>
+<span><span class="co">## np1  -57.85658    0.2941908 -196.6635 standard</span></span></code></pre>
 </div>
-<div id="parallel-computing" class="section level2">
-<h2 class="hasAnchor">
-<a href="#parallel-computing" class="anchor"></a>Parallel computing</h2>
+<div class="section level2">
+<h2 id="parallel-computing">Parallel computing<a class="anchor" aria-label="anchor" href="#parallel-computing"></a>
+</h2>
 <p>Updating can be significantly sped up by using parallel computing. This can be done in the following way:</p>
 <ul>
-<li>Define a cluster with the <code><a href="../reference/cluster.html">use_cluster()</a></code> functions (i.e. <code><a href="../reference/cluster.html">use_cluster(4)</a></code> to use 4 cores).</li>
+<li>Define a cluster with the <code><a href="../reference/cluster.html">use_cluster()</a></code> functions (i.e. <code>use_cluster(4)</code> to use 4 cores).</li>
 <li>Run the analysis as usual.</li>
 <li>To stop using parallel computing use the <code><a href="../reference/cluster.html">close_cluster()</a></code> function.</li>
 </ul>
@@ -329,11 +324,13 @@
 
 
       <footer><div class="copyright">
-  <p>Developed by Kevin Zarca, Antoine Filipovic-Pierucci.</p>
+  <p></p>
+<p>Developed by Kevin Zarca, Antoine Filipovic-Pierucci.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
+  <p></p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.7.</p>
 </div>
 
       </footer>
@@ -341,6 +338,8 @@
 
   
 
+
+  
 
   </body>
 </html>

@@ -106,12 +106,12 @@ plot.dsa <- function(x, type = c("simple", "difference"),
     dplyr::left_join(
       summary(model_ref, center = FALSE)$res_comp %>%
         dplyr::select(
-          .data$.strategy_names,
-          .cost_ref = .data$.cost,
-          .effect_ref = .data$.effect,
-          .dcost_ref = .data$.dcost,
-          .deffect_ref = .data$.deffect,
-          .icer_ref = .data$.icer
+          .strategy_names,
+          .cost_ref = .cost,
+          .effect_ref = .effect,
+          .dcost_ref = .dcost,
+          .deffect_ref = .deffect,
+          .icer_ref = .icer
         ),
       by = ".strategy_names"
     ) %>% 
@@ -173,13 +173,13 @@ plot.dsa <- function(x, type = c("simple", "difference"),
     if (limits_by_bars) l <- l * (1 + 0.075 * max(new_digits$nd))
   }
   
-  res <- ggplot2::ggplot(tab, ggplot2::aes_string(
+  res <- ggplot2::ggplot(tab, ggplot2::aes(
     y = ".par_names",
     yend = ".par_names",
-    x = var_plot,
-    xend = var_ref,
-    colour = var_col)) +
-    ggplot2::geom_segment(size = 5) +
+    x = !!sym(var_plot),
+    xend = !!sym(var_ref),
+    colour = !!sym(var_col))) +
+    ggplot2::geom_segment(linewidth = 5) +
     ggplot2::guides(colour = "none") +
     ggplot2::ylab("Variable") +
     ggplot2::xlab(xl) +
@@ -189,11 +189,11 @@ plot.dsa <- function(x, type = c("simple", "difference"),
   if (limits_by_bars) {
     res <- res + 
       ggplot2::geom_text(
-        ggplot2::aes_string(
-          x = var_plot,
-          y = ".par_names",
-          label = ".par_value",
-          hjust = ".hjust"
+        ggplot2::aes(
+          x = !!sym(var_plot),
+          y = .par_names,
+          label = .par_value,
+          hjust = .hjust
         )
       )
   }
@@ -222,9 +222,9 @@ print.summary_dsa <- function(x, ...) {
     x$res_comp$.par_value
   )
   
-  x <- dplyr::select(x$res_comp, -.data$.par_names,
-                      -.data$.par_value,
-                      -.data$.strategy_names)
+  x <- dplyr::select(x$res_comp, -.par_names,
+                      -.par_value,
+                      -.strategy_names)
   x <- pretty_names(x)
   
   res <- as.matrix(x)
