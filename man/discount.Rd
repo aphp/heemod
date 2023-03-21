@@ -2,9 +2,12 @@
 % Please edit documentation in R/utils.R
 \name{discount}
 \alias{discount}
+\alias{discount2}
 \title{Discount a Quantity Over Time}
 \usage{
 discount(x, r, first = FALSE, period = 1)
+
+discount2(x, r, first = FALSE, period = 1, time)
 }
 \arguments{
 \item{x}{numeric. A quantity to discount.}

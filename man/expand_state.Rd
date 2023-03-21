@@ -10,13 +10,13 @@
 \usage{
 expand_state(x, ...)
 
-\method{expand_state}{uneval_matrix}(x, state_pos, state_name, cycles, n = 1)
+\method{expand_state}{uneval_matrix}(x, state_pos, state_name, cycles, n = 1, ...)
 
-\method{expand_state}{uneval_state_list}(x, state_name, cycles)
+\method{expand_state}{uneval_state_list}(x, state_name, cycles, ...)
 
 \method{expand_state}{uneval_inflow}(x, ...)
 
-\method{expand_state}{uneval_init}(x, state_name, cycles)
+\method{expand_state}{uneval_init}(x, state_name, cycles, ...)
 }
 \arguments{
 \item{x}{A transition matrix or a state list.}
