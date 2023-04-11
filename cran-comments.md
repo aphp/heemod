@@ -1,7 +1,7 @@
 ## Test environments
 * local ubuntu 20.04 install, R 4.2.1
-* r-hub (windows-server, Fedora Linux R-devel, clang, gfortran, solaris)
-* win-devel seems to be broken, I don't get any results from devtools::check_rhub() to my email address.
+* r-hub (r-devel-linux-x86_64-fedora-gcc, r-devel-linux-x86_64-debian-gcc, 
+r-devel-linux-x86_64-debian-clang)
 
 ## R CMD check results
 

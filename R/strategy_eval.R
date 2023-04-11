@@ -394,13 +394,13 @@ expand_if_necessary <- function(strategy, parameters,
     complete_parameters <- parameters[1,]
   }
   
-  e_init <- unlist(eval_init(x = init, parameters[1,]))
-  e_inflow <- eval_inflow(x = inflow, parameters)
+  e_init <- unlist(eval_init(x = init, complete_parameters[1,]))
+  e_inflow <- eval_inflow(x = inflow, complete_parameters)
   
   e_starting_values <- unlist(
     eval_starting_values(
       x = strategy$starting_values,
-      parameters[1, ])
+      complete_parameters[1, ])
   )
   # e_starting_values <- 
   #   list(starting_strategy = e_starting_values_strat,
