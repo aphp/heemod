@@ -1,6 +1,6 @@
 Package: heemod
 Title: Markov Models for Health Economic Evaluations
-Version: 0.15.1
+Version: 0.15.1.9000
 Authors@R: c(
     person("Kevin", "Zarca", email = "kevin.zarca@gmail.com", role = c("aut", "cre")),
     person("Antoine", "Filipovic-Pierucci", role = "aut"),
@@ -53,6 +53,6 @@ Suggests:
     triangle,
     magrittr,
     cli
-BugReports: https://github.com/pierucci/heemod/issues
+BugReports: https://github.com/aphp/heemod/issues
 Roxygen: list(markdown = TRUE)
 Encoding: UTF-8
