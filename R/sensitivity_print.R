@@ -174,8 +174,8 @@ plot.dsa <- function(x, type = c("simple", "difference"),
   }
   
   res <- ggplot2::ggplot(tab, ggplot2::aes(
-    y = ".par_names",
-    yend = ".par_names",
+    y = .par_names,
+    yend = .par_names,
     x = !!sym(var_plot),
     xend = !!sym(var_ref),
     colour = !!sym(var_col))) +
