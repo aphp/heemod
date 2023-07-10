@@ -15,8 +15,7 @@ test_that(
     expect_output(
       str(s1$.dots),
       'List of 2
- $ x:List of 2
-  ..$ expr: num 234',
+ $ x: language ~234',
       fixed = TRUE
     )
     expect_output(
@@ -38,8 +37,7 @@ y = 123',
         )
       ),
       "List of 2
- $ x:List of 2
-  ..$ expr: num 111",
+ $ x: language ~111",
       fixed = TRUE
     )
     expect_error(
@@ -100,8 +98,7 @@ test_that(
       "List of 2
  $ X1:List of 2
   ..$ .dots          :List of 2
-  .. ..$ x:List of 2
-  .. .. ..$ expr: num 234",
+  .. ..$ x: language ~234",
       fixed = TRUE
     )
     expect_output(
@@ -123,8 +120,7 @@ y"
       "List of 2
  $ A:List of 2
   ..$ .dots          :List of 2
-  .. ..$ x:List of 2
-  .. .. ..$ expr: num 234",
+  .. ..$ x: language ~234",
       fixed = TRUE
     )
     expect_output(
@@ -137,8 +133,7 @@ y"
       "List of 2
  $ X1:List of 2
   ..$ .dots          :List of 2
-  .. ..$ x:List of 2
-  .. .. ..$ expr: num 987",
+  .. ..$ x: language ~987",
       fixed = TRUE
     )
     
@@ -152,8 +147,7 @@ y"
       "List of 3
  $ X1:List of 2
   ..$ .dots          :List of 2
-  .. ..$ x:List of 2
-  .. .. ..$ expr: num 234",
+  .. ..$ x: language ~234",
       fixed = TRUE
     )
     expect_error(

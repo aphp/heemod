@@ -941,6 +941,6 @@ test_that("Combining Survival Distributions",
                 cycle_length = 100,
                 type = "prob"
               ),
-              "No covariates provided, returning aggregate survial across all subjects."
+              "No covariates provided, returning aggregate survival across all subjects."
             )
           })

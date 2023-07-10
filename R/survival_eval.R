@@ -181,7 +181,7 @@ extract_strata <- function(sf) {
   if (is.null(sf$strata)) {
     extract_stratum(sf, 1)
   } else {
-    plyr::ldply(
+    purrr::map_dfr(
       seq_len(length(sf$strata)),
       function(i) extract_stratum(sf, i)
     )
@@ -290,26 +290,22 @@ eval_surv.survfit <- function(x, time,  ...) {
   )
   
   # Generate predicted survival for each group
-  surv_df <- plyr::ddply(
-    pl_table,
-    terms,
-    function(d) {
-      maxtime <- max(d$time)
-      selector <- (time > maxtime)
-      # Use stepfun to look up survival probabilities
-      value <- stats::stepfun(d$time[-1], d$surv)(time)
-      # Use NA when time > max time
-      value[selector] <- as.numeric(NA)
-      tibble(
-        t = time, 
-        value = value,
-        n = d$n[1])
-    }
-  )
+  
+  surv_df <- pl_table %>%
+    dplyr::group_by( !!!syms(terms)) %>%
+    dplyr::reframe(
+      maxtime = max(time),
+      selector = !!time > .data$maxtime,
+      value = stats::stepfun(time[-1], .data$surv)( !!time ),
+      n = dplyr::first(n),
+      t = !!time
+    ) %>%
+    dplyr::mutate(value = ifelse(.data$selector, as.numeric(NA), .data$value)) %>%
+    dplyr::select(-.data$maxtime, -.data$selector)
   
   if (is.null(dots$covar)) {
     if (length(terms) > 0) {
-      message("No covariates provided, returning aggregate survial across all subjects.")
+      message("No covariates provided, returning aggregate survival across all subjects.")
     }
     # If covariates are not provided, do weighted average for each time.
     agg_df <- surv_df %>%
@@ -322,7 +318,7 @@ eval_surv.survfit <- function(x, time,  ...) {
     # do simple average for each time.
     
     agg_df <- clean_factors(dots$covar) %>% 
-      dplyr::left_join(surv_df, by = terms) %>%
+      dplyr::left_join(surv_df, by = terms, multiple = "all") %>%
       dplyr::group_by(t) %>%
       dplyr::summarize(value = mean(.data$value))
   }
@@ -346,7 +342,7 @@ eval_surv.flexsurvreg <- function(x, time,  ...) {
   n_time <- length(time_surv)
   
   if(x$ncovs > 0 && is.null(dots$covar)) {
-    message("No covariates provided, returning aggregate survial across all subjects.")
+    message("No covariates provided, returning aggregate survival across all subjects.")
   }
   
   # For efficiency, survival probabilities are only calculated
@@ -391,7 +387,7 @@ eval_surv.flexsurvreg <- function(x, time,  ...) {
   # Join to the full data, then summarize over times.
   if(x$ncovs > 0) {
     surv_df <- surv_df %>%
-      dplyr::left_join(data_full, by = colnames(data)) %>%
+      dplyr::left_join(data_full, by = colnames(data), multiple = "all") %>%
       dplyr::group_by(t) %>%
       dplyr::summarize(value = mean(.data$value))
   }
@@ -591,12 +587,12 @@ eval_surv.surv_table <- function(x, time, ...){
   look_up(data = x, time = time, bin = "time", value = "survival")
 }
 
-eval_surv.lazy <- function(x, ...){
+eval_surv.quosure <- function(x, ...){
   dots <- list(...)
   use_data <- list()
   if("extra_env" %in% names(dots))
     use_data <- as.list.environment(dots$extra_env)
-  eval_surv(lazyeval::lazy_eval(x, data = use_data), ...)
+  eval_surv(eval_tidy(x, data = use_data), ...)
 }
 
 eval_surv.character <- function(x, ...){

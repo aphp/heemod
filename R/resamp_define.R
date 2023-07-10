@@ -168,7 +168,7 @@ define_correlation_ <- function(.dots) {
     if (i %% 3 == 0) {
       rlang::eval_tidy(.dots[[i]])
     } else {
-      deparse(rlang::quo_get_expr(.dots[[i]]))
+      deparse(rlang::get_expr(.dots[[i]]))
     }
   }
   

@@ -19,7 +19,8 @@ acceptability_curve <- function(x, wtp_thresholds) {
         .ceac = wtp_thresholds,
         .key = 1
       ),
-      by = ".key"
+      by = ".key",
+      multiple = "all"
     ) %>% 
     dplyr::group_by(.data$.index, .data$.ceac) %>% 
     dplyr::mutate(

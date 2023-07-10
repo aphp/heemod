@@ -74,8 +74,8 @@ run_model <- function(...,
     init = init,
     cycles = cycles,
     method = method,
-    cost = lazyeval::lazy_(substitute(cost), env = parent.frame()),
-    effect = lazyeval::lazy_(substitute(effect), env = parent.frame()),
+    cost = new_quosure(substitute(cost), env = parent.frame()),
+    effect = new_quosure(substitute(effect), env = parent.frame()),
     state_time_limit = state_time_limit,
     central_strategy = central_strategy,
     inflow = inflow
@@ -116,12 +116,11 @@ run_model_ <- function(uneval_strategy_list,
     ))
   }
   
-  list_ce <- list(
+  ce <- list(
     .cost = cost,
     .effect = effect
   )
   
-  ce <- compat_lazy_dots(list_ce)
   
   strategy_names <- names(uneval_strategy_list)
   
@@ -175,9 +174,18 @@ run_model_ <- function(uneval_strategy_list,
     list_res[[n]]$.strategy_names <- n
   }
   
-  res <- 
-    dplyr::bind_rows(list_res) %>%
-      dplyr::mutate(!!!ce)
+  p <- dplyr::bind_rows(list_res) 
+  nr <- nrow(p)
+  
+  tab_res <- lapply(ce, function(x){
+    res <- rlang::eval_tidy(x, data = p)
+    if (length(res) == 1){
+      return(rep(res, nr))
+    }
+    res
+  }) 
+
+    res <- dplyr::bind_cols(p, tab_res)
   
   root_strategy <- get_root_strategy(res)
   noncomparable_strategy <- get_noncomparable_strategy(res)

@@ -67,7 +67,7 @@ test_that(
       correlation = define_correlation(age_init, cost_init, .4)
     )
     
-    rsp2_lazy <- define_psa_(
+    rsp2_tidy <- define_psa_(
       rlang::quos(
         age_init ~ normal(60, 10),
         cost_init ~ normal(1000, 100)
@@ -77,7 +77,7 @@ test_that(
     
     expect_equal(
       rsp2, 
-      rsp2_lazy
+      rsp2_tidy
     )
     set.seed(1)
     # with run_model result
@@ -99,7 +99,7 @@ test_that(
       a + b ~ multinomial(15, 30)
     )
     
-    x_lazy <- define_psa_(
+    x_tidy <- define_psa_(
       rlang::quos(
         rate1 + rate2 + rate3 ~ multinomial(10, 50, 40),
         a + b ~ multinomial(15, 30)
@@ -108,12 +108,12 @@ test_that(
     
     expect_equal(
       x, 
-      x_lazy
+      x_tidy
     )
     
     set.seed(1)
     
-    res2 <- heemod:::eval_resample(x, 2)
+    res2 <- eval_resample(x, 2)
     
     expect_equal(
       nrow(ndt2$psa), 2

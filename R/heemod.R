@@ -26,17 +26,6 @@
 #' @importFrom dplyr funs
 #' @importFrom dplyr anti_join
 #' 
-#' @importFrom plyr ldply
-#' @importFrom plyr ddply
-#'   
-#' @importFrom lazyeval lazy
-#' @importFrom lazyeval lazy_dots
-#' @importFrom lazyeval as.lazy_dots
-#' @importFrom lazyeval lazy_eval
-#' @importFrom lazyeval interp
-#'   
-#' @importFrom pryr standardise_call
-#'   
 #' @importFrom utils head
 #' @importFrom utils modifyList
 #' @importFrom utils globalVariables
@@ -94,6 +83,10 @@
 #' 
 #' @importFrom rlang sym syms quo .data
 #' 
+#' @importFrom rlang sym syms quo .data quos quos as_quosures enexprs 
+#' set_expr as_label as_quosure get_expr is_quosure expr eval_tidy new_quosure
+#' parse_exprs get_env call_standardise caller_env
+#'
 #' @importFrom purrr map map_chr map_dbl map_lgl
 NULL
 

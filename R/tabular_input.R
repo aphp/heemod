@@ -481,13 +481,14 @@ create_states_from_tabular <- function(state_info,
       function(state) {
         define_state_(
           list(
-            .dots = lazyeval::as.lazy_dots(
+            .dots = as_quosures(
               stats::setNames(as.character(lapply(
                 values,
                 function(value) {
                   state_info[[value]][state_info$.state == state]
                 }
-              )), values),
+              )) %>%
+              parse_exprs(), values),
               env = df_env
           ), 
           starting_values = define_starting_values()
@@ -569,7 +570,8 @@ create_matrix_from_tabular <- function(trans_probs, state_names,
   prob_mat[as.matrix(trans_probs[, c("to", "from")])] <- trans_probs$prob
   
   res <- define_transition_(
-    lazyeval::as.lazy_dots(as.character(prob_mat), env = df_env),
+    as_quosures(as.character(prob_mat)%>%
+                parse_exprs(), env = df_env),
     state_names = state_names
   )
   if (options()$heemod.verbose) print(res)
@@ -608,9 +610,10 @@ create_parameters_from_tabular <- function(param_defs,
   }
   
   parameters <- define_parameters_(
-    lazyeval::as.lazy_dots(
+    as_quosures(
       stats::setNames(
-        as.character(lapply(param_defs$value, function(x) x)),
+        as.character(lapply(param_defs$value, function(x) x)) %>%
+        parse_exprs(),
         param_defs$parameter
       ),
       env = df_env
@@ -637,16 +640,18 @@ create_parameters_from_tabular <- function(param_defs,
     
     dsa <- define_dsa_(
       par_names = param_sens,
-      low_dots = lazyeval::as.lazy_dots(
+      low_dots = as_quosures(
         stats::setNames(
-          as.character(lapply(low, function(x) x)),
+          as.character(lapply(low, function(x) x))%>%
+          parse_exprs(),
           param_sens
         ),
         env = df_env
       ),
-      high_dots = lazyeval::as.lazy_dots(
+      high_dots = as_quosures(
         stats::setNames(
-          as.character(lapply(high, function(x) x)),
+          as.character(lapply(high, function(x) x))%>%
+          parse_exprs(),
           param_sens
         ),
         env = df_env
@@ -685,9 +690,10 @@ create_parameters_from_tabular <- function(param_defs,
     modify_param_defs_for_multinomials(param_defs, psa)
   
   parameters <- define_parameters_(
-    lazyeval::as.lazy_dots(
+    as_quosures(
       stats::setNames(
-        as.character(lapply(param_defs_new$value, function(x) x)),
+        as.character(lapply(param_defs_new$value, function(x) x))%>%
+        parse_exprs(),        
         param_defs_new$parameter
       ),
       env = df_env

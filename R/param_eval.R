@@ -29,7 +29,7 @@ eval_parameters <- function(x, cycles = 1,
   ) #%>% 
     #tibble::as_tibble()
   
-  x_tidy <- compat_lazy_dots(x)
+  x_tidy <- x
   
   # other datastructure?
   res <- try({
@@ -96,7 +96,7 @@ eval_parameters <- function(x, cycles = 1,
 
 eval_init <- function(x, parameters) {
   to_keep <- names(x)
-  x_tidy <- compat_lazy_dots(x)
+  x_tidy <- x
   if (length(to_keep)) {
     lapply(seq_along(x_tidy), function(i){
       #parameters[to_keep[i]] <<- eval(rlang::quo_squash(x_tidy[[i]]), parameters)

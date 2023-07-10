@@ -78,8 +78,8 @@ define_part_surv <- function(pfs, os, state_names,
   }
   
   define_part_surv_(
-    pfs = lazyeval::lazy_(substitute(pfs), env = parent.frame()),
-    os = lazyeval::lazy_(substitute(os), env = parent.frame()),
+    pfs = new_quosure(substitute(pfs), env = parent.frame()),
+    os = new_quosure(substitute(os), env = parent.frame()),
     state_names = state_names,
     cycle_length = cycle_length)
   }
@@ -97,8 +97,8 @@ define_part_surv_ <- function(pfs, os, state_names,
   }
   
   stopifnot(
-    inherits(pfs, "lazy"),
-    inherits(os, "lazy"),
+    inherits(pfs, "quosure"),
+    inherits(os, "quosure"),
     
     length(state_names) %in% 3:4,
     ! is.null(names(state_names)),
@@ -166,7 +166,7 @@ eval_transition.part_surv <- function(x, parameters) {
   
   time_ <- c(0, parameters$markov_cycle)
   
-  pfs_dist <- lazyeval::lazy_eval(
+  pfs_dist <- eval_tidy(
     x$pfs, 
     data = dplyr::slice(parameters, 1)
   )
@@ -178,7 +178,7 @@ eval_transition.part_surv <- function(x, parameters) {
     type = "surv"
   )
   
-  os_dist <- lazyeval::lazy_eval(
+  os_dist <- eval_tidy(
     x$os, 
     data = dplyr::slice(parameters, 1)
   )

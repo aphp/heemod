@@ -57,8 +57,7 @@ run_psa <- function(model, psa, N, resample) {
     list_res[[n]]$.index <- index
   }
   
-  x_tidy <- get_ce(model) %>%
-    compat_lazy_dots()
+  x_tidy <- get_ce(model)
   
   res <- 
     dplyr::bind_rows(list_res)
@@ -164,15 +163,14 @@ eval_resample <- function(psa, N) {
   
   for (m in psa$multinom) {
     call_denom <- make_call(m, "+")
-    list_expr <- lazyeval::as.lazy_dots(
+    list_expr <- as_quosures(
       c(list(
         .denom = call_denom),
       stats::setNames(
         lapply(
           m,
           function(x) as.call(list(as.name("/"), as.name(x), as.name(".denom")))),
-        m))) %>%
-      compat_lazy_dots()
+        m)), env = parent.frame()) 
     res <- dplyr::mutate(res, !!!list_expr) %>% 
       dplyr::select(-.denom)
   }

@@ -51,14 +51,21 @@ is.wholenumber <- function(x, tol = .Machine$double.eps^0.5) {
   abs(x - round(x)) < tol
 }
 
-#' Discount a Quantity Over Time
+#' Discount a Quantity Over Time. Should be a scalar if time is 
+#' specified, a vector otherwise
 #' 
 #' @param x numeric. A quantity to discount.
 #' @param r discount rate.
-#' @param first logical. Should discouting start at the
-#'   first value ?
+#' @param first logical. Should discounting start at the
+#'   first value?
 #' @param period Number of cycle per unit of discount rate.
-#'   
+#' @param linear logical. Should the discount rate vary linearly along the 
+#' whole period?
+#' @param time The cycle number.
+#'
+#' @details If the unit of discount rate is the year and a cycle duration is 1 
+#' month, period should be 12.
+#' 
 #' @return A numeric vector of the same length as `x`.
 #' @export
 #' 
@@ -66,28 +73,25 @@ is.wholenumber <- function(x, tol = .Machine$double.eps^0.5) {
 #' 
 #' discount(rep(10, 5), .02)
 #' discount(rep(10, 5), .02, first = FALSE)
+#'  
+#' discount(1000, .05, time = 10)
+#' discount(1000, .05, period = 2, time = 1:10)
+#' discount(1000, .05, period = 2, time = 1:10, linear = TRUE)
 #' 
 #' @keywords internal
-discount <- function(x, r, first = FALSE, period = 1) {
+discount <- function(x, r, first = FALSE, period = 1, linear = FALSE, time) {
   if (length(r) > 1) r <- r[1]
   stopifnot(
     r >= 0,
     r <= 1,
     period > 0
   )
-  dr <- trunc((seq_along(x) - (1 - isTRUE(first))) / period)
-  x / (1 + r) ^ dr
-}
-
-#' @rdname discount
-#' @export
-discount2 <- function(x, r, first = FALSE, period = 1, time) {
-  if (length(r) > 1) r <- r[1]
-  stopifnot(
-    r >= 0,
-    r <= 1
-  )
-  dr <- trunc((time - as.numeric(!isTRUE(first)))/period)
+  fun <- if(linear) function(x) x else trunc
+  dr <- if (missing(time)){
+    fun((seq_along(x) - (1 - isTRUE(first))) / period)
+  } else {
+    fun((time - as.numeric(!isTRUE(first)))/period)
+  }
   x / (1 + r) ^ dr
 }
 
@@ -338,8 +342,8 @@ to_text_dots <- function(x, name = TRUE) {
   } else {
     unlist(lapply(
       x,
-      function(y) if (any(is.na(y))) NA else
-        deparse(y$expr, width.cutoff = 500L)
+      function(y) if (!rlang::is_call(y) && any(is.na(y))) NA else
+      as_label(y)
     ))
   }
   
@@ -438,7 +442,7 @@ to_dots <- function(x) {
 }
 
 to_dots.default <- function(x) {
-  lazyeval::as.lazy_dots(lapply(
+  as_quosures(lapply(
     x, function(x) x
   ))
 }
@@ -446,19 +450,13 @@ to_dots.default <- function(x) {
 to_dots.list <- function(x) {
   f <- function(x) {
     if (inherits(x, "character") || inherits(x, "factor")) {
-      structure(
-        list(
-          expr = as.character(x),
-          env = globalenv()
-        ),
-        class = "lazy"
-      )
+      as_quosure(as.character(x), env = globalenv())
     } else {
       x
     }
   }
   
-  lazyeval::as.lazy_dots(
+  as_quosures(
     lapply(x, f)
   )
 }
@@ -609,4 +607,39 @@ matrix_expand_grid <- function(...){
       rep.fac <- rep.fac * nx
     }
     cargs
+}
+
+
+interp <-  function (x, ..., .values) {
+  .dots <- enexprs(...)
+  values <- all_values(.values, .dots)
+  expr <- substitute_(get_expr(x), values)
+  x <- set_expr(x, expr)
+  x
+}
+
+all_values <- function (.values, .dots) 
+{
+  if (missing(.values)) {
+    values <- lapply(.dots,function(x) eval_tidy(x, env = rlang::caller_env(4)))
+  }  else {
+    values <- c(.values, lapply(.dots, function(x) eval_tidy(x,  env = rlang::caller_env(4))))
+  }
+  if (is.list(values)) {
+    find_quosure <- vapply(values, is_quosure, logical(1))
+    values[find_quosure] <- lapply(values[find_quosure], get_expr)
+  }
+  values
+}
+
+
+substitute_ <- function (x, env) 
+{
+  if (identical(env, globalenv())) {
+    env <- as.list(env)
+  } else {
+    env <- as.environment(env)
+  }
+  call <- substitute(substitute(x, env), list(x = x))
+  eval(call)
 }

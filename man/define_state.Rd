@@ -25,7 +25,7 @@ with \code{\link[=define_starting_values]{define_starting_values()}}.}
 }
 \value{
 An object of class \code{state} (actually a named
-list of \code{lazy} expressions).
+list of quosures).
 }
 \description{
 Define the values characterising a Markov Model state for

@@ -7,7 +7,7 @@
 as_expr_list(.dots)
 }
 \arguments{
-\item{.dots}{A lazy dots object.}
+\item{.dots}{A quosures object.}
 }
 \value{
 A list of expression.

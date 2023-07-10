@@ -117,7 +117,7 @@ test_that(
       c("p_AA", "p_AB", "p_AC", "p_AD")
     )
     expect_identical(
-      round(sapply(from_file$params, "[[", "expr"), 4),
+      round(sapply(from_file$params, get_expr), 4),
       c(p_AA = 721.0000, p_AB = 0.7240, p_AC = 0.2401, p_AD = 0.0358)
     )
     

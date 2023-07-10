@@ -65,9 +65,9 @@ test_that("define_strategy works as expected without starting_values", {
   expect_equal(class(mod1), "uneval_model")
   expect_equal(names(mod1), c("transition", "states", "starting_values"))
   sv <- mod1$starting_values
-  expect_equal(class(sv), c("starting_values", "uneval_starting_values", "lazy_dots"))
-  expect_equal(sv$x$expr, 0)
-  expect_equal(sv$y$expr, 0)
+  expect_equal(class(sv), c("starting_values", "uneval_starting_values", "quosures", "list"))
+  expect_equal(get_expr(sv$x), 0)
+  expect_equal(get_expr(sv$y), 0)
 })
 
 test_that("starting_values return errors",{
@@ -96,9 +96,9 @@ test_that("starting_values return errors",{
 
 test_that("define_strategy works as expected with starting_values", {
   sv <- mod2$starting_values
-  expect_equal(class(sv), c("starting_values", "uneval_starting_values", "lazy_dots"))
-  expect_equal(sv$x$expr, 10)
-  expect_equal(sv$y$expr, 20)
+  expect_equal(class(sv), c("starting_values", "uneval_starting_values", "quosures", "list"))
+  expect_equal(get_expr(sv$x), 10)
+  expect_equal(get_expr(sv$y), 20)
 })
 
 test_that("starting_values only adds values at first cycle", {

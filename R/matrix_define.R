@@ -41,17 +41,17 @@
 #' @param .dots Used to work around non-standard evaluation.
 #'   
 #' @return An object of class `uneval_matrix` (actually a
-#'   named list of `lazy` expressions).
+#'   named list of `quosures` expressions).
 #' @export
 #' 
 #' @example inst/examples/example_define_transition.R
 #'   
 define_transition <- function(..., state_names) {
-  .dots <- lazyeval::lazy_dots(...)
+  .dots <- quos(...)
   
   if (missing(state_names)) {
     message("No named state -> generating names.")
-    state_names <- LETTERS[seq_len(sqrt(length(lazyeval::lazy_dots(...))))]
+    state_names <- LETTERS[seq_len(sqrt(length(.dots)))]
   }
   
   define_transition_(.dots = .dots, state_names = state_names)
@@ -120,7 +120,7 @@ modify.uneval_matrix <- function(.OBJECT, ...){
   # !mod!
   # modifier par rr simplment
   
-  .dots <- lazyeval::lazy_dots(...)
+  .dots <- .dots <- quos(...)
   
   modify_(.OBJECT = .OBJECT, .dots = .dots)
 }

@@ -4,8 +4,7 @@ has_state_time <- function(x, ...) {
 
 #' @export
 has_state_time.uneval_matrix <- function(x, ...) {
-  unlist(lapply(x, function(y) "state_time" %in% all.vars(y$expr)))
-}
+  unlist(lapply(x, function(y) "state_time" %in% all.vars(get_expr(y))))}
 
 has_state_time.uneval_parameters <- function(x, ...) {
   unlist(lapply(x, function(y) "state_time" %in% all.vars(y$expr)))
@@ -23,12 +22,12 @@ has_state_time.uneval_state_list <- function(x, ...) {
 
 #' @export
 has_state_time.state <- function(x, ...) {
-  any(unlist(lapply(x$.dots, function(y) "state_time" %in% all.vars(y$expr))))
+  any(unlist(lapply(x$.dots, function(y) "state_time" %in% all.vars(get_expr(y)))))
 }
 
 substitute_dots <- function(.dots, .values) {
-  lazyeval::as.lazy_dots(
-    lapply(.dots, lazyeval::interp, .values = .values)
+  as_quosures(
+    lapply(.dots, interp, .values = .values)
   )
 }
 
@@ -58,7 +57,7 @@ expand_state.uneval_matrix <- function(x, state_pos,
 
   L <- length(x)
   N <- sqrt(L)
-  m <-  matrix(list(lazyeval::lazy(0)), nrow = cycles + N, ncol = cycles + N)
+  m <-  matrix(list(quo(0)), nrow = cycles + N, ncol = cycles + N)
 
   tm <- matrix(x,
                byrow = TRUE,
@@ -66,7 +65,7 @@ expand_state.uneval_matrix <- function(x, state_pos,
 
   val_to_expand <- tm[state_pos, state_pos][[1]]
   for (i in seq.int(1L, cycles)){
-    m[i + state_pos -1, i+state_pos] <- list(interp(val_to_expand, state_time = i))
+    m[i + state_pos -1, i + state_pos] <- list(interp(val_to_expand, state_time = i))
   }
 
 
@@ -105,7 +104,7 @@ expand_state.uneval_matrix <- function(x, state_pos,
   sn <- insert(sn, state_pos, sprintf(".%s_%i", state_name, seq.int(1, cycles+1L)))
   sn <- sn[-state_pos]
 
-  x <- define_transition_(as.lazy_dots(t(m)), sn)
+  x <- define_transition_(as_quosures(t(m)), sn)
 
 
   x[get_tm_pos(state_pos+cycles, 1, N+cycles):get_tm_pos(state_pos+cycles, N+cycles, N+cycles)] <-
@@ -126,7 +125,7 @@ expand_state.uneval_state_list <- function(x, state_name, cycles, ...) {
   state_values_names <- get_state_value_names(st)
   num_state_values <-length(state_values_names)
   revert_starting <- setNames(as.list(rep(0, num_state_values)), state_values_names) %>%
-    as.lazy_dots()
+    as_quosures()
   
   id <- seq_len(cycles + 1)
   res <- lapply(
@@ -163,7 +162,7 @@ expand_state.uneval_init <- function(x, state_name, cycles, ...) {
     x,
     which(names(x) == state_name),
     stats::setNames(
-      rep(list(lazyeval::lazy(0)), cycles),
+      rep(list(quo(0)), cycles),
       sprintf(".%s_%i", state_name, seq_len(cycles) + 1))
   )
   
@@ -175,20 +174,20 @@ expand_state.uneval_init <- function(x, state_name, cycles, ...) {
 #' 
 #' This function is used by [interpolate()].
 #'
-#' @param .dots A lazy dots object.
+#' @param .dots A quosures object.
 #'
 #' @return A list of expression.
 #' @keywords internal
 as_expr_list <- function(.dots) {
   setNames(
-    lapply(.dots, function(x) x$expr),
+    lapply(.dots, function(x) get_expr(x)),
     names(.dots)
   )
 }
 
-#' Interpolate Lazy Dots
+#' Interpolate Quosures
 #' 
-#' Sequentially interpolates lazy dots, optionally using 
+#' Sequentially interpolates quosures, optionally using 
 #' external references.
 #' 
 #' The interpolation is sequential: the second dot is 
@@ -200,7 +199,7 @@ as_expr_list <- function(.dots) {
 #' @param more A list of expressions.
 #' @param ... Addition parameters passed to methods.
 #'   
-#' @return An interpolated lazy dots object.
+#' @return An interpolated quosures object.
 #' @keywords internal
 interpolate <- function(x, ...) {
   UseMethod("interpolate")
@@ -214,7 +213,7 @@ interpolate.default <- function(x, more = NULL, ...) {
   for (i in seq_along(x)) {
     to_interp <- x[[i]]
     for_interp <- c(more, as_expr_list(res))
-    funs <- all.funs(to_interp$expr)
+    funs <- all.funs(get_expr(to_interp))
    
     if (any(pb <- funs %in% names(for_interp))) {
       stop(sprintf(
@@ -223,7 +222,7 @@ interpolate.default <- function(x, more = NULL, ...) {
       ))
     }
     
-    new <- setNames(list(lazyeval::interp(
+    new <- setNames(list(interp(
       to_interp,
       .values = for_interp
     )
@@ -231,7 +230,7 @@ interpolate.default <- function(x, more = NULL, ...) {
     res <- c(res, new)
     
   }
-  lazyeval::as.lazy_dots(res)
+  as_quosures(res)
 }
 
 
