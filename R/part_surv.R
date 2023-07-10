@@ -221,6 +221,13 @@ compute_counts.eval_part_surv <- function(x, init,
     death            = 1 - x$os_surv
   )
   
+  if (any(res$progression < 0) & !any(res$death < 0) & !any(res$progression_free < 0)){
+    neg_cycles <- which(res$progression < 0)
+    warning(glue::glue("Progression probability was < 0 at cycle(s) {neg_cycles}, 
+                       which means that OS was below the PFS. Forced the probability to be 0"))
+    res$progression[neg_cycles] <- 0
+  }
+  
   if (length(x$state_names) == 4) {
     res$terminal <- diff(c(0, res$death))
     res$death <- c(0, res$death[-nrow(res)])
