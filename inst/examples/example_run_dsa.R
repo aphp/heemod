@@ -49,10 +49,14 @@ ds <- define_dsa(
 )
 print(ds)
 
-x <- run_dsa(res2, ds)
 
-plot(x, value = "cost")
 
+#'\dontrun{
+#'x <- run_dsa(res2, ds)
+#'plot(x, value = "cost")
+#'}
+#'
+#'
 # can be specified as a function of other parameters
 
 
@@ -60,4 +64,6 @@ ds2 <- define_dsa(
   p2, p1 - .1, p1 + .1
 )
 
-run_dsa(res2, ds2)
+#'\dontrun{
+#'run_dsa(res2, ds2)
+#'}

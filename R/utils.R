@@ -79,7 +79,8 @@ discount <- function(x, r, first = FALSE, period = 1) {
   x / (1 + r) ^ dr
 }
 
-
+#' @rdname discount
+#' @export
 discount2 <- function(x, r, first = FALSE, period = 1, time) {
   if (length(r) > 1) r <- r[1]
   stopifnot(

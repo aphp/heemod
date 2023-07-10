@@ -73,6 +73,7 @@ discount_hack <- function(.dots) {
         typeof(x)))
     }
   }
+
   
   do.call(
     structure,

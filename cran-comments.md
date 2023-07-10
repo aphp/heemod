@@ -1,10 +1,8 @@
 ## Test environments
-* local ubuntu 20.04 install, R 4.1.1
-* win-builder (devel, release and old-release)
-* r-hub (windows-server, Fedora Linux R-devel, clang, gfortran, solaris)
+* local ubuntu 20.04 install, R 4.2.1
+* r-hub (r-devel-linux-x86_64-fedora-gcc, r-devel-linux-x86_64-debian-gcc, 
+r-devel-linux-x86_64-debian-clang)
 
 ## R CMD check results
 
-There were no ERRORs or WARNINGs. 
-
-    
+There were no ERRORs, WARNINGs or NOTEs

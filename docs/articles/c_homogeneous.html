@@ -19,6 +19,8 @@
 <![endif]-->
 </head>
 <body data-spy="scroll" data-target="#toc">
+    
+
     <div class="container template-article">
       <header><div class="navbar navbar-default navbar-fixed-top" role="navigation">
   <div class="container">
@@ -31,18 +33,12 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">heemod</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.14.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.15.0</span>
       </span>
     </div>
 
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
-<li>
-  <a href="../index.html">
-    <span class="fas fa fas fa-home fa-lg"></span>
-     
-  </a>
-</li>
 <li>
   <a href="../reference/index.html">Reference</a>
 </li>
@@ -55,8 +51,8 @@
       </ul>
 <ul class="nav navbar-nav navbar-right">
 <li>
-  <a href="https://github.com/pierucci/heemod/">
-    <span class="fab fa fab fa-github fa-lg"></span>
+  <a href="https://github.com/aphp/heemod/" class="external-link">
+    <span class="fab fa-github fa-lg"></span>
      
   </a>
 </li>
@@ -70,15 +66,14 @@
 
       
 
-      </header><script src="c_homogeneous_files/accessible-code-block-0.0.1/empty-anchor.js"></script><link href="c_homogeneous_files/anchor-sections-1.0/anchor-sections.css" rel="stylesheet">
-<script src="c_homogeneous_files/anchor-sections-1.0/anchor-sections.js"></script><div class="row">
+      </header><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>Simple Markov Models (Homogeneous)</h1>
             
-            <h4 class="date">2020-12-07</h4>
+            <h4 data-toc-skip class="date">2023-02-14</h4>
       
-      <small class="dont-index">Source: <a href="https://github.com/pierucci/heemod/blob/master/vignettes/c_homogeneous.Rmd"><code>vignettes/c_homogeneous.Rmd</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/aphp/heemod/blob/HEAD/vignettes/c_homogeneous.Rmd" class="external-link"><code>vignettes/c_homogeneous.Rmd</code></a></small>
       <div class="hidden name"><code>c_homogeneous.Rmd</code></div>
 
     </div>
@@ -86,10 +81,10 @@
     
     
 <p>The most simple Markov models in health economic evaluation are models were transition probabilities between states do not change with time. Those are called <em>homogeneous</em> or <em>time-homogeneous</em> Markov models.</p>
-<div id="model-description" class="section level2">
-<h2 class="hasAnchor">
-<a href="#model-description" class="anchor"></a>Model description</h2>
-<p>In this example we will model the cost effectiveness of lamivudine/zidovudine combination therapy in HIV infection (<a href="https://www.ncbi.nlm.nih.gov/pubmed/10169387">Chancellor, 1997</a>) further described in <a href="https://ukcatalogue.oup.com/product/9780198526629.do">Decision Modelling for Health Economic Evaluation</a>, page 32. For the sake of simplicity we will not reproduce exactly the analysis from the book. See vignette <code>vignette("i-reproduction", "heemod")</code> for an exact reproduction of the analysis.</p>
+<div class="section level2">
+<h2 id="model-description">Model description<a class="anchor" aria-label="anchor" href="#model-description"></a>
+</h2>
+<p>In this example we will model the cost effectiveness of lamivudine/zidovudine combination therapy in HIV infection (<a href="https://pubmed.ncbi.nlm.nih.gov/10169387/" class="external-link">Chancellor, 1997</a> further described in <a href="https://global.oup.com/academic/product/decision-modelling-for-health-economic-evaluation-9780198526629/" class="external-link">Decision Modelling for Health Economic Evaluation</a>, page 32. For the sake of simplicity we will not reproduce exactly the analysis from the book. See vignette <code>vignette("i-reproduction", "heemod")</code> for an exact reproduction of the analysis.</p>
 <p>This model aims to compare costs and utilities of two treatment strategies, <em>monotherapy</em> and <em>combined therapy</em>.</p>
 <p>Four states are described, from best to worst health-wise:</p>
 <ul>
@@ -103,235 +98,235 @@
 <strong>D</strong>: Death.</li>
 </ul>
 </div>
-<div id="transition-probabilities" class="section level2">
-<h2 class="hasAnchor">
-<a href="#transition-probabilities" class="anchor"></a>Transition probabilities</h2>
+<div class="section level2">
+<h2 id="transition-probabilities">Transition probabilities<a class="anchor" aria-label="anchor" href="#transition-probabilities"></a>
+</h2>
 <p>Transition probabilities for the monotherapy study group are rather simple to implement with <code><a href="../reference/define_transition.html">define_transition()</a></code>:</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">mat_mono</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/define_transition.html">define_transition</a></span><span class="op">(</span>
-    <span class="fl">.721</span>, <span class="fl">.202</span>, <span class="fl">.067</span>, <span class="fl">.010</span>,
-    <span class="fl">0</span>,    <span class="fl">.581</span>, <span class="fl">.407</span>, <span class="fl">.012</span>,
-    <span class="fl">0</span>,    <span class="fl">0</span>,    <span class="fl">.750</span>, <span class="fl">.250</span>,
-    <span class="fl">0</span>,    <span class="fl">0</span>,    <span class="fl">0</span>,    <span class="fl">1</span>
-  <span class="op">)</span></code></pre></div>
-<pre><code>## No named state -&gt; generating names.</code></pre>
+<code class="sourceCode R"><span><span class="va">mat_mono</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/define_transition.html">define_transition</a></span><span class="op">(</span></span>
+<span>    <span class="fl">.721</span>, <span class="fl">.202</span>, <span class="fl">.067</span>, <span class="fl">.010</span>,</span>
+<span>    <span class="fl">0</span>,    <span class="fl">.581</span>, <span class="fl">.407</span>, <span class="fl">.012</span>,</span>
+<span>    <span class="fl">0</span>,    <span class="fl">0</span>,    <span class="fl">.750</span>, <span class="fl">.250</span>,</span>
+<span>    <span class="fl">0</span>,    <span class="fl">0</span>,    <span class="fl">0</span>,    <span class="fl">1</span></span>
+<span>  <span class="op">)</span></span></code></pre></div>
+<pre><code><span><span class="co">## No named state -&gt; generating names.</span></span></code></pre>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">mat_mono</span></code></pre></div>
-<pre><code>## A transition matrix, 4 states.
-## 
-##   A     B     C     D    
-## A 0.721 0.202 0.067 0.01 
-## B       0.581 0.407 0.012
-## C             0.75  0.25 
-## D                   1</code></pre>
+<code class="sourceCode R"><span><span class="va">mat_mono</span></span></code></pre></div>
+<pre><code><span><span class="co">## A transition matrix, 4 states.</span></span>
+<span><span class="co">## </span></span>
+<span><span class="co">##   A     B     C     D    </span></span>
+<span><span class="co">## A 0.721 0.202 0.067 0.01 </span></span>
+<span><span class="co">## B       0.581 0.407 0.012</span></span>
+<span><span class="co">## C             0.75  0.25 </span></span>
+<span><span class="co">## D                   1</span></span></code></pre>
 <p>The combined therapy group has its transition probabilities multiplied by <span class="math inline">\(rr = 0.509\)</span>, the relative risk of event for the population treated by combined therapy. Since <span class="math inline">\(rr &lt; 1\)</span>, the combined therapy group has less chance to transition to worst health states.</p>
 <p>The probabilities to stay in the same state are equal to <span class="math inline">\(1 - \sum P_{trans}\)</span> where <span class="math inline">\(P_{trans}\)</span> are the probabilities to change to another state (because all transition probabilities from a given state must sum to 1).</p>
 <p>We use the alias <code>C</code> as a convenient way to specify the probability complement, equal to <span class="math inline">\(1 - \sum P_{trans}\)</span>.</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">rr</span> <span class="op">&lt;-</span> <span class="fl">.509</span>
-
-<span class="va">mat_comb</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/define_transition.html">define_transition</a></span><span class="op">(</span>
-    <span class="va">C</span>, <span class="fl">.202</span><span class="op">*</span><span class="va">rr</span>, <span class="fl">.067</span><span class="op">*</span><span class="va">rr</span>, <span class="fl">.010</span><span class="op">*</span><span class="va">rr</span>,
-    <span class="fl">0</span>, <span class="va">C</span>,       <span class="fl">.407</span><span class="op">*</span><span class="va">rr</span>, <span class="fl">.012</span><span class="op">*</span><span class="va">rr</span>,
-    <span class="fl">0</span>, <span class="fl">0</span>,       <span class="va">C</span>,       <span class="fl">.250</span><span class="op">*</span><span class="va">rr</span>,
-    <span class="fl">0</span>, <span class="fl">0</span>,       <span class="fl">0</span>,       <span class="fl">1</span>
-  <span class="op">)</span></code></pre></div>
-<pre><code>## No named state -&gt; generating names.</code></pre>
+<code class="sourceCode R"><span><span class="va">rr</span> <span class="op">&lt;-</span> <span class="fl">.509</span></span>
+<span></span>
+<span><span class="va">mat_comb</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/define_transition.html">define_transition</a></span><span class="op">(</span></span>
+<span>    <span class="va">C</span>, <span class="fl">.202</span><span class="op">*</span><span class="va">rr</span>, <span class="fl">.067</span><span class="op">*</span><span class="va">rr</span>, <span class="fl">.010</span><span class="op">*</span><span class="va">rr</span>,</span>
+<span>    <span class="fl">0</span>, <span class="va">C</span>,       <span class="fl">.407</span><span class="op">*</span><span class="va">rr</span>, <span class="fl">.012</span><span class="op">*</span><span class="va">rr</span>,</span>
+<span>    <span class="fl">0</span>, <span class="fl">0</span>,       <span class="va">C</span>,       <span class="fl">.250</span><span class="op">*</span><span class="va">rr</span>,</span>
+<span>    <span class="fl">0</span>, <span class="fl">0</span>,       <span class="fl">0</span>,       <span class="fl">1</span></span>
+<span>  <span class="op">)</span></span></code></pre></div>
+<pre><code><span><span class="co">## No named state -&gt; generating names.</span></span></code></pre>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">mat_comb</span></code></pre></div>
-<pre><code>## A transition matrix, 4 states.
-## 
-##   A B          C          D         
-## A C 0.202 * rr 0.067 * rr 0.01 * rr 
-## B   C          0.407 * rr 0.012 * rr
-## C              C          0.25 * rr 
-## D                         1</code></pre>
+<code class="sourceCode R"><span><span class="va">mat_comb</span></span></code></pre></div>
+<pre><code><span><span class="co">## A transition matrix, 4 states.</span></span>
+<span><span class="co">## </span></span>
+<span><span class="co">##   A B          C          D         </span></span>
+<span><span class="co">## A C 0.202 * rr 0.067 * rr 0.01 * rr </span></span>
+<span><span class="co">## B   C          0.407 * rr 0.012 * rr</span></span>
+<span><span class="co">## C              C          0.25 * rr </span></span>
+<span><span class="co">## D                         1</span></span></code></pre>
 <p>We can plot the transition matrix for the monotherapy group:</p>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="va">mat_mono</span><span class="op">)</span></code></pre></div>
-<pre><code>## Le chargement a nécessité le package : diagram</code></pre>
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">mat_mono</span><span class="op">)</span></span></code></pre></div>
+<pre><code><span><span class="co">## Loading required namespace: diagram</span></span></code></pre>
 <p><img src="c_homogeneous_files/figure-html/unnamed-chunk-4-1.png" width="576" style="display: block; margin: auto;"></p>
 <p>And the combined therapy group:</p>
 <div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="va">mat_comb</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">mat_comb</span><span class="op">)</span></span></code></pre></div>
 <p><img src="c_homogeneous_files/figure-html/unnamed-chunk-5-1.png" width="576" style="display: block; margin: auto;"></p>
 </div>
-<div id="state-values" class="section level2">
-<h2 class="hasAnchor">
-<a href="#state-values" class="anchor"></a>State values</h2>
+<div class="section level2">
+<h2 id="state-values">State values<a class="anchor" aria-label="anchor" href="#state-values"></a>
+</h2>
 <p>The costs of lamivudine and zidovudine are defined:</p>
 <div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">cost_zido</span> <span class="op">&lt;-</span> <span class="fl">2278</span>
-<span class="va">cost_lami</span> <span class="op">&lt;-</span> <span class="fl">2086</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">cost_zido</span> <span class="op">&lt;-</span> <span class="fl">2278</span></span>
+<span><span class="va">cost_lami</span> <span class="op">&lt;-</span> <span class="fl">2086</span></span></code></pre></div>
 <p>In addition to drugs costs (called <code>cost_drugs</code> in the model), each state is associated to healthcare costs (called <code>cost_health</code>). Cost are discounted at a 6% rate with the <code>discount</code> function.</p>
 <p>Efficacy in this study is measured in terms of life expectancy (called <code>life_year</code> in the model). Each state thus has a value of 1 life year per year, except death who has a value of 0. Life-years are not discounted in this example.</p>
 <p>Only <code>cost_drug</code> differs between the monotherapy and the combined therapy treatment groups, the function <code><a href="../reference/dispatch_strategy.html">dispatch_strategy()</a></code> can be used to account for that. For example state A can be defined with <code><a href="../reference/define_state.html">define_state()</a></code>:</p>
 <div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">state_A</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/define_state.html">define_state</a></span><span class="op">(</span>
-    cost_health <span class="op">=</span> <span class="fu"><a href="../reference/discount.html">discount</a></span><span class="op">(</span><span class="fl">2756</span>, <span class="fl">.06</span><span class="op">)</span>,
-    cost_drugs <span class="op">=</span> <span class="fu"><a href="../reference/discount.html">discount</a></span><span class="op">(</span><span class="fu"><a href="../reference/dispatch_strategy.html">dispatch_strategy</a></span><span class="op">(</span>
-      mono <span class="op">=</span> <span class="va">cost_zido</span>,
-      comb <span class="op">=</span> <span class="va">cost_zido</span> <span class="op">+</span> <span class="va">cost_lami</span>
-    <span class="op">)</span>, <span class="fl">.06</span><span class="op">)</span>,
-    cost_total <span class="op">=</span> <span class="va">cost_health</span> <span class="op">+</span> <span class="va">cost_drugs</span>,
-    life_year <span class="op">=</span> <span class="fl">1</span>
-  <span class="op">)</span>
-<span class="va">state_A</span></code></pre></div>
-<pre><code>## A state with 4 values.
-## 
-## cost_health = discount(2756, 0.06)
-## cost_drugs = discount(dispatch_strategy(mono = cost_zido, comb = cost_zido + 
-##     cost_lami), 0.06)
-## cost_total = cost_health + cost_drugs
-## life_year = 1</code></pre>
+<code class="sourceCode R"><span><span class="va">state_A</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/define_state.html">define_state</a></span><span class="op">(</span></span>
+<span>    cost_health <span class="op">=</span> <span class="fu"><a href="../reference/discount.html">discount</a></span><span class="op">(</span><span class="fl">2756</span>, <span class="fl">.06</span><span class="op">)</span>,</span>
+<span>    cost_drugs <span class="op">=</span> <span class="fu"><a href="../reference/discount.html">discount</a></span><span class="op">(</span><span class="fu"><a href="../reference/dispatch_strategy.html">dispatch_strategy</a></span><span class="op">(</span></span>
+<span>      mono <span class="op">=</span> <span class="va">cost_zido</span>,</span>
+<span>      comb <span class="op">=</span> <span class="va">cost_zido</span> <span class="op">+</span> <span class="va">cost_lami</span></span>
+<span>    <span class="op">)</span>, <span class="fl">.06</span><span class="op">)</span>,</span>
+<span>    cost_total <span class="op">=</span> <span class="va">cost_health</span> <span class="op">+</span> <span class="va">cost_drugs</span>,</span>
+<span>    life_year <span class="op">=</span> <span class="fl">1</span></span>
+<span>  <span class="op">)</span></span>
+<span><span class="va">state_A</span></span></code></pre></div>
+<pre><code><span><span class="co">## A state with 4 values.</span></span>
+<span><span class="co">## </span></span>
+<span><span class="co">## cost_health = discount(2756, 0.06)</span></span>
+<span><span class="co">## cost_drugs = discount(dispatch_strategy(mono = cost_zido, comb = cost_zido + </span></span>
+<span><span class="co">##     cost_lami), 0.06)</span></span>
+<span><span class="co">## cost_total = cost_health + cost_drugs</span></span>
+<span><span class="co">## life_year = 1</span></span></code></pre>
 <p>The other states for the monotherapy treatment group can be specified in the same way:</p>
 <div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">state_B</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/define_state.html">define_state</a></span><span class="op">(</span>
-    cost_health <span class="op">=</span> <span class="fu"><a href="../reference/discount.html">discount</a></span><span class="op">(</span><span class="fl">3052</span>, <span class="fl">.06</span><span class="op">)</span>,
-    cost_drugs <span class="op">=</span> <span class="fu"><a href="../reference/discount.html">discount</a></span><span class="op">(</span><span class="fu"><a href="../reference/dispatch_strategy.html">dispatch_strategy</a></span><span class="op">(</span>
-      mono <span class="op">=</span> <span class="va">cost_zido</span>,
-      comb <span class="op">=</span> <span class="va">cost_zido</span> <span class="op">+</span> <span class="va">cost_lami</span>
-    <span class="op">)</span>, <span class="fl">.06</span><span class="op">)</span>,
-    cost_total <span class="op">=</span> <span class="va">cost_health</span> <span class="op">+</span> <span class="va">cost_drugs</span>,
-    life_year <span class="op">=</span> <span class="fl">1</span>
-  <span class="op">)</span>
-<span class="va">state_C</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/define_state.html">define_state</a></span><span class="op">(</span>
-    cost_health <span class="op">=</span> <span class="fu"><a href="../reference/discount.html">discount</a></span><span class="op">(</span><span class="fl">9007</span>, <span class="fl">.06</span><span class="op">)</span>,
-    cost_drugs <span class="op">=</span> <span class="fu"><a href="../reference/discount.html">discount</a></span><span class="op">(</span><span class="fu"><a href="../reference/dispatch_strategy.html">dispatch_strategy</a></span><span class="op">(</span>
-      mono <span class="op">=</span> <span class="va">cost_zido</span>,
-      comb <span class="op">=</span> <span class="va">cost_zido</span> <span class="op">+</span> <span class="va">cost_lami</span>
-    <span class="op">)</span>, <span class="fl">.06</span><span class="op">)</span>,
-    cost_total <span class="op">=</span> <span class="va">cost_health</span> <span class="op">+</span> <span class="va">cost_drugs</span>,
-    life_year <span class="op">=</span> <span class="fl">1</span>
-  <span class="op">)</span>
-<span class="va">state_D</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/define_state.html">define_state</a></span><span class="op">(</span>
-    cost_health <span class="op">=</span> <span class="fl">0</span>,
-    cost_drugs <span class="op">=</span> <span class="fl">0</span>,
-    cost_total <span class="op">=</span> <span class="fl">0</span>,
-    life_year <span class="op">=</span> <span class="fl">0</span>
-  <span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">state_B</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/define_state.html">define_state</a></span><span class="op">(</span></span>
+<span>    cost_health <span class="op">=</span> <span class="fu"><a href="../reference/discount.html">discount</a></span><span class="op">(</span><span class="fl">3052</span>, <span class="fl">.06</span><span class="op">)</span>,</span>
+<span>    cost_drugs <span class="op">=</span> <span class="fu"><a href="../reference/discount.html">discount</a></span><span class="op">(</span><span class="fu"><a href="../reference/dispatch_strategy.html">dispatch_strategy</a></span><span class="op">(</span></span>
+<span>      mono <span class="op">=</span> <span class="va">cost_zido</span>,</span>
+<span>      comb <span class="op">=</span> <span class="va">cost_zido</span> <span class="op">+</span> <span class="va">cost_lami</span></span>
+<span>    <span class="op">)</span>, <span class="fl">.06</span><span class="op">)</span>,</span>
+<span>    cost_total <span class="op">=</span> <span class="va">cost_health</span> <span class="op">+</span> <span class="va">cost_drugs</span>,</span>
+<span>    life_year <span class="op">=</span> <span class="fl">1</span></span>
+<span>  <span class="op">)</span></span>
+<span><span class="va">state_C</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/define_state.html">define_state</a></span><span class="op">(</span></span>
+<span>    cost_health <span class="op">=</span> <span class="fu"><a href="../reference/discount.html">discount</a></span><span class="op">(</span><span class="fl">9007</span>, <span class="fl">.06</span><span class="op">)</span>,</span>
+<span>    cost_drugs <span class="op">=</span> <span class="fu"><a href="../reference/discount.html">discount</a></span><span class="op">(</span><span class="fu"><a href="../reference/dispatch_strategy.html">dispatch_strategy</a></span><span class="op">(</span></span>
+<span>      mono <span class="op">=</span> <span class="va">cost_zido</span>,</span>
+<span>      comb <span class="op">=</span> <span class="va">cost_zido</span> <span class="op">+</span> <span class="va">cost_lami</span></span>
+<span>    <span class="op">)</span>, <span class="fl">.06</span><span class="op">)</span>,</span>
+<span>    cost_total <span class="op">=</span> <span class="va">cost_health</span> <span class="op">+</span> <span class="va">cost_drugs</span>,</span>
+<span>    life_year <span class="op">=</span> <span class="fl">1</span></span>
+<span>  <span class="op">)</span></span>
+<span><span class="va">state_D</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/define_state.html">define_state</a></span><span class="op">(</span></span>
+<span>    cost_health <span class="op">=</span> <span class="fl">0</span>,</span>
+<span>    cost_drugs <span class="op">=</span> <span class="fl">0</span>,</span>
+<span>    cost_total <span class="op">=</span> <span class="fl">0</span>,</span>
+<span>    life_year <span class="op">=</span> <span class="fl">0</span></span>
+<span>  <span class="op">)</span></span></code></pre></div>
 </div>
-<div id="strategy-definitions" class="section level2">
-<h2 class="hasAnchor">
-<a href="#strategy-definitions" class="anchor"></a>Strategy definitions</h2>
+<div class="section level2">
+<h2 id="strategy-definitions">Strategy definitions<a class="anchor" aria-label="anchor" href="#strategy-definitions"></a>
+</h2>
 <p>Strategies can now be defined by combining a transition matrix and a state list with <code><a href="../reference/define_strategy.html">define_strategy()</a></code>:</p>
 <div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">strat_mono</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/define_strategy.html">define_strategy</a></span><span class="op">(</span>
-  transition <span class="op">=</span> <span class="va">mat_mono</span>,
-  <span class="va">state_A</span>,
-  <span class="va">state_B</span>,
-  <span class="va">state_C</span>,
-  <span class="va">state_D</span>
-<span class="op">)</span></code></pre></div>
-<pre><code>## No named state -&gt; generating names.</code></pre>
+<code class="sourceCode R"><span><span class="va">strat_mono</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/define_strategy.html">define_strategy</a></span><span class="op">(</span></span>
+<span>  transition <span class="op">=</span> <span class="va">mat_mono</span>,</span>
+<span>  <span class="va">state_A</span>,</span>
+<span>  <span class="va">state_B</span>,</span>
+<span>  <span class="va">state_C</span>,</span>
+<span>  <span class="va">state_D</span></span>
+<span><span class="op">)</span></span></code></pre></div>
+<pre><code><span><span class="co">## No named state -&gt; generating names.</span></span></code></pre>
 <div class="sourceCode" id="cb18"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">strat_mono</span></code></pre></div>
-<pre><code>## A Markov model strategy:
-## 
-##     4 states,
-##     4 state values</code></pre>
+<code class="sourceCode R"><span><span class="va">strat_mono</span></span></code></pre></div>
+<pre><code><span><span class="co">## A Markov model strategy:</span></span>
+<span><span class="co">## </span></span>
+<span><span class="co">##     4 states,</span></span>
+<span><span class="co">##     4 state values</span></span></code></pre>
 <p>For the combined therapy model:</p>
 <div class="sourceCode" id="cb20"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">strat_comb</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/define_strategy.html">define_strategy</a></span><span class="op">(</span>
-  transition <span class="op">=</span> <span class="va">mat_comb</span>,
-  <span class="va">state_A</span>,
-  <span class="va">state_B</span>,
-  <span class="va">state_C</span>,
-  <span class="va">state_D</span>
-<span class="op">)</span></code></pre></div>
-<pre><code>## No named state -&gt; generating names.</code></pre>
+<code class="sourceCode R"><span><span class="va">strat_comb</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/define_strategy.html">define_strategy</a></span><span class="op">(</span></span>
+<span>  transition <span class="op">=</span> <span class="va">mat_comb</span>,</span>
+<span>  <span class="va">state_A</span>,</span>
+<span>  <span class="va">state_B</span>,</span>
+<span>  <span class="va">state_C</span>,</span>
+<span>  <span class="va">state_D</span></span>
+<span><span class="op">)</span></span></code></pre></div>
+<pre><code><span><span class="co">## No named state -&gt; generating names.</span></span></code></pre>
 </div>
-<div id="running-the-model" class="section level2">
-<h2 class="hasAnchor">
-<a href="#running-the-model" class="anchor"></a>Running the model</h2>
+<div class="section level2">
+<h2 id="running-the-model">Running the model<a class="anchor" aria-label="anchor" href="#running-the-model"></a>
+</h2>
 <p>Both strategies can then be combined in a model and run for 50 years with <code><a href="../reference/run_model.html">run_model()</a></code>. Strategies are given names (<code>mono</code> and <code>comb</code>) in order to facilitate result interpretation.</p>
 <div class="sourceCode" id="cb22"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">res_mod</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/run_model.html">run_model</a></span><span class="op">(</span>
-  mono <span class="op">=</span> <span class="va">strat_mono</span>,
-  comb <span class="op">=</span> <span class="va">strat_comb</span>,
-  cycles <span class="op">=</span> <span class="fl">50</span>,
-  cost <span class="op">=</span> <span class="va">cost_total</span>,
-  effect <span class="op">=</span> <span class="va">life_year</span>
-<span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">res_mod</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/run_model.html">run_model</a></span><span class="op">(</span></span>
+<span>  mono <span class="op">=</span> <span class="va">strat_mono</span>,</span>
+<span>  comb <span class="op">=</span> <span class="va">strat_comb</span>,</span>
+<span>  cycles <span class="op">=</span> <span class="fl">50</span>,</span>
+<span>  cost <span class="op">=</span> <span class="va">cost_total</span>,</span>
+<span>  effect <span class="op">=</span> <span class="va">life_year</span></span>
+<span><span class="op">)</span></span></code></pre></div>
 <p>By default models are run for 1000 persons starting in the first state (here state <strong>A</strong>).</p>
 </div>
-<div id="result-interpretation" class="section level2">
-<h2 class="hasAnchor">
-<a href="#result-interpretation" class="anchor"></a>Result interpretation</h2>
-<p>Strategy values can then be compared with <code><a href="https://rdrr.io/r/base/summary.html">summary()</a></code> (optionally net monetary benefits can be calculated with the <code>threshold</code> option):</p>
+<div class="section level2">
+<h2 id="result-interpretation">Result interpretation<a class="anchor" aria-label="anchor" href="#result-interpretation"></a>
+</h2>
+<p>Strategy values can then be compared with <code><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary()</a></code> (optionally net monetary benefits can be calculated with the <code>threshold</code> option):</p>
 <div class="sourceCode" id="cb23"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="va">res_mod</span>,
-        threshold <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">1000</span>, <span class="fl">5000</span>, <span class="fl">6000</span>, <span class="fl">1e4</span><span class="op">)</span><span class="op">)</span></code></pre></div>
-<pre><code>## 2 strategies run for 50 cycles.
-## 
-## Initial state counts:
-## 
-## A = 1000L
-## B = 0L
-## C = 0L
-## D = 0L
-## 
-## Counting method: 'life-table'.
-## 
-##  
-## 
-## Counting method: 'beginning'.
-## 
-##  
-## 
-## Counting method: 'end'.
-## 
-## Values:
-## 
-##      cost_health cost_drugs cost_total life_year
-## mono    33891136   14870957   48762093  8585.843
-## comb    48739757   44245091   92984848 17256.937
-## 
-## Net monetary benefit difference:
-## 
-##          1000     5000     6000    10000
-## mono 35551.66 867.2847    0.000     0.00
-## comb     0.00   0.0000 7803.809 42488.19
-## 
-## Efficiency frontier:
-## 
-## mono -&gt; comb
-## 
-## Differences:
-## 
-##      Cost Diff. Effect Diff.    ICER Ref.
-## comb   44222.75     8.671094 5100.02 mono</code></pre>
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">res_mod</span>,</span>
+<span>        threshold <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1000</span>, <span class="fl">5000</span>, <span class="fl">6000</span>, <span class="fl">1e4</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
+<pre><code><span><span class="co">## 2 strategies run for 50 cycles.</span></span>
+<span><span class="co">## </span></span>
+<span><span class="co">## Initial state counts:</span></span>
+<span><span class="co">## </span></span>
+<span><span class="co">## A = 1000L</span></span>
+<span><span class="co">## B = 0L</span></span>
+<span><span class="co">## C = 0L</span></span>
+<span><span class="co">## D = 0L</span></span>
+<span><span class="co">## </span></span>
+<span><span class="co">## Counting method: 'life-table'.</span></span>
+<span><span class="co">## </span></span>
+<span><span class="co">##  </span></span>
+<span><span class="co">## </span></span>
+<span><span class="co">## Counting method: 'beginning'.</span></span>
+<span><span class="co">## </span></span>
+<span><span class="co">##  </span></span>
+<span><span class="co">## </span></span>
+<span><span class="co">## Counting method: 'end'.</span></span>
+<span><span class="co">## </span></span>
+<span><span class="co">## Values:</span></span>
+<span><span class="co">## </span></span>
+<span><span class="co">##      cost_health cost_drugs cost_total life_year</span></span>
+<span><span class="co">## mono    33891136   14870957   48762093  8585.843</span></span>
+<span><span class="co">## comb    48739757   44245091   92984848 17256.937</span></span>
+<span><span class="co">## </span></span>
+<span><span class="co">## Net monetary benefit difference:</span></span>
+<span><span class="co">## </span></span>
+<span><span class="co">##          1000     5000     6000    10000</span></span>
+<span><span class="co">## mono 35551.66 867.2847    0.000     0.00</span></span>
+<span><span class="co">## comb     0.00   0.0000 7803.809 42488.19</span></span>
+<span><span class="co">## </span></span>
+<span><span class="co">## Efficiency frontier:</span></span>
+<span><span class="co">## </span></span>
+<span><span class="co">## mono -&gt; comb</span></span>
+<span><span class="co">## </span></span>
+<span><span class="co">## Differences:</span></span>
+<span><span class="co">## </span></span>
+<span><span class="co">##      Cost Diff. Effect Diff.    ICER Ref.</span></span>
+<span><span class="co">## comb   44222.75     8.671094 5100.02 mono</span></span></code></pre>
 <p>The incremental cost-effectiveness ratio of the combined therapy strategy is thus £5100 per life-year gained.</p>
 <p>The counts per state can be plotted by model:</p>
 <div class="sourceCode" id="cb25"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="va">res_mod</span>, type <span class="op">=</span> <span class="st">"counts"</span>, panel <span class="op">=</span> <span class="st">"by_strategy"</span><span class="op">)</span> <span class="op">+</span>
-  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">xlab</a></span><span class="op">(</span><span class="st">"Time"</span><span class="op">)</span> <span class="op">+</span>
-  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html">theme_bw</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span>
-  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_brewer.html">scale_color_brewer</a></span><span class="op">(</span>
-    name <span class="op">=</span> <span class="st">"State"</span>,
-    palette <span class="op">=</span> <span class="st">"Set1"</span>
-  <span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">res_mod</span>, type <span class="op">=</span> <span class="st">"counts"</span>, panel <span class="op">=</span> <span class="st">"by_strategy"</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">xlab</a></span><span class="op">(</span><span class="st">"Time"</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html" class="external-link">theme_bw</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_brewer.html" class="external-link">scale_color_brewer</a></span><span class="op">(</span></span>
+<span>    name <span class="op">=</span> <span class="st">"State"</span>,</span>
+<span>    palette <span class="op">=</span> <span class="st">"Set1"</span></span>
+<span>  <span class="op">)</span></span></code></pre></div>
 <p><img src="c_homogeneous_files/figure-html/unnamed-chunk-13-1.png" width="576" style="display: block; margin: auto;"></p>
 <p>Or by state:</p>
 <div class="sourceCode" id="cb26"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="va">res_mod</span>, type <span class="op">=</span> <span class="st">"counts"</span>, panel <span class="op">=</span> <span class="st">"by_state"</span><span class="op">)</span> <span class="op">+</span>
-  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">xlab</a></span><span class="op">(</span><span class="st">"Time"</span><span class="op">)</span> <span class="op">+</span>
-  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html">theme_bw</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span>
-  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_brewer.html">scale_color_brewer</a></span><span class="op">(</span>
-    name <span class="op">=</span> <span class="st">"Strategy"</span>,
-    palette <span class="op">=</span> <span class="st">"Set1"</span>
-  <span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">res_mod</span>, type <span class="op">=</span> <span class="st">"counts"</span>, panel <span class="op">=</span> <span class="st">"by_state"</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">xlab</a></span><span class="op">(</span><span class="st">"Time"</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html" class="external-link">theme_bw</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_brewer.html" class="external-link">scale_color_brewer</a></span><span class="op">(</span></span>
+<span>    name <span class="op">=</span> <span class="st">"Strategy"</span>,</span>
+<span>    palette <span class="op">=</span> <span class="st">"Set1"</span></span>
+<span>  <span class="op">)</span></span></code></pre></div>
 <p><img src="c_homogeneous_files/figure-html/unnamed-chunk-14-1.png" width="576" style="display: block; margin: auto;"></p>
 <p>The values can also be represented:</p>
 <div class="sourceCode" id="cb27"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="va">res_mod</span>, type <span class="op">=</span> <span class="st">"values"</span>, panel <span class="op">=</span> <span class="st">"by_value"</span>,
-     free_y <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="op">+</span>
-  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">xlab</a></span><span class="op">(</span><span class="st">"Time"</span><span class="op">)</span> <span class="op">+</span>
-  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html">theme_bw</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span>
-  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_brewer.html">scale_color_brewer</a></span><span class="op">(</span>
-    name <span class="op">=</span> <span class="st">"Strategy"</span>,
-    palette <span class="op">=</span> <span class="st">"Set1"</span>
-  <span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">res_mod</span>, type <span class="op">=</span> <span class="st">"values"</span>, panel <span class="op">=</span> <span class="st">"by_value"</span>,</span>
+<span>     free_y <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">xlab</a></span><span class="op">(</span><span class="st">"Time"</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html" class="external-link">theme_bw</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_brewer.html" class="external-link">scale_color_brewer</a></span><span class="op">(</span></span>
+<span>    name <span class="op">=</span> <span class="st">"Strategy"</span>,</span>
+<span>    palette <span class="op">=</span> <span class="st">"Set1"</span></span>
+<span>  <span class="op">)</span></span></code></pre></div>
 <p><img src="c_homogeneous_files/figure-html/unnamed-chunk-15-1.png" width="576" style="display: block; margin: auto;"></p>
 <p>Note that classic <code>ggplot2</code> syntax can be used to modifiy plot appearance.</p>
 </div>
@@ -348,11 +343,13 @@
 
 
       <footer><div class="copyright">
-  <p>Developed by Kevin Zarca, Antoine Filipovic-Pierucci.</p>
+  <p></p>
+<p>Developed by Kevin Zarca, Antoine Filipovic-Pierucci.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
+  <p></p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.7.</p>
 </div>
 
       </footer>
@@ -360,6 +357,8 @@
 
   
 
+
+  
 
   </body>
 </html>

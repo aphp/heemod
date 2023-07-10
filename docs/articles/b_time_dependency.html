@@ -19,6 +19,8 @@
 <![endif]-->
 </head>
 <body data-spy="scroll" data-target="#toc">
+    
+
     <div class="container template-article">
       <header><div class="navbar navbar-default navbar-fixed-top" role="navigation">
   <div class="container">
@@ -31,18 +33,12 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">heemod</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.14.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.15.0</span>
       </span>
     </div>
 
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
-<li>
-  <a href="../index.html">
-    <span class="fas fa fas fa-home fa-lg"></span>
-     
-  </a>
-</li>
 <li>
   <a href="../reference/index.html">Reference</a>
 </li>
@@ -55,8 +51,8 @@
       </ul>
 <ul class="nav navbar-nav navbar-right">
 <li>
-  <a href="https://github.com/pierucci/heemod/">
-    <span class="fab fa fab fa-github fa-lg"></span>
+  <a href="https://github.com/aphp/heemod/" class="external-link">
+    <span class="fab fa-github fa-lg"></span>
      
   </a>
 </li>
@@ -70,15 +66,14 @@
 
       
 
-      </header><script src="b_time_dependency_files/accessible-code-block-0.0.1/empty-anchor.js"></script><link href="b_time_dependency_files/anchor-sections-1.0/anchor-sections.css" rel="stylesheet">
-<script src="b_time_dependency_files/anchor-sections-1.0/anchor-sections.js"></script><div class="row">
+      </header><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>Time-varying values</h1>
             
-            <h4 class="date">2020-12-07</h4>
+            <h4 data-toc-skip class="date">2023-02-14</h4>
       
-      <small class="dont-index">Source: <a href="https://github.com/pierucci/heemod/blob/master/vignettes/b_time_dependency.Rmd"><code>vignettes/b_time_dependency.Rmd</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/aphp/heemod/blob/HEAD/vignettes/b_time_dependency.Rmd" class="external-link"><code>vignettes/b_time_dependency.Rmd</code></a></small>
       <div class="hidden name"><code>b_time_dependency.Rmd</code></div>
 
     </div>
@@ -91,59 +86,59 @@
 <li>depend on how long <strong>an individual</strong> has been in a given <strong>state</strong> (state-time dependency).</li>
 </ol>
 <p>These two situations can be modelled using the <code>model_time</code> (or its alias <code>markov_cycle</code>) and <code>state_time</code> variables, respectively.</p>
-<div id="how-to-specifiy-time-dependency" class="section level2">
-<h2 class="hasAnchor">
-<a href="#how-to-specifiy-time-dependency" class="anchor"></a>How to specifiy time-dependency</h2>
+<div class="section level2">
+<h2 id="how-to-specifiy-time-dependency">How to specifiy time-dependency<a class="anchor" aria-label="anchor" href="#how-to-specifiy-time-dependency"></a>
+</h2>
 <p>These variables takes increasing values with each cycles, starting from 1. For example the age of individuals at any moment can be defined as <code>Initial age + model_time</code>. The time an individual spends in a state is equal to <code>state_time</code>.</p>
 <p>Both variables can be used in <code><a href="../reference/define_parameters.html">define_parameters()</a></code>, <code><a href="../reference/define_state.html">define_state()</a></code>, or <code><a href="../reference/define_transition.html">define_transition()</a></code>:</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="../reference/define_parameters.html">define_parameters</a></span><span class="op">(</span>
-  mr <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Log.html">exp</a></span><span class="op">(</span><span class="op">-</span> <span class="va">state_time</span> <span class="op">*</span> <span class="va">lambda</span><span class="op">)</span>,
-  age <span class="op">=</span> <span class="fl">50</span> <span class="op">+</span> <span class="va">model_time</span>
-<span class="op">)</span></code></pre></div>
-<pre><code>## 2 unevaluated parameters.
-## 
-## mr = exp(-state_time * lambda)
-## age = 50 + model_time</code></pre>
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/define_parameters.html">define_parameters</a></span><span class="op">(</span></span>
+<span>  mr <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Log.html" class="external-link">exp</a></span><span class="op">(</span><span class="op">-</span> <span class="va">state_time</span> <span class="op">*</span> <span class="va">lambda</span><span class="op">)</span>,</span>
+<span>  age <span class="op">=</span> <span class="fl">50</span> <span class="op">+</span> <span class="va">model_time</span></span>
+<span><span class="op">)</span></span></code></pre></div>
+<pre><code><span><span class="co">## 2 unevaluated parameters.</span></span>
+<span><span class="co">## </span></span>
+<span><span class="co">## mr = exp(-state_time * lambda)</span></span>
+<span><span class="co">## age = 50 + model_time</span></span></code></pre>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="../reference/define_state.html">define_state</a></span><span class="op">(</span>
-  cost <span class="op">=</span> <span class="fl">100</span> <span class="op">-</span> <span class="va">state_time</span>,
-  effect <span class="op">=</span> <span class="fl">10</span>
-<span class="op">)</span></code></pre></div>
-<pre><code>## A state with 2 values.
-## 
-## cost = 100 - state_time
-## effect = 10</code></pre>
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/define_state.html">define_state</a></span><span class="op">(</span></span>
+<span>  cost <span class="op">=</span> <span class="fl">100</span> <span class="op">-</span> <span class="va">state_time</span>,</span>
+<span>  effect <span class="op">=</span> <span class="fl">10</span></span>
+<span><span class="op">)</span></span></code></pre></div>
+<pre><code><span><span class="co">## A state with 2 values.</span></span>
+<span><span class="co">## </span></span>
+<span><span class="co">## cost = 100 - state_time</span></span>
+<span><span class="co">## effect = 10</span></span></code></pre>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">f</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="fu"><a href="https://rdrr.io/r/base/MathFun.html">abs</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/Trig.html">sin</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span><span class="op">)</span>
-
-<span class="fu"><a href="../reference/define_transition.html">define_transition</a></span><span class="op">(</span>
-  <span class="va">C</span>,  <span class="fu">f</span><span class="op">(</span><span class="va">state_time</span><span class="op">)</span>,
-  <span class="fl">.1</span>, <span class="fl">.9</span>
-<span class="op">)</span></code></pre></div>
-<pre><code>## No named state -&gt; generating names.</code></pre>
-<pre><code>## A transition matrix, 2 states.
-## 
-##   A   B            
-## A C   f(state_time)
-## B 0.1 0.9</code></pre>
+<code class="sourceCode R"><span><span class="va">f</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="fu"><a href="https://rdrr.io/r/base/MathFun.html" class="external-link">abs</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/Trig.html" class="external-link">sin</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu"><a href="../reference/define_transition.html">define_transition</a></span><span class="op">(</span></span>
+<span>  <span class="va">C</span>,  <span class="fu">f</span><span class="op">(</span><span class="va">state_time</span><span class="op">)</span>,</span>
+<span>  <span class="fl">.1</span>, <span class="fl">.9</span></span>
+<span><span class="op">)</span></span></code></pre></div>
+<pre><code><span><span class="co">## No named state -&gt; generating names.</span></span></code></pre>
+<pre><code><span><span class="co">## A transition matrix, 2 states.</span></span>
+<span><span class="co">## </span></span>
+<span><span class="co">##   A   B            </span></span>
+<span><span class="co">## A C   f(state_time)</span></span>
+<span><span class="co">## B 0.1 0.9</span></span></code></pre>
 </div>
-<div id="details" class="section level2">
-<h2 class="hasAnchor">
-<a href="#details" class="anchor"></a>Details</h2>
+<div class="section level2">
+<h2 id="details">Details<a class="anchor" aria-label="anchor" href="#details"></a>
+</h2>
 <p>Using <code>model_time</code> in a model does not change the execution speed of the analysis. On the other hand adding <code>state_time</code> may slow down the analysis, especially if the model is run for many cycles <strong>and</strong> a transition probability depends on <code>state_time</code>.<a href="#fn1" class="footnote-ref" id="fnref1"><sup>1</sup></a></p>
 <p>To mitigate this drawback it is possible to limit the number of state expansion with <code>state_time_limit</code>. Because most time-varying values reach an asymptotic value quite fast, it is unnecessary to expand the states any further. The last cycle value is repeated until the end.</p>
 <p>The limit can be defined globally, per state, or per model and state. In the following example probabilities are kept constant after <em>10</em> cycles for state <strong>B</strong> and <em>20</em> cycles for state <strong>D</strong> in strategy <strong>I</strong>, and <em>15</em> cycles in state <strong>B</strong> in strategy <strong>II</strong>.</p>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="../reference/run_model.html">run_model</a></span><span class="op">(</span>
-  I <span class="op">=</span>  <span class="va">strat_1</span>,
-  II <span class="op">=</span> <span class="va">strat_2</span>,
-  cycles <span class="op">=</span> <span class="fl">100</span>,
-  state_time_limit <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>
-    I <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span>B <span class="op">=</span> <span class="fl">10</span>, D <span class="op">=</span> <span class="fl">20</span><span class="op">)</span>,
-    II <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span>B <span class="op">=</span> <span class="fl">15</span><span class="op">)</span>
-  <span class="op">)</span>
-<span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/run_model.html">run_model</a></span><span class="op">(</span></span>
+<span>  I <span class="op">=</span>  <span class="va">strat_1</span>,</span>
+<span>  II <span class="op">=</span> <span class="va">strat_2</span>,</span>
+<span>  cycles <span class="op">=</span> <span class="fl">100</span>,</span>
+<span>  state_time_limit <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span></span>
+<span>    I <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span>B <span class="op">=</span> <span class="fl">10</span>, D <span class="op">=</span> <span class="fl">20</span><span class="op">)</span>,</span>
+<span>    II <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span>B <span class="op">=</span> <span class="fl">15</span><span class="op">)</span></span>
+<span>  <span class="op">)</span></span>
+<span><span class="op">)</span></span></code></pre></div>
 </div>
 <div class="footnotes">
 <hr>
@@ -164,11 +159,13 @@
 
 
       <footer><div class="copyright">
-  <p>Developed by Kevin Zarca, Antoine Filipovic-Pierucci.</p>
+  <p></p>
+<p>Developed by Kevin Zarca, Antoine Filipovic-Pierucci.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
+  <p></p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.7.</p>
 </div>
 
       </footer>
@@ -176,6 +173,8 @@
 
   
 
+
+  
 
   </body>
 </html>

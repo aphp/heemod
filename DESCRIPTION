@@ -1,6 +1,6 @@
 Package: heemod
 Title: Markov Models for Health Economic Evaluations
-Version: 0.14.5
+Version: 0.15.1.9001
 Authors@R: c(
     person("Kevin", "Zarca", email = "kevin.zarca@gmail.com", role = c("aut", "cre")),
     person("Antoine", "Filipovic-Pierucci", role = "aut"),
@@ -20,7 +20,7 @@ Description: An implementation of the modelling and reporting features described
     (semi-Markov and non-homogeneous Markov models), etc.
 Depends: R (>= 3.6.0)
 Imports:
-    dplyr (>= 1.0.4),
+    dplyr (>= 1.0.9),
     ggplot2 (>= 3.3.3),
     lazyeval (>= 0.2.2),
     memoise (>= 2.0.0),
@@ -28,12 +28,12 @@ Imports:
     plyr (>= 1.8.6),
     pryr (>= 0.1.4),
     tibble (>= 3.0.6),
-    rlang (>= 0.4.1), 
+    rlang (>= 1.0.2), 
     purrr (>= 0.3.4)
 License: GPL (>= 3)
 LazyData: true
 VignetteBuilder: knitr
-RoxygenNote: 7.1.1
+RoxygenNote: 7.2.3
 Suggests:
     BCEA,
     diagram,
@@ -53,5 +53,6 @@ Suggests:
     triangle,
     magrittr,
     cli
-BugReports: https://github.com/pierucci/heemod/issues
+BugReports: https://github.com/aphp/heemod/issues
 Roxygen: list(markdown = TRUE)
+Encoding: UTF-8

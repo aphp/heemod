@@ -78,7 +78,7 @@ run_dsa <- function(model, dsa) {
   
   res <- res %>% 
     dplyr::do(get_total_state_values(.data$.mod)) %>% 
-    dplyr::bind_cols(res %>% dplyr::select(-.data$.mod)) %>% 
+    dplyr::bind_cols(res %>% dplyr::select(-.mod)) %>% 
     dplyr::ungroup() %>% 
     dplyr::mutate(
       .par_value_eval = unlist(e_newdata)) %>% 

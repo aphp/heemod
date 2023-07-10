@@ -19,6 +19,8 @@
 <![endif]-->
 </head>
 <body data-spy="scroll" data-target="#toc">
+    
+
     <div class="container template-article">
       <header><div class="navbar navbar-default navbar-fixed-top" role="navigation">
   <div class="container">
@@ -31,18 +33,12 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">heemod</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.14.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.15.0</span>
       </span>
     </div>
 
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
-<li>
-  <a href="../index.html">
-    <span class="fas fa fas fa-home fa-lg"></span>
-     
-  </a>
-</li>
 <li>
   <a href="../reference/index.html">Reference</a>
 </li>
@@ -55,8 +51,8 @@
       </ul>
 <ul class="nav navbar-nav navbar-right">
 <li>
-  <a href="https://github.com/pierucci/heemod/">
-    <span class="fab fa fab fa-github fa-lg"></span>
+  <a href="https://github.com/aphp/heemod/" class="external-link">
+    <span class="fab fa-github fa-lg"></span>
      
   </a>
 </li>
@@ -70,30 +66,29 @@
 
       
 
-      </header><script src="f_sensitivity_files/accessible-code-block-0.0.1/empty-anchor.js"></script><link href="f_sensitivity_files/anchor-sections-1.0/anchor-sections.css" rel="stylesheet">
-<script src="f_sensitivity_files/anchor-sections-1.0/anchor-sections.js"></script><div class="row">
+      </header><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>Deterministic Sensitivity Analysis</h1>
             
-            <h4 class="date">2020-12-07</h4>
+            <h4 data-toc-skip class="date">2023-02-14</h4>
       
-      <small class="dont-index">Source: <a href="https://github.com/pierucci/heemod/blob/master/vignettes/f_sensitivity.Rmd"><code>vignettes/f_sensitivity.Rmd</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/aphp/heemod/blob/HEAD/vignettes/f_sensitivity.Rmd" class="external-link"><code>vignettes/f_sensitivity.Rmd</code></a></small>
       <div class="hidden name"><code>f_sensitivity.Rmd</code></div>
 
     </div>
 
     
     
-<div id="introduction" class="section level2">
-<h2 class="hasAnchor">
-<a href="#introduction" class="anchor"></a>Introduction</h2>
+<div class="section level2">
+<h2 id="introduction">Introduction<a class="anchor" aria-label="anchor" href="#introduction"></a>
+</h2>
 <p>The objective of deterministic sensitivity analysis is to assess how model results are sensitive to parameter values. Parameter values are changed through upper and lower bounds, and the results are reported.</p>
 <p>Sensitivity analysis is distinct from probabilistic uncertainty analysis: whereas in PSA the objective is to estimate the effect of global uncertainty on model results, in DSA the objective is to assess the sensitivity of results to variations of individual parameters. Both analyses are complementary.</p>
 </div>
-<div id="define-the-analysis" class="section level2">
-<h2 class="hasAnchor">
-<a href="#define-the-analysis" class="anchor"></a>Define the analysis</h2>
+<div class="section level2">
+<h2 id="define-the-analysis">Define the analysis<a class="anchor" aria-label="anchor" href="#define-the-analysis"></a>
+</h2>
 <p>This example uses the HIV drug model defined in <code>vignette("e-probabilistic", "heemod")</code>. See this vignette for an explanation of the model. Note that as in PSA, parameters need to be defined in <code><a href="../reference/define_parameters.html">define_parameters()</a></code> in order to be modified in a DSA.</p>
 <p>In this example we will study the sensitivity of cost to 4 parameters:</p>
 <ul>
@@ -106,138 +101,132 @@
 </ul>
 <p>Upper and lower values for the paramters are given to <code><a href="../reference/define_dsa.html">define_dsa()</a></code>.</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">se</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/define_dsa.html">define_dsa</a></span><span class="op">(</span>
-  <span class="va">rr</span>, <span class="fl">.4</span>, <span class="fl">.6</span>,
-  
-  <span class="va">cost_zido</span>, <span class="fl">1500</span>, <span class="fl">3000</span>,
-  <span class="va">cost_lami</span>, <span class="fl">1500</span>, <span class="fl">3000</span>,
-  
-  <span class="va">dr</span>, <span class="fl">.04</span>, <span class="fl">.08</span>
-<span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">se</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/define_dsa.html">define_dsa</a></span><span class="op">(</span></span>
+<span>  <span class="va">rr</span>, <span class="fl">.4</span>, <span class="fl">.6</span>,</span>
+<span>  </span>
+<span>  <span class="va">cost_zido</span>, <span class="fl">1500</span>, <span class="fl">3000</span>,</span>
+<span>  <span class="va">cost_lami</span>, <span class="fl">1500</span>, <span class="fl">3000</span>,</span>
+<span>  </span>
+<span>  <span class="va">dr</span>, <span class="fl">.04</span>, <span class="fl">.08</span></span>
+<span><span class="op">)</span></span></code></pre></div>
 <p>We then run the sensitivity analysis with <code><a href="../reference/run_dsa.html">run_dsa()</a></code>, using <code>res_mod</code> the result from <code><a href="../reference/run_model.html">run_model()</a></code> as input.</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">res_dsa</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/run_dsa.html">run_dsa</a></span><span class="op">(</span>
-  model <span class="op">=</span> <span class="va">res_mod</span>,
-  dsa <span class="op">=</span> <span class="va">se</span>
-<span class="op">)</span></code></pre></div>
-<pre><code>## Running DSA on strategy 'mono'...</code></pre>
-<pre><code>## Running DSA on strategy 'comb'...</code></pre>
+<code class="sourceCode R"><span><span class="va">res_dsa</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/run_dsa.html">run_dsa</a></span><span class="op">(</span></span>
+<span>  model <span class="op">=</span> <span class="va">res_mod</span>,</span>
+<span>  dsa <span class="op">=</span> <span class="va">se</span></span>
+<span><span class="op">)</span></span></code></pre></div>
+<pre><code><span><span class="co">## Running DSA on strategy 'mono'...</span></span></code></pre>
+<pre><code><span><span class="co">## Running DSA on strategy 'comb'...</span></span></code></pre>
 </div>
-<div id="interpretation" class="section level2">
-<h2 class="hasAnchor">
-<a href="#interpretation" class="anchor"></a>Interpretation</h2>
+<div class="section level2">
+<h2 id="interpretation">Interpretation<a class="anchor" aria-label="anchor" href="#interpretation"></a>
+</h2>
 <p>All the results can be displayed in a table.</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">res_dsa</span></code></pre></div>
-<pre><code>## A sensitivity analysis on 4 parameters.
-## 
-## Parameters:
-##   -rr
-##   -cost_zido
-##   -cost_lami
-##   -dr
-## 
-## Sensitivity analysis:
-## 
-##                        cost_health cost_drugs cost_total life_year .n_indiv
-## mono, cost_lami = 1500 46725886    19279596   48417031    8463.387 1000    
-## comb, cost_lami = 1500 71019861    53642502   79593035   14198.651 1000    
-## mono, cost_lami = 3000 46725886    19279596   48417031    8463.387 1000    
-## comb, cost_lami = 3000 71019861    74940478   93812382   14198.651 1000    
-## mono, cost_zido = 1500 46725886    12695081   43363208    8463.387 1000    
-## comb, cost_zido = 1500 71019861    50916361   77772959   14198.651 1000    
-## mono, cost_zido = 3000 46725886    25390162   53107083    8463.387 1000    
-## comb, cost_zido = 3000 71019861    72214337   91992306   14198.651 1000    
-## mono, dr = 0.04        46725886    19279596   53238469    8463.387 1000    
-## comb, dr = 0.04        71019861    61962911   97480846   14198.651 1000    
-## mono, dr = 0.08        46725886    19279596   44351921    8463.387 1000    
-## comb, dr = 0.08        71019861    61962911   75259528   14198.651 1000    
-## mono, rr = 0.4         46725886    19279596   48417031    8463.387 1000    
-## comb, rr = 0.4         74749377    69178956   89573275   15852.190 1000    
-## mono, rr = 0.6         46725886    19279596   48417031    8463.387 1000    
-## comb, rr = 0.6         66652719    56216918   80800674   12881.970 1000    
-##                        .par_value_eval Cost     Effect   ICER     Cost Diff.
-## mono, cost_lami = 1500 1500.00             0.00 0.000000 -        -         
-## comb, cost_lami = 1500 1500.00         31176.00 5.735263 5435.845 31176.00  
-## mono, cost_lami = 3000 3000.00             0.00 0.000000 -        -         
-## comb, cost_lami = 3000 3000.00         45395.35 5.735263 7915.129 45395.35  
-## mono, cost_zido = 1500 1500.00             0.00 0.000000 -        -         
-## comb, cost_zido = 1500 1500.00         34409.75 5.735263 5999.681 34409.75  
-## mono, cost_zido = 3000 3000.00             0.00 0.000000 -        -         
-## comb, cost_zido = 3000 3000.00         38885.22 5.735263 6780.024 38885.22  
-## mono, dr = 0.04           0.04             0.00 0.000000 -        -         
-## comb, dr = 0.04           0.04         44242.38 5.735263 7714.097 44242.38  
-## mono, dr = 0.08           0.08             0.00 0.000000 -        -         
-## comb, dr = 0.08           0.08         30907.61 5.735263 5389.047 30907.61  
-## mono, rr = 0.4            0.40             0.00 0.000000 -        -         
-## comb, rr = 0.4            0.40         41156.24 7.388802 5570.083 41156.24  
-## mono, rr = 0.6            0.60             0.00 0.000000 -        -         
-## comb, rr = 0.6            0.60         32383.64 4.418583 7328.966 32383.64  
-##                        Effect Diff. Ref. .nmb     .dnmb   
-## mono, cost_lami = 1500 -            -         0.0 -       
-## comb, cost_lami = 1500 5.735263     mono 140881.9 140881.9
-## mono, cost_lami = 3000 -            -         0.0 -       
-## comb, cost_lami = 3000 5.735263     mono 126662.5 126662.5
-## mono, cost_zido = 1500 -            -         0.0 -       
-## comb, cost_zido = 1500 5.735263     mono 137648.1 137648.1
-## mono, cost_zido = 3000 -            -         0.0 -       
-## comb, cost_zido = 3000 5.735263     mono 133172.7 133172.7
-## mono, dr = 0.04        -            -         0.0 -       
-## comb, dr = 0.04        5.735263     mono 127815.5 127815.5
-## mono, dr = 0.08        -            -         0.0 -       
-## comb, dr = 0.08        5.735263     mono 141150.3 141150.3
-## mono, rr = 0.4         -            -         0.0 -       
-## comb, rr = 0.4         7.388802     mono 180507.8 180507.8
-## mono, rr = 0.6         -            -         0.0 -       
-## comb, rr = 0.6         4.418583     mono 100173.8 100173.8</code></pre>
+<code class="sourceCode R"><span><span class="va">res_dsa</span></span></code></pre></div>
+<pre><code><span><span class="co">## A sensitivity analysis on 4 parameters.</span></span>
+<span><span class="co">## </span></span>
+<span><span class="co">## Parameters:</span></span>
+<span><span class="co">##   -rr</span></span>
+<span><span class="co">##   -cost_zido</span></span>
+<span><span class="co">##   -cost_lami</span></span>
+<span><span class="co">##   -dr</span></span>
+<span><span class="co">## </span></span>
+<span><span class="co">## Sensitivity analysis:</span></span>
+<span><span class="co">## </span></span>
+<span><span class="co">##                        cost_health cost_drugs cost_total life_year .n_indiv</span></span>
+<span><span class="co">## mono, cost_lami = 1500 46725886    19279596   48417031    8463.387 1000    </span></span>
+<span><span class="co">## comb, cost_lami = 1500 71019861    53642502   79593035   14198.651 1000    </span></span>
+<span><span class="co">## mono, cost_lami = 3000 46725886    19279596   48417031    8463.387 1000    </span></span>
+<span><span class="co">## comb, cost_lami = 3000 71019861    74940478   93812382   14198.651 1000    </span></span>
+<span><span class="co">## mono, cost_zido = 1500 46725886    12695081   43363208    8463.387 1000    </span></span>
+<span><span class="co">## comb, cost_zido = 1500 71019861    50916361   77772959   14198.651 1000    </span></span>
+<span><span class="co">## mono, cost_zido = 3000 46725886    25390162   53107083    8463.387 1000    </span></span>
+<span><span class="co">## comb, cost_zido = 3000 71019861    72214337   91992306   14198.651 1000    </span></span>
+<span><span class="co">## mono, dr = 0.04        46725886    19279596   53238469    8463.387 1000    </span></span>
+<span><span class="co">## comb, dr = 0.04        71019861    61962911   97480846   14198.651 1000    </span></span>
+<span><span class="co">## mono, dr = 0.08        46725886    19279596   44351921    8463.387 1000    </span></span>
+<span><span class="co">## comb, dr = 0.08        71019861    61962911   75259528   14198.651 1000    </span></span>
+<span><span class="co">## mono, rr = 0.4         46725886    19279596   48417031    8463.387 1000    </span></span>
+<span><span class="co">## comb, rr = 0.4         74749377    69178956   89573275   15852.190 1000    </span></span>
+<span><span class="co">## mono, rr = 0.6         46725886    19279596   48417031    8463.387 1000    </span></span>
+<span><span class="co">## comb, rr = 0.6         66652719    56216918   80800674   12881.970 1000    </span></span>
+<span><span class="co">##                        .par_value_eval Cost     Effect   ICER     Cost Diff.</span></span>
+<span><span class="co">## mono, cost_lami = 1500 1500.00             0.00 0.000000 -        -         </span></span>
+<span><span class="co">## comb, cost_lami = 1500 1500.00         31176.00 5.735263 5435.845 31176.00  </span></span>
+<span><span class="co">## mono, cost_lami = 3000 3000.00             0.00 0.000000 -        -         </span></span>
+<span><span class="co">## comb, cost_lami = 3000 3000.00         45395.35 5.735263 7915.129 45395.35  </span></span>
+<span><span class="co">## mono, cost_zido = 1500 1500.00             0.00 0.000000 -        -         </span></span>
+<span><span class="co">## comb, cost_zido = 1500 1500.00         34409.75 5.735263 5999.681 34409.75  </span></span>
+<span><span class="co">## mono, cost_zido = 3000 3000.00             0.00 0.000000 -        -         </span></span>
+<span><span class="co">## comb, cost_zido = 3000 3000.00         38885.22 5.735263 6780.024 38885.22  </span></span>
+<span><span class="co">## mono, dr = 0.04           0.04             0.00 0.000000 -        -         </span></span>
+<span><span class="co">## comb, dr = 0.04           0.04         44242.38 5.735263 7714.097 44242.38  </span></span>
+<span><span class="co">## mono, dr = 0.08           0.08             0.00 0.000000 -        -         </span></span>
+<span><span class="co">## comb, dr = 0.08           0.08         30907.61 5.735263 5389.047 30907.61  </span></span>
+<span><span class="co">## mono, rr = 0.4            0.40             0.00 0.000000 -        -         </span></span>
+<span><span class="co">## comb, rr = 0.4            0.40         41156.24 7.388802 5570.083 41156.24  </span></span>
+<span><span class="co">## mono, rr = 0.6            0.60             0.00 0.000000 -        -         </span></span>
+<span><span class="co">## comb, rr = 0.6            0.60         32383.64 4.418583 7328.966 32383.64  </span></span>
+<span><span class="co">##                        Effect Diff. Ref. .nmb     .dnmb   </span></span>
+<span><span class="co">## mono, cost_lami = 1500 -            -         0.0 -       </span></span>
+<span><span class="co">## comb, cost_lami = 1500 5.735263     mono 140881.9 140881.9</span></span>
+<span><span class="co">## mono, cost_lami = 3000 -            -         0.0 -       </span></span>
+<span><span class="co">## comb, cost_lami = 3000 5.735263     mono 126662.5 126662.5</span></span>
+<span><span class="co">## mono, cost_zido = 1500 -            -         0.0 -       </span></span>
+<span><span class="co">## comb, cost_zido = 1500 5.735263     mono 137648.1 137648.1</span></span>
+<span><span class="co">## mono, cost_zido = 3000 -            -         0.0 -       </span></span>
+<span><span class="co">## comb, cost_zido = 3000 5.735263     mono 133172.7 133172.7</span></span>
+<span><span class="co">## mono, dr = 0.04        -            -         0.0 -       </span></span>
+<span><span class="co">## comb, dr = 0.04        5.735263     mono 127815.5 127815.5</span></span>
+<span><span class="co">## mono, dr = 0.08        -            -         0.0 -       </span></span>
+<span><span class="co">## comb, dr = 0.08        5.735263     mono 141150.3 141150.3</span></span>
+<span><span class="co">## mono, rr = 0.4         -            -         0.0 -       </span></span>
+<span><span class="co">## comb, rr = 0.4         7.388802     mono 180507.8 180507.8</span></span>
+<span><span class="co">## mono, rr = 0.6         -            -         0.0 -       </span></span>
+<span><span class="co">## comb, rr = 0.6         4.418583     mono 100173.8 100173.8</span></span></code></pre>
 <p>Two distinct plot types are available. The basic plot (<code>type = "simple"</code>) displays cost variations for each model, around the base cost.</p>
 <p>As expected <code>mono</code> model costs are not senstive to <code>cost_lami</code>, since this drug was not given to this group. Similarly it is not sensitive to <code>rr</code>, because this parameters only modifies transition probabilities in the other model.</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="va">res_dsa</span>,
-     strategy <span class="op">=</span> <span class="st">"mono"</span>,
-     result <span class="op">=</span> <span class="st">"cost"</span>,
-     type <span class="op">=</span> <span class="st">"simple"</span><span class="op">)</span></code></pre></div>
-<pre><code>## Joining, by = ".strategy_names"</code></pre>
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">res_dsa</span>,</span>
+<span>     strategy <span class="op">=</span> <span class="st">"mono"</span>,</span>
+<span>     result <span class="op">=</span> <span class="st">"cost"</span>,</span>
+<span>     type <span class="op">=</span> <span class="st">"simple"</span><span class="op">)</span></span></code></pre></div>
 <p><img src="f_sensitivity_files/figure-html/unnamed-chunk-5-1.png" width="576" style="display: block; margin: auto;"></p>
 <p>On the other hand the <code>comb</code> model cost is sensitive to all 4 parameters.</p>
-<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="va">res_dsa</span>,
-     strategy <span class="op">=</span> <span class="st">"comb"</span>,
-     result <span class="op">=</span> <span class="st">"cost"</span>,
-     type <span class="op">=</span> <span class="st">"simple"</span><span class="op">)</span></code></pre></div>
-<pre><code>## Joining, by = ".strategy_names"</code></pre>
+<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">res_dsa</span>,</span>
+<span>     strategy <span class="op">=</span> <span class="st">"comb"</span>,</span>
+<span>     result <span class="op">=</span> <span class="st">"cost"</span>,</span>
+<span>     type <span class="op">=</span> <span class="st">"simple"</span><span class="op">)</span></span></code></pre></div>
 <p><img src="f_sensitivity_files/figure-html/unnamed-chunk-6-1.png" width="576" style="display: block; margin: auto;"></p>
 <p>And its effectiveness is sensitive to <code>rr</code></p>
-<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="va">res_dsa</span>, 
-     strategy <span class="op">=</span> <span class="st">"comb"</span>,
-     result <span class="op">=</span> <span class="st">"effect"</span>,
-     type <span class="op">=</span> <span class="st">"simple"</span><span class="op">)</span></code></pre></div>
-<pre><code>## Joining, by = ".strategy_names"</code></pre>
+<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">res_dsa</span>, </span>
+<span>     strategy <span class="op">=</span> <span class="st">"comb"</span>,</span>
+<span>     result <span class="op">=</span> <span class="st">"effect"</span>,</span>
+<span>     type <span class="op">=</span> <span class="st">"simple"</span><span class="op">)</span></span></code></pre></div>
 <p><img src="f_sensitivity_files/figure-html/unnamed-chunk-7-1.png" width="576" style="display: block; margin: auto;"></p>
 <p>The difference plot (<code>type = "difference"</code>) displays the difference between the specified model <code>comb</code> and the reference model <code>mono</code>.</p>
-<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="va">res_dsa</span>,
-     strategy <span class="op">=</span> <span class="st">"comb"</span>,
-     result <span class="op">=</span> <span class="st">"cost"</span>,
-     type <span class="op">=</span> <span class="st">"difference"</span><span class="op">)</span></code></pre></div>
-<pre><code>## Joining, by = ".strategy_names"</code></pre>
+<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">res_dsa</span>,</span>
+<span>     strategy <span class="op">=</span> <span class="st">"comb"</span>,</span>
+<span>     result <span class="op">=</span> <span class="st">"cost"</span>,</span>
+<span>     type <span class="op">=</span> <span class="st">"difference"</span><span class="op">)</span></span></code></pre></div>
 <p><img src="f_sensitivity_files/figure-html/unnamed-chunk-8-1.png" width="576" style="display: block; margin: auto;"></p>
-<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="va">res_dsa</span>,
-     strategy <span class="op">=</span> <span class="st">"comb"</span>,
-     result <span class="op">=</span> <span class="st">"icer"</span>,
-     type <span class="op">=</span> <span class="st">"difference"</span><span class="op">)</span></code></pre></div>
-<pre><code>## Joining, by = ".strategy_names"</code></pre>
+<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">res_dsa</span>,</span>
+<span>     strategy <span class="op">=</span> <span class="st">"comb"</span>,</span>
+<span>     result <span class="op">=</span> <span class="st">"icer"</span>,</span>
+<span>     type <span class="op">=</span> <span class="st">"difference"</span><span class="op">)</span></span></code></pre></div>
 <p><img src="f_sensitivity_files/figure-html/unnamed-chunk-8-2.png" width="576" style="display: block; margin: auto;"></p>
 <p>It is also possible to leave the high and low parameter values off the plot:</p>
-<div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="va">res_dsa</span>,
-     strategy <span class="op">=</span> <span class="st">"comb"</span>,
-     result <span class="op">=</span> <span class="st">"icer"</span>,
-     type <span class="op">=</span> <span class="st">"difference"</span>,
-     limits_by_bars <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></code></pre></div>
-<pre><code>## Joining, by = ".strategy_names"</code></pre>
+<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">res_dsa</span>,</span>
+<span>     strategy <span class="op">=</span> <span class="st">"comb"</span>,</span>
+<span>     result <span class="op">=</span> <span class="st">"icer"</span>,</span>
+<span>     type <span class="op">=</span> <span class="st">"difference"</span>,</span>
+<span>     limits_by_bars <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></code></pre></div>
 <p><img src="f_sensitivity_files/figure-html/unnamed-chunk-9-1.png" width="576" style="display: block; margin: auto;"></p>
 </div>
   </div>
@@ -253,11 +242,13 @@
 
 
       <footer><div class="copyright">
-  <p>Developed by Kevin Zarca, Antoine Filipovic-Pierucci.</p>
+  <p></p>
+<p>Developed by Kevin Zarca, Antoine Filipovic-Pierucci.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
+  <p></p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.7.</p>
 </div>
 
       </footer>
@@ -265,6 +256,8 @@
 
   
 
+
+  
 
   </body>
 </html>

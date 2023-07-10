@@ -1,3 +1,9 @@
+## heemod 0.15.1
+Compliance with r-devel
+
+## heemod 0.15.0
+  * Performance improvements: using state_time is much faster now, as well as  probabilistic sensitivity analyses
+
 ## heemod 0.14.5
   * Rebuild vignettes
   * fix guides(<scale> = FALSE)

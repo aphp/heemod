@@ -19,6 +19,8 @@
 <![endif]-->
 </head>
 <body data-spy="scroll" data-target="#toc">
+    
+
     <div class="container template-article">
       <header><div class="navbar navbar-default navbar-fixed-top" role="navigation">
   <div class="container">
@@ -31,18 +33,12 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">heemod</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.14.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.15.0</span>
       </span>
     </div>
 
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
-<li>
-  <a href="../index.html">
-    <span class="fas fa fas fa-home fa-lg"></span>
-     
-  </a>
-</li>
 <li>
   <a href="../reference/index.html">Reference</a>
 </li>
@@ -55,8 +51,8 @@
       </ul>
 <ul class="nav navbar-nav navbar-right">
 <li>
-  <a href="https://github.com/pierucci/heemod/">
-    <span class="fab fa fab fa-github fa-lg"></span>
+  <a href="https://github.com/aphp/heemod/" class="external-link">
+    <span class="fab fa-github fa-lg"></span>
      
   </a>
 </li>
@@ -70,15 +66,14 @@
 
       
 
-      </header><script src="h_tabular_files/accessible-code-block-0.0.1/empty-anchor.js"></script><link href="h_tabular_files/anchor-sections-1.0/anchor-sections.css" rel="stylesheet">
-<script src="h_tabular_files/anchor-sections-1.0/anchor-sections.js"></script><div class="row">
+      </header><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>Tabular Input</h1>
             
-            <h4 class="date">2020-12-07</h4>
+            <h4 data-toc-skip class="date">2023-02-14</h4>
       
-      <small class="dont-index">Source: <a href="https://github.com/pierucci/heemod/blob/master/vignettes/h_tabular.Rmd"><code>vignettes/h_tabular.Rmd</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/aphp/heemod/blob/HEAD/vignettes/h_tabular.Rmd" class="external-link"><code>vignettes/h_tabular.Rmd</code></a></small>
       <div class="hidden name"><code>h_tabular.Rmd</code></div>
 
     </div>
@@ -87,17 +82,17 @@
     
 <p>In most of the <code>heemod</code> vignettes models are defined through <code>R</code> code. But models with large numbers of states and transition probabilities might be unwieldy to input at the keyboard, and could be conveniently specified by file inputs.</p>
 <p>This vignette demonstrates how to make and use files to input models to <code>heemod</code>. The files can then be used to run a suite of analyses (including deterministic and probabilistic sensitivity analyses, acceptability curve calculation, etc.) and optionally save results to a folder.</p>
-<div id="introduction" class="section level2">
-<h2 class="hasAnchor">
-<a href="#introduction" class="anchor"></a>Introduction</h2>
+<div class="section level2">
+<h2 id="introduction">Introduction<a class="anchor" aria-label="anchor" href="#introduction"></a>
+</h2>
 <p>The inputs for state definition, transition matrices, model options, etc. (referenced as <em>tabular inputs</em>) must be provided via <code>csv</code>, <code>xls</code> or <code>xlsx</code> files.<a href="#fn1" class="footnote-ref" id="fnref1"><sup>1</sup></a> Columns starting by <code>.comment</code> are ignored, as well as blank rows.</p>
 <p>These inputs must be provided in separate files. The path to these files is specified in a <em>reference file</em>, that acts as an ‘umbrella’ file atop of the other inputs. The reference file default name is <code>REFERENCE.csv</code>.</p>
 <p><em>Warning for users of the <code>xls</code> format:</em><br>
 The <code>xls</code> files are read with the <code>readxl</code> package. As of version 0.1.1 if a column contains strings and numeric values the numeric values are rounded to 6 decimal places. We therefore recommend to use solely the <code>csv</code> or <code>xlsx</code> format.</p>
 </div>
-<div id="reference-file" class="section level2">
-<h2 class="hasAnchor">
-<a href="#reference-file" class="anchor"></a>Reference file</h2>
+<div class="section level2">
+<h2 id="reference-file">Reference file<a class="anchor" aria-label="anchor" href="#reference-file"></a>
+</h2>
 <p>This file contains two mandatory columns <code>data</code> and <code>file</code>, as well as optional columns with comments, which will be ignored. The <code>data</code> column must contain the following keywords:</p>
 <ol style="list-style-type: decimal">
 <li>
@@ -159,11 +154,11 @@ The <code>xls</code> files are read with the <code>readxl</code> package. As of 
 </table>
 <p>All the files and directories must be in the reference file directory. Files or directories located elsewhere must be given by absolute path and marked by a <code>TRUE</code> value in an optional <code>absolute_path</code> column.</p>
 </div>
-<div id="states-file" class="section level2">
-<h2 class="hasAnchor">
-<a href="#states-file" class="anchor"></a>States file</h2>
+<div class="section level2">
+<h2 id="states-file">States file<a class="anchor" aria-label="anchor" href="#states-file"></a>
+</h2>
 <p>A state file contains 2 mandatory columns: <code>.model</code> and <code>.state</code>, corresponding to strategy and state names respectively. The other columns correspond to the state values.</p>
-<p>Discounting rates can be specified in <code>.discount.*</code> columns, where <code><a href="https://rdrr.io/r/base/Arithmetic.html">*</a></code> stands for the name of the value to discount. Values are always discounted at the same rate in all states.<a href="#fn2" class="footnote-ref" id="fnref2"><sup>2</sup></a></p>
+<p>Discounting rates can be specified in <code>.discount.*</code> columns, where <code>*</code> stands for the name of the value to discount. Values are always discounted at the same rate in all states.<a href="#fn2" class="footnote-ref" id="fnref2"><sup>2</sup></a></p>
 <p>Values specified for only one strategy will be carried over to others. Only values that differ from one strategy to another must be specified separately for each strategy.</p>
 <table class="table">
 <thead><tr class="header">
@@ -220,9 +215,9 @@ The <code>xls</code> files are read with the <code>readxl</code> package. As of 
 </table>
 <p>State values that do not change between models need only be specified once (such as all states except <code>PrimaryTHR</code> in the <code>new</code> model) and will automatically be repeated between models.</p>
 </div>
-<div id="transition-probabilities" class="section level2">
-<h2 class="hasAnchor">
-<a href="#transition-probabilities" class="anchor"></a>Transition probabilities</h2>
+<div class="section level2">
+<h2 id="transition-probabilities">Transition probabilities<a class="anchor" aria-label="anchor" href="#transition-probabilities"></a>
+</h2>
 <p>A transition probabilities file contains 4 columns:</p>
 <ul>
 <li>
@@ -319,9 +314,9 @@ The <code>xls</code> files are read with the <code>readxl</code> package. As of 
 <p>A probability can be defined by any expression: a number, <code>C</code>, a different parameter name (specified in the parameter file), or a function call.</p>
 <p>As with the state file above probabilities specified for only one strategy will be carried over to others. Only probabilities that differ from one strategy to another must be specified separately for each strategy. Unspecified transition probabilities are assumed to be 0.</p>
 </div>
-<div id="parameters" class="section level2">
-<h2 class="hasAnchor">
-<a href="#parameters" class="anchor"></a>Parameters</h2>
+<div class="section level2">
+<h2 id="parameters">Parameters<a class="anchor" aria-label="anchor" href="#parameters"></a>
+</h2>
 <p>A parameter file contains 2 mandatory columns: the parameter names <code>parameter</code> and the values <code>value</code>.</p>
 <p>Optional columns can be added to perform determinist or probabilist sensitivity analysis (DSA and PSA). <code>low</code> and <code>high</code> columns specify the lower and upper bounds of parameter values for DSA, while <code>psa</code> contains the parameter distribution for PSA.</p>
 <table class="table">
@@ -457,14 +452,14 @@ The <code>xls</code> files are read with the <code>readxl</code> package. As of 
 <p>A parameter can be specified as any expression: as a number, through a previously defined parameter, with a mathematical formula or a function call.</p>
 <p>The <code><a href="../reference/look_up.html">look_up()</a></code> function can be used to look up parameter values in external reference tables (see section <strong>User-defined data</strong>), if a <code>data</code> argument is given in the reference file (as for the <code>mr</code> parameter in the above example).</p>
 </div>
-<div id="user-defined-data" class="section level2">
-<h2 class="hasAnchor">
-<a href="#user-defined-data" class="anchor"></a>User-defined data</h2>
+<div class="section level2">
+<h2 id="user-defined-data">User-defined data<a class="anchor" aria-label="anchor" href="#user-defined-data"></a>
+</h2>
 <p>Sometimes external data is required for an analysis (e.g. age-specific mortality rates). A <code>data</code> row in the reference file specifies a subdirectory containing data frames to be loaded (saved as <code>csv</code>, <code>xls</code>, or <code>xlsx</code> files). Multiple files can be placed here, and each filename (without the extension) is used as the dataframe name.<a href="#fn3" class="footnote-ref" id="fnref3"><sup>3</sup></a></p>
 </div>
-<div id="model-options" class="section level2">
-<h2 class="hasAnchor">
-<a href="#model-options" class="anchor"></a>Model options</h2>
+<div class="section level2">
+<h2 id="model-options">Model options<a class="anchor" aria-label="anchor" href="#model-options"></a>
+</h2>
 <p>Models specified by tabular input will run with defaults options. The following options can be specified in a non-mandatory <code>options</code> file:</p>
 <ul>
 <li>
@@ -515,123 +510,122 @@ The <code>xls</code> files are read with the <code>readxl</code> package. As of 
 </tbody>
 </table>
 </div>
-<div id="run-the-analysis" class="section level2">
-<h2 class="hasAnchor">
-<a href="#run-the-analysis" class="anchor"></a>Run the analysis</h2>
+<div class="section level2">
+<h2 id="run-the-analysis">Run the analysis<a class="anchor" aria-label="anchor" href="#run-the-analysis"></a>
+</h2>
 <p>The entire set of analysis specified in the tabular files can be run by the function <code>run_model_from_tabular()</code>.</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">result</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/run_model_tabular.html">run_model_tabular</a></span><span class="op">(</span>
-  location <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html">system.file</a></span><span class="op">(</span><span class="st">"tabular/thr"</span>, package <span class="op">=</span> <span class="st">"heemod"</span><span class="op">)</span>
-<span class="op">)</span></code></pre></div>
-<pre><code>## Running DSA on strategy 'standard'...</code></pre>
-<pre><code>## Running DSA on strategy 'new'...</code></pre>
-<pre><code>## Resampling strategy 'standard'...</code></pre>
-<pre><code>## Resampling strategy 'new'...</code></pre>
-<pre><code>## Updating strategy 'standard'...</code></pre>
-<pre><code>## Updating strategy 'new'...</code></pre>
+<code class="sourceCode R"><span><span class="va">result</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/run_model_tabular.html">run_model_tabular</a></span><span class="op">(</span></span>
+<span>  location <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"tabular/thr"</span>, package <span class="op">=</span> <span class="st">"heemod"</span><span class="op">)</span></span>
+<span><span class="op">)</span></span></code></pre></div>
+<pre><code><span><span class="co">## Running DSA on strategy 'standard'...</span></span></code></pre>
+<pre><code><span><span class="co">## Running DSA on strategy 'new'...</span></span></code></pre>
+<pre><code><span><span class="co">## Resampling strategy 'standard'...</span></span></code></pre>
+<pre><code><span><span class="co">## Resampling strategy 'new'...</span></span></code></pre>
+<pre><code><span><span class="co">## Updating strategy 'standard'...</span></span></code></pre>
+<pre><code><span><span class="co">## Updating strategy 'new'...</span></span></code></pre>
 <p>The results can then be interpreted as usual.</p>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">result</span><span class="op">$</span><span class="va">model_runs</span></code></pre></div>
-<pre><code>## 2 strategies run for 50 cycles.
-## 
-## Initial state counts:
-## 
-## PrimaryTHR = 1000
-## SuccessfulPrimary = 0
-## RevisionTHR = 0
-## SuccessfulRevision = 0
-## Death = 0
-## 
-## Counting method: 'beginning'.
-## 
-## Values:
-## 
-##               cost     qaly
-## standard 304266.73 14641.51
-## new       80960.18 14685.77
-## 
-## Efficiency frontier:
-## 
-## new
-## 
-## Differences:
-## 
-##     Cost Diff. Effect Diff.      ICER     Ref.
-## new  -223.3065   0.04426563 -5044.693 standard</code></pre>
+<code class="sourceCode R"><span><span class="va">result</span><span class="op">$</span><span class="va">model_runs</span></span></code></pre></div>
+<pre><code><span><span class="co">## 2 strategies run for 50 cycles.</span></span>
+<span><span class="co">## </span></span>
+<span><span class="co">## Initial state counts:</span></span>
+<span><span class="co">## </span></span>
+<span><span class="co">## PrimaryTHR = 1000</span></span>
+<span><span class="co">## SuccessfulPrimary = 0</span></span>
+<span><span class="co">## RevisionTHR = 0</span></span>
+<span><span class="co">## SuccessfulRevision = 0</span></span>
+<span><span class="co">## Death = 0</span></span>
+<span><span class="co">## </span></span>
+<span><span class="co">## Counting method: 'beginning'.</span></span>
+<span><span class="co">## </span></span>
+<span><span class="co">## Values:</span></span>
+<span><span class="co">## </span></span>
+<span><span class="co">##               cost     qaly</span></span>
+<span><span class="co">## standard 304266.73 14641.51</span></span>
+<span><span class="co">## new       80960.18 14685.77</span></span>
+<span><span class="co">## </span></span>
+<span><span class="co">## Efficiency frontier:</span></span>
+<span><span class="co">## </span></span>
+<span><span class="co">## new</span></span>
+<span><span class="co">## </span></span>
+<span><span class="co">## Differences:</span></span>
+<span><span class="co">## </span></span>
+<span><span class="co">##     Cost Diff. Effect Diff.      ICER     Ref.</span></span>
+<span><span class="co">## new  -223.3065   0.04426563 -5044.693 standard</span></span></code></pre>
 <div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="va">result</span><span class="op">$</span><span class="va">psa</span>,
-     type <span class="op">=</span> <span class="st">"ce"</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">result</span><span class="op">$</span><span class="va">psa</span>,</span>
+<span>     type <span class="op">=</span> <span class="st">"ce"</span><span class="op">)</span></span></code></pre></div>
 <p><img src="h_tabular_files/figure-html/unnamed-chunk-8-1.png" width="576" style="display: block; margin: auto;"></p>
 <div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="va">result</span><span class="op">$</span><span class="va">dsa</span>,
-     result <span class="op">=</span> <span class="st">"cost"</span>,
-     strategy <span class="op">=</span> <span class="st">"new"</span><span class="op">)</span></code></pre></div>
-<pre><code>## Joining, by = ".strategy_names"</code></pre>
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">result</span><span class="op">$</span><span class="va">dsa</span>,</span>
+<span>     result <span class="op">=</span> <span class="st">"cost"</span>,</span>
+<span>     strategy <span class="op">=</span> <span class="st">"new"</span><span class="op">)</span></span></code></pre></div>
 <p><img src="h_tabular_files/figure-html/unnamed-chunk-8-2.png" width="576" style="display: block; margin: auto;"></p>
-<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">result</span><span class="op">$</span><span class="va">demographics</span></code></pre></div>
-<pre><code>## An analysis re-run on 8 parameter sets.
-## 
-## * Weigths distribution:
-## 
-##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
-## 0.00219 0.01194 0.01482 0.01489 0.01994 0.02264 
-## 
-## Total weight: 0.1191407
-## 
-## * Values distribution:
-## 
-##                                  Min.       1st Qu.        Median          Mean
-## standard - Cost          3.892620e+01  4.392518e+01   993.2017848   708.5801137
-## standard - Effect        4.098947e+00  4.403150e+00    13.1467098    10.0487221
-## standard - Cost Diff.               -             -             -             -
-## standard - Effect Diff.             -             -             -             -
-## standard - Icer                     -             -             -             -
-## new - Cost               1.022389e+01  1.154223e+01   279.3495600   200.4971884
-## new - Effect             4.103704e+00  4.408382e+00    13.2912790    10.1504406
-## new - Cost Diff.        -9.174158e+02 -8.167007e+02  -713.8522248  -508.0829253
-## new - Effect Diff.       4.587073e-03  5.172165e-03     0.1418194     0.1017185
-## new - Icer              -6.263848e+03 -6.256979e+03 -5032.9834879 -5471.8546606
-##                               3rd Qu.          Max.
-## standard - Cost          1139.7822107  1284.1587856
-## standard - Effect          13.8274561    14.4422790
-## standard - Cost Diff.               -             -
-## standard - Effect Diff.             -             -
-## standard - Icer                     -             -
-## new - Cost                323.0815351   366.7429773
-## new - Effect               13.9929427    14.6290526
-## new - Cost Diff.          -32.3829481   -28.7023186
-## new - Effect Diff.          0.1643751     0.1867736
-## new - Icer              -4968.9381888 -4911.9130861
-## 
-## * Combined result:
-## 
-## 2 strategies run for 50 cycles.
-## 
-## Initial state counts:
-## 
-## PrimaryTHR = 1000
-## SuccessfulPrimary = 0
-## RevisionTHR = 0
-## SuccessfulRevision = 0
-## Death = 0
-## 
-## Counting method: 'beginning'.
-## 
-## Values:
-## 
-##              cost     qaly
-## standard 708580.1 10048.72
-## new      200497.2 10150.44
-## 
-## Efficiency frontier:
-## 
-## new
-## 
-## Differences:
-## 
-##     Cost Diff. Effect Diff.      ICER     Ref.
-## new  -508.0829    0.1017185 -4994.989 standard</code></pre>
+<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">result</span><span class="op">$</span><span class="va">demographics</span></span></code></pre></div>
+<pre><code><span><span class="co">## An analysis re-run on 8 parameter sets.</span></span>
+<span><span class="co">## </span></span>
+<span><span class="co">## * Weigths distribution:</span></span>
+<span><span class="co">## </span></span>
+<span><span class="co">##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. </span></span>
+<span><span class="co">## 0.00219 0.01194 0.01482 0.01489 0.01994 0.02264 </span></span>
+<span><span class="co">## </span></span>
+<span><span class="co">## Total weight: 0.1191407</span></span>
+<span><span class="co">## </span></span>
+<span><span class="co">## * Values distribution:</span></span>
+<span><span class="co">## </span></span>
+<span><span class="co">##                                  Min.       1st Qu.        Median          Mean</span></span>
+<span><span class="co">## standard - Cost          3.892620e+01  4.392518e+01   993.2017848   708.5801137</span></span>
+<span><span class="co">## standard - Effect        4.098947e+00  4.403150e+00    13.1467098    10.0487221</span></span>
+<span><span class="co">## standard - Cost Diff.               -             -             -             -</span></span>
+<span><span class="co">## standard - Effect Diff.             -             -             -             -</span></span>
+<span><span class="co">## standard - Icer                     -             -             -             -</span></span>
+<span><span class="co">## new - Cost               1.022389e+01  1.154223e+01   279.3495600   200.4971884</span></span>
+<span><span class="co">## new - Effect             4.103704e+00  4.408382e+00    13.2912790    10.1504406</span></span>
+<span><span class="co">## new - Cost Diff.        -9.174158e+02 -8.167007e+02  -713.8522248  -508.0829253</span></span>
+<span><span class="co">## new - Effect Diff.       4.587073e-03  5.172165e-03     0.1418194     0.1017185</span></span>
+<span><span class="co">## new - Icer              -6.263848e+03 -6.256979e+03 -5032.9834879 -5471.8546606</span></span>
+<span><span class="co">##                               3rd Qu.          Max.</span></span>
+<span><span class="co">## standard - Cost          1139.7822107  1284.1587856</span></span>
+<span><span class="co">## standard - Effect          13.8274561    14.4422790</span></span>
+<span><span class="co">## standard - Cost Diff.               -             -</span></span>
+<span><span class="co">## standard - Effect Diff.             -             -</span></span>
+<span><span class="co">## standard - Icer                     -             -</span></span>
+<span><span class="co">## new - Cost                323.0815351   366.7429773</span></span>
+<span><span class="co">## new - Effect               13.9929427    14.6290526</span></span>
+<span><span class="co">## new - Cost Diff.          -32.3829481   -28.7023186</span></span>
+<span><span class="co">## new - Effect Diff.          0.1643751     0.1867736</span></span>
+<span><span class="co">## new - Icer              -4968.9381888 -4911.9130861</span></span>
+<span><span class="co">## </span></span>
+<span><span class="co">## * Combined result:</span></span>
+<span><span class="co">## </span></span>
+<span><span class="co">## 2 strategies run for 50 cycles.</span></span>
+<span><span class="co">## </span></span>
+<span><span class="co">## Initial state counts:</span></span>
+<span><span class="co">## </span></span>
+<span><span class="co">## PrimaryTHR = 1000</span></span>
+<span><span class="co">## SuccessfulPrimary = 0</span></span>
+<span><span class="co">## RevisionTHR = 0</span></span>
+<span><span class="co">## SuccessfulRevision = 0</span></span>
+<span><span class="co">## Death = 0</span></span>
+<span><span class="co">## </span></span>
+<span><span class="co">## Counting method: 'beginning'.</span></span>
+<span><span class="co">## </span></span>
+<span><span class="co">## Values:</span></span>
+<span><span class="co">## </span></span>
+<span><span class="co">##              cost     qaly</span></span>
+<span><span class="co">## standard 708580.1 10048.72</span></span>
+<span><span class="co">## new      200497.2 10150.44</span></span>
+<span><span class="co">## </span></span>
+<span><span class="co">## Efficiency frontier:</span></span>
+<span><span class="co">## </span></span>
+<span><span class="co">## new</span></span>
+<span><span class="co">## </span></span>
+<span><span class="co">## Differences:</span></span>
+<span><span class="co">## </span></span>
+<span><span class="co">##     Cost Diff. Effect Diff.      ICER     Ref.</span></span>
+<span><span class="co">## new  -508.0829    0.1017185 -4994.989 standard</span></span></code></pre>
 </div>
 <div class="footnotes">
 <hr>
@@ -654,11 +648,13 @@ The <code>xls</code> files are read with the <code>readxl</code> package. As of 
 
 
       <footer><div class="copyright">
-  <p>Developed by Kevin Zarca, Antoine Filipovic-Pierucci.</p>
+  <p></p>
+<p>Developed by Kevin Zarca, Antoine Filipovic-Pierucci.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
+  <p></p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.7.</p>
 </div>
 
       </footer>
@@ -666,6 +662,8 @@ The <code>xls</code> files are read with the <code>readxl</code> package. As of 
 
   
 
+
+  
 
   </body>
 </html>

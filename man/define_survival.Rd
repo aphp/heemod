@@ -5,8 +5,8 @@
 \title{Define a Survival Distribution}
 \usage{
 define_survival(
-  distribution = c("exp", "weibull", "weibullPH", "lnorm", "llogis", "gamma",
-    "gompertz", "gengamma", "gengamma.orig", "genf", "genf.orig"),
+  distribution = c("exp", "weibull", "weibullPH", "lnorm", "llogis", "gamma", "gompertz",
+    "gengamma", "gengamma.orig", "genf", "genf.orig"),
   ...
 )
 }

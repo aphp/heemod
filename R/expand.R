@@ -54,7 +54,7 @@ expand_state <- function(x, ...) {
 #' @export
 #' @rdname expand_state
 expand_state.uneval_matrix <- function(x, state_pos,
-                                       state_name, cycles, n = 1) {
+                                       state_name, cycles, n = 1, ...) {
 
   L <- length(x)
   N <- sqrt(L)
@@ -119,7 +119,7 @@ expand_state.uneval_matrix <- function(x, state_pos,
 
 #' @export
 #' @rdname expand_state
-expand_state.uneval_state_list <- function(x, state_name, cycles) {
+expand_state.uneval_state_list <- function(x, state_name, cycles, ...) {
   
   st <- x[[state_name]]
   x[state_name] <- NULL
@@ -158,7 +158,7 @@ expand_state.uneval_inflow <- function(x, ...) {
 
 #' @export
 #' @rdname expand_state
-expand_state.uneval_init <- function(x, state_name, cycles) {
+expand_state.uneval_init <- function(x, state_name, cycles, ...) {
   res <- insert(
     x,
     which(names(x) == state_name),

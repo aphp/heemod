@@ -433,7 +433,7 @@ plot.surv_obj <- function(x, times, type = c("surv", "prob"),
                      res = compute_surv(x, times, ..., type = type))
   
   this_plot <- 
-    ggplot2::ggplot(res1, ggplot2::aes_string(x = "times", y = "res")) + 
+    ggplot2::ggplot(res1, ggplot2::aes(x = times, y = res)) + 
     ggplot2::geom_line() + 
     ggplot2::scale_x_continuous(name = "time") + 
     ggplot2::scale_y_continuous(name = y_ax_label)
@@ -441,7 +441,7 @@ plot.surv_obj <- function(x, times, type = c("surv", "prob"),
   if("at" %in% names(x))
     this_plot <- this_plot +
     ggplot2::geom_point(data = dplyr::filter(res1, times == x$at),
-                        ggplot2::aes_string(x = "times", y = "res"),
+                        ggplot2::aes(x = times, y = res),
                         pch = "join_pch", size = "join_size", 
                         col = "join_col")
   

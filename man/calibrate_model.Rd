@@ -103,12 +103,14 @@ f <- function(x) {
 }
 f(res_mod)
 
-calibrate_model(
-  res_mod,
-  parameter_names = "p",
-  fn_values = f,
-  target_values = 130,
-  initial_values = data.frame(p = c(0.5, 0.9)),
-  lower = 0, upper = 1
-)
+#'\dontrun{
+#'calibrate_model(
+#'  res_mod,
+#'  parameter_names = "p",
+#'  fn_values = f,
+#'  target_values = 130,
+#'  initial_values = data.frame(p = c(0.5, 0.9)),
+#'  lower = 0, upper = 1
+#')
+#'}
 }
