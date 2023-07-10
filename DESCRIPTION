@@ -27,7 +27,7 @@ Imports:
     tibble (>= 3.0.6),
     rlang (>= 1.0.2), 
     purrr (>= 0.3.4)
-License: GPL (>= 3)
+License: GPL (>= 3) + file LICENCE.md
 LazyData: true
 VignetteBuilder: knitr
 RoxygenNote: 7.2.3
