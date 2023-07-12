@@ -53,7 +53,7 @@ a given country.
 Locally cached data is used in case of connection
 problems, of if \code{local = TRUE}. For memory space reasons
 local data is only available for WHO high-income
-countries, and only for the latest year.
+countries (pooled), and only for the latest year.
 
 The results of \code{get_who_mr} are memoised for
 \code{options("heemod.memotime")} (default: 1 hour) to
@@ -62,7 +62,7 @@ increase resampling performance.
 \examples{
 
 define_transition(
-  C, get_who_mr(age = 50 + markov_cycle, sex = "FMLE", country = "FRA"),
+  C, get_who_mr(age = 50 + model_time, sex = "FMLE", country = "FRA"),
   0, 1
 )
 

@@ -42,7 +42,7 @@ Suggests:
     optimx,
     parallel,
     readxl,
-    rgho,
+    rgho (>= 3.0.0),
     rmarkdown,
     stringr,
     survival,
