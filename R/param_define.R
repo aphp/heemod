@@ -76,7 +76,7 @@ get_parameter_names.updated_model <- function(x) {
 }
 
 get_parameter_names.uneval_parameters <- function(x) {
-  names(x)[! names(x) %in% c("strategy",
+  names(x)[! names(x) %in% c("markov_cycle", "strategy",
                              "model_time")]
 }
 

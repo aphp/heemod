@@ -147,10 +147,10 @@ check_names <- function(x) {
   if (any("" %in% x)) {
     stop("Empty string names are not allowed.")
   }
-  if (any("model_time" %in% x)) {
+  if (any("markov_model" %in% x)) {
     stop("'model_time' is a reserved name.")
   }
-  if (any("model_time" %in% x)) {
+  if (any("markov_model" %in% x)) {
     stop("'model_time' is a reserved name.")
   }
   if (any("state_cycle" %in% x)) {
@@ -645,13 +645,10 @@ substitute_ <- function (x, env)
 }
 
 deprecated_x_cycle <- function(.dots){
-  res <- map(.dots, function(x){
-      as.list(get_expr(x))
-  } )
-  if(any(map_lgl(res, ~ any(quote(markov_cycle) == .)))){
+  if(any(grepl("markov_cycle", deparse(.dots)))){
     lifecycle::deprecate_warn("0.16.0", I("markov_cycle"), I("model_time"), user_env = caller_env(3))
   }
-  if(any(map_lgl(res, ~ any(quote(state_cycle) == .)))){
+  if(any(grepl("state_dcyle", deparse(.dots)))){
     lifecycle::deprecate_warn("0.16.0", I("state_cycle"), I("state_time"), user_env = caller_env(3))
   }
 }
