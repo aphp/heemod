@@ -59,7 +59,7 @@ discount_hack <- function(.dots) {
       x
     } else if (is.call(x)) {
       if (discount_check(x[[1]], env)) {
-        x <- call_standardise(x)
+        x <- call_match(x, rlang::eval_bare(rlang::node_car(x)))
         x$time <- substitute(model_time)
       }
       as.call(lapply(x, f, env = env))

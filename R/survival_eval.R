@@ -295,13 +295,13 @@ eval_surv.survfit <- function(x, time,  ...) {
     dplyr::group_by( !!!syms(terms)) %>%
     dplyr::reframe(
       maxtime = max(time),
-      selector = !!time > .data$maxtime,
+      selector = !!time > maxtime,
       value = stats::stepfun(time[-1], .data$surv)( !!time ),
       n = dplyr::first(n),
       t = !!time
     ) %>%
-    dplyr::mutate(value = ifelse(.data$selector, as.numeric(NA), .data$value)) %>%
-    dplyr::select(-.data$maxtime, -.data$selector)
+    dplyr::mutate(value = ifelse(selector, as.numeric(NA), .data$value)) %>%
+    dplyr::select(-maxtime, -selector)
   
   if (is.null(dots$covar)) {
     if (length(terms) > 0) {
@@ -318,7 +318,7 @@ eval_surv.survfit <- function(x, time,  ...) {
     # do simple average for each time.
     
     agg_df <- clean_factors(dots$covar) %>% 
-      dplyr::left_join(surv_df, by = terms, multiple = "all") %>%
+      dplyr::left_join(surv_df, by = terms, relationship = "many-to-many") %>%
       dplyr::group_by(t) %>%
       dplyr::summarize(value = mean(.data$value))
   }
@@ -387,7 +387,7 @@ eval_surv.flexsurvreg <- function(x, time,  ...) {
   # Join to the full data, then summarize over times.
   if(x$ncovs > 0) {
     surv_df <- surv_df %>%
-      dplyr::left_join(data_full, by = colnames(data), multiple = "all") %>%
+      dplyr::left_join(data_full, by = colnames(data), relationship = "many-to-many") %>%
       dplyr::group_by(t) %>%
       dplyr::summarize(value = mean(.data$value))
   }

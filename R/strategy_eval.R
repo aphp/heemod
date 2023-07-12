@@ -105,6 +105,7 @@ get_eval_init <- function(x) {
   UseMethod("get_eval_init")
 }
 
+#' @export
 get_eval_init.eval_strategy <- function(x) {
   x$e_init
 }
@@ -348,7 +349,6 @@ expand_if_necessary <- function(strategy, parameters,
       get_state_names(uneval_transition)[td_tm],
       get_state_names(uneval_states)[td_st]
     )))
-    
     message(
       sprintf(
         "%s: detected use of 'state_time', expanding state%s: %s.",
