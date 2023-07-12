@@ -34,7 +34,7 @@ res <- run_model(
   mod1, mod2,
   parameters = define_parameters(
     age_init = 60,
-    age = age_init + markov_cycle
+    age = age_init + model_time
   ),
   init = 1:0,
   cycles = 10,

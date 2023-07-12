@@ -38,7 +38,7 @@ test_that(
       parameters = define_parameters(
         age_init = 60,
         cost_init = 1000,
-        age = age_init + markov_cycle
+        age = age_init + model_time
       ),
       init = 1:0,
       cycles = 10,
@@ -174,7 +174,7 @@ test_that(
       parameters = define_parameters(
         age_init = 60,
         cost_init = 1000,
-        age = age_init + markov_cycle
+        age = age_init + model_time
       ),
       init = 1:0,
       cycles = 10,

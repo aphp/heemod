@@ -1,6 +1,6 @@
 par1 <- define_parameters(
   a = .1,
-  b = 1 / (markov_cycle + 1)
+  b = 1 / (model_time + 1)
 )
 
 mat1 <- define_transition(
@@ -179,7 +179,7 @@ test_that("starting_values works with discount_hack", {
 
 test_that("starting_values works with expanded states", {
   par2 <- define_parameters(
-    a = 1 / (markov_cycle + 1),
+    a = 1 / (model_time + 1),
     b = exp(-state_time * 0.2)
   )
 

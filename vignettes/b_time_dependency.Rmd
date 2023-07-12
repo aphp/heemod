@@ -19,7 +19,7 @@ In more complex Markov models state values or transition probabilities can vary 
   1. depend on how long __the entire model__ has been running (model-time dependency);
   2. depend on how long __an individual__ has been in a given  __state__ (state-time dependency).
   
-These two situations can be modelled using the `model_time` (or its alias `markov_cycle`) and `state_time` variables, respectively.
+These two situations can be modelled using the `model_time` (or its alias `model_time`) and `state_time` variables, respectively.
 
 ## How to specifiy time-dependency
 

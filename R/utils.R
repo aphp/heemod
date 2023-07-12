@@ -128,7 +128,7 @@ plur_y <- function(x) {
 #' 
 #' Throws an error if any of the names are reserved.
 #' 
-#' Reserved names are `markov_cycle` and anything
+#' Reserved names are `model_time` and anything
 #' starting with `.`.
 #' 
 #' @param x A character vector of names.
@@ -147,8 +147,8 @@ check_names <- function(x) {
   if (any("" %in% x)) {
     stop("Empty string names are not allowed.")
   }
-  if (any("markov_cycle" %in% x)) {
-    stop("'markov_cycle' is a reserved name.")
+  if (any("model_time" %in% x)) {
+    stop("'model_time' is a reserved name.")
   }
   if (any("model_time" %in% x)) {
     stop("'model_time' is a reserved name.")
@@ -642,4 +642,16 @@ substitute_ <- function (x, env)
   }
   call <- substitute(substitute(x, env), list(x = x))
   eval(call)
+}
+
+deprecated_x_cycle <- function(.dots){
+  res <- map(.dots, function(x){
+      as.list(get_expr(x))
+  } )
+  if(any(map_lgl(res, ~ any(quote(markov_cycle) == .)))){
+    lifecycle::deprecate_warn("0.16.0", I("markov_cycle"), I("model_time"), user_env = caller_env(3))
+  }
+  if(any(map_lgl(res, ~ any(quote(state_cycle) == .)))){
+    lifecycle::deprecate_warn("0.16.0", I("state_cycle"), I("state_time"), user_env = caller_env(3))
+  }
 }

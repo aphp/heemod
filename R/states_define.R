@@ -27,6 +27,7 @@
 #'   
 define_state <- function(..., starting_values = define_starting_values()) {
   .dots <- quos(...)
+  deprecated_x_cycle(.dots)
   define_state_(list(.dots = .dots, starting_values = starting_values))
 }
 

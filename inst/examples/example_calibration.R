@@ -24,7 +24,7 @@ res_mod <- run_model(
 f <- function(x) {
   dplyr::filter(
     get_counts(x),
-    state_names == "A" & markov_cycle == 10
+    state_names == "A" & model_time == 10
   )$count
 }
 f(res_mod)

@@ -4,19 +4,19 @@
 
 define_parameters(
   age_start = 60,
-  age = age_start + markov_cycle
+  age = age_start + model_time
 )
 
-# other uses of markov_cycle are possible
+# other uses of model_time are possible
 
 define_parameters(
-  top_time = ifelse(markov_cycle < 10, 1, 0)
+  top_time = ifelse(model_time < 10, 1, 0)
 )
 
 # more elaborate: risk function
 
 define_parameters(
-  rate = 1 - exp(- markov_time * .5)
+  rate = 1 - exp(- model_time * .5)
 )
 
 # dont explicitly state lengths
@@ -25,17 +25,17 @@ define_parameters(
 # )
 
 
-# instead rely on markov_cycle or dplyr 
+# instead rely on model_time or dplyr 
 # functions such as n() or row_number()
 
 define_parameters(
   var = seq(from = 1, length.out = n(), by = 3),
-  var2 = seq(1, length(markov_cycle), 2)
+  var2 = seq(1, length(model_time), 2)
 )
 
 param <- define_parameters(
   age_start = 60,
-  age = age_start + markov_cycle
+  age = age_start + model_time
 )
 
 # modify existing parameters

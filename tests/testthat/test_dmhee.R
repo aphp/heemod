@@ -5,8 +5,8 @@ test_that("exactly match HIV model",
           ##  Example 2.5 and related online Excel model
           {
             par_mod <- define_parameters(
-              rr = ifelse(markov_cycle <= 2, .509, 1),
-              cost_lami = ifelse(markov_cycle <= 2, 2086.5, 0),
+              rr = ifelse(model_time <= 2, .509, 1),
+              cost_lami = ifelse(model_time <= 2, 2086.5, 0),
               cost_zido = 2278
             )
             
@@ -149,7 +149,7 @@ test_that("Exactly match THR model",
               age_init = 60,
               sex = 0,
               # age increases with cycles
-              age = age_init + markov_cycle,
+              age = age_init + model_time,
               
               # operative mortality rates
               omrPTHR = .02,
@@ -169,10 +169,10 @@ test_that("Exactly match THR model",
               rrNP1 = exp(lnrrNP1),
               
               # revision probability of primary procedure
-              standardRR = 1 - exp(lambda * ((markov_cycle - 1) ^ gamma -
-                                               markov_cycle ^ gamma)),
-              np1RR = 1 - exp(lambda * rrNP1 * ((markov_cycle - 1) ^ gamma - 
-                                                  markov_cycle ^ gamma)),
+              standardRR = 1 - exp(lambda * ((model_time - 1) ^ gamma -
+                                               model_time ^ gamma)),
+              np1RR = 1 - exp(lambda * rrNP1 * ((model_time - 1) ^ gamma - 
+                                                  model_time ^ gamma)),
               
               # age-related mortality rate
               sex_cat = ifelse(sex == 0, "FMLE", "MLE"),

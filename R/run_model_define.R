@@ -340,7 +340,7 @@ get_values.run_model <- function(x, ...) {
     key_col = "value_names",
     value_col = "value",
     gather_cols = names(res)[! names(res) %in% 
-                               c("markov_cycle",
+                               c("model_time",
                                  ".strategy_names")]
   )
 }
@@ -383,7 +383,7 @@ get_counts.run_model <- function(x, ...) {
         get_counts(x$eval_strategy_list[[.n]]) %>% 
           dplyr::mutate(
             .strategy_names = .n,
-            markov_cycle = row_number())
+            model_time = row_number())
       }
     )
   )
@@ -393,7 +393,7 @@ get_counts.run_model <- function(x, ...) {
     key_col = "state_names",
     value_col = "count",
     gather_cols = names(res)[! names(res) %in% 
-                               c("markov_cycle",
+                               c("model_time",
                                  ".strategy_names")]
   )
 }

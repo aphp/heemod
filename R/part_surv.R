@@ -165,7 +165,7 @@ get_state_names.part_surv <- function(x) {
 
 eval_transition.part_surv <- function(x, parameters) {
   
-  time_ <- c(0, parameters$markov_cycle)
+  time_ <- c(0, parameters$model_time)
   
   pfs_dist <- eval_tidy(
     x$pfs, 

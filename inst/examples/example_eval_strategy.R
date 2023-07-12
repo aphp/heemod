@@ -1,5 +1,5 @@
 param <- define_parameters(
-  a = markov_cycle + 1 * 2
+  a = model_time + 1 * 2
 )
 
 mat <- define_transition(

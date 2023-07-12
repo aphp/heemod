@@ -6,6 +6,7 @@
  pooled for high income countries.
  * `prop`, `multinom` and `make_gamma`, deprecated since a long time are now unavailable,
  to be replaced with `binomial`, `multinomial` and `gamma`, respectively.
+ * `markov_cycle` is now deprecated in favor of `model_time` and `state_cycle` in favor of `state_time`
 
 ## heemod 0.15.1
 Compliance with r-devel
@@ -165,7 +166,7 @@ Package heemod.” _ArXiv e-prints_. R package version
   * Counting method `"half-cycle"` is deprecated.
   * `resample` argument in `run_psa()` renamed to `psa`.
   * Probability distributions for PSA were renamed, see `?distributions`.
-  * `state_cycle` renamed to `state_time`, added a `model_time` alias to `markov_cycle`.
+  * `state_cycle` renamed to `state_time`, added a `model_time` alias to `model_time`.
   * The `inflow` argument for budget impact analysis is specified with `define_inflow()`.
   * `prob_to_prob()`=>`rescale_prob()`.
 

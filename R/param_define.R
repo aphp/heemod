@@ -2,14 +2,14 @@
 #' 
 #' Define parameters called to compute the transition matrix
 #' or state values for a Markov model. Parameters can be 
-#' time dependent by using the `markov_cycle` 
+#' time dependent by using the `model_time` 
 #' parameter.
 #' 
 #' Parameters are defined sequentially, parameters defined 
 #' earlier can be called in later expressions.
 #' 
 #' Vector length should not be explicitly set, but should 
-#' instead be stated relatively to `markov_cycle` 
+#' instead be stated relatively to `model_time` 
 #' (whose length depends on the number of simulation 
 #' cycles). Alternatively, `dplyr` functions such as 
 #' [dplyr::n()] can be used.
@@ -43,6 +43,7 @@
 #'   
 define_parameters <- function(...) {
   .dots <- quos(...)
+  deprecated_x_cycle(.dots)
   define_parameters_(.dots)
 }
 
@@ -75,7 +76,7 @@ get_parameter_names.updated_model <- function(x) {
 }
 
 get_parameter_names.uneval_parameters <- function(x) {
-  names(x)[! names(x) %in% c("markov_cycle", "strategy",
+  names(x)[! names(x) %in% c("strategy",
                              "model_time")]
 }
 

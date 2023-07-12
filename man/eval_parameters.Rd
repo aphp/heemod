@@ -23,7 +23,7 @@ Evaluate parameters specified through
 \examples{
 param <- define_parameters(
   age_start = 60,
-  age = age_start + markov_cycle
+  age = age_start + model_time
 )
 
 heemod:::eval_parameters(param, cycles = 15)

@@ -234,8 +234,8 @@ compute_values <- function(states, count_list, strategy_starting_values) {
   state_val_array <- array(unlist(states_values), dim = dims_array_2)
   start_val_array <- array(unlist(states_starting), dim = dims_array_2)
 
-  ## get rid of markov_cycle
-  mc_col <- match("markov_cycle", names(states_values[[1]]))
+  ## get rid of model_time
+  mc_col <- match("model_time", names(states_values[[1]]))
   state_val_array <- state_val_array[, -mc_col, , drop = FALSE]
   start_val_array <- start_val_array[, -mc_col, , drop = FALSE]
 
@@ -281,10 +281,10 @@ compute_values <- function(states, count_list, strategy_starting_values) {
     unlist() %>%
     array(dim = dims_array_1)
   
-  # multiply, sum, add starting values and add markov_cycle back in
+  # multiply, sum, add starting values and add model_time back in
   vals_x_counts <- (state_val_array + starting_fill_zero) * counts_mat 
   wtd_sums <- rowSums(vals_x_counts, dims = 2) + rowSums(start_x_counts, dims = 2)
-  res <- data.frame(markov_cycle = states_values[[1]]$markov_cycle, wtd_sums)
+  res <- data.frame(model_time = states_values[[1]]$model_time, wtd_sums)
 
   names(res)[-1] <- state_values_names
   

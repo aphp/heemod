@@ -68,7 +68,7 @@ test_that(
   "Model evaluation, 1 model", {
     par1 <- define_parameters(
       a = .1,
-      b = 1 / (markov_cycle + 1)
+      b = 1 / (model_time + 1)
     )
     mat1 <- define_transition(
       state_names = c("X1", "X2"),
@@ -163,7 +163,7 @@ test_that(
     
     par1 <- define_parameters(
       a = .1,
-      b = 1 / (markov_cycle + 1)
+      b = 1 / (model_time + 1)
     )
     mat1 <- define_transition(
       state_names = c("X1", "X2"),
@@ -240,11 +240,11 @@ test_that(
 test_that(
   "eval_matrix works", {
     par <- tibble::tibble(
-      markov_cycle = 2:3,
+      model_time = 2:3,
       a = c(.1, .2)
     )
     mat <- define_transition(
-      C, 1/markov_cycle,
+      C, 1/model_time,
       a, 1-a
     )
     

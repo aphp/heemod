@@ -315,7 +315,7 @@ test_that(
       abs(sin(x)) / 2
     }
     mat_mc <- define_transition(
-      C, f(markov_cycle),
+      C, f(model_time),
       0, 1
     )
     mat_sc <- define_transition(

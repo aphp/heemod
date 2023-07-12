@@ -46,13 +46,13 @@ y = 123',
     )
     expect_error(
       define_state(
-        markov_cycle = 876
+        model_time = 876
       )
     )
     expect_error(
       modify(
         s1,
-        markov_cycle = 678
+        model_time = 678
       )
     )
     expect_equal(
@@ -196,7 +196,7 @@ test_that(
   "State evaluation", {
     par1 <- define_parameters(
       a = 12,
-      b = a + 4 * markov_cycle
+      b = a + 4 * model_time
     )
     sl <- define_state_list(
       X1 = define_state(A = a),
@@ -214,8 +214,8 @@ test_that(
     expect_equal(names(e_st), c(".dots", "starting_values"))
     expect_output(
       str(e_st$.dots),
-      "..$ markov_cycle: int [1:10] 1 2 3 4 5 6 7 8 9 10
-  ..$ A           :",
+      "..$ model_time: int [1:10] 1 2 3 4 5 6 7 8 9 10
+  ..$ A         :",
       fixed = TRUE
     )
     expect_equal(
@@ -237,7 +237,7 @@ test_that(
     
     par1 <- define_parameters(
       a = .1,
-      b = 1 / (markov_cycle + 1),
+      b = 1 / (model_time + 1),
       cte1 = 234,
       cte2 = 123,
       cte3 = 987,

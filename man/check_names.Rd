@@ -17,7 +17,7 @@ is encountered.
 Throws an error if any of the names are reserved.
 }
 \details{
-Reserved names are \code{markov_cycle} and anything
+Reserved names are \code{model_time} and anything
 starting with \code{.}.
 }
 \keyword{internal}

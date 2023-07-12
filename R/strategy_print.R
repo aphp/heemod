@@ -96,11 +96,11 @@ plot.run_model <- function(x, type = c("counts", "ce", "values"),
       }
       
       
-      pos_cycle <- pretty(sort(unique(tab$markov_cycle)),
-                          n = min(max(tab$markov_cycle), 10))
+      pos_cycle <- pretty(sort(unique(tab$model_time)),
+                          n = min(max(tab$model_time), 10))
       res <- ggplot2::ggplot(
         tab,
-        ggplot2::aes(x = markov_cycle, y = count,
+        ggplot2::aes(x = model_time, y = count,
                             colour = !!sym(colour_var))) +
         ggplot2::geom_point() +
         ggplot2::geom_line() +
@@ -170,12 +170,12 @@ plot.run_model <- function(x, type = c("counts", "ce", "values"),
       }
       
       
-      pos_cycle <- pretty(sort(unique(tab$markov_cycle)),
-                          n = min(max(tab$markov_cycle), 10))
+      pos_cycle <- pretty(sort(unique(tab$model_time)),
+                          n = min(max(tab$model_time), 10))
       
       res <- ggplot2::ggplot(
         tab,
-        ggplot2::aes(x = markov_cycle, y = value,
+        ggplot2::aes(x = model_time, y = value,
                             colour = !!sym(colour_var))) +
         ggplot2::geom_point() +
         ggplot2::geom_line() +

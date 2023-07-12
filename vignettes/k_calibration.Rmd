@@ -19,7 +19,7 @@ param <- define_parameters(
     age_init = 60,
     sex = 0,
     # age increases with cycles
-    age = age_init + markov_cycle,
+    age = age_init + model_time,
     
     # operative mortality rates
     omrPTHR = .02,
@@ -38,10 +38,10 @@ param <- define_parameters(
     rrNP1 = .260677,
     
     # revision probability of primary procedure
-    standardRR = 1 - exp(lambda * ((markov_cycle - 1) ^ gamma -
-                                     markov_cycle ^ gamma)),
-    np1RR = 1 - exp(lambda * rrNP1 * ((markov_cycle - 1) ^ gamma - 
-                                        markov_cycle ^ gamma)),
+    standardRR = 1 - exp(lambda * ((model_time - 1) ^ gamma -
+                                     model_time ^ gamma)),
+    np1RR = 1 - exp(lambda * rrNP1 * ((model_time - 1) ^ gamma - 
+                                        model_time ^ gamma)),
     
     # age-related mortality rate
     sex_cat = ifelse(sex == 0, "FMLE", "MLE"),
@@ -162,14 +162,14 @@ The original number of patients with a THR revision after 20 cycles are found in
 ```{r get_counts, message=FALSE}
 library(dplyr)
 get_counts(res_mod) %>% 
-  dplyr::filter(markov_cycle == 20 & state_names == "RevisionTHR")
+  dplyr::filter(model_time == 20 & state_names == "RevisionTHR")
 ```
 We want to calibrate `gamma` and `rrNP1` to obtain 3 patients for the `standard` strategy and 1 patient for the `np1` strategy at time 20. We need to define a function to extract the values we want to change from the model and return them as a numeric vector:
 ```{r extract_values}
 extract_values <- function(x) {
   dplyr::filter(
     get_counts(x),
-    markov_cycle == 20 & state_names == "RevisionTHR"
+    model_time == 20 & state_names == "RevisionTHR"
   )$count
 }
 extract_values(res_mod)

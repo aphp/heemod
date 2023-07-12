@@ -27,14 +27,14 @@ Key differences in DMHEE:
 
 
 It is possible to reproduce 1. and 2. by making transition happen at the end of each year with method = "end". Since with this method the transition occur 1 year after the beginning, costs should be discounted from the first cycle with the argument first = TRUE in discount().
-Point 3. is reproduced by making `rr` and `cost_lami` a time changing variable like this `rr = ifelse(markov_cycle <= 2, .509, 1.00)`.
+Point 3. is reproduced by making `rr` and `cost_lami` a time changing variable like this `rr = ifelse(model_time <= 2, .509, 1.00)`.
 
 The last point is reproduced by writing transition probabilities as fractions.
 
 ```{r}
 par_mod <- define_parameters(
-  rr = ifelse(markov_cycle <= 2, .509, 1),
-  cost_lami = ifelse(markov_cycle <= 2, 2086.5, 0),
+  rr = ifelse(model_time <= 2, .509, 1),
+  cost_lami = ifelse(model_time <= 2, 2086.5, 0),
   cost_zido = 2278
 )
 
@@ -169,7 +169,7 @@ param <- define_parameters(
     age_init = 60,
     sex = 0,
     # age increases with cycles
-    age = age_init + markov_cycle,
+    age = age_init + model_time,
     
     # operative mortality rates
     omrPTHR = .02,
@@ -189,10 +189,10 @@ param <- define_parameters(
     rrNP1 = exp(lnrrNP1),
    
     # revision probability of primary procedure
-    standardRR = 1 - exp(lambda * ((markov_cycle - 1) ^ gamma -
-                                     markov_cycle ^ gamma)),
-    np1RR = 1 - exp(lambda * rrNP1 * ((markov_cycle - 1) ^ gamma - 
-                                        markov_cycle ^ gamma)),
+    standardRR = 1 - exp(lambda * ((model_time - 1) ^ gamma -
+                                     model_time ^ gamma)),
+    np1RR = 1 - exp(lambda * rrNP1 * ((model_time - 1) ^ gamma - 
+                                        model_time ^ gamma)),
     
     # age-related mortality rate
     sex_cat = ifelse(sex == 0, "FMLE", "MLE"),

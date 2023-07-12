@@ -22,8 +22,8 @@ eval_state_list <- function(x, parameters) {
       #parameters[names(x)[i]] <<- eval(rlang::quo_squash(x_tidy[[i]]), parameters)
       parameters[names(x)[i]] <<- rlang::eval_tidy(x_tidy[[i]], data = parameters)
     })
-    parameters[c("markov_cycle", names(x))]
-    #dplyr::mutate(parameters, !!!x_tidy)[c("markov_cycle", names(x))]
+    parameters[c("model_time", names(x))]
+    #dplyr::mutate(parameters, !!!x_tidy)[c("model_time", names(x))]
     
   }
   

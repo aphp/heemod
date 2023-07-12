@@ -32,7 +32,7 @@ res_mod <- run_model(
 f <- function(x) {
   dplyr::filter(
     get_counts(x),
-    .strategy_names == "I" & state_names == "A" & markov_cycle == 10
+    .strategy_names == "I" & state_names == "A" & model_time == 10
   )$count
 }
 f(res_mod)
@@ -143,7 +143,7 @@ test_that("multi-dimensional calibration",
     age_init = 60,
     sex = 0,
     # age increases with cycles
-    age = age_init + markov_cycle,
+    age = age_init + model_time,
     
     # operative mortality rates
     omrPTHR = .02,
@@ -162,10 +162,10 @@ test_that("multi-dimensional calibration",
     rrNP1 = .260677,
     
     # revision probability of primary procedure
-    standardRR = 1 - exp(lambda * ((markov_cycle - 1) ^ gamma -
-                                     markov_cycle ^ gamma)),
-    np1RR = 1 - exp(lambda * rrNP1 * ((markov_cycle - 1) ^ gamma - 
-                                        markov_cycle ^ gamma)),
+    standardRR = 1 - exp(lambda * ((model_time - 1) ^ gamma -
+                                     model_time ^ gamma)),
+    np1RR = 1 - exp(lambda * rrNP1 * ((model_time - 1) ^ gamma - 
+                                        model_time ^ gamma)),
     
     # age-related mortality rate
     sex_cat = ifelse(sex == 0, "FMLE", "MLE"),
@@ -270,7 +270,7 @@ test_that("multi-dimensional calibration",
   extract_values <- function(x) {
     dplyr::filter(
       get_counts(x),
-      markov_cycle == 20 & state_names == "RevisionTHR"
+      model_time == 20 & state_names == "RevisionTHR"
     )$count
   }
   expect_warning(

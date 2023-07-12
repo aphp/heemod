@@ -168,7 +168,7 @@ In order to compare different strategies it is possible to run a model with mult
 
 ## Time-variability
 
-Time varying transition probabilities and state values are available through the `markov_cycle` and `state_cycle` variables. Time-varying probabilities and values are explained in `vignette("b-time-dependency", "heemod")`.
+Time varying transition probabilities and state values are available through the `model_time` and `state_time` variables. Time-varying probabilities and values are explained in `vignette("b-time-dependency", "heemod")`.
 
 ## Transition costs
 

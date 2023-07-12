@@ -24,7 +24,6 @@ eval_parameters <- function(x, cycles = 1,
   
   start_tibble <- data.frame(
     model_time = seq_len(cycles),
-    markov_cycle = seq_len(cycles),
     strategy = strategy_name,row.names = NULL,stringsAsFactors = F
   ) #%>% 
     #tibble::as_tibble()
