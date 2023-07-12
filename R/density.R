@@ -75,10 +75,6 @@ r_lognormal <- function(meanlog, sdlog) {
 gamma <- function(mean, sd) {
   list(r_gamma(mean^2/sd^2, sd^2/mean))
 }
-make_gamma <- function(...) {
-  warning("'make_gamma()' is deprecated, use 'gamma()' instead.")
-  gamma(...)
-}
 r_gamma <- function(shape, scale) {
   function(x) stats::qgamma(p = x, shape = shape, scale = scale)
 }
@@ -86,10 +82,6 @@ r_gamma <- function(shape, scale) {
 #' @rdname distributions
 binomial <- function(prob, size) {
   list(r_binomial(prob, size))
-}
-prop <- function(...) {
-  warning("'prop() is deprecated, use 'binomial()' instead.")
-  binomial(...)
 }
 r_binomial <- function(prob, size) {
   function(x) stats::qbinom(p = x, size = size, prob = prob) / size
@@ -103,10 +95,6 @@ multinomial <- function(...) {
     lapply(list_param, function(x) r_multinomial(x)),
     class = "multinom_param"
   )
-}
-multinom <- function(...) {
-  warning("'multinom()' is deprecated, use 'multinomial()' instead.")
-  multinomial(...)
 }
 r_multinomial <- function(n) {
   function(x) stats::qgamma(x, shape = n, scale = 1)

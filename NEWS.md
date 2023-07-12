@@ -1,6 +1,11 @@
 ## heemod 0.15.1.9000
   * Remove lazyeval, plyr and pryr dependency
   * For PSM, when OS is lower to PFS, force the transition probability to be 0 (#7 @william-rawlinson)
+  * `get_who_mr()` is working again
+  * Mortality rates gathered with `get_who_mr(..., local = TRUE)` are only available as     
+ pooled for high income countries.
+ * `prop`, `multinom` and `make_gamma`, deprecated since a long time are now unavailable,
+ to be replaced with `binomial`, `multinomial` and `gamma`, respectively.
 
 ## heemod 0.15.1
 Compliance with r-devel

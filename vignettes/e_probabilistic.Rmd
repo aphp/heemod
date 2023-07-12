@@ -178,10 +178,10 @@ $$cost_A \sim \Gamma(\mu = 2756, \sigma = \sqrt{2756})$$
 This can be programmed as:
 
 ```r
-cost_A ~ make_gamma(mean = 2756, sd = sqrt(2756))
+cost_A ~ gamma(mean = 2756, sd = sqrt(2756))
 ```
 
-Proportions follow a binomial distribution that can be estimated by giving the mean proportion and the size of the sample used to estimate that proportion with `p_CD ~ prop(prob = .25, size = 40)`.
+Proportions follow a binomial distribution that can be estimated by giving the mean proportion and the size of the sample used to estimate that proportion with `p_CD ~ binomial(prob = .25, size = 40)`.
 
 Finally multinomial distributions are declared with the number of individuals in each group in the sample used to estimate the proportions. These proportions follow a Dirichlet distribution:
 
