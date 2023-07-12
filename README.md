@@ -1,3 +1,7 @@
+  <!-- badges: start -->
+  [![R-CMD-check](https://github.com/aphp/heemod/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/aphp/heemod/actions/workflows/R-CMD-check.yaml)
+  <!-- badges: end -->
+
 # heemod - Health Economic Evaluation MODelling
 
 
