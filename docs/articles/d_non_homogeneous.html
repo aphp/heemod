@@ -33,7 +33,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">heemod</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.15.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.16.0</span>
       </span>
     </div>
 
@@ -69,9 +69,10 @@
       </header><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
-      <h1 data-toc-skip>Time-varying Markov Models (Non-Homogeneous)</h1>
+      <h1 data-toc-skip>Time-varying Markov Models
+(Non-Homogeneous)</h1>
             
-            <h4 data-toc-skip class="date">2023-02-14</h4>
+            <h4 data-toc-skip class="date">2023-07-12</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/aphp/heemod/blob/HEAD/vignettes/d_non_homogeneous.Rmd" class="external-link"><code>vignettes/d_non_homogeneous.Rmd</code></a></small>
       <div class="hidden name"><code>d_non_homogeneous.Rmd</code></div>
@@ -83,13 +84,30 @@
 <div class="section level2">
 <h2 id="model-description">Model description<a class="anchor" aria-label="anchor" href="#model-description"></a>
 </h2>
-<p>This example is an implementation of the assessment of a new total hip replacement (THR) technology described in chapter 3.5 of <a href="https://global.oup.com/academic/product/decision-modelling-for-health-economic-evaluation-9780198526629" class="external-link">Decision Modelling for Health Economic Evaluation</a>. A more detailed report is available <a href="https://www.york.ac.uk/media/che/documents/papers/technicalpapers/CHE%20Technical%20Paper%2028.pdf" class="external-link">at this location</a>. This reports goes a bit further in the analysis. For the sake of simplicity we will not reproduce exactly the analysis from the book. See vignette <code>vignette("i-reproduction", "heemod")</code> for an exact reproduction.</p>
+<p>This example is an implementation of the assessment of a new total
+hip replacement (THR) technology described in chapter 3.5 of <a href="https://global.oup.com/academic/product/decision-modelling-for-health-economic-evaluation-9780198526629" class="external-link">Decision
+Modelling for Health Economic Evaluation</a>. A more detailed report is
+available <a href="https://www.york.ac.uk/media/che/documents/papers/technicalpapers/CHE%20Technical%20Paper%2028.pdf" class="external-link">at
+this location</a>. This reports goes a bit further in the analysis. For
+the sake of simplicity we will not reproduce exactly the analysis from
+the book. See vignette <code>vignette("i-reproduction", "heemod")</code>
+for an exact reproduction.</p>
 <p>This model has 5 states:</p>
 <ul>
-<li>Primary THR: starting state, individuals receive either the standard or the new THR (called NP1), outcomes are either success of primary THR or death (the operative mortality rate of primary THR will be called <code>omrPTHR</code>);</li>
-<li>Success of primary THR: state after receiving primary THR if the surgery is successfull, individuals can stay in that state, need a THR revision, or die of other causes;</li>
-<li>Revision of primary THR: for individuals whose primary THR needed revision, outcomes are either success of revision THR or death (the operative mortality rate of revision THR will be called <code>omrRTHR</code>);</li>
-<li>Success of revision THR: state after receiving revision THR if the surgery is successfull, individuals can stay in that state, need a THR re-revision, or die of other causes;</li>
+<li>Primary THR: starting state, individuals receive either the standard
+or the new THR (called NP1), outcomes are either success of primary THR
+or death (the operative mortality rate of primary THR will be called
+<code>omrPTHR</code>);</li>
+<li>Success of primary THR: state after receiving primary THR if the
+surgery is successfull, individuals can stay in that state, need a THR
+revision, or die of other causes;</li>
+<li>Revision of primary THR: for individuals whose primary THR needed
+revision, outcomes are either success of revision THR or death (the
+operative mortality rate of revision THR will be called
+<code>omrRTHR</code>);</li>
+<li>Success of revision THR: state after receiving revision THR if the
+surgery is successfull, individuals can stay in that state, need a THR
+re-revision, or die of other causes;</li>
 <li>Death (either caused by THR or another cause).</li>
 </ul>
 <p>Two transition probabilities are time-varying in this model:</p>
@@ -101,45 +119,68 @@
 <div class="section level2">
 <h2 id="other-cause-death">Other-Cause death<a class="anchor" aria-label="anchor" href="#other-cause-death"></a>
 </h2>
-<p>Other-cause death probabilities (mortality rate <code>mr</code>) for the United Kingdom is taken from WHO databases using the <code><a href="../reference/who_mortality.html">get_who_mr()</a></code> function. The variable <code>sex</code>, taking values <code>0</code> and <code>1</code>, must be recoded in <code>"FMLE"</code> and <code>"MLE"</code> before being passed to this function.</p>
+<p>Other-cause death probabilities (mortality rate <code>mr</code>) for
+the United Kingdom is taken from WHO databases using the
+<code><a href="../reference/who_mortality.html">get_who_mr()</a></code> function. The variable <code>sex</code>,
+taking values <code>0</code> and <code>1</code>, must be recoded in
+<code>"FMLE"</code> and <code>"MLE"</code> before being passed to this
+function.</p>
 </div>
 <div class="section level2">
 <h2 id="thr-revision">THR revision<a class="anchor" aria-label="anchor" href="#thr-revision"></a>
 </h2>
 <ul>
-<li>Primary THR revision probability for the standard THR, called <code>standardRR</code> increases with time with the following formula (a <a href="https://en.wikipedia.org/wiki/Weibull_distribution" class="external-link">Weibull distribution</a>):</li>
+<li>Primary THR revision probability for the standard THR, called
+<code>standardRR</code> increases with time with the following formula
+(a <a href="https://en.wikipedia.org/wiki/Weibull_distribution" class="external-link">Weibull
+distribution</a>):</li>
 </ul>
 <p><span class="math display">\[
 P_{revision} = 1 - \exp(\lambda \times ((t-1)^\gamma-t^\gamma))
 \]</span></p>
-<p>Where <span class="math inline">\(t\)</span> is the time since revision, <span class="math inline">\(\gamma = 1.45367786\)</span> and:</p>
+<p>Where <span class="math inline">\(t\)</span> is the time since
+revision, <span class="math inline">\(\gamma = 1.45367786\)</span>
+and:</p>
 <p><span class="math display">\[
 \lambda = exp(cons + ageC \times age + maleC \times sex)
 \]</span></p>
-<p>Where <span class="math inline">\(age\)</span> and <span class="math inline">\(sex\)</span> (female = <em>0</em>, male = <em>1</em>) are individual characteristics, <span class="math inline">\(cons = -5.49094\)</span>, <span class="math inline">\(ageC = -0.0367\)</span> and <span class="math inline">\(maleC = 0.768536\)</span>.</p>
+<p>Where <span class="math inline">\(age\)</span> and <span class="math inline">\(sex\)</span> (female = <em>0</em>, male =
+<em>1</em>) are individual characteristics, <span class="math inline">\(cons = -5.49094\)</span>, <span class="math inline">\(ageC = -0.0367\)</span> and <span class="math inline">\(maleC = 0.768536\)</span>.</p>
 <ul>
-<li>For the NP1 procedure the standard procedure revision probability <code>standardRR</code> is modified by the relative risk <span class="math inline">\(rrNP1 = 0.260677\)</span>.</li>
+<li>For the NP1 procedure the standard procedure revision probability
+<code>standardRR</code> is modified by the relative risk <span class="math inline">\(rrNP1 = 0.260677\)</span>.</li>
 </ul>
 <p><span class="math display">\[
-P_{revision} = 1 - \exp(\lambda \times rr \times NP1 \times ((t-1)^\gamma-t^\gamma))
+P_{revision} = 1 - \exp(\lambda \times rr \times NP1 \times
+((t-1)^\gamma-t^\gamma))
 \]</span></p>
 <ul>
-<li>Revision THR re-revision (<code>rrr</code>) probability is set to be constant at <em>0.04</em> per year.</li>
+<li>Revision THR re-revision (<code>rrr</code>) probability is set to be
+constant at <em>0.04</em> per year.</li>
 </ul>
 </div>
 <div class="section level2">
 <h2 id="parameter-definition">Parameter definition<a class="anchor" aria-label="anchor" href="#parameter-definition"></a>
 </h2>
-<p>The key element to specify time-varying elements in <code>heemod</code> is through the use of the <strong>package-defined variables</strong> <code>markov_cycle</code> and <code>state_cycle</code>. See vignette <code>vignette("b-time-dependency", "heemod")</code> for more details.</p>
-<p>In order to build this more complex Markov model, parameters need to be defined through <code><a href="../reference/define_parameters.html">define_parameters()</a></code> (for 2 reasons: to keep the transition matrix readable, and to avoid repetition by re-using parameters between strategies).</p>
-<p>The equations decribed in the previous section can be written easily, here for a female population (<code>sex</code> = <em>0</em>) starting at 60 years old (<code>age_init</code> = <em>60</em>).</p>
+<p>The key element to specify time-varying elements in
+<code>heemod</code> is through the use of the <strong>package-defined
+variables</strong> <code>model_time</code> and <code>state_time</code>.
+See vignette <code>vignette("b-time-dependency", "heemod")</code> for
+more details.</p>
+<p>In order to build this more complex Markov model, parameters need to
+be defined through <code><a href="../reference/define_parameters.html">define_parameters()</a></code> (for 2 reasons: to
+keep the transition matrix readable, and to avoid repetition by re-using
+parameters between strategies).</p>
+<p>The equations decribed in the previous section can be written easily,
+here for a female population (<code>sex</code> = <em>0</em>) starting at
+60 years old (<code>age_init</code> = <em>60</em>).</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">param</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/define_parameters.html">define_parameters</a></span><span class="op">(</span></span>
 <span>    age_init <span class="op">=</span> <span class="fl">60</span>,</span>
 <span>    sex <span class="op">=</span> <span class="fl">0</span>,</span>
 <span>    </span>
 <span>    <span class="co"># age increases with cycles</span></span>
-<span>    age <span class="op">=</span> <span class="va">age_init</span> <span class="op">+</span> <span class="va">markov_cycle</span>,</span>
+<span>    age <span class="op">=</span> <span class="va">age_init</span> <span class="op">+</span> <span class="va">model_time</span>,</span>
 <span>    </span>
 <span>    <span class="co"># operative mortality rates</span></span>
 <span>    omrPTHR <span class="op">=</span> <span class="fl">.02</span>,</span>
@@ -158,14 +199,14 @@ P_{revision} = 1 - \exp(\lambda \times rr \times NP1 \times ((t-1)^\gamma-t^\gam
 <span>    rrNP1 <span class="op">=</span> <span class="fl">.260677</span>,</span>
 <span>    </span>
 <span>    <span class="co"># revision probability of primary procedure</span></span>
-<span>    standardRR <span class="op">=</span> <span class="fl">1</span> <span class="op">-</span> <span class="fu"><a href="https://rdrr.io/r/base/Log.html" class="external-link">exp</a></span><span class="op">(</span><span class="va">lambda</span> <span class="op">*</span> <span class="op">(</span><span class="op">(</span><span class="va">markov_cycle</span> <span class="op">-</span> <span class="fl">1</span><span class="op">)</span> <span class="op">^</span> <span class="va">gamma</span> <span class="op">-</span></span>
-<span>                                     <span class="va">markov_cycle</span> <span class="op">^</span> <span class="va">gamma</span><span class="op">)</span><span class="op">)</span>,</span>
-<span>    np1RR <span class="op">=</span> <span class="fl">1</span> <span class="op">-</span> <span class="fu"><a href="https://rdrr.io/r/base/Log.html" class="external-link">exp</a></span><span class="op">(</span><span class="va">lambda</span> <span class="op">*</span> <span class="va">rrNP1</span> <span class="op">*</span> <span class="op">(</span><span class="op">(</span><span class="va">markov_cycle</span> <span class="op">-</span> <span class="fl">1</span><span class="op">)</span> <span class="op">^</span> <span class="va">gamma</span> <span class="op">-</span> </span>
-<span>                                        <span class="va">markov_cycle</span> <span class="op">^</span> <span class="va">gamma</span><span class="op">)</span><span class="op">)</span>,</span>
+<span>    standardRR <span class="op">=</span> <span class="fl">1</span> <span class="op">-</span> <span class="fu"><a href="https://rdrr.io/r/base/Log.html" class="external-link">exp</a></span><span class="op">(</span><span class="va">lambda</span> <span class="op">*</span> <span class="op">(</span><span class="op">(</span><span class="va">model_time</span> <span class="op">-</span> <span class="fl">1</span><span class="op">)</span> <span class="op">^</span> <span class="va">gamma</span> <span class="op">-</span></span>
+<span>                                     <span class="va">model_time</span> <span class="op">^</span> <span class="va">gamma</span><span class="op">)</span><span class="op">)</span>,</span>
+<span>    np1RR <span class="op">=</span> <span class="fl">1</span> <span class="op">-</span> <span class="fu"><a href="https://rdrr.io/r/base/Log.html" class="external-link">exp</a></span><span class="op">(</span><span class="va">lambda</span> <span class="op">*</span> <span class="va">rrNP1</span> <span class="op">*</span> <span class="op">(</span><span class="op">(</span><span class="va">model_time</span> <span class="op">-</span> <span class="fl">1</span><span class="op">)</span> <span class="op">^</span> <span class="va">gamma</span> <span class="op">-</span> </span>
+<span>                                        <span class="va">model_time</span> <span class="op">^</span> <span class="va">gamma</span><span class="op">)</span><span class="op">)</span>,</span>
 <span>    </span>
 <span>    <span class="co"># age-related mortality rate</span></span>
 <span>    sex_cat <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/ifelse.html" class="external-link">ifelse</a></span><span class="op">(</span><span class="va">sex</span> <span class="op">==</span> <span class="fl">0</span>, <span class="st">"FMLE"</span>, <span class="st">"MLE"</span><span class="op">)</span>,</span>
-<span>    mr <span class="op">=</span> <span class="fu"><a href="../reference/who_mortality.html">get_who_mr</a></span><span class="op">(</span><span class="va">age</span>, <span class="va">sex_cat</span>, country <span class="op">=</span> <span class="st">"GBR"</span>, local <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>,</span>
+<span>    mr <span class="op">=</span> <span class="fu"><a href="../reference/who_mortality.html">get_who_mr</a></span><span class="op">(</span><span class="va">age</span>, <span class="va">sex_cat</span>, local <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>,</span>
 <span>    </span>
 <span>    <span class="co"># state values</span></span>
 <span>    u_SuccessP <span class="op">=</span> <span class="fl">.85</span>,</span>
@@ -178,7 +219,7 @@ P_{revision} = 1 - \exp(\lambda \times rr \times NP1 \times ((t-1)^\gamma-t^\gam
 <span><span class="co">## </span></span>
 <span><span class="co">## age_init = 60</span></span>
 <span><span class="co">## sex = 0</span></span>
-<span><span class="co">## age = age_init + markov_cycle</span></span>
+<span><span class="co">## age = age_init + model_time</span></span>
 <span><span class="co">## omrPTHR = 0.02</span></span>
 <span><span class="co">## omrRTHR = 0.02</span></span>
 <span><span class="co">## rrr = 0.04</span></span>
@@ -188,10 +229,10 @@ P_{revision} = 1 - \exp(\lambda \times rr \times NP1 \times ((t-1)^\gamma-t^\gam
 <span><span class="co">## lambda = exp(cons + ageC * age_init + maleC * sex)</span></span>
 <span><span class="co">## gamma = 1.45367786</span></span>
 <span><span class="co">## rrNP1 = 0.260677</span></span>
-<span><span class="co">## standardRR = 1 - exp(lambda * ((markov_cycle - 1)^gamma - markov_cycle^gamma))</span></span>
-<span><span class="co">## np1RR = 1 - exp(lambda * rrNP1 * ((markov_cycle - 1)^gamma - markov_cycle^gamma))</span></span>
+<span><span class="co">## standardRR = 1 - ...</span></span>
+<span><span class="co">## np1RR = 1 - ...</span></span>
 <span><span class="co">## sex_cat = ifelse(sex == 0, "FMLE", "MLE")</span></span>
-<span><span class="co">## mr = get_who_mr(age, sex_cat, country = "GBR", local = TRUE)</span></span>
+<span><span class="co">## mr = get_who_mr(age, sex_cat, local = TRUE)</span></span>
 <span><span class="co">## u_SuccessP = 0.85</span></span>
 <span><span class="co">## u_RevisionTHR = 0.3</span></span>
 <span><span class="co">## u_SuccessR = 0.75</span></span>
@@ -200,7 +241,8 @@ P_{revision} = 1 - \exp(\lambda \times rr \times NP1 \times ((t-1)^\gamma-t^\gam
 <div class="section level2">
 <h2 id="transition-matrix-definition">Transition matrix definition<a class="anchor" aria-label="anchor" href="#transition-matrix-definition"></a>
 </h2>
-<p>Now that parameters are defined, the probability transitions can be easily written:</p>
+<p>Now that parameters are defined, the probability transitions can be
+easily written:</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">mat_standard</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/define_transition.html">define_transition</a></span><span class="op">(</span></span>
 <span>    state_names <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span></span>
@@ -249,7 +291,9 @@ P_{revision} = 1 - \exp(\lambda \times rr \times NP1 \times ((t-1)^\gamma-t^\gam
 <span><span class="co">## RevisionTHR                                 C        omrRTHR + mr</span></span>
 <span><span class="co">## SuccessR                        rrr         C        mr          </span></span>
 <span><span class="co">## Death                                                1</span></span></code></pre>
-<p>While it is possible to plot the matrix thanks to the <code>diagram</code> package, the results may not always be easy to read.</p>
+<p>While it is possible to plot the matrix thanks to the
+<code>diagram</code> package, the results may not always be easy to
+read.</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">mat_standard</span><span class="op">)</span></span></code></pre></div>
 <pre><code><span><span class="co">## Loading required namespace: diagram</span></span></code></pre>
@@ -258,9 +302,13 @@ P_{revision} = 1 - \exp(\lambda \times rr \times NP1 \times ((t-1)^\gamma-t^\gam
 <div class="section level2">
 <h2 id="state-strategy-definition">State &amp; strategy definition<a class="anchor" aria-label="anchor" href="#state-strategy-definition"></a>
 </h2>
-<p>Utilities and costs are then associated to states. In this model costs are discounted at a rate of 6% and utilities at a rate of 1.5%.</p>
-<p>Now that parameters, transition matrix and states are defined we can define the strategies for the control group and the NP1 treatment.</p>
-<p>We use <code><a href="../reference/define_starting_values.html">define_starting_values()</a></code> to take into account the cost of surgery.</p>
+<p>Utilities and costs are then associated to states. In this model
+costs are discounted at a rate of 6% and utilities at a rate of
+1.5%.</p>
+<p>Now that parameters, transition matrix and states are defined we can
+define the strategies for the control group and the NP1 treatment.</p>
+<p>We use <code><a href="../reference/define_starting_values.html">define_starting_values()</a></code> to take into account the
+cost of surgery.</p>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">strat_standard</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/define_strategy.html">define_strategy</a></span><span class="op">(</span></span>
 <span>  transition <span class="op">=</span> <span class="va">mat_standard</span>,</span>
@@ -329,7 +377,8 @@ P_{revision} = 1 - \exp(\lambda \times rr \times NP1 \times ((t-1)^\gamma-t^\gam
 <div class="section level2">
 <h2 id="model-analysis">Model analysis<a class="anchor" aria-label="anchor" href="#model-analysis"></a>
 </h2>
-<p>Both strategies can now be run for 60 years. By default models are computed for 1000 person starting in <code>PrimaryTHR</code>.</p>
+<p>Both strategies can now be run for 60 years. By default models are
+computed for 1000 person starting in <code>PrimaryTHR</code>.</p>
 <div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">res_mod</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/run_model.html">run_model</a></span><span class="op">(</span></span>
 <span>  standard <span class="op">=</span> <span class="va">strat_standard</span>,</span>
@@ -340,8 +389,10 @@ P_{revision} = 1 - \exp(\lambda \times rr \times NP1 \times ((t-1)^\gamma-t^\gam
 <span>  effect <span class="op">=</span> <span class="va">utility</span></span>
 <span><span class="op">)</span></span></code></pre></div>
 <pre><code><span><span class="co">## Fetching mortality data from package cached data.</span></span></code></pre>
-<pre><code><span><span class="co">## Using cached data from year 2015.</span></span></code></pre>
-<p>A comparison of both strategies can be done with <code><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary()</a></code>. The incremental cost and effect are displayed in columns <code>Cost</code> and <code>Effect</code>.</p>
+<pre><code><span><span class="co">## Using cached data from year 2019.</span></span></code></pre>
+<p>A comparison of both strategies can be done with
+<code><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary()</a></code>. The incremental cost and effect are displayed in
+columns <code>Cost</code> and <code>Effect</code>.</p>
 <div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">res_mod</span><span class="op">)</span></span></code></pre></div>
 <pre><code><span><span class="co">## 2 strategies run for 60 cycles.</span></span>
@@ -367,8 +418,8 @@ P_{revision} = 1 - \exp(\lambda \times rr \times NP1 \times ((t-1)^\gamma-t^\gam
 <span><span class="co">## Values:</span></span>
 <span><span class="co">## </span></span>
 <span><span class="co">##           utility     cost</span></span>
-<span><span class="co">## standard 16239.62 529400.8</span></span>
-<span><span class="co">## np1      16291.79 614827.1</span></span>
+<span><span class="co">## standard 16949.57 535002.2</span></span>
+<span><span class="co">## np1      17009.10 616348.5</span></span>
 <span><span class="co">## </span></span>
 <span><span class="co">## Efficiency frontier:</span></span>
 <span><span class="co">## </span></span>
@@ -377,9 +428,13 @@ P_{revision} = 1 - \exp(\lambda \times rr \times NP1 \times ((t-1)^\gamma-t^\gam
 <span><span class="co">## Differences:</span></span>
 <span><span class="co">## </span></span>
 <span><span class="co">##     Cost Diff. Effect Diff.     ICER     Ref.</span></span>
-<span><span class="co">## np1   85.42637   0.05216416 1637.645 standard</span></span></code></pre>
-<p>The new treatment costs £1638 more per QALY gained.</p>
-<p>It should be noted that this result differs from the original study. This difference is explained by higher population-level all-causes mortality rates in the original study than in the WHO database (used here). See vignette <code>vignette("i-reproduction", "heemod")</code> for an exact reproduction of the analysis.</p>
+<span><span class="co">## np1    81.3463   0.05953445 1366.374 standard</span></span></code></pre>
+<p>The new treatment costs £1366 more per QALY gained.</p>
+<p>It should be noted that this result differs from the original study.
+This difference is explained by higher population-level all-causes
+mortality rates in the original study than in the WHO database (used
+here). See vignette <code>vignette("i-reproduction", "heemod")</code>
+for an exact reproduction of the analysis.</p>
 <p>We can plot the counts per state:</p>
 <div class="sourceCode" id="cb18"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">res_mod</span>, type <span class="op">=</span> <span class="st">"counts"</span>, panel <span class="op">=</span> <span class="st">"by_state"</span>, free_y <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="op">+</span></span>

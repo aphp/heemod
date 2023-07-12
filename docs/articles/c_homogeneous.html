@@ -33,7 +33,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">heemod</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.15.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.16.0</span>
       </span>
     </div>
 
@@ -71,7 +71,7 @@
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>Simple Markov Models (Homogeneous)</h1>
             
-            <h4 data-toc-skip class="date">2023-02-14</h4>
+            <h4 data-toc-skip class="date">2023-07-12</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/aphp/heemod/blob/HEAD/vignettes/c_homogeneous.Rmd" class="external-link"><code>vignettes/c_homogeneous.Rmd</code></a></small>
       <div class="hidden name"><code>c_homogeneous.Rmd</code></div>
@@ -80,12 +80,22 @@
 
     
     
-<p>The most simple Markov models in health economic evaluation are models were transition probabilities between states do not change with time. Those are called <em>homogeneous</em> or <em>time-homogeneous</em> Markov models.</p>
+<p>The most simple Markov models in health economic evaluation are
+models were transition probabilities between states do not change with
+time. Those are called <em>homogeneous</em> or <em>time-homogeneous</em>
+Markov models.</p>
 <div class="section level2">
 <h2 id="model-description">Model description<a class="anchor" aria-label="anchor" href="#model-description"></a>
 </h2>
-<p>In this example we will model the cost effectiveness of lamivudine/zidovudine combination therapy in HIV infection (<a href="https://pubmed.ncbi.nlm.nih.gov/10169387/" class="external-link">Chancellor, 1997</a> further described in <a href="https://global.oup.com/academic/product/decision-modelling-for-health-economic-evaluation-9780198526629/" class="external-link">Decision Modelling for Health Economic Evaluation</a>, page 32. For the sake of simplicity we will not reproduce exactly the analysis from the book. See vignette <code>vignette("i-reproduction", "heemod")</code> for an exact reproduction of the analysis.</p>
-<p>This model aims to compare costs and utilities of two treatment strategies, <em>monotherapy</em> and <em>combined therapy</em>.</p>
+<p>In this example we will model the cost effectiveness of
+lamivudine/zidovudine combination therapy in HIV infection (<a href="https://pubmed.ncbi.nlm.nih.gov/10169387/" class="external-link">Chancellor, 1997</a>
+further described in <a href="https://global.oup.com/academic/product/decision-modelling-for-health-economic-evaluation-9780198526629/" class="external-link">Decision
+Modelling for Health Economic Evaluation</a>, page 32. For the sake of
+simplicity we will not reproduce exactly the analysis from the book. See
+vignette <code>vignette("i-reproduction", "heemod")</code> for an exact
+reproduction of the analysis.</p>
+<p>This model aims to compare costs and utilities of two treatment
+strategies, <em>monotherapy</em> and <em>combined therapy</em>.</p>
 <p>Four states are described, from best to worst health-wise:</p>
 <ul>
 <li>
@@ -101,7 +111,8 @@
 <div class="section level2">
 <h2 id="transition-probabilities">Transition probabilities<a class="anchor" aria-label="anchor" href="#transition-probabilities"></a>
 </h2>
-<p>Transition probabilities for the monotherapy study group are rather simple to implement with <code><a href="../reference/define_transition.html">define_transition()</a></code>:</p>
+<p>Transition probabilities for the monotherapy study group are rather
+simple to implement with <code><a href="../reference/define_transition.html">define_transition()</a></code>:</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">mat_mono</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/define_transition.html">define_transition</a></span><span class="op">(</span></span>
 <span>    <span class="fl">.721</span>, <span class="fl">.202</span>, <span class="fl">.067</span>, <span class="fl">.010</span>,</span>
@@ -119,9 +130,17 @@
 <span><span class="co">## B       0.581 0.407 0.012</span></span>
 <span><span class="co">## C             0.75  0.25 </span></span>
 <span><span class="co">## D                   1</span></span></code></pre>
-<p>The combined therapy group has its transition probabilities multiplied by <span class="math inline">\(rr = 0.509\)</span>, the relative risk of event for the population treated by combined therapy. Since <span class="math inline">\(rr &lt; 1\)</span>, the combined therapy group has less chance to transition to worst health states.</p>
-<p>The probabilities to stay in the same state are equal to <span class="math inline">\(1 - \sum P_{trans}\)</span> where <span class="math inline">\(P_{trans}\)</span> are the probabilities to change to another state (because all transition probabilities from a given state must sum to 1).</p>
-<p>We use the alias <code>C</code> as a convenient way to specify the probability complement, equal to <span class="math inline">\(1 - \sum P_{trans}\)</span>.</p>
+<p>The combined therapy group has its transition probabilities
+multiplied by <span class="math inline">\(rr = 0.509\)</span>, the
+relative risk of event for the population treated by combined therapy.
+Since <span class="math inline">\(rr &lt; 1\)</span>, the combined
+therapy group has less chance to transition to worst health states.</p>
+<p>The probabilities to stay in the same state are equal to <span class="math inline">\(1 - \sum P_{trans}\)</span> where <span class="math inline">\(P_{trans}\)</span> are the probabilities to change
+to another state (because all transition probabilities from a given
+state must sum to 1).</p>
+<p>We use the alias <code>C</code> as a convenient way to specify the
+probability complement, equal to <span class="math inline">\(1 - \sum
+P_{trans}\)</span>.</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">rr</span> <span class="op">&lt;-</span> <span class="fl">.509</span></span>
 <span></span>
@@ -158,9 +177,18 @@
 <div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">cost_zido</span> <span class="op">&lt;-</span> <span class="fl">2278</span></span>
 <span><span class="va">cost_lami</span> <span class="op">&lt;-</span> <span class="fl">2086</span></span></code></pre></div>
-<p>In addition to drugs costs (called <code>cost_drugs</code> in the model), each state is associated to healthcare costs (called <code>cost_health</code>). Cost are discounted at a 6% rate with the <code>discount</code> function.</p>
-<p>Efficacy in this study is measured in terms of life expectancy (called <code>life_year</code> in the model). Each state thus has a value of 1 life year per year, except death who has a value of 0. Life-years are not discounted in this example.</p>
-<p>Only <code>cost_drug</code> differs between the monotherapy and the combined therapy treatment groups, the function <code><a href="../reference/dispatch_strategy.html">dispatch_strategy()</a></code> can be used to account for that. For example state A can be defined with <code><a href="../reference/define_state.html">define_state()</a></code>:</p>
+<p>In addition to drugs costs (called <code>cost_drugs</code> in the
+model), each state is associated to healthcare costs (called
+<code>cost_health</code>). Cost are discounted at a 6% rate with the
+<code>discount</code> function.</p>
+<p>Efficacy in this study is measured in terms of life expectancy
+(called <code>life_year</code> in the model). Each state thus has a
+value of 1 life year per year, except death who has a value of 0.
+Life-years are not discounted in this example.</p>
+<p>Only <code>cost_drug</code> differs between the monotherapy and the
+combined therapy treatment groups, the function
+<code><a href="../reference/dispatch_strategy.html">dispatch_strategy()</a></code> can be used to account for that. For
+example state A can be defined with <code><a href="../reference/define_state.html">define_state()</a></code>:</p>
 <div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">state_A</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/define_state.html">define_state</a></span><span class="op">(</span></span>
 <span>    cost_health <span class="op">=</span> <span class="fu"><a href="../reference/discount.html">discount</a></span><span class="op">(</span><span class="fl">2756</span>, <span class="fl">.06</span><span class="op">)</span>,</span>
@@ -175,11 +203,11 @@
 <pre><code><span><span class="co">## A state with 4 values.</span></span>
 <span><span class="co">## </span></span>
 <span><span class="co">## cost_health = discount(2756, 0.06)</span></span>
-<span><span class="co">## cost_drugs = discount(dispatch_strategy(mono = cost_zido, comb = cost_zido + </span></span>
-<span><span class="co">##     cost_lami), 0.06)</span></span>
+<span><span class="co">## cost_drugs = discount(...)</span></span>
 <span><span class="co">## cost_total = cost_health + cost_drugs</span></span>
 <span><span class="co">## life_year = 1</span></span></code></pre>
-<p>The other states for the monotherapy treatment group can be specified in the same way:</p>
+<p>The other states for the monotherapy treatment group can be specified
+in the same way:</p>
 <div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">state_B</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/define_state.html">define_state</a></span><span class="op">(</span></span>
 <span>    cost_health <span class="op">=</span> <span class="fu"><a href="../reference/discount.html">discount</a></span><span class="op">(</span><span class="fl">3052</span>, <span class="fl">.06</span><span class="op">)</span>,</span>
@@ -209,7 +237,8 @@
 <div class="section level2">
 <h2 id="strategy-definitions">Strategy definitions<a class="anchor" aria-label="anchor" href="#strategy-definitions"></a>
 </h2>
-<p>Strategies can now be defined by combining a transition matrix and a state list with <code><a href="../reference/define_strategy.html">define_strategy()</a></code>:</p>
+<p>Strategies can now be defined by combining a transition matrix and a
+state list with <code><a href="../reference/define_strategy.html">define_strategy()</a></code>:</p>
 <div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">strat_mono</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/define_strategy.html">define_strategy</a></span><span class="op">(</span></span>
 <span>  transition <span class="op">=</span> <span class="va">mat_mono</span>,</span>
@@ -239,7 +268,10 @@
 <div class="section level2">
 <h2 id="running-the-model">Running the model<a class="anchor" aria-label="anchor" href="#running-the-model"></a>
 </h2>
-<p>Both strategies can then be combined in a model and run for 50 years with <code><a href="../reference/run_model.html">run_model()</a></code>. Strategies are given names (<code>mono</code> and <code>comb</code>) in order to facilitate result interpretation.</p>
+<p>Both strategies can then be combined in a model and run for 50 years
+with <code><a href="../reference/run_model.html">run_model()</a></code>. Strategies are given names
+(<code>mono</code> and <code>comb</code>) in order to facilitate result
+interpretation.</p>
 <div class="sourceCode" id="cb22"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">res_mod</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/run_model.html">run_model</a></span><span class="op">(</span></span>
 <span>  mono <span class="op">=</span> <span class="va">strat_mono</span>,</span>
@@ -248,12 +280,15 @@
 <span>  cost <span class="op">=</span> <span class="va">cost_total</span>,</span>
 <span>  effect <span class="op">=</span> <span class="va">life_year</span></span>
 <span><span class="op">)</span></span></code></pre></div>
-<p>By default models are run for 1000 persons starting in the first state (here state <strong>A</strong>).</p>
+<p>By default models are run for 1000 persons starting in the first
+state (here state <strong>A</strong>).</p>
 </div>
 <div class="section level2">
 <h2 id="result-interpretation">Result interpretation<a class="anchor" aria-label="anchor" href="#result-interpretation"></a>
 </h2>
-<p>Strategy values can then be compared with <code><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary()</a></code> (optionally net monetary benefits can be calculated with the <code>threshold</code> option):</p>
+<p>Strategy values can then be compared with <code><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary()</a></code>
+(optionally net monetary benefits can be calculated with the
+<code>threshold</code> option):</p>
 <div class="sourceCode" id="cb23"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">res_mod</span>,</span>
 <span>        threshold <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1000</span>, <span class="fl">5000</span>, <span class="fl">6000</span>, <span class="fl">1e4</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
@@ -296,7 +331,8 @@
 <span><span class="co">## </span></span>
 <span><span class="co">##      Cost Diff. Effect Diff.    ICER Ref.</span></span>
 <span><span class="co">## comb   44222.75     8.671094 5100.02 mono</span></span></code></pre>
-<p>The incremental cost-effectiveness ratio of the combined therapy strategy is thus £5100 per life-year gained.</p>
+<p>The incremental cost-effectiveness ratio of the combined therapy
+strategy is thus £5100 per life-year gained.</p>
 <p>The counts per state can be plotted by model:</p>
 <div class="sourceCode" id="cb25"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">res_mod</span>, type <span class="op">=</span> <span class="st">"counts"</span>, panel <span class="op">=</span> <span class="st">"by_strategy"</span><span class="op">)</span> <span class="op">+</span></span>
@@ -328,7 +364,8 @@
 <span>    palette <span class="op">=</span> <span class="st">"Set1"</span></span>
 <span>  <span class="op">)</span></span></code></pre></div>
 <p><img src="c_homogeneous_files/figure-html/unnamed-chunk-15-1.png" width="576" style="display: block; margin: auto;"></p>
-<p>Note that classic <code>ggplot2</code> syntax can be used to modifiy plot appearance.</p>
+<p>Note that classic <code>ggplot2</code> syntax can be used to modifiy
+plot appearance.</p>
 </div>
   </div>
 

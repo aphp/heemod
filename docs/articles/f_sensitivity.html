@@ -33,7 +33,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">heemod</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.15.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.16.0</span>
       </span>
     </div>
 
@@ -71,7 +71,7 @@
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>Deterministic Sensitivity Analysis</h1>
             
-            <h4 data-toc-skip class="date">2023-02-14</h4>
+            <h4 data-toc-skip class="date">2023-07-12</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/aphp/heemod/blob/HEAD/vignettes/f_sensitivity.Rmd" class="external-link"><code>vignettes/f_sensitivity.Rmd</code></a></small>
       <div class="hidden name"><code>f_sensitivity.Rmd</code></div>
@@ -83,23 +83,38 @@
 <div class="section level2">
 <h2 id="introduction">Introduction<a class="anchor" aria-label="anchor" href="#introduction"></a>
 </h2>
-<p>The objective of deterministic sensitivity analysis is to assess how model results are sensitive to parameter values. Parameter values are changed through upper and lower bounds, and the results are reported.</p>
-<p>Sensitivity analysis is distinct from probabilistic uncertainty analysis: whereas in PSA the objective is to estimate the effect of global uncertainty on model results, in DSA the objective is to assess the sensitivity of results to variations of individual parameters. Both analyses are complementary.</p>
+<p>The objective of deterministic sensitivity analysis is to assess how
+model results are sensitive to parameter values. Parameter values are
+changed through upper and lower bounds, and the results are
+reported.</p>
+<p>Sensitivity analysis is distinct from probabilistic uncertainty
+analysis: whereas in PSA the objective is to estimate the effect of
+global uncertainty on model results, in DSA the objective is to assess
+the sensitivity of results to variations of individual parameters. Both
+analyses are complementary.</p>
 </div>
 <div class="section level2">
 <h2 id="define-the-analysis">Define the analysis<a class="anchor" aria-label="anchor" href="#define-the-analysis"></a>
 </h2>
-<p>This example uses the HIV drug model defined in <code>vignette("e-probabilistic", "heemod")</code>. See this vignette for an explanation of the model. Note that as in PSA, parameters need to be defined in <code><a href="../reference/define_parameters.html">define_parameters()</a></code> in order to be modified in a DSA.</p>
-<p>In this example we will study the sensitivity of cost to 4 parameters:</p>
+<p>This example uses the HIV drug model defined in
+<code>vignette("e-probabilistic", "heemod")</code>. See this vignette
+for an explanation of the model. Note that as in PSA, parameters need to
+be defined in <code><a href="../reference/define_parameters.html">define_parameters()</a></code> in order to be modified
+in a DSA.</p>
+<p>In this example we will study the sensitivity of cost to 4
+parameters:</p>
 <ul>
 <li>
-<code>rr</code>, the relative risk associated with the new treatment.</li>
+<code>rr</code>, the relative risk associated with the new
+treatment.</li>
 <li>
-<code>cost_zido</code> and <code>cost_lami</code>, the drug costs.</li>
+<code>cost_zido</code> and <code>cost_lami</code>, the drug
+costs.</li>
 <li>
 <code>dr</code>, the discount rate.</li>
 </ul>
-<p>Upper and lower values for the paramters are given to <code><a href="../reference/define_dsa.html">define_dsa()</a></code>.</p>
+<p>Upper and lower values for the paramters are given to
+<code><a href="../reference/define_dsa.html">define_dsa()</a></code>.</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">se</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/define_dsa.html">define_dsa</a></span><span class="op">(</span></span>
 <span>  <span class="va">rr</span>, <span class="fl">.4</span>, <span class="fl">.6</span>,</span>
@@ -109,7 +124,9 @@
 <span>  </span>
 <span>  <span class="va">dr</span>, <span class="fl">.04</span>, <span class="fl">.08</span></span>
 <span><span class="op">)</span></span></code></pre></div>
-<p>We then run the sensitivity analysis with <code><a href="../reference/run_dsa.html">run_dsa()</a></code>, using <code>res_mod</code> the result from <code><a href="../reference/run_model.html">run_model()</a></code> as input.</p>
+<p>We then run the sensitivity analysis with <code><a href="../reference/run_dsa.html">run_dsa()</a></code>,
+using <code>res_mod</code> the result from <code><a href="../reference/run_model.html">run_model()</a></code> as
+input.</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">res_dsa</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/run_dsa.html">run_dsa</a></span><span class="op">(</span></span>
 <span>  model <span class="op">=</span> <span class="va">res_mod</span>,</span>
@@ -185,15 +202,22 @@
 <span><span class="co">## comb, rr = 0.4         7.388802     mono 180507.8 180507.8</span></span>
 <span><span class="co">## mono, rr = 0.6         -            -         0.0 -       </span></span>
 <span><span class="co">## comb, rr = 0.6         4.418583     mono 100173.8 100173.8</span></span></code></pre>
-<p>Two distinct plot types are available. The basic plot (<code>type = "simple"</code>) displays cost variations for each model, around the base cost.</p>
-<p>As expected <code>mono</code> model costs are not senstive to <code>cost_lami</code>, since this drug was not given to this group. Similarly it is not sensitive to <code>rr</code>, because this parameters only modifies transition probabilities in the other model.</p>
+<p>Two distinct plot types are available. The basic plot
+(<code>type = "simple"</code>) displays cost variations for each model,
+around the base cost.</p>
+<p>As expected <code>mono</code> model costs are not senstive to
+<code>cost_lami</code>, since this drug was not given to this group.
+Similarly it is not sensitive to <code>rr</code>, because this
+parameters only modifies transition probabilities in the other
+model.</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">res_dsa</span>,</span>
 <span>     strategy <span class="op">=</span> <span class="st">"mono"</span>,</span>
 <span>     result <span class="op">=</span> <span class="st">"cost"</span>,</span>
 <span>     type <span class="op">=</span> <span class="st">"simple"</span><span class="op">)</span></span></code></pre></div>
 <p><img src="f_sensitivity_files/figure-html/unnamed-chunk-5-1.png" width="576" style="display: block; margin: auto;"></p>
-<p>On the other hand the <code>comb</code> model cost is sensitive to all 4 parameters.</p>
+<p>On the other hand the <code>comb</code> model cost is sensitive to
+all 4 parameters.</p>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">res_dsa</span>,</span>
 <span>     strategy <span class="op">=</span> <span class="st">"comb"</span>,</span>
@@ -207,7 +231,9 @@
 <span>     result <span class="op">=</span> <span class="st">"effect"</span>,</span>
 <span>     type <span class="op">=</span> <span class="st">"simple"</span><span class="op">)</span></span></code></pre></div>
 <p><img src="f_sensitivity_files/figure-html/unnamed-chunk-7-1.png" width="576" style="display: block; margin: auto;"></p>
-<p>The difference plot (<code>type = "difference"</code>) displays the difference between the specified model <code>comb</code> and the reference model <code>mono</code>.</p>
+<p>The difference plot (<code>type = "difference"</code>) displays the
+difference between the specified model <code>comb</code> and the
+reference model <code>mono</code>.</p>
 <div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">res_dsa</span>,</span>
 <span>     strategy <span class="op">=</span> <span class="st">"comb"</span>,</span>
@@ -220,7 +246,8 @@
 <span>     result <span class="op">=</span> <span class="st">"icer"</span>,</span>
 <span>     type <span class="op">=</span> <span class="st">"difference"</span><span class="op">)</span></span></code></pre></div>
 <p><img src="f_sensitivity_files/figure-html/unnamed-chunk-8-2.png" width="576" style="display: block; margin: auto;"></p>
-<p>It is also possible to leave the high and low parameter values off the plot:</p>
+<p>It is also possible to leave the high and low parameter values off
+the plot:</p>
 <div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">res_dsa</span>,</span>
 <span>     strategy <span class="op">=</span> <span class="st">"comb"</span>,</span>

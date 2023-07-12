@@ -33,7 +33,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">heemod</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.15.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.16.0</span>
       </span>
     </div>
 
@@ -71,7 +71,7 @@
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>Survival models</h1>
             
-            <h4 data-toc-skip class="date">2023-02-14</h4>
+            <h4 data-toc-skip class="date">2023-07-12</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/aphp/heemod/blob/HEAD/vignettes/j_survival.Rmd" class="external-link"><code>vignettes/j_survival.Rmd</code></a></small>
       <div class="hidden name"><code>j_survival.Rmd</code></div>
@@ -83,14 +83,20 @@
 <div class="section level2">
 <h2 id="distributions">Distributions<a class="anchor" aria-label="anchor" href="#distributions"></a>
 </h2>
-<p>The <code>heemod</code> package provides a number of ways to estimate transition probabilities from survival distributions. Survival distributions can come from at least three different sources:</p>
+<p>The <code>heemod</code> package provides a number of ways to estimate
+transition probabilities from survival distributions. Survival
+distributions can come from at least three different sources:</p>
 <ul>
 <li>User-definded parametric distributions.</li>
-<li>Fitted parametric distributions with <code><a href="https://rdrr.io/pkg/flexsurv/man/flexsurvreg.html" class="external-link">flexsurv::flexsurvreg()</a></code>.</li>
+<li>Fitted parametric distributions with
+<code><a href="https://rdrr.io/pkg/flexsurv/man/flexsurvreg.html" class="external-link">flexsurv::flexsurvreg()</a></code>.</li>
 <li>Fitted Kaplan-Meiers with <code><a href="https://rdrr.io/pkg/survival/man/survfit.html" class="external-link">survival::survfit()</a></code>.</li>
 </ul>
-<p>Once defined, each of these types of distributions can be combined and modified using a standard set of operations.</p>
-<p>User-defined parametric distributions are created using the <code><a href="../reference/define_survival.html">define_survival()</a></code> and <code><a href="../reference/define_spline_survival.html">define_spline_survival()</a></code> functions:</p>
+<p>Once defined, each of these types of distributions can be combined
+and modified using a standard set of operations.</p>
+<p>User-defined parametric distributions are created using the
+<code><a href="../reference/define_survival.html">define_survival()</a></code> and <code><a href="../reference/define_spline_survival.html">define_spline_survival()</a></code>
+functions:</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">surv_dist_1</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/define_survival.html">define_survival</a></span><span class="op">(</span></span>
 <span>  distribution <span class="op">=</span> <span class="st">"exp"</span>,</span>
@@ -103,7 +109,9 @@
 <span>  knots <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">4.077537</span>, <span class="fl">5.883183</span>, <span class="fl">6.458338</span><span class="op">)</span></span>
 <span><span class="op">)</span></span></code></pre></div>
 <pre><code><span><span class="co">## Loading required namespace: flexsurv</span></span></code></pre>
-<p>Fitted parametric models are created using <code><a href="https://rdrr.io/pkg/flexsurv/man/flexsurvreg.html" class="external-link">flexsurv::flexsurvreg()</a></code> and <code><a href="https://rdrr.io/pkg/flexsurv/man/flexsurvspline.html" class="external-link">flexsurv::flexsurvspline()</a></code>:</p>
+<p>Fitted parametric models are created using
+<code><a href="https://rdrr.io/pkg/flexsurv/man/flexsurvreg.html" class="external-link">flexsurv::flexsurvreg()</a></code> and
+<code><a href="https://rdrr.io/pkg/flexsurv/man/flexsurvspline.html" class="external-link">flexsurv::flexsurvspline()</a></code>:</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/chjackson/flexsurv-dev" class="external-link">flexsurv</a></span><span class="op">)</span></span></code></pre></div>
 <pre><code><span><span class="co">## Loading required package: survival</span></span></code></pre>
@@ -123,7 +131,14 @@
 <span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">fit_spl</span><span class="op">)</span></span></code></pre></div>
 <p><img src="j_survival_files/figure-html/unnamed-chunk-2-2.png" width="576"></p>
-<p>Fitted models can include covariates. In order to use a model with covariates in heemod, you can use the <code><a href="../reference/set_covariates.html">set_covariates()</a></code> function on the fitted model and provide as additional arguments the covariate values you want to model. You can also provide a data frame of covariate levels to aggregate survival probabilites over different groups. By default, heemod will aggregate over predicted survival probabilities for each subject in the dataset to which the model was fit.</p>
+<p>Fitted models can include covariates. In order to use a model with
+covariates in heemod, you can use the <code><a href="../reference/set_covariates.html">set_covariates()</a></code>
+function on the fitted model and provide as additional arguments the
+covariate values you want to model. You can also provide a data frame of
+covariate levels to aggregate survival probabilites over different
+groups. By default, heemod will aggregate over predicted survival
+probabilities for each subject in the dataset to which the model was
+fit.</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">fit_cov</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/flexsurv/man/flexsurvreg.html" class="external-link">flexsurvreg</a></span><span class="op">(</span></span>
 <span>  formula <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/survival/man/Surv.html" class="external-link">Surv</a></span><span class="op">(</span><span class="va">rectime</span>, <span class="va">censrec</span><span class="op">)</span> <span class="op">~</span> <span class="va">group</span>,</span>
@@ -136,7 +151,8 @@
 <code class="sourceCode R"><span><span class="va">fitcov_good</span>   <span class="op">&lt;-</span> <span class="fu"><a href="../reference/set_covariates.html">set_covariates</a></span><span class="op">(</span><span class="va">fit_cov</span>, group <span class="op">=</span> <span class="st">"Good"</span><span class="op">)</span></span>
 <span><span class="va">fitcov_medium</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/set_covariates.html">set_covariates</a></span><span class="op">(</span><span class="va">fit_cov</span>, group <span class="op">=</span> <span class="st">"Medium"</span><span class="op">)</span></span>
 <span><span class="va">fitcov_poor</span>   <span class="op">&lt;-</span> <span class="fu"><a href="../reference/set_covariates.html">set_covariates</a></span><span class="op">(</span><span class="va">fit_cov</span>, group <span class="op">=</span> <span class="st">"Poor"</span><span class="op">)</span></span></code></pre></div>
-<p>Similar functionality is also available for Kaplan-Meiers created using <code><a href="https://rdrr.io/pkg/survival/man/survfit.html" class="external-link">survival::survfit()</a></code></p>
+<p>Similar functionality is also available for Kaplan-Meiers created
+using <code><a href="https://rdrr.io/pkg/survival/man/survfit.html" class="external-link">survival::survfit()</a></code></p>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/therneau/survival" class="external-link">survival</a></span><span class="op">)</span></span>
 <span></span>
@@ -158,7 +174,8 @@
 <div class="section level2">
 <h2 id="operations">Operations<a class="anchor" aria-label="anchor" href="#operations"></a>
 </h2>
-<p>Once defined, treatment effects of various types can be applied to any survival distribution:</p>
+<p>Once defined, treatment effects of various types can be applied to
+any survival distribution:</p>
 <ul>
 <li>Hazard ratio: <code><a href="../reference/apply_hr.html">apply_hr()</a></code>.</li>
 <li>Odds ratio: <code><a href="../reference/apply_or.html">apply_or()</a></code>.</li>
@@ -167,11 +184,13 @@
 <div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">km_poor_ph</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/apply_hr.html">apply_hr</a></span><span class="op">(</span><span class="va">km_poor</span>, hr <span class="op">=</span> <span class="fl">0.5</span><span class="op">)</span></span>
 <span><span class="va">km_medium_af</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/apply_af.html">apply_af</a></span><span class="op">(</span><span class="va">km_medium</span>, af <span class="op">=</span> <span class="fl">1.2</span><span class="op">)</span></span></code></pre></div>
-<p>In addition, distributions can be combined using a variety of operations:</p>
+<p>In addition, distributions can be combined using a variety of
+operations:</p>
 <ul>
 <li>Join survival distributions together: <code><a href="../reference/join.html">join()</a></code>.</li>
 <li>Mix two (or more) survival distributions: <code><a href="../reference/mix.html">mix()</a></code>.</li>
-<li>Combine two (or more) survival distributions as independent risks: <code><a href="../reference/add_hazards.html">add_hazards()</a></code>.</li>
+<li>Combine two (or more) survival distributions as independent risks:
+<code><a href="../reference/add_hazards.html">add_hazards()</a></code>.</li>
 </ul>
 <div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">km_poor_join</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/join.html">join</a></span><span class="op">(</span></span>
@@ -186,11 +205,15 @@
 <span><span class="va">combined_risks</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/add_hazards.html">add_hazards</a></span><span class="op">(</span></span>
 <span>  <span class="va">fit_w</span>, <span class="va">fitcov_good</span></span>
 <span><span class="op">)</span></span></code></pre></div>
-<p>The transition or survival probabilities are computed with <code><a href="../reference/compute_surv.html">compute_surv()</a></code>. Time (usually <code>model_time</code> or <code>state_time</code>) needs to be passed to the function as a <code>time</code> argument.</p>
+<p>The transition or survival probabilities are computed with
+<code><a href="../reference/compute_surv.html">compute_surv()</a></code>. Time (usually <code>model_time</code> or
+<code>state_time</code>) needs to be passed to the function as a
+<code>time</code> argument.</p>
 <div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/compute_surv.html">compute_surv</a></span><span class="op">(</span><span class="va">surv_dist_2</span>, time <span class="op">=</span> <span class="fl">1</span><span class="op">:</span><span class="fl">5</span><span class="op">)</span></span></code></pre></div>
 <pre><code><span><span class="co">## [1] 8.780223e-06 2.271877e-05 3.500128e-05 4.649850e-05 5.747782e-05</span></span></code></pre>
-<p>All these operations can be chained with the <code>%&gt;%</code> piping operator.</p>
+<p>All these operations can be chained with the <code>%&gt;%</code>
+piping operator.</p>
 <div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">fit_cov</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> </span>
 <span>  <span class="fu"><a href="../reference/set_covariates.html">set_covariates</a></span><span class="op">(</span>group <span class="op">=</span> <span class="st">"Good"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> </span>

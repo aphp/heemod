@@ -33,7 +33,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">heemod</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.15.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.16.0</span>
       </span>
     </div>
 
@@ -71,7 +71,7 @@
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>Tabular Input</h1>
             
-            <h4 data-toc-skip class="date">2023-02-14</h4>
+            <h4 data-toc-skip class="date">2023-07-12</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/aphp/heemod/blob/HEAD/vignettes/h_tabular.Rmd" class="external-link"><code>vignettes/h_tabular.Rmd</code></a></small>
       <div class="hidden name"><code>h_tabular.Rmd</code></div>
@@ -80,20 +80,41 @@
 
     
     
-<p>In most of the <code>heemod</code> vignettes models are defined through <code>R</code> code. But models with large numbers of states and transition probabilities might be unwieldy to input at the keyboard, and could be conveniently specified by file inputs.</p>
-<p>This vignette demonstrates how to make and use files to input models to <code>heemod</code>. The files can then be used to run a suite of analyses (including deterministic and probabilistic sensitivity analyses, acceptability curve calculation, etc.) and optionally save results to a folder.</p>
+<p>In most of the <code>heemod</code> vignettes models are defined
+through <code>R</code> code. But models with large numbers of states and
+transition probabilities might be unwieldy to input at the keyboard, and
+could be conveniently specified by file inputs.</p>
+<p>This vignette demonstrates how to make and use files to input models
+to <code>heemod</code>. The files can then be used to run a suite of
+analyses (including deterministic and probabilistic sensitivity
+analyses, acceptability curve calculation, etc.) and optionally save
+results to a folder.</p>
 <div class="section level2">
 <h2 id="introduction">Introduction<a class="anchor" aria-label="anchor" href="#introduction"></a>
 </h2>
-<p>The inputs for state definition, transition matrices, model options, etc. (referenced as <em>tabular inputs</em>) must be provided via <code>csv</code>, <code>xls</code> or <code>xlsx</code> files.<a href="#fn1" class="footnote-ref" id="fnref1"><sup>1</sup></a> Columns starting by <code>.comment</code> are ignored, as well as blank rows.</p>
-<p>These inputs must be provided in separate files. The path to these files is specified in a <em>reference file</em>, that acts as an ‘umbrella’ file atop of the other inputs. The reference file default name is <code>REFERENCE.csv</code>.</p>
+<p>The inputs for state definition, transition matrices, model options,
+etc. (referenced as <em>tabular inputs</em>) must be provided via
+<code>csv</code>, <code>xls</code> or <code>xlsx</code> files.<a href="#fn1" class="footnote-ref" id="fnref1"><sup>1</sup></a> Columns
+starting by <code>.comment</code> are ignored, as well as blank
+rows.</p>
+<p>These inputs must be provided in separate files. The path to these
+files is specified in a <em>reference file</em>, that acts as an
+‘umbrella’ file atop of the other inputs. The reference file default
+name is <code>REFERENCE.csv</code>.</p>
 <p><em>Warning for users of the <code>xls</code> format:</em><br>
-The <code>xls</code> files are read with the <code>readxl</code> package. As of version 0.1.1 if a column contains strings and numeric values the numeric values are rounded to 6 decimal places. We therefore recommend to use solely the <code>csv</code> or <code>xlsx</code> format.</p>
+The <code>xls</code> files are read with the <code>readxl</code>
+package. As of version 0.1.1 if a column contains strings and numeric
+values the numeric values are rounded to 6 decimal places. We therefore
+recommend to use solely the <code>csv</code> or <code>xlsx</code>
+format.</p>
 </div>
 <div class="section level2">
 <h2 id="reference-file">Reference file<a class="anchor" aria-label="anchor" href="#reference-file"></a>
 </h2>
-<p>This file contains two mandatory columns <code>data</code> and <code>file</code>, as well as optional columns with comments, which will be ignored. The <code>data</code> column must contain the following keywords:</p>
+<p>This file contains two mandatory columns <code>data</code> and
+<code>file</code>, as well as optional columns with comments, which will
+be ignored. The <code>data</code> column must contain the following
+keywords:</p>
 <ol style="list-style-type: decimal">
 <li>
 <code>state</code>: file containing model states.</li>
@@ -107,14 +128,20 @@ The <code>xls</code> files are read with the <code>readxl</code> package. As of 
 <li>
 <code>options</code>: file specifying model options.</li>
 <li>
-<code>demographics</code>: file describing of the population to run the models on.</li>
+<code>demographics</code>: file describing of the population to run
+the models on.</li>
 <li>
-<code>data</code>: a <em>directory</em> containing additional tables to be loaded; these can be <code>.csv</code>, <code>.xls</code> or <code>.xlsx</code>.</li>
+<code>data</code>: a <em>directory</em> containing additional tables
+to be loaded; these can be <code>.csv</code>, <code>.xls</code> or
+<code>.xlsx</code>.</li>
 <li>
-<code>output</code>: a <em>directory</em> to save the output graphics.<br>
+<code>output</code>: a <em>directory</em> to save the output
+graphics.<br>
 </li>
 <li>
-<code>source</code>: a <em>directory</em> in which <code>R</code> source files used in the analysis can be placed, and will be sourced when the model is run. The global environment is not modified.</li>
+<code>source</code>: a <em>directory</em> in which <code>R</code>
+source files used in the analysis can be placed, and will be sourced
+when the model is run. The global environment is not modified.</li>
 </ol>
 <table class="table">
 <thead><tr class="header">
@@ -152,14 +179,23 @@ The <code>xls</code> files are read with the <code>readxl</code> package. As of 
 </tr>
 </tbody>
 </table>
-<p>All the files and directories must be in the reference file directory. Files or directories located elsewhere must be given by absolute path and marked by a <code>TRUE</code> value in an optional <code>absolute_path</code> column.</p>
+<p>All the files and directories must be in the reference file
+directory. Files or directories located elsewhere must be given by
+absolute path and marked by a <code>TRUE</code> value in an optional
+<code>absolute_path</code> column.</p>
 </div>
 <div class="section level2">
 <h2 id="states-file">States file<a class="anchor" aria-label="anchor" href="#states-file"></a>
 </h2>
-<p>A state file contains 2 mandatory columns: <code>.model</code> and <code>.state</code>, corresponding to strategy and state names respectively. The other columns correspond to the state values.</p>
-<p>Discounting rates can be specified in <code>.discount.*</code> columns, where <code>*</code> stands for the name of the value to discount. Values are always discounted at the same rate in all states.<a href="#fn2" class="footnote-ref" id="fnref2"><sup>2</sup></a></p>
-<p>Values specified for only one strategy will be carried over to others. Only values that differ from one strategy to another must be specified separately for each strategy.</p>
+<p>A state file contains 2 mandatory columns: <code>.model</code> and
+<code>.state</code>, corresponding to strategy and state names
+respectively. The other columns correspond to the state values.</p>
+<p>Discounting rates can be specified in <code>.discount.*</code>
+columns, where <code>*</code> stands for the name of the value to
+discount. Values are always discounted at the same rate in all states.<a href="#fn2" class="footnote-ref" id="fnref2"><sup>2</sup></a></p>
+<p>Values specified for only one strategy will be carried over to
+others. Only values that differ from one strategy to another must be
+specified separately for each strategy.</p>
 <table class="table">
 <thead><tr class="header">
 <th align="left">.model</th>
@@ -213,7 +249,10 @@ The <code>xls</code> files are read with the <code>readxl</code> package. As of 
 </tr>
 </tbody>
 </table>
-<p>State values that do not change between models need only be specified once (such as all states except <code>PrimaryTHR</code> in the <code>new</code> model) and will automatically be repeated between models.</p>
+<p>State values that do not change between models need only be specified
+once (such as all states except <code>PrimaryTHR</code> in the
+<code>new</code> model) and will automatically be repeated between
+models.</p>
 </div>
 <div class="section level2">
 <h2 id="transition-probabilities">Transition probabilities<a class="anchor" aria-label="anchor" href="#transition-probabilities"></a>
@@ -227,7 +266,8 @@ The <code>xls</code> files are read with the <code>readxl</code> package. As of 
 <li>
 <code>to</code>: end state.</li>
 <li>
-<code>prob</code>: transition probability from initial state to end state.</li>
+<code>prob</code>: transition probability from initial state to end
+state.</li>
 </ul>
 <table class="table">
 <thead><tr class="header">
@@ -311,14 +351,24 @@ The <code>xls</code> files are read with the <code>readxl</code> package. As of 
 </tr>
 </tbody>
 </table>
-<p>A probability can be defined by any expression: a number, <code>C</code>, a different parameter name (specified in the parameter file), or a function call.</p>
-<p>As with the state file above probabilities specified for only one strategy will be carried over to others. Only probabilities that differ from one strategy to another must be specified separately for each strategy. Unspecified transition probabilities are assumed to be 0.</p>
+<p>A probability can be defined by any expression: a number,
+<code>C</code>, a different parameter name (specified in the parameter
+file), or a function call.</p>
+<p>As with the state file above probabilities specified for only one
+strategy will be carried over to others. Only probabilities that differ
+from one strategy to another must be specified separately for each
+strategy. Unspecified transition probabilities are assumed to be 0.</p>
 </div>
 <div class="section level2">
 <h2 id="parameters">Parameters<a class="anchor" aria-label="anchor" href="#parameters"></a>
 </h2>
-<p>A parameter file contains 2 mandatory columns: the parameter names <code>parameter</code> and the values <code>value</code>.</p>
-<p>Optional columns can be added to perform determinist or probabilist sensitivity analysis (DSA and PSA). <code>low</code> and <code>high</code> columns specify the lower and upper bounds of parameter values for DSA, while <code>psa</code> contains the parameter distribution for PSA.</p>
+<p>A parameter file contains 2 mandatory columns: the parameter names
+<code>parameter</code> and the values <code>value</code>.</p>
+<p>Optional columns can be added to perform determinist or probabilist
+sensitivity analysis (DSA and PSA). <code>low</code> and
+<code>high</code> columns specify the lower and upper bounds of
+parameter values for DSA, while <code>psa</code> contains the parameter
+distribution for PSA.</p>
 <table class="table">
 <colgroup>
 <col width="11%">
@@ -393,7 +443,7 @@ The <code>xls</code> files are read with the <code>readxl</code> package. As of 
 </tr>
 <tr class="odd">
 <td align="left">age</td>
-<td align="left">age_init + markov_cycle</td>
+<td align="left">age_init + model_time</td>
 <td align="left"></td>
 <td align="left"></td>
 <td align="left"></td>
@@ -414,56 +464,75 @@ The <code>xls</code> files are read with the <code>readxl</code> package. As of 
 </tr>
 <tr class="even">
 <td align="left">mr</td>
-<td align="left">look_up(mr_table, age = age, sex = sex_str, bin = TRUE, value = “value”)</td>
+<td align="left">look_up(mr_table, age = age, sex = sex_str, bin = TRUE,
+value = “value”)</td>
 <td align="left"></td>
 <td align="left"></td>
 <td align="left"></td>
 </tr>
 <tr class="odd">
 <td align="left">lambdaStandard</td>
-<td align="left">exp(constant + agecoef * age_init + malecoef * sex)</td>
+<td align="left">exp(constant + agecoef * age_init + malecoef *
+sex)</td>
 <td align="left"></td>
 <td align="left"></td>
 <td align="left"></td>
 </tr>
 <tr class="even">
 <td align="left">lambdaNew</td>
-<td align="left">exp(constant + agecoef * age_init + malecoef * sex) * rr</td>
+<td align="left">exp(constant + agecoef * age_init + malecoef * sex) *
+rr</td>
 <td align="left"></td>
 <td align="left"></td>
 <td align="left"></td>
 </tr>
 <tr class="odd">
 <td align="left">pHRFailStandard</td>
-<td align="left">1 - exp(lambdaStandard * ((markov_cycle-1)^gamma - markov_cycle^gamma))</td>
+<td align="left">1 - exp(lambdaStandard * ((model_time-1)^gamma -
+model_time^gamma))</td>
 <td align="left"></td>
 <td align="left"></td>
 <td align="left"></td>
 </tr>
 <tr class="even">
 <td align="left">pHRFailNew</td>
-<td align="left">1 - exp(lambdaNew * ((markov_cycle-1)^gamma - markov_cycle^gamma))</td>
+<td align="left">1 - exp(lambdaNew * ((model_time-1)^gamma -
+model_time^gamma))</td>
 <td align="left"></td>
 <td align="left"></td>
 <td align="left"></td>
 </tr>
 </tbody>
 </table>
-<p>A parameter can be specified as any expression: as a number, through a previously defined parameter, with a mathematical formula or a function call.</p>
-<p>The <code><a href="../reference/look_up.html">look_up()</a></code> function can be used to look up parameter values in external reference tables (see section <strong>User-defined data</strong>), if a <code>data</code> argument is given in the reference file (as for the <code>mr</code> parameter in the above example).</p>
+<p>A parameter can be specified as any expression: as a number, through
+a previously defined parameter, with a mathematical formula or a
+function call.</p>
+<p>The <code><a href="../reference/look_up.html">look_up()</a></code> function can be used to look up parameter
+values in external reference tables (see section <strong>User-defined
+data</strong>), if a <code>data</code> argument is given in the
+reference file (as for the <code>mr</code> parameter in the above
+example).</p>
 </div>
 <div class="section level2">
 <h2 id="user-defined-data">User-defined data<a class="anchor" aria-label="anchor" href="#user-defined-data"></a>
 </h2>
-<p>Sometimes external data is required for an analysis (e.g. age-specific mortality rates). A <code>data</code> row in the reference file specifies a subdirectory containing data frames to be loaded (saved as <code>csv</code>, <code>xls</code>, or <code>xlsx</code> files). Multiple files can be placed here, and each filename (without the extension) is used as the dataframe name.<a href="#fn3" class="footnote-ref" id="fnref3"><sup>3</sup></a></p>
+<p>Sometimes external data is required for an analysis
+(e.g. age-specific mortality rates). A <code>data</code> row in the
+reference file specifies a subdirectory containing data frames to be
+loaded (saved as <code>csv</code>, <code>xls</code>, or
+<code>xlsx</code> files). Multiple files can be placed here, and each
+filename (without the extension) is used as the dataframe name.<a href="#fn3" class="footnote-ref" id="fnref3"><sup>3</sup></a></p>
 </div>
 <div class="section level2">
 <h2 id="model-options">Model options<a class="anchor" aria-label="anchor" href="#model-options"></a>
 </h2>
-<p>Models specified by tabular input will run with defaults options. The following options can be specified in a non-mandatory <code>options</code> file:</p>
+<p>Models specified by tabular input will run with defaults options. The
+following options can be specified in a non-mandatory
+<code>options</code> file:</p>
 <ul>
 <li>
-<code>cost</code>, <code>effect</code>: values to be used as cost and effect.</li>
+<code>cost</code>, <code>effect</code>: values to be used as cost
+and effect.</li>
 <li>
 <code>init</code> comma separated starting values.</li>
 <li>
@@ -513,7 +582,8 @@ The <code>xls</code> files are read with the <code>readxl</code> package. As of 
 <div class="section level2">
 <h2 id="run-the-analysis">Run the analysis<a class="anchor" aria-label="anchor" href="#run-the-analysis"></a>
 </h2>
-<p>The entire set of analysis specified in the tabular files can be run by the function <code>run_model_from_tabular()</code>.</p>
+<p>The entire set of analysis specified in the tabular files can be run
+by the function <code>run_model_from_tabular()</code>.</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">result</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/run_model_tabular.html">run_model_tabular</a></span><span class="op">(</span></span>
 <span>  location <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"tabular/thr"</span>, package <span class="op">=</span> <span class="st">"heemod"</span><span class="op">)</span></span>
@@ -627,12 +697,17 @@ The <code>xls</code> files are read with the <code>readxl</code> package. As of 
 <span><span class="co">##     Cost Diff. Effect Diff.      ICER     Ref.</span></span>
 <span><span class="co">## new  -508.0829    0.1017185 -4994.989 standard</span></span></code></pre>
 </div>
-<div class="footnotes">
+<div class="footnotes footnotes-end-of-document">
 <hr>
 <ol>
-<li id="fn1"><p>French <code>csv</code> (with <code>;</code> separator) are not supported.<a href="#fnref1" class="footnote-back">↩︎</a></p></li>
-<li id="fn2"><p>A single discount rate can be duplicated across states, or specified in one state and left blank elsewhere. Specifying two different discount rates for a single variable in different states will cause an error.<a href="#fnref2" class="footnote-back">↩︎</a></p></li>
-<li id="fn3"><p>Having multiple files with the same base name but different extensions in the directory will cause an error.<a href="#fnref3" class="footnote-back">↩︎</a></p></li>
+<li id="fn1"><p>French <code>csv</code> (with <code>;</code> separator)
+are not supported.<a href="#fnref1" class="footnote-back">↩︎</a></p></li>
+<li id="fn2"><p>A single discount rate can be duplicated across states,
+or specified in one state and left blank elsewhere. Specifying two
+different discount rates for a single variable in different states will
+cause an error.<a href="#fnref2" class="footnote-back">↩︎</a></p></li>
+<li id="fn3"><p>Having multiple files with the same base name but
+different extensions in the directory will cause an error.<a href="#fnref3" class="footnote-back">↩︎</a></p></li>
 </ol>
 </div>
   </div>

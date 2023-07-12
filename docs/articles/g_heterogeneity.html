@@ -33,7 +33,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">heemod</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.15.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.16.0</span>
       </span>
     </div>
 
@@ -71,7 +71,7 @@
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>Heterogeneity &amp; Demographic Analysis</h1>
             
-            <h4 data-toc-skip class="date">2023-02-14</h4>
+            <h4 data-toc-skip class="date">2023-07-12</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/aphp/heemod/blob/HEAD/vignettes/g_heterogeneity.Rmd" class="external-link"><code>vignettes/g_heterogeneity.Rmd</code></a></small>
       <div class="hidden name"><code>g_heterogeneity.Rmd</code></div>
@@ -83,31 +83,44 @@
 <div class="section level2">
 <h2 id="introduction">Introduction<a class="anchor" aria-label="anchor" href="#introduction"></a>
 </h2>
-<p>Heterogeneity analysis is a way to explore how the results of a model can vary depending on the characteristics of individuals in a population, and demographic analysis estimates the average values of a model over an entire population.</p>
-<p>In practice these two analyses naturally complement each other: heterogeneity analysis runs the model on multiple sets of parameters (reflecting differents characteristics found in the target population), and demographic analysis combines the results.</p>
-<p>For this example we will use the result from the assessment of a new total hip replacement previously described in <code>vignette("d-non-homogeneous", "heemod")</code>.</p>
+<p>Heterogeneity analysis is a way to explore how the results of a model
+can vary depending on the characteristics of individuals in a
+population, and demographic analysis estimates the average values of a
+model over an entire population.</p>
+<p>In practice these two analyses naturally complement each other:
+heterogeneity analysis runs the model on multiple sets of parameters
+(reflecting differents characteristics found in the target population),
+and demographic analysis combines the results.</p>
+<p>For this example we will use the result from the assessment of a new
+total hip replacement previously described in
+<code>vignette("d-non-homogeneous", "heemod")</code>.</p>
 </div>
 <div class="section level2">
 <h2 id="population-characteristics">Population characteristics<a class="anchor" aria-label="anchor" href="#population-characteristics"></a>
 </h2>
-<p>The characteristics of the population are input from a table, with one column per parameter and one row per individual. Those may be for example the characteristics of the indiviuals included in the original trial data.</p>
-<p>For this example we will use the characteristics of 100 individuals, with varying sex and age, specified in the data frame <code>tab_indiv</code>:</p>
+<p>The characteristics of the population are input from a table, with
+one column per parameter and one row per individual. Those may be for
+example the characteristics of the indiviuals included in the original
+trial data.</p>
+<p>For this example we will use the characteristics of 100 individuals,
+with varying sex and age, specified in the data frame
+<code>tab_indiv</code>:</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">tab_indiv</span></span></code></pre></div>
 <pre><code><span><span class="co">## <span style="color: #949494;"># A tibble: 100 × 2</span></span></span>
 <span><span class="co">##      age   sex</span></span>
 <span><span class="co">##    <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;int&gt;</span></span></span>
-<span><span class="co">## <span style="color: #BCBCBC;"> 1</span>    77     1</span></span>
-<span><span class="co">## <span style="color: #BCBCBC;"> 2</span>    51     0</span></span>
-<span><span class="co">## <span style="color: #BCBCBC;"> 3</span>    60     0</span></span>
-<span><span class="co">## <span style="color: #BCBCBC;"> 4</span>    63     1</span></span>
-<span><span class="co">## <span style="color: #BCBCBC;"> 5</span>    56     1</span></span>
-<span><span class="co">## <span style="color: #BCBCBC;"> 6</span>    77     1</span></span>
-<span><span class="co">## <span style="color: #BCBCBC;"> 7</span>    52     0</span></span>
-<span><span class="co">## <span style="color: #BCBCBC;"> 8</span>    62     0</span></span>
-<span><span class="co">## <span style="color: #BCBCBC;"> 9</span>    71     0</span></span>
-<span><span class="co">## <span style="color: #BCBCBC;">10</span>    86     0</span></span>
-<span><span class="co">## <span style="color: #949494;"># … with 90 more rows</span></span></span></code></pre>
+<span><span class="co">## <span style="color: #BCBCBC;"> 1</span>    73     1</span></span>
+<span><span class="co">## <span style="color: #BCBCBC;"> 2</span>    63     1</span></span>
+<span><span class="co">## <span style="color: #BCBCBC;"> 3</span>    65     0</span></span>
+<span><span class="co">## <span style="color: #BCBCBC;"> 4</span>    52     0</span></span>
+<span><span class="co">## <span style="color: #BCBCBC;"> 5</span>    55     0</span></span>
+<span><span class="co">## <span style="color: #BCBCBC;"> 6</span>    58     0</span></span>
+<span><span class="co">## <span style="color: #BCBCBC;"> 7</span>    67     0</span></span>
+<span><span class="co">## <span style="color: #BCBCBC;"> 8</span>    69     0</span></span>
+<span><span class="co">## <span style="color: #BCBCBC;"> 9</span>    70     1</span></span>
+<span><span class="co">## <span style="color: #BCBCBC;">10</span>    50     0</span></span>
+<span><span class="co">## <span style="color: #949494;"># ℹ 90 more rows</span></span></span></code></pre>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://ggplot2.tidyverse.org" class="external-link">ggplot2</a></span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="va">tab_indiv</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">age</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
@@ -117,7 +130,10 @@
 <div class="section level2">
 <h2 id="running-the-analysis">Running the analysis<a class="anchor" aria-label="anchor" href="#running-the-analysis"></a>
 </h2>
-<p><code>res_mod</code>, the result we obtained from <code><a href="../reference/run_model.html">run_model()</a></code> in the <em>Time-varying Markov models</em> vignette, can be passed to <code><a href="https://rdrr.io/r/stats/update.html" class="external-link">update()</a></code> to update the model with the new data and perform the heterogeneity analysis.</p>
+<p><code>res_mod</code>, the result we obtained from
+<code><a href="../reference/run_model.html">run_model()</a></code> in the <em>Time-varying Markov models</em>
+vignette, can be passed to <code><a href="https://rdrr.io/r/stats/update.html" class="external-link">update()</a></code> to update the model
+with the new data and perform the heterogeneity analysis.</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">res_h</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/update.html" class="external-link">update</a></span><span class="op">(</span><span class="va">res_mod</span>, newdata <span class="op">=</span> <span class="va">tab_indiv</span><span class="op">)</span></span></code></pre></div>
 <pre><code><span><span class="co">## No weights specified in update, using equal weights.</span></span></code></pre>
@@ -127,7 +143,9 @@
 <div class="section level2">
 <h2 id="interpreting-results">Interpreting results<a class="anchor" aria-label="anchor" href="#interpreting-results"></a>
 </h2>
-<p>The <code><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary()</a></code> method reports summary statistics for cost, effect and ICER, as well as the result from the combined model.</p>
+<p>The <code><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary()</a></code> method reports summary statistics for
+cost, effect and ICER, as well as the result from the combined
+model.</p>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">res_h</span><span class="op">)</span></span></code></pre></div>
 <pre><code><span><span class="co">## An analysis re-run on 100 parameter sets.</span></span>
@@ -136,28 +154,28 @@
 <span><span class="co">## </span></span>
 <span><span class="co">## * Values distribution:</span></span>
 <span><span class="co">## </span></span>
-<span><span class="co">##                                  Min.      1st Qu.      Median        Mean</span></span>
-<span><span class="co">## standard - Cost          450.15881156  605.0062810 631.4705169 701.4791743</span></span>
-<span><span class="co">## standard - Effect          7.47256790   22.7930050  27.3769142  26.0090165</span></span>
-<span><span class="co">## standard - Cost Diff.               -            -           -           -</span></span>
-<span><span class="co">## standard - Effect Diff.             -            -           -           -</span></span>
-<span><span class="co">## standard - Icer                     -            -           -           -</span></span>
-<span><span class="co">## np1 - Cost               593.80297968  635.5509751 643.0316939 663.0656204</span></span>
-<span><span class="co">## np1 - Effect               7.49009703   23.0848338  27.7656911  26.2802128</span></span>
-<span><span class="co">## np1 - Cost Diff.        -167.83433856 -129.4829089  11.2763887 -38.4135539</span></span>
-<span><span class="co">## np1 - Effect Diff.         0.01752913    0.1948185   0.2294328   0.2711963</span></span>
-<span><span class="co">## np1 - Icer              -355.65308588 -333.0519971  47.6378220  72.9810754</span></span>
+<span><span class="co">##                                  Min.      1st Qu.     Median        Mean</span></span>
+<span><span class="co">## standard - Cost          500.08967163  613.9316623 636.544085 695.6417660</span></span>
+<span><span class="co">## standard - Effect         13.56976193   23.3226486  26.357778  25.4681550</span></span>
+<span><span class="co">## standard - Cost Diff.               -            -          -           -</span></span>
+<span><span class="co">## standard - Effect Diff.             -            -          -           -</span></span>
+<span><span class="co">## standard - Icer                     -            -          -           -</span></span>
+<span><span class="co">## np1 - Cost               607.16692250  637.9767000 644.877440 661.3576982</span></span>
+<span><span class="co">## np1 - Effect              13.62743581   23.4706053  26.632993  25.7271759</span></span>
+<span><span class="co">## np1 - Cost Diff.        -165.40882382  -99.5031416   8.333355 -34.2840678</span></span>
+<span><span class="co">## np1 - Effect Diff.         0.05767389    0.1948185   0.220806   0.2590208</span></span>
+<span><span class="co">## np1 - Icer              -354.56585682 -304.0330575  54.727146 -37.1716989</span></span>
 <span><span class="co">##                             3rd Qu.         Max.</span></span>
-<span><span class="co">## standard - Cost         828.5434528  882.1752204</span></span>
-<span><span class="co">## standard - Effect        29.0749005   31.5986556</span></span>
+<span><span class="co">## standard - Cost         786.6690449  878.7813785</span></span>
+<span><span class="co">## standard - Effect        29.0596426   31.6837747</span></span>
 <span><span class="co">## standard - Cost Diff.             -            -</span></span>
 <span><span class="co">## standard - Effect Diff.           -            -</span></span>
 <span><span class="co">## standard - Icer                   -            -</span></span>
-<span><span class="co">## np1 - Cost              699.0605439  714.3408818</span></span>
-<span><span class="co">## np1 - Effect             29.5008365   31.8353665</span></span>
-<span><span class="co">## np1 - Cost Diff.         30.5446941  143.6441681</span></span>
-<span><span class="co">## np1 - Effect Diff.        0.3887769    0.4719046</span></span>
-<span><span class="co">## np1 - Icer              156.7853582 8194.5991768</span></span>
+<span><span class="co">## np1 - Cost              687.1659033  713.3725547</span></span>
+<span><span class="co">## np1 - Effect             29.2683350   31.9214350</span></span>
+<span><span class="co">## np1 - Cost Diff.         24.0450377  107.0772509</span></span>
+<span><span class="co">## np1 - Effect Diff.        0.3272774    0.4665109</span></span>
+<span><span class="co">## np1 - Icer              115.2176112 1856.5985016</span></span>
 <span><span class="co">## </span></span>
 <span><span class="co">## * Combined result:</span></span>
 <span><span class="co">## </span></span>
@@ -176,8 +194,8 @@
 <span><span class="co">## Values:</span></span>
 <span><span class="co">## </span></span>
 <span><span class="co">##           utility     cost</span></span>
-<span><span class="co">## standard 26009.02 701479.2</span></span>
-<span><span class="co">## np1      26280.21 663065.6</span></span>
+<span><span class="co">## standard 25468.16 695641.8</span></span>
+<span><span class="co">## np1      25727.18 661357.7</span></span>
 <span><span class="co">## </span></span>
 <span><span class="co">## Efficiency frontier:</span></span>
 <span><span class="co">## </span></span>
@@ -186,7 +204,7 @@
 <span><span class="co">## Differences:</span></span>
 <span><span class="co">## </span></span>
 <span><span class="co">##     Cost Diff. Effect Diff.      ICER     Ref.</span></span>
-<span><span class="co">## np1  -38.41355    0.2711963 -141.6448 standard</span></span></code></pre>
+<span><span class="co">## np1  -34.28407    0.2590208 -132.3603 standard</span></span></code></pre>
 <p>The variation of cost or effect can then be plotted.</p>
 <div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">res_h</span>, result <span class="op">=</span> <span class="st">"effect"</span>, binwidth <span class="op">=</span> <span class="fl">5</span><span class="op">)</span></span></code></pre></div>
@@ -206,7 +224,8 @@
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">res_h</span>, result <span class="op">=</span> <span class="st">"cost"</span>, type <span class="op">=</span> <span class="st">"difference"</span>,</span>
 <span>     binwidth <span class="op">=</span> <span class="fl">30</span><span class="op">)</span></span></code></pre></div>
 <p><img src="g_heterogeneity_files/figure-html/unnamed-chunk-9-3.png" width="576" style="display: block; margin: auto;"></p>
-<p>The results from the combined model can be plotted similarly to the results from <code><a href="../reference/run_model.html">run_model()</a></code>.</p>
+<p>The results from the combined model can be plotted similarly to the
+results from <code><a href="../reference/run_model.html">run_model()</a></code>.</p>
 <div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">res_h</span>, type <span class="op">=</span> <span class="st">"counts"</span><span class="op">)</span></span></code></pre></div>
 <p><img src="g_heterogeneity_files/figure-html/unnamed-chunk-10-1.png" width="576" style="display: block; margin: auto;"></p>
@@ -214,23 +233,25 @@
 <div class="section level2">
 <h2 id="weighted-results">Weighted results<a class="anchor" aria-label="anchor" href="#weighted-results"></a>
 </h2>
-<p>Weights can be used in the analysis by including an optional column <code>.weights</code> in the new data to specify the respective weights of each strata in the target population.</p>
+<p>Weights can be used in the analysis by including an optional column
+<code>.weights</code> in the new data to specify the respective weights
+of each strata in the target population.</p>
 <div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">tab_indiv_w</span></span></code></pre></div>
 <pre><code><span><span class="co">## <span style="color: #949494;"># A tibble: 100 × 3</span></span></span>
 <span><span class="co">##      age   sex .weights</span></span>
 <span><span class="co">##    <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;int&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span></span>
-<span><span class="co">## <span style="color: #BCBCBC;"> 1</span>    58     1   0.139 </span></span>
-<span><span class="co">## <span style="color: #BCBCBC;"> 2</span>    54     1   0.069<span style="text-decoration: underline;">7</span></span></span>
-<span><span class="co">## <span style="color: #BCBCBC;"> 3</span>    75     1   0.907 </span></span>
-<span><span class="co">## <span style="color: #BCBCBC;"> 4</span>    65     0   0.090<span style="text-decoration: underline;">4</span></span></span>
-<span><span class="co">## <span style="color: #BCBCBC;"> 5</span>    62     1   0.632 </span></span>
-<span><span class="co">## <span style="color: #BCBCBC;"> 6</span>    66     1   0.392 </span></span>
-<span><span class="co">## <span style="color: #BCBCBC;"> 7</span>    38     1   0.770 </span></span>
-<span><span class="co">## <span style="color: #BCBCBC;"> 8</span>    62     0   0.508 </span></span>
-<span><span class="co">## <span style="color: #BCBCBC;"> 9</span>    54     0   0.274 </span></span>
-<span><span class="co">## <span style="color: #BCBCBC;">10</span>    76     0   0.615 </span></span>
-<span><span class="co">## <span style="color: #949494;"># … with 90 more rows</span></span></span></code></pre>
+<span><span class="co">## <span style="color: #BCBCBC;"> 1</span>    66     0    0.912</span></span>
+<span><span class="co">## <span style="color: #BCBCBC;"> 2</span>    57     0    0.455</span></span>
+<span><span class="co">## <span style="color: #BCBCBC;"> 3</span>    67     1    0.268</span></span>
+<span><span class="co">## <span style="color: #BCBCBC;"> 4</span>    54     1    0.794</span></span>
+<span><span class="co">## <span style="color: #BCBCBC;"> 5</span>    70     0    0.905</span></span>
+<span><span class="co">## <span style="color: #BCBCBC;"> 6</span>    56     1    0.474</span></span>
+<span><span class="co">## <span style="color: #BCBCBC;"> 7</span>    58     0    0.245</span></span>
+<span><span class="co">## <span style="color: #BCBCBC;"> 8</span>    73     0    0.268</span></span>
+<span><span class="co">## <span style="color: #BCBCBC;"> 9</span>    65     1    0.745</span></span>
+<span><span class="co">## <span style="color: #BCBCBC;">10</span>    55     1    0.740</span></span>
+<span><span class="co">## <span style="color: #949494;"># ℹ 90 more rows</span></span></span></code></pre>
 <div class="sourceCode" id="cb18"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">res_w</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/update.html" class="external-link">update</a></span><span class="op">(</span><span class="va">res_mod</span>, newdata <span class="op">=</span> <span class="va">tab_indiv_w</span><span class="op">)</span></span></code></pre></div>
 <pre><code><span><span class="co">## Updating strategy 'standard'...</span></span></code></pre>
@@ -241,35 +262,35 @@
 <span><span class="co">## </span></span>
 <span><span class="co">## * Weigths distribution:</span></span>
 <span><span class="co">## </span></span>
-<span><span class="co">##     Min.  1st Qu.   Median     Mean  3rd Qu.     Max. </span></span>
-<span><span class="co">## 0.002345 0.217701 0.473230 0.471688 0.756621 0.955490 </span></span>
+<span><span class="co">##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. </span></span>
+<span><span class="co">## 0.02117 0.28505 0.50694 0.51094 0.73984 0.98277 </span></span>
 <span><span class="co">## </span></span>
-<span><span class="co">## Total weight: 47.16877</span></span>
+<span><span class="co">## Total weight: 51.09403</span></span>
 <span><span class="co">## </span></span>
 <span><span class="co">## * Values distribution:</span></span>
 <span><span class="co">## </span></span>
 <span><span class="co">##                                  Min.      1st Qu.      Median        Mean</span></span>
-<span><span class="co">## standard - Cost          485.85297365  613.8364635 629.4680260 693.9510896</span></span>
-<span><span class="co">## standard - Effect         11.78433667   23.8479491  27.3769142  25.9703423</span></span>
+<span><span class="co">## standard - Cost          438.70535048  605.0062810 626.3492829 679.1036469</span></span>
+<span><span class="co">## standard - Effect          6.12465030   23.3226486  27.7806580  25.5846874</span></span>
 <span><span class="co">## standard - Cost Diff.               -            -           -           -</span></span>
 <span><span class="co">## standard - Effect Diff.             -            -           -           -</span></span>
 <span><span class="co">## standard - Icer                     -            -           -           -</span></span>
-<span><span class="co">## np1 - Cost               603.34263272  637.9508204 642.2020458 660.8900870</span></span>
-<span><span class="co">## np1 - Effect              11.82839436   25.3875777  27.7656911  26.2325589</span></span>
-<span><span class="co">## np1 - Cost Diff.        -167.83433856 -110.7286273  13.7615031 -33.0610025</span></span>
-<span><span class="co">## np1 - Effect Diff.         0.04405769    0.1948185   0.2214442   0.2622166</span></span>
-<span><span class="co">## np1 - Icer              -355.65308588 -316.4394659  78.9564344  -5.9784275</span></span>
+<span><span class="co">## np1 - Cost               590.76054210  635.5509751 641.3535756 656.6607753</span></span>
+<span><span class="co">## np1 - Effect               6.13624942   23.4706053  27.9754765  25.8303523</span></span>
+<span><span class="co">## np1 - Cost Diff.        -165.40882382  -87.4060976  16.2025361 -22.4428716</span></span>
+<span><span class="co">## np1 - Effect Diff.         0.01159912    0.1948185   0.2086924   0.2456649</span></span>
+<span><span class="co">## np1 - Icer              -354.56585682 -286.0378070  71.8956581  46.4387962</span></span>
 <span><span class="co">##                             3rd Qu.         Max.</span></span>
-<span><span class="co">## standard - Cost         802.3426777  882.1752204</span></span>
-<span><span class="co">## standard - Effect        29.0749005   31.3071020</span></span>
+<span><span class="co">## standard - Cost         761.2095631 8.787814e+02</span></span>
+<span><span class="co">## standard - Effect        29.0596426 3.129948e+01</span></span>
 <span><span class="co">## standard - Cost Diff.             -            -</span></span>
 <span><span class="co">## standard - Effect Diff.           -            -</span></span>
 <span><span class="co">## standard - Icer                   -            -</span></span>
-<span><span class="co">## np1 - Cost              691.6140504  714.3408818</span></span>
-<span><span class="co">## np1 - Effect             29.5008365   31.6126413</span></span>
-<span><span class="co">## np1 - Cost Diff.         24.1143568  117.4896591</span></span>
-<span><span class="co">## np1 - Effect Diff.        0.3499204    0.4719046</span></span>
-<span><span class="co">## np1 - Icer              115.6325465 2666.7229585</span></span>
+<span><span class="co">## np1 - Cost              679.9551391 7.133726e+02</span></span>
+<span><span class="co">## np1 - Effect             29.2683350 3.153286e+01</span></span>
+<span><span class="co">## np1 - Cost Diff.         30.5446941 1.520552e+02</span></span>
+<span><span class="co">## np1 - Effect Diff.        0.2918352 4.665109e-01</span></span>
+<span><span class="co">## np1 - Icer              156.7853582 1.310920e+04</span></span>
 <span><span class="co">## </span></span>
 <span><span class="co">## * Combined result:</span></span>
 <span><span class="co">## </span></span>
@@ -288,8 +309,8 @@
 <span><span class="co">## Values:</span></span>
 <span><span class="co">## </span></span>
 <span><span class="co">##           utility     cost</span></span>
-<span><span class="co">## standard 25970.34 693951.1</span></span>
-<span><span class="co">## np1      26232.56 660890.1</span></span>
+<span><span class="co">## standard 25584.69 679103.6</span></span>
+<span><span class="co">## np1      25830.35 656660.8</span></span>
 <span><span class="co">## </span></span>
 <span><span class="co">## Efficiency frontier:</span></span>
 <span><span class="co">## </span></span>
@@ -298,18 +319,22 @@
 <span><span class="co">## Differences:</span></span>
 <span><span class="co">## </span></span>
 <span><span class="co">##     Cost Diff. Effect Diff.      ICER     Ref.</span></span>
-<span><span class="co">## np1    -33.061    0.2622166 -126.0828 standard</span></span></code></pre>
+<span><span class="co">## np1  -22.44287    0.2456649 -91.35562 standard</span></span></code></pre>
 </div>
 <div class="section level2">
 <h2 id="parallel-computing">Parallel computing<a class="anchor" aria-label="anchor" href="#parallel-computing"></a>
 </h2>
-<p>Updating can be significantly sped up by using parallel computing. This can be done in the following way:</p>
+<p>Updating can be significantly sped up by using parallel computing.
+This can be done in the following way:</p>
 <ul>
-<li>Define a cluster with the <code><a href="../reference/cluster.html">use_cluster()</a></code> functions (i.e. <code>use_cluster(4)</code> to use 4 cores).</li>
+<li>Define a cluster with the <code><a href="../reference/cluster.html">use_cluster()</a></code> functions
+(i.e. <code>use_cluster(4)</code> to use 4 cores).</li>
 <li>Run the analysis as usual.</li>
-<li>To stop using parallel computing use the <code><a href="../reference/cluster.html">close_cluster()</a></code> function.</li>
+<li>To stop using parallel computing use the
+<code><a href="../reference/cluster.html">close_cluster()</a></code> function.</li>
 </ul>
-<p>Results may vary depending on the machine, but we found speed gains to be quite limited beyond 4 cores.</p>
+<p>Results may vary depending on the machine, but we found speed gains
+to be quite limited beyond 4 cores.</p>
 </div>
   </div>
 

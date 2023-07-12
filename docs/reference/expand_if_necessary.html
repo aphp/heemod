@@ -20,7 +20,7 @@ individual per state per model cycle."><!-- mathjax --><script src="https://cdnj
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">heemod</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.15.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.16.0</span>
       </span>
     </div>
 
@@ -155,98 +155,10 @@ unchanged).</p>
 <span class="r-in"><span>  strategy_name <span class="op">=</span> <span class="st">"A"</span>,</span></span>
 <span class="r-in"><span>  expand_limit <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span>A <span class="op">=</span> <span class="fl">5</span>, B <span class="op">=</span> <span class="fl">5</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="op">)</span></span></span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>longer object length is not a multiple of shorter object length</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> $parameters</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   model_time markov_cycle strategy a</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1          1            1        A 3</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2          2            2        A 4</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 3          3            3        A 5</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 4          4            4        A 6</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 5          5            5        A 7</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> $complete_parameters</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   model_time markov_cycle strategy a</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1          1            1        A 3</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> $transition</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> An evaluated transition matrix, 2 states, 5 markov cycles.</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> State names:</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> A</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> B</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [[1]]</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>           [,1]      [,2]</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1,] 0.6666667 0.3333333</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [2,] 0.1000000 0.9000000</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [[2]]</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>      [,1] [,2]</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1,] 0.75 0.25</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [2,] 0.10 0.90</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [[3]]</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>      [,1] [,2]</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1,]  0.8  0.2</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [2,]  0.1  0.9</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [[4]]</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>           [,1]      [,2]</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1,] 0.8333333 0.1666667</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [2,] 0.1000000 0.9000000</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [[5]]</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>           [,1]      [,2]</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1,] 0.8571429 0.1428571</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [2,] 0.1000000 0.9000000</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> $states</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2 evaluated states, 5 Markov cycles.</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> $counts</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 5 × 2</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>       A     B</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">1</span>  7.17  7.83</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">2</span>  6.16  8.84</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">3</span>  5.81  9.19</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">4</span>  5.76  9.24</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">5</span>  5.86  9.14</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> $values</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   markov_cycle     cost</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1            1 87.33333</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2            2 79.26667</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 3            3 76.48667</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 4            4 76.09022</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 5            5 76.89688</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> $e_init</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  A  B </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 10  5 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> $e_inflow</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   A B</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1 0 0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2 0 0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 3 0 0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 4 0 0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 5 0 0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> $n_indiv</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 15</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> $cycles</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 5</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> $expand_limit</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> A B </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 5 5 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> attr(,"class")</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "eval_strategy"</span>
+<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error:</span> Error in parameter: a: Error in dplyr::mutate(start_tibble, !!!x_tidy[seq_len(i)]) : </span>
+<span class="r-err co"><span class="r-pr">#&gt;</span>   <span style="color: #00BBBB;">ℹ</span> In argument: `a = markov_cycle + 1 * 2`.</span>
+<span class="r-err co"><span class="r-pr">#&gt;</span> <span style="font-weight: bold;">Caused by error:</span></span>
+<span class="r-err co"><span class="r-pr">#&gt;</span> <span style="color: #BBBB00;">!</span> object 'markov_cycle' not found</span>
 </code></pre></div>
     </div>
   </div>

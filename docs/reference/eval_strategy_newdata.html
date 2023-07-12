@@ -21,7 +21,7 @@ new values."><!-- mathjax --><script src="https://cdnjs.cloudflare.com/ajax/libs
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">heemod</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.15.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.16.0</span>
       </span>
     </div>
 
@@ -100,7 +100,7 @@ replace existing parameters.</p>
     <h2>Examples</h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="va">par1</span> <span class="op">&lt;-</span> <span class="fu"><a href="define_parameters.html">define_parameters</a></span><span class="op">(</span></span></span>
 <span class="r-in"><span>  a <span class="op">=</span> <span class="fl">1</span>,</span></span>
-<span class="r-in"><span>  b <span class="op">=</span> <span class="fl">1</span> <span class="op">/</span> <span class="op">(</span><span class="va">markov_cycle</span> <span class="op">+</span> <span class="va">a</span><span class="op">)</span></span></span>
+<span class="r-in"><span>  b <span class="op">=</span> <span class="fl">1</span> <span class="op">/</span> <span class="op">(</span><span class="va">model_time</span> <span class="op">+</span> <span class="va">a</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="va">mat1</span> <span class="op">&lt;-</span> <span class="fu"><a href="define_transition.html">define_transition</a></span><span class="op">(</span></span></span>
@@ -111,7 +111,7 @@ replace existing parameters.</p>
 <span class="r-in"><span><span class="va">mod1</span> <span class="op">&lt;-</span> <span class="fu"><a href="define_strategy.html">define_strategy</a></span><span class="op">(</span></span></span>
 <span class="r-in"><span>  transition <span class="op">=</span> <span class="va">mat1</span>,</span></span>
 <span class="r-in"><span>  <span class="fu"><a href="define_state.html">define_state</a></span><span class="op">(</span>var <span class="op">=</span> <span class="va">a</span><span class="op">)</span>,</span></span>
-<span class="r-in"><span>  <span class="fu"><a href="define_state.html">define_state</a></span><span class="op">(</span>var <span class="op">=</span> <span class="va">a</span> <span class="op">*</span> <span class="va">markov_cycle</span><span class="op">)</span></span></span>
+<span class="r-in"><span>  <span class="fu"><a href="define_state.html">define_state</a></span><span class="op">(</span>var <span class="op">=</span> <span class="va">a</span> <span class="op">*</span> <span class="va">model_time</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="op">)</span></span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> No named state -&gt; generating names.</span>
 <span class="r-in"><span></span></span>

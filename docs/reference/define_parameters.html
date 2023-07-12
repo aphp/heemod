@@ -20,7 +20,7 @@ parameter."><!-- mathjax --><script src="https://cdnjs.cloudflare.com/ajax/libs/
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">heemod</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.15.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.16.0</span>
       </span>
     </div>
 
@@ -93,7 +93,7 @@ parameters.</p></dd>
 <p>An object of class <code>uneval_parameters</code></p>
 
 
-<p>(actually a named list of <code>lazy</code> expressions).</p>
+<p>(actually a named list of quosures).</p>
     </div>
     <div id="details">
     <h2>Details</h2>
@@ -127,6 +127,10 @@ be referenced in later expressions.</p>
 <span class="r-in"><span>  age_start <span class="op">=</span> <span class="fl">60</span>,</span></span>
 <span class="r-in"><span>  age <span class="op">=</span> <span class="va">age_start</span> <span class="op">+</span> <span class="va">markov_cycle</span></span></span>
 <span class="r-in"><span><span class="op">)</span></span></span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>markov_cycle was deprecated in heemod 0.16.0.</span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> Please use model_time instead.</span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> The deprecated feature was likely used in the <span style="color: #0000BB;">base</span> package.</span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span>   Please report the issue to the authors.</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 2 unevaluated parameters.</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> age_start = 60</span>
@@ -156,21 +160,21 @@ be referenced in later expressions.</p>
 <span class="r-in"><span><span class="co"># )</span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="co"># instead rely on markov_cycle or dplyr </span></span></span>
+<span class="r-in"><span><span class="co"># instead rely on model_time or dplyr </span></span></span>
 <span class="r-in"><span><span class="co"># functions such as n() or row_number()</span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="fu">define_parameters</span><span class="op">(</span></span></span>
 <span class="r-in"><span>  var <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq</a></span><span class="op">(</span>from <span class="op">=</span> <span class="fl">1</span>, length.out <span class="op">=</span> <span class="fu">n</span><span class="op">(</span><span class="op">)</span>, by <span class="op">=</span> <span class="fl">3</span><span class="op">)</span>,</span></span>
-<span class="r-in"><span>  var2 <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fu"><a href="https://rdrr.io/r/base/length.html" class="external-link">length</a></span><span class="op">(</span><span class="va">markov_cycle</span><span class="op">)</span>, <span class="fl">2</span><span class="op">)</span></span></span>
+<span class="r-in"><span>  var2 <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fu"><a href="https://rdrr.io/r/base/length.html" class="external-link">length</a></span><span class="op">(</span><span class="va">model_time</span><span class="op">)</span>, <span class="fl">2</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 2 unevaluated parameters.</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> var = seq(from = 1, length.out = n(), by = 3)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> var2 = seq(1, length(markov_cycle), 2)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> var2 = seq(1, length(model_time), 2)</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="va">param</span> <span class="op">&lt;-</span> <span class="fu">define_parameters</span><span class="op">(</span></span></span>
 <span class="r-in"><span>  age_start <span class="op">=</span> <span class="fl">60</span>,</span></span>
-<span class="r-in"><span>  age <span class="op">=</span> <span class="va">age_start</span> <span class="op">+</span> <span class="va">markov_cycle</span></span></span>
+<span class="r-in"><span>  age <span class="op">=</span> <span class="va">age_start</span> <span class="op">+</span> <span class="va">model_time</span></span></span>
 <span class="r-in"><span><span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># modify existing parameters</span></span></span>
@@ -182,7 +186,7 @@ be referenced in later expressions.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 2 unevaluated parameters.</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> age_start = 40</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> age = age_start + markov_cycle</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> age = age_start + model_time</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># cannot add new parameters</span></span></span>
 <span class="r-in"><span></span></span>

@@ -33,7 +33,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">heemod</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.15.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.16.0</span>
       </span>
     </div>
 
@@ -71,7 +71,7 @@
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>Reproducing Exact Results from DMHEE</h1>
             
-            <h4 data-toc-skip class="date">2023-02-14</h4>
+            <h4 data-toc-skip class="date">2023-07-12</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/aphp/heemod/blob/HEAD/vignettes/i_reproduction.Rmd" class="external-link"><code>vignettes/i_reproduction.Rmd</code></a></small>
       <div class="hidden name"><code>i_reproduction.Rmd</code></div>
@@ -80,7 +80,16 @@
 
     
     
-<p>The purpose of this vignette is to present how to reproduce exactly the results from <a href="https://global.oup.com/academic/product/decision-modelling-for-health-economic-evaluation-9780198526629" class="external-link">Decision Modelling for Health Economic Evaluation</a>. While other vignettes such as <code>vignette("c-homogeneous", "heemod")</code>, <code>vignette("d-non-homogeneous", "heemod")</code> or <code>vignette("e-probabilistic", "heemod")</code> are greatly inspired from this book, key elements differ (mostly for the sake of clarity) and thus results differ, sometimes significantly, from the book. Here we show how to exactly reproduce the results with the <code>heemod</code> package.</p>
+<p>The purpose of this vignette is to present how to reproduce exactly
+the results from <a href="https://global.oup.com/academic/product/decision-modelling-for-health-economic-evaluation-9780198526629" class="external-link">Decision
+Modelling for Health Economic Evaluation</a>. While other vignettes such
+as <code>vignette("c-homogeneous", "heemod")</code>,
+<code>vignette("d-non-homogeneous", "heemod")</code> or
+<code>vignette("e-probabilistic", "heemod")</code> are greatly inspired
+from this book, key elements differ (mostly for the sake of clarity) and
+thus results differ, sometimes significantly, from the book. Here we
+show how to exactly reproduce the results with the <code>heemod</code>
+package.</p>
 <div class="section level2">
 <h2 id="hiv-model">HIV model<a class="anchor" aria-label="anchor" href="#hiv-model"></a>
 </h2>
@@ -91,12 +100,19 @@
 <li>treatment stops after 2 years,</li>
 <li>rounding errors.</li>
 </ol>
-<p>It is possible to reproduce 1. and 2. by making transition happen at the end of each year with method = “end”. Since with this method the transition occur 1 year after the beginning, costs should be discounted from the first cycle with the argument first = TRUE in discount(). Point 3. is reproduced by making <code>rr</code> and <code>cost_lami</code> a time changing variable like this <code>rr = ifelse(markov_cycle &lt;= 2, .509, 1.00)</code>.</p>
-<p>The last point is reproduced by writing transition probabilities as fractions.</p>
+<p>It is possible to reproduce 1. and 2. by making transition happen at
+the end of each year with method = “end”. Since with this method the
+transition occur 1 year after the beginning, costs should be discounted
+from the first cycle with the argument first = TRUE in discount(). Point
+3. is reproduced by making <code>rr</code> and <code>cost_lami</code> a
+time changing variable like this
+<code>rr = ifelse(model_time &lt;= 2, .509, 1.00)</code>.</p>
+<p>The last point is reproduced by writing transition probabilities as
+fractions.</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">par_mod</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/define_parameters.html">define_parameters</a></span><span class="op">(</span></span>
-<span>  rr <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/ifelse.html" class="external-link">ifelse</a></span><span class="op">(</span><span class="va">markov_cycle</span> <span class="op">&lt;=</span> <span class="fl">2</span>, <span class="fl">.509</span>, <span class="fl">1</span><span class="op">)</span>,</span>
-<span>  cost_lami <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/ifelse.html" class="external-link">ifelse</a></span><span class="op">(</span><span class="va">markov_cycle</span> <span class="op">&lt;=</span> <span class="fl">2</span>, <span class="fl">2086.5</span>, <span class="fl">0</span><span class="op">)</span>,</span>
+<span>  rr <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/ifelse.html" class="external-link">ifelse</a></span><span class="op">(</span><span class="va">model_time</span> <span class="op">&lt;=</span> <span class="fl">2</span>, <span class="fl">.509</span>, <span class="fl">1</span><span class="op">)</span>,</span>
+<span>  cost_lami <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/ifelse.html" class="external-link">ifelse</a></span><span class="op">(</span><span class="va">model_time</span> <span class="op">&lt;=</span> <span class="fl">2</span>, <span class="fl">2086.5</span>, <span class="fl">0</span><span class="op">)</span>,</span>
 <span>  cost_zido <span class="op">=</span> <span class="fl">2278</span></span>
 <span><span class="op">)</span></span>
 <span></span>
@@ -236,7 +252,8 @@
 <ol style="list-style-type: decimal">
 <li>Mortality rates are much higher in the book.</li>
 </ol>
-<p>This can be corrected by using a user-specified mortality table and then fetch the values with:</p>
+<p>This can be corrected by using a user-specified mortality table and
+then fetch the values with:</p>
 <div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/look_up.html">look_up</a></span><span class="op">(</span><span class="va">death_prob</span>, age <span class="op">=</span> <span class="va">age</span>, sex <span class="op">=</span> <span class="va">sex</span>, bin <span class="op">=</span> <span class="st">"age"</span><span class="op">)</span></span></code></pre></div>
 <div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
@@ -271,7 +288,7 @@
 <span>    age_init <span class="op">=</span> <span class="fl">60</span>,</span>
 <span>    sex <span class="op">=</span> <span class="fl">0</span>,</span>
 <span>    <span class="co"># age increases with cycles</span></span>
-<span>    age <span class="op">=</span> <span class="va">age_init</span> <span class="op">+</span> <span class="va">markov_cycle</span>,</span>
+<span>    age <span class="op">=</span> <span class="va">age_init</span> <span class="op">+</span> <span class="va">model_time</span>,</span>
 <span>    </span>
 <span>    <span class="co"># operative mortality rates</span></span>
 <span>    omrPTHR <span class="op">=</span> <span class="fl">.02</span>,</span>
@@ -291,10 +308,10 @@
 <span>    rrNP1 <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Log.html" class="external-link">exp</a></span><span class="op">(</span><span class="va">lnrrNP1</span><span class="op">)</span>,</span>
 <span>   </span>
 <span>    <span class="co"># revision probability of primary procedure</span></span>
-<span>    standardRR <span class="op">=</span> <span class="fl">1</span> <span class="op">-</span> <span class="fu"><a href="https://rdrr.io/r/base/Log.html" class="external-link">exp</a></span><span class="op">(</span><span class="va">lambda</span> <span class="op">*</span> <span class="op">(</span><span class="op">(</span><span class="va">markov_cycle</span> <span class="op">-</span> <span class="fl">1</span><span class="op">)</span> <span class="op">^</span> <span class="va">gamma</span> <span class="op">-</span></span>
-<span>                                     <span class="va">markov_cycle</span> <span class="op">^</span> <span class="va">gamma</span><span class="op">)</span><span class="op">)</span>,</span>
-<span>    np1RR <span class="op">=</span> <span class="fl">1</span> <span class="op">-</span> <span class="fu"><a href="https://rdrr.io/r/base/Log.html" class="external-link">exp</a></span><span class="op">(</span><span class="va">lambda</span> <span class="op">*</span> <span class="va">rrNP1</span> <span class="op">*</span> <span class="op">(</span><span class="op">(</span><span class="va">markov_cycle</span> <span class="op">-</span> <span class="fl">1</span><span class="op">)</span> <span class="op">^</span> <span class="va">gamma</span> <span class="op">-</span> </span>
-<span>                                        <span class="va">markov_cycle</span> <span class="op">^</span> <span class="va">gamma</span><span class="op">)</span><span class="op">)</span>,</span>
+<span>    standardRR <span class="op">=</span> <span class="fl">1</span> <span class="op">-</span> <span class="fu"><a href="https://rdrr.io/r/base/Log.html" class="external-link">exp</a></span><span class="op">(</span><span class="va">lambda</span> <span class="op">*</span> <span class="op">(</span><span class="op">(</span><span class="va">model_time</span> <span class="op">-</span> <span class="fl">1</span><span class="op">)</span> <span class="op">^</span> <span class="va">gamma</span> <span class="op">-</span></span>
+<span>                                     <span class="va">model_time</span> <span class="op">^</span> <span class="va">gamma</span><span class="op">)</span><span class="op">)</span>,</span>
+<span>    np1RR <span class="op">=</span> <span class="fl">1</span> <span class="op">-</span> <span class="fu"><a href="https://rdrr.io/r/base/Log.html" class="external-link">exp</a></span><span class="op">(</span><span class="va">lambda</span> <span class="op">*</span> <span class="va">rrNP1</span> <span class="op">*</span> <span class="op">(</span><span class="op">(</span><span class="va">model_time</span> <span class="op">-</span> <span class="fl">1</span><span class="op">)</span> <span class="op">^</span> <span class="va">gamma</span> <span class="op">-</span> </span>
+<span>                                        <span class="va">model_time</span> <span class="op">^</span> <span class="va">gamma</span><span class="op">)</span><span class="op">)</span>,</span>
 <span>    </span>
 <span>    <span class="co"># age-related mortality rate</span></span>
 <span>    sex_cat <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/ifelse.html" class="external-link">ifelse</a></span><span class="op">(</span><span class="va">sex</span> <span class="op">==</span> <span class="fl">0</span>, <span class="st">"FMLE"</span>, <span class="st">"MLE"</span><span class="op">)</span>,</span>

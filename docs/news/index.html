@@ -17,7 +17,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">heemod</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.15.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.16.0</span>
       </span>
     </div>
 
@@ -51,8 +51,27 @@
     </div>
 
     <div class="section level2">
-<h2 class="page-header" data-toc-text="0.15.0" id="heemod-0150">heemod 0.15.0<a class="anchor" aria-label="anchor" href="#heemod-0150"></a></h2>
-<ul><li>Performance improvements: using state_time is much faster now, as well as probabilistic sensitivity analyses</li></ul></div>
+<h2 class="page-header" data-toc-text="0.15.1.9000" id="heemod-01519000">heemod 0.15.1.9000<a class="anchor" aria-label="anchor" href="#heemod-01519000"></a></h2>
+<ul><li>Remove lazyeval, plyr and pryr dependency</li>
+<li>For PSM, when OS is lower to PFS, force the transition probability to be 0 (<a href="https://github.com/aphp/heemod/issues/7" class="external-link">#7</a> <a href="https://github.com/william-rawlinson" class="external-link">@william-rawlinson</a>)</li>
+<li>
+<code><a href="../reference/who_mortality.html">get_who_mr()</a></code> is working again</li>
+<li>Mortality rates gathered with <code>get_who_mr(..., local = TRUE)</code> are only available as<br>
+pooled for high income countries.</li>
+<li>
+<code>prop</code>, <code>multinom</code> and <code>make_gamma</code>, deprecated since a long time are now unavailable, to be replaced with <code>binomial</code>, <code>multinomial</code> and <code>gamma</code>, respectively.</li>
+<li>
+<code>markov_cycle</code> is now deprecated in favor of <code>model_time</code>
+</li>
+</ul></div>
+    <div class="section level2">
+<h2 class="page-header" data-toc-text="0.15.1" id="heemod-0151">heemod 0.15.1<small>2023-03-22</small><a class="anchor" aria-label="anchor" href="#heemod-0151"></a></h2>
+<p>Compliance with r-devel</p>
+</div>
+    <div class="section level2">
+<h2 class="page-header" data-toc-text="0.15.0" id="heemod-0150">heemod 0.15.0<small>2023-02-14</small><a class="anchor" aria-label="anchor" href="#heemod-0150"></a></h2>
+<ul><li>Performance improvements: using state_time is much faster now, as well as probabilistic sensitivity analyses</li>
+</ul></div>
     <div class="section level2">
 <h2 class="page-header" data-toc-text="0.14.5" id="heemod-0145">heemod 0.14.5<a class="anchor" aria-label="anchor" href="#heemod-0145"></a></h2>
 <ul><li>Rebuild vignettes</li>
@@ -60,22 +79,26 @@
 </ul></div>
     <div class="section level2">
 <h2 class="page-header" data-toc-text="0.14.4" id="heemod-0144">heemod 0.14.4<small>2021-10-06</small><a class="anchor" aria-label="anchor" href="#heemod-0144"></a></h2>
-<ul><li>updates for compatibility with rlang 1.0.0</li></ul></div>
+<ul><li>updates for compatibility with rlang 1.0.0</li>
+</ul></div>
     <div class="section level2">
 <h2 class="page-header" data-toc-text="0.14.2" id="heemod-0142">heemod 0.14.2<small>2021-01-22</small><a class="anchor" aria-label="anchor" href="#heemod-0142"></a></h2>
-<ul><li>checks cairo_pdf availability</li></ul></div>
+<ul><li>checks cairo_pdf availability</li>
+</ul></div>
     <div class="section level2">
 <h2 class="page-header" data-toc-text="0.14.0" id="heemod-0140">heemod 0.14.0<small>2020-12-08</small><a class="anchor" aria-label="anchor" href="#heemod-0140"></a></h2>
 <div class="section level3">
 <h3 id="breaking-changes-0-14-0">Breaking changes<a class="anchor" aria-label="anchor" href="#breaking-changes-0-14-0"></a></h3>
-<ul><li>argument “method” for run_model was inverted. Now “beginning” overestimates costs and “end” underestimates costs (<a href="https://github.com/aphp/heemod/issues/345" class="external-link">#345</a> <a href="https://github.com/zaddyzad" class="external-link">@zaddyzad</a>)</li></ul></div>
+<ul><li>argument “method” for run_model was inverted. Now “beginning” overestimates costs and “end” underestimates costs (<a href="https://github.com/aphp/heemod/issues/345" class="external-link">#345</a> <a href="https://github.com/zaddyzad" class="external-link">@zaddyzad</a>)</li>
+</ul></div>
 </div>
     <div class="section level2">
 <h2 class="page-header" data-toc-text="0.13.0" id="heemod-0130">heemod 0.13.0<small>2020-05-11</small><a class="anchor" aria-label="anchor" href="#heemod-0130"></a></h2>
 <p>Prepare for dplyr 1.0.0</p>
 <div class="section level3">
 <h3 id="bugfixes-0-13-0">Bugfixes<a class="anchor" aria-label="anchor" href="#bugfixes-0-13-0"></a></h3>
-<ul><li>Fix problem with state_time (fix <a href="https://github.com/aphp/heemod/issues/343" class="external-link">#343</a> <a href="https://github.com/Reale3" class="external-link">@Reale3</a>)</li></ul></div>
+<ul><li>Fix problem with state_time (fix <a href="https://github.com/aphp/heemod/issues/343" class="external-link">#343</a> <a href="https://github.com/Reale3" class="external-link">@Reale3</a>)</li>
+</ul></div>
 </div>
     <div class="section level2">
 <h2 class="page-header" data-toc-text="0.12.0" id="heemod-0120">heemod 0.12.0<small>2020-04-14</small><a class="anchor" aria-label="anchor" href="#heemod-0120"></a></h2>
@@ -90,7 +113,8 @@
 <h2 class="page-header" data-toc-text="0.11.0" id="heemod-0110">heemod 0.11.0<small>2019-10-22</small><a class="anchor" aria-label="anchor" href="#heemod-0110"></a></h2>
 <div class="section level3">
 <h3 id="backend-changes-0-11-0">Backend changes<a class="anchor" aria-label="anchor" href="#backend-changes-0-11-0"></a></h3>
-<ul><li>States are now length 2 lists:<ul><li>.dots: the state values</li>
+<ul><li>States are now length 2 lists:
+<ul><li>.dots: the state values</li>
 <li>starting_values: the state values when entering the state</li>
 </ul></li>
 <li>Compatibility with dplyr 0.8: replaced all underscored (SE) versions of all verbs</li>
@@ -98,29 +122,34 @@
 <div class="section level3">
 <h3 id="bugfixes-0-11-0">Bugfixes<a class="anchor" aria-label="anchor" href="#bugfixes-0-11-0"></a></h3>
 <ul><li>
-<code><a href="../reference/who_mortality.html">get_who_mr()</a></code> is again able to fetch data from GHO server</li></ul></div>
+<code><a href="../reference/who_mortality.html">get_who_mr()</a></code> is again able to fetch data from GHO server</li>
+</ul></div>
 </div>
     <div class="section level2">
 <h2 class="page-header" data-toc-text="0.10.0" id="heemod-0100">heemod 0.10.0<small>2019-07-03</small><a class="anchor" aria-label="anchor" href="#heemod-0100"></a></h2>
 <div class="section level3">
 <h3 id="new-features-0-10-0">New features<a class="anchor" aria-label="anchor" href="#new-features-0-10-0"></a></h3>
 <ul><li>
-<code><a href="../reference/define_state.html">define_state()</a></code> gains the <code>starting_values</code> argument (same as <code><a href="../reference/define_strategy.html">define_strategy()</a></code>).</li></ul></div>
+<code><a href="../reference/define_state.html">define_state()</a></code> gains the <code>starting_values</code> argument (same as <code><a href="../reference/define_strategy.html">define_strategy()</a></code>).</li>
+</ul></div>
 </div>
     <div class="section level2">
 <h2 class="page-header" data-toc-text="0.9.4" id="heemod-094">heemod 0.9.4<small>2019-02-24</small><a class="anchor" aria-label="anchor" href="#heemod-094"></a></h2>
-<ul><li>Compatibility with dplyr v0.8</li></ul></div>
+<ul><li>Compatibility with dplyr v0.8</li>
+</ul></div>
     <div class="section level2">
 <h2 class="page-header" data-toc-text="0.9.3" id="heemod-093">heemod 0.9.3<small>2019-02-07</small><a class="anchor" aria-label="anchor" href="#heemod-093"></a></h2>
 <div class="section level3">
 <h3 id="backend-changes-0-9-3">Backend changes<a class="anchor" aria-label="anchor" href="#backend-changes-0-9-3"></a></h3>
-<ul><li>Remove <code>Hmisc</code> dependency for weighted summaries.</li></ul></div>
+<ul><li>Remove <code>Hmisc</code> dependency for weighted summaries.</li>
+</ul></div>
 </div>
     <div class="section level2">
 <h2 class="page-header" data-toc-text="0.9.2" id="heemod-092">heemod 0.9.2<small>2017-09-15</small><a class="anchor" aria-label="anchor" href="#heemod-092"></a></h2>
 <div class="section level3">
 <h3 id="breaking-changes-0-9-2">Breaking changes<a class="anchor" aria-label="anchor" href="#breaking-changes-0-9-2"></a></h3>
-<ul><li>Survival function renamed: <code><a href="../reference/mix.html">pool()</a></code>=&gt;<code><a href="../reference/mix.html">mix()</a></code>.</li></ul></div>
+<ul><li>Survival function renamed: <code><a href="../reference/mix.html">pool()</a></code>=&gt;<code><a href="../reference/mix.html">mix()</a></code>.</li>
+</ul></div>
 <div class="section level3">
 <h3 id="new-features-0-9-2">New features<a class="anchor" aria-label="anchor" href="#new-features-0-9-2"></a></h3>
 <ul><li>Starting values with <code><a href="../reference/define_starting_values.html">define_starting_values()</a></code>.</li>
@@ -159,13 +188,16 @@
 </ul></div>
 <div class="section level3">
 <h3 id="new-features-0-9-1">New features<a class="anchor" aria-label="anchor" href="#new-features-0-9-1"></a></h3>
-<ul><li>NMB is now reported as relative values.</li></ul></div>
+<ul><li>NMB is now reported as relative values.</li>
+</ul></div>
 <div class="section level3">
 <h3 id="bugfixes-0-9-1">Bugfixes<a class="anchor" aria-label="anchor" href="#bugfixes-0-9-1"></a></h3>
-<ul><li>Fixed error with <code><a href="../reference/run_dsa.html">run_dsa()</a></code> in state expansion situations.</li></ul></div>
+<ul><li>Fixed error with <code><a href="../reference/run_dsa.html">run_dsa()</a></code> in state expansion situations.</li>
+</ul></div>
 <div class="section level3">
 <h3 id="backend-changes-0-9-1">Backend changes<a class="anchor" aria-label="anchor" href="#backend-changes-0-9-1"></a></h3>
-<ul><li>Multiple changes to prepare for the <code>dplyr</code> update 0.6.0.</li></ul></div>
+<ul><li>Multiple changes to prepare for the <code>dplyr</code> update 0.6.0.</li>
+</ul></div>
 </div>
     <div class="section level2">
 <h2 class="page-header" data-toc-text="0.9.0" id="heemod-090">heemod 0.9.0<small>2017-04-07</small><a class="anchor" aria-label="anchor" href="#heemod-090"></a></h2>
@@ -179,7 +211,8 @@
 </ul><div class="section level3">
 <h3 id="breaking-changes-0-9-0">Breaking changes<a class="anchor" aria-label="anchor" href="#breaking-changes-0-9-0"></a></h3>
 <ul><li>
-<code>get_probs_from_surv()</code>=&gt;<code><a href="../reference/compute_surv.html">compute_surv()</a></code>.</li></ul></div>
+<code>get_probs_from_surv()</code>=&gt;<code><a href="../reference/compute_surv.html">compute_surv()</a></code>.</li>
+</ul></div>
 <div class="section level3">
 <h3 id="new-features-0-9-0">New features<a class="anchor" aria-label="anchor" href="#new-features-0-9-0"></a></h3>
 <ul><li>Operations on survival functions, see <code>vignette("j-survival")</code>. Thanks to <a href="https://github.com/jrdnmdhl" class="external-link">Jordan Amdahl</a>.</li>
@@ -193,7 +226,8 @@
 <div class="section level3">
 <h3 id="bugfixes-0-9-0">Bugfixes<a class="anchor" aria-label="anchor" href="#bugfixes-0-9-0"></a></h3>
 <ul><li>
-<code><a href="../reference/discount.html">heemod::discount()</a></code> now produces results similar to <code><a href="../reference/discount.html">discount()</a></code>.</li></ul></div>
+<code><a href="../reference/discount.html">heemod::discount()</a></code> now produces results similar to <code><a href="../reference/discount.html">discount()</a></code>.</li>
+</ul></div>
 <div class="section level3">
 <h3 id="backend-changes-0-9-0">Backend changes<a class="anchor" aria-label="anchor" href="#backend-changes-0-9-0"></a></h3>
 <ul><li>Renamed memoised functions.</li>
@@ -211,14 +245,15 @@
 <code>resample</code> argument in <code><a href="../reference/run_psa.html">run_psa()</a></code> renamed to <code>psa</code>.</li>
 <li>Probability distributions for PSA were renamed, see <code><a href="../reference/distributions.html">?distributions</a></code>.</li>
 <li>
-<code>state_cycle</code> renamed to <code>state_time</code>, added a <code>model_time</code> alias to <code>markov_cycle</code>.</li>
+<code>state_cycle</code> renamed to <code>state_time</code>, added a <code>model_time</code> alias to <code>model_time</code>.</li>
 <li>The <code>inflow</code> argument for budget impact analysis is specified with <code><a href="../reference/define_inflow.html">define_inflow()</a></code>.</li>
 <li>
 <code><a href="../reference/probability.html">prob_to_prob()</a></code>=&gt;<code><a href="../reference/probability.html">rescale_prob()</a></code>.</li>
 </ul></div>
 <div class="section level3">
 <h3 id="new-features-0-8-0">New features<a class="anchor" aria-label="anchor" href="#new-features-0-8-0"></a></h3>
-<ul><li>Transition probabilities from survival models with <code>get_probs_from_surv()</code>:<ul><li>Parametrically defined by <code><a href="../reference/define_survival.html">define_survival()</a></code>.</li>
+<ul><li>Transition probabilities from survival models with <code>get_probs_from_surv()</code>:
+<ul><li>Parametrically defined by <code><a href="../reference/define_survival.html">define_survival()</a></code>.</li>
 <li>Or fitted on data by the <code>flexsurv</code> package.</li>
 </ul></li>
 <li>Support for partitioned survival models with <code><a href="../reference/define_part_surv.html">define_part_surv()</a></code>.</li>
@@ -258,19 +293,22 @@
 </ul></div>
 <div class="section level3">
 <h3 id="acknowledgments-0-8-0">Acknowledgments<a class="anchor" aria-label="anchor" href="#acknowledgments-0-8-0"></a></h3>
-<ul><li>Thanks to <a href="https://github.com/MattWiener" class="external-link">Matthew Wiener</a>, especially for the survival analysis code.</li></ul></div>
+<ul><li>Thanks to <a href="https://github.com/MattWiener" class="external-link">Matthew Wiener</a>, especially for the survival analysis code.</li>
+</ul></div>
 </div>
     <div class="section level2">
 <h2 class="page-header" data-toc-text="0.7.1" id="heemod-071">heemod 0.7.1<small>2016-11-29</small><a class="anchor" aria-label="anchor" href="#heemod-071"></a></h2>
 <div class="section level3">
 <h3 id="bugfixes-0-7-1">Bugfixes<a class="anchor" aria-label="anchor" href="#bugfixes-0-7-1"></a></h3>
-<ul><li>Fixed an error resulting in incorrect co-variance analysis results when relations between values and parameters were negative.</li></ul></div>
+<ul><li>Fixed an error resulting in incorrect co-variance analysis results when relations between values and parameters were negative.</li>
+</ul></div>
 </div>
     <div class="section level2">
 <h2 class="page-header" data-toc-text="0.7.0" id="heemod-070">heemod 0.7.0<small>2016-11-21</small><a class="anchor" aria-label="anchor" href="#heemod-070"></a></h2>
 <div class="section level3">
 <h3 id="breaking-changes-0-7-0">Breaking changes<a class="anchor" aria-label="anchor" href="#breaking-changes-0-7-0"></a></h3>
-<ul><li>Some plotting arguments changed (e.g. <code>type</code>=&gt;<code>results</code>).</li></ul></div>
+<ul><li>Some plotting arguments changed (e.g. <code>type</code>=&gt;<code>results</code>).</li>
+</ul></div>
 <div class="section level3">
 <h3 id="new-features-0-7-0">New features<a class="anchor" aria-label="anchor" href="#new-features-0-7-0"></a></h3>
 <ul><li>Added co-variance analysis for PSA with <code>type = "cov"</code> plot.</li>
@@ -311,19 +349,22 @@
 </ul></div>
 <div class="section level3">
 <h3 id="acknowledments-0-6-0">Acknowledments<a class="anchor" aria-label="anchor" href="#acknowledments-0-6-0"></a></h3>
-<ul><li>Thanks to <a href="https://github.com/MattWiener" class="external-link">Matthew Wiener</a>, <a href="https://github.com/zkabat" class="external-link">Zdenek Kabat</a> and <a href="https://github.com/vojtech-filipec" class="external-link">Vojtech Filipec</a> for their great contributions to this update.</li></ul></div>
+<ul><li>Thanks to <a href="https://github.com/MattWiener" class="external-link">Matthew Wiener</a>, <a href="https://github.com/zkabat" class="external-link">Zdenek Kabat</a> and <a href="https://github.com/vojtech-filipec" class="external-link">Vojtech Filipec</a> for their great contributions to this update.</li>
+</ul></div>
 </div>
     <div class="section level2">
 <h2 class="page-header" data-toc-text="0.5.1" id="heemod-051">heemod 0.5.1<small>2016-10-29</small><a class="anchor" aria-label="anchor" href="#heemod-051"></a></h2>
 <div class="section level3">
 <h3 id="bugfixes-0-5-1">Bugfixes<a class="anchor" aria-label="anchor" href="#bugfixes-0-5-1"></a></h3>
-<ul><li>Added <code>formatR</code> to suggest list.</li></ul></div>
+<ul><li>Added <code>formatR</code> to suggest list.</li>
+</ul></div>
 </div>
     <div class="section level2">
 <h2 class="page-header" data-toc-text="0.5.0" id="heemod-050">heemod 0.5.0<small>2016-10-18</small><a class="anchor" aria-label="anchor" href="#heemod-050"></a></h2>
 <div class="section level3">
 <h3 id="breaking-changes-0-5-0">Breaking changes<a class="anchor" aria-label="anchor" href="#breaking-changes-0-5-0"></a></h3>
-<ul><li>Some functions were renamed for clarification:<ul><li>
+<ul><li>Some functions were renamed for clarification:
+<ul><li>
 <code>define_model()</code> =&gt; <code><a href="../reference/define_strategy.html">define_strategy()</a></code>
 </li>
 <li>
@@ -344,7 +385,8 @@
 <li>
 <code>run_probabilistic()</code> =&gt; <code><a href="../reference/run_psa.html">run_psa()</a></code>
 </li>
-</ul></li></ul></div>
+</ul></li>
+</ul></div>
 <div class="section level3">
 <h3 id="new-features-0-5-0">New features<a class="anchor" aria-label="anchor" href="#new-features-0-5-0"></a></h3>
 <ul><li>Values and probabilities can depend on state time with <code>state_cycle</code>, allowing to reproduce the results of micro-simulations.</li>
@@ -387,20 +429,24 @@
 <div class="section level3">
 <h3 id="bug-fixes-0-4-0">Bug fixes<a class="anchor" aria-label="anchor" href="#bug-fixes-0-4-0"></a></h3>
 <ul><li>
-<em>really</em> fixed problem when the argument to <code><a href="../reference/discount.html">discount()</a></code> was not defined as a parameter.</li></ul></div>
+<em>really</em> fixed problem when the argument to <code><a href="../reference/discount.html">discount()</a></code> was not defined as a parameter.</li>
+</ul></div>
 <div class="section level3">
 <h3 id="backend-changes-0-4-0">Backend changes<a class="anchor" aria-label="anchor" href="#backend-changes-0-4-0"></a></h3>
 <ul><li>
-<code>eval_model_newdata()</code>, the function behind re-sampling and sensitivity analysis now returns list-variables.</li></ul></div>
+<code>eval_model_newdata()</code>, the function behind re-sampling and sensitivity analysis now returns list-variables.</li>
+</ul></div>
 <div class="section level3">
 <h3 id="acknowledments-0-4-0">Acknowledments<a class="anchor" aria-label="anchor" href="#acknowledments-0-4-0"></a></h3>
-<ul><li>Thanks to <a href="https://github.com/MattWiener" class="external-link">Matthew Wiener</a>, <a href="https://github.com/zkabat" class="external-link">Zdenek Kabat</a> and <a href="https://github.com/vojtech-filipec" class="external-link">Vojtech Filipec</a> for their great contributions to this update.</li></ul></div>
+<ul><li>Thanks to <a href="https://github.com/MattWiener" class="external-link">Matthew Wiener</a>, <a href="https://github.com/zkabat" class="external-link">Zdenek Kabat</a> and <a href="https://github.com/vojtech-filipec" class="external-link">Vojtech Filipec</a> for their great contributions to this update.</li>
+</ul></div>
 </div>
     <div class="section level2">
 <h2 class="page-header" data-toc-text="0.3.3" id="heemod-033">heemod 0.3.3<small>2016-07-01</small><a class="anchor" aria-label="anchor" href="#heemod-033"></a></h2>
 <div class="section level3">
 <h3 id="new-features-0-3-3">New features<a class="anchor" aria-label="anchor" href="#new-features-0-3-3"></a></h3>
-<ul><li>Added a vignette to exactly reproduce results from Decision Modelling for Health Economic Evaluation.</li></ul></div>
+<ul><li>Added a vignette to exactly reproduce results from Decision Modelling for Health Economic Evaluation.</li>
+</ul></div>
 <div class="section level3">
 <h3 id="bug-fixes-0-3-3">Bug fixes<a class="anchor" aria-label="anchor" href="#bug-fixes-0-3-3"></a></h3>
 <ul><li>Fixed problem when argument to <code><a href="../reference/discount.html">discount()</a></code> was not defined as a parameter.</li>
@@ -420,7 +466,8 @@
 <h2 class="page-header" data-toc-text="0.3.1" id="heemod-031">heemod 0.3.1<small>2016-04-04</small><a class="anchor" aria-label="anchor" href="#heemod-031"></a></h2>
 <div class="section level3">
 <h3 id="backend-changes-0-3-1">Backend changes<a class="anchor" aria-label="anchor" href="#backend-changes-0-3-1"></a></h3>
-<ul><li>A single set of parameters is now used for a set of models.</li></ul></div>
+<ul><li>A single set of parameters is now used for a set of models.</li>
+</ul></div>
 <div class="section level3">
 <h3 id="bug-fixes-0-3-1">Bug fixes<a class="anchor" aria-label="anchor" href="#bug-fixes-0-3-1"></a></h3>
 <ul><li>Correct error in probabilistic analysis vignette.</li>
@@ -453,7 +500,8 @@
 </ul></div>
 <div class="section level3">
 <h3 id="bug-fixes-0-2-0">Bug fixes<a class="anchor" aria-label="anchor" href="#bug-fixes-0-2-0"></a></h3>
-<ul><li>added <code>*_</code> functions.</li></ul></div>
+<ul><li>added <code>*_</code> functions.</li>
+</ul></div>
 <div class="section level3">
 <h3 id="removed-0-2-0">Removed<a class="anchor" aria-label="anchor" href="#removed-0-2-0"></a></h3>
 <ul><li>
@@ -463,7 +511,8 @@
 </div>
     <div class="section level2">
 <h2 class="page-header" data-toc-text="0.1.0" id="heemod-010">heemod 0.1.0<small>2015-12-23</small><a class="anchor" aria-label="anchor" href="#heemod-010"></a></h2>
-<ul><li>Initial CRAN submission.</li></ul></div>
+<ul><li>Initial CRAN submission.</li>
+</ul></div>
   </div>
 
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">

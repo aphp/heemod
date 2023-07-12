@@ -33,7 +33,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">heemod</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.15.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.16.0</span>
       </span>
     </div>
 
@@ -72,7 +72,7 @@
       <h1 data-toc-skip>An Introduction to <code>heemod</code>
 </h1>
             
-            <h4 data-toc-skip class="date">2023-02-14</h4>
+            <h4 data-toc-skip class="date">2023-07-12</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/aphp/heemod/blob/HEAD/vignettes/a_introduction.Rmd" class="external-link"><code>vignettes/a_introduction.Rmd</code></a></small>
       <div class="hidden name"><code>a_introduction.Rmd</code></div>
@@ -81,8 +81,12 @@
 
     
     
-<p>This document is a presentation of the basic steps to define and run a model in <code>heemod</code>. Note that decision trees are actually a subset even of <em>Markov model</em>, and thus can be specified easily with this package.</p>
-<p>When building a Markov model the following steps must be performed:</p>
+<p>This document is a presentation of the basic steps to define and run
+a model in <code>heemod</code>. Note that decision trees are actually a
+subset even of <em>Markov model</em>, and thus can be specified easily
+with this package.</p>
+<p>When building a Markov model the following steps must be
+performed:</p>
 <ul>
 <li>Specify transition probabilities between states.</li>
 <li>Specify values attached to states (costs, utilities, etc.).</li>
@@ -91,8 +95,13 @@
 <div class="section level2">
 <h2 id="transition-probabilities">Transition probabilities<a class="anchor" aria-label="anchor" href="#transition-probabilities"></a>
 </h2>
-<p>The probability to transition from one state to another during a time period is called a <em>transition probability</em>. Said time period is called a <em>cycle</em>.</p>
-<p>Transition probabilities between states can be described through a 2-way table where the lines correspond to the states at the beginning of a cycle and the columns to the states at the end of a cycle. Consider a model with 2 states <code>A</code> and <code>B</code>:</p>
+<p>The probability to transition from one state to another during a time
+period is called a <em>transition probability</em>. Said time period is
+called a <em>cycle</em>.</p>
+<p>Transition probabilities between states can be described through a
+2-way table where the lines correspond to the states at the beginning of
+a cycle and the columns to the states at the end of a cycle. Consider a
+model with 2 states <code>A</code> and <code>B</code>:</p>
 <table class="table">
 <thead><tr class="header">
 <th></th>
@@ -112,9 +121,21 @@
 </tr>
 </tbody>
 </table>
-<p>When starting a cycle in state <strong>A</strong> (row <strong>A</strong>), the probability to still be in state <strong>A</strong> at the end of the cycle is found in colunm <strong>A</strong> (cell <strong>1</strong>) and the probability to change to state <strong>B</strong> is found in column <strong>B</strong> (cell <strong>2</strong>).</p>
-<p>Similarly, when starting a cycle from state <strong>B</strong> (row <strong>B</strong>), the probability to be in state <strong>A</strong> or <strong>B</strong> at the end of the cycle are found in cells <strong>3</strong> or <strong>4</strong> respectively.</p>
-<p>In the context of Markov models, this 2-way table is called a <em>transition matrix</em>. A transition matrix can be defined easily in <code>heemod</code> with the <code><a href="../reference/define_transition.html">define_transition()</a></code> function. If we consider the previous example, where cell values have been replaced by actual probabilities:</p>
+<p>When starting a cycle in state <strong>A</strong> (row
+<strong>A</strong>), the probability to still be in state
+<strong>A</strong> at the end of the cycle is found in colunm
+<strong>A</strong> (cell <strong>1</strong>) and the probability to
+change to state <strong>B</strong> is found in column <strong>B</strong>
+(cell <strong>2</strong>).</p>
+<p>Similarly, when starting a cycle from state <strong>B</strong> (row
+<strong>B</strong>), the probability to be in state <strong>A</strong>
+or <strong>B</strong> at the end of the cycle are found in cells
+<strong>3</strong> or <strong>4</strong> respectively.</p>
+<p>In the context of Markov models, this 2-way table is called a
+<em>transition matrix</em>. A transition matrix can be defined easily in
+<code>heemod</code> with the <code><a href="../reference/define_transition.html">define_transition()</a></code> function.
+If we consider the previous example, where cell values have been
+replaced by actual probabilities:</p>
 <table class="table">
 <thead><tr class="header">
 <th></th>
@@ -152,12 +173,18 @@
 <div class="section level2">
 <h2 id="attach-values-to-states">Attach values to states<a class="anchor" aria-label="anchor" href="#attach-values-to-states"></a>
 </h2>
-<p>Values are attached to states. Cost and utility are classical examples of such values. To continue with the previous example, the following values can be attachd to state <strong>A</strong> and <strong>B</strong>:</p>
+<p>Values are attached to states. Cost and utility are classical
+examples of such values. To continue with the previous example, the
+following values can be attachd to state <strong>A</strong> and
+<strong>B</strong>:</p>
 <ul>
-<li>State <strong>A</strong> has a cost of <em>1234</em> per cycle and an utility of <em>0.85</em>.</li>
-<li>State <strong>B</strong> has a cost of <em>4321</em> per cycle and an utility of <em>0.50</em>.</li>
+<li>State <strong>A</strong> has a cost of <em>1234</em> per cycle and
+an utility of <em>0.85</em>.</li>
+<li>State <strong>B</strong> has a cost of <em>4321</em> per cycle and
+an utility of <em>0.50</em>.</li>
 </ul>
-<p>A state and its values can be defined with <code><a href="../reference/define_state.html">define_state()</a></code>:</p>
+<p>A state and its values can be defined with
+<code><a href="../reference/define_state.html">define_state()</a></code>:</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">state_A</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/define_state.html">define_state</a></span><span class="op">(</span></span>
 <span>  cost <span class="op">=</span> <span class="fl">1234</span>,</span>
@@ -182,7 +209,9 @@
 <div class="section level2">
 <h2 id="combine-information-in-a-model">Combine information in a model<a class="anchor" aria-label="anchor" href="#combine-information-in-a-model"></a>
 </h2>
-<p>Now that the transition matrix and the state values are defined for a given strategy, we can combine them with <code><a href="../reference/define_strategy.html">define_strategy()</a></code>:</p>
+<p>Now that the transition matrix and the state values are defined for a
+given strategy, we can combine them with
+<code><a href="../reference/define_strategy.html">define_strategy()</a></code>:</p>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">strat</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/define_strategy.html">define_strategy</a></span><span class="op">(</span></span>
 <span>  transition <span class="op">=</span> <span class="va">mat_trans</span>,</span>
@@ -200,7 +229,11 @@
 <div class="section level2">
 <h2 id="run-the-model">Run the model<a class="anchor" aria-label="anchor" href="#run-the-model"></a>
 </h2>
-<p>A model is a made of one or more strategy, run with <code><a href="../reference/run_model.html">run_model()</a></code> for a given number of cycles. Here we run only one strategy, so no comparison of the cost-effectiveness of the different strategies will be made. The variables corresponding to valuation of cost and effect must be given at that point.</p>
+<p>A model is a made of one or more strategy, run with
+<code><a href="../reference/run_model.html">run_model()</a></code> for a given number of cycles. Here we run only
+one strategy, so no comparison of the cost-effectiveness of the
+different strategies will be made. The variables corresponding to
+valuation of cost and effect must be given at that point.</p>
 <div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">res_mod</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/run_model.html">run_model</a></span><span class="op">(</span></span>
 <span>  <span class="va">strat</span>,</span>
@@ -232,12 +265,14 @@
 <span><span class="co">## </span></span>
 <span><span class="co">##       cost  utility</span></span>
 <span><span class="co">## I 19796856 7654.552</span></span></code></pre>
-<p>By default the model is run for <em>1000</em> persons starting in the first state (here state <strong>A</strong>).</p>
+<p>By default the model is run for <em>1000</em> persons starting in the
+first state (here state <strong>A</strong>).</p>
 </div>
 <div class="section level2">
 <h2 id="analyse-results">Analyse results<a class="anchor" aria-label="anchor" href="#analyse-results"></a>
 </h2>
-<p>We can plot the state membership counts over time. Other plot types are available.</p>
+<p>We can plot the state membership counts over time. Other plot types
+are available.</p>
 <div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">res_mod</span><span class="op">)</span></span></code></pre></div>
 <p><img src="a_introduction_files/figure-html/unnamed-chunk-6-1.png" width="576" style="display: block; margin: auto;"></p>
@@ -254,79 +289,116 @@
 <span>    palette <span class="op">=</span> <span class="st">"Set1"</span></span>
 <span>  <span class="op">)</span></span></code></pre></div>
 <p><img src="a_introduction_files/figure-html/unnamed-chunk-7-1.png" width="576" style="display: block; margin: auto;"></p>
-<p>And black &amp; white plots for publication are available with the <code>bw</code> plot option</p>
+<p>And black &amp; white plots for publication are available with the
+<code>bw</code> plot option</p>
 <div class="sourceCode" id="cb19"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://ggplot2.tidyverse.org" class="external-link">ggplot2</a></span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">res_mod</span>, bw <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
 <p><img src="a_introduction_files/figure-html/unnamed-chunk-8-1.png" width="576" style="display: block; margin: auto;"></p>
-<p>The state membership counts and the values can be accessed with <code><a href="../reference/get_counts.html">get_counts()</a></code> and <code><a href="../reference/get_values.html">get_values()</a></code> respectively.</p>
+<p>The state membership counts and the values can be accessed with
+<code><a href="../reference/get_counts.html">get_counts()</a></code> and <code><a href="../reference/get_values.html">get_values()</a></code>
+respectively.</p>
 <div class="sourceCode" id="cb20"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="fu"><a href="../reference/get_counts.html">get_counts</a></span><span class="op">(</span><span class="va">res_mod</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
-<pre><code><span><span class="co">##   .strategy_names markov_cycle state_names    count</span></span>
-<span><span class="co">## 1               I            1           A 950.0000</span></span>
-<span><span class="co">## 2               I            2           A 865.0000</span></span>
-<span><span class="co">## 3               I            3           A 805.5000</span></span>
-<span><span class="co">## 4               I            4           A 763.8500</span></span>
-<span><span class="co">## 5               I            5           A 734.6950</span></span>
-<span><span class="co">## 6               I            6           A 714.2865</span></span></code></pre>
+<pre><code><span><span class="co">##   .strategy_names model_time state_names    count</span></span>
+<span><span class="co">## 1               I          1           A 950.0000</span></span>
+<span><span class="co">## 2               I          2           A 865.0000</span></span>
+<span><span class="co">## 3               I          3           A 805.5000</span></span>
+<span><span class="co">## 4               I          4           A 763.8500</span></span>
+<span><span class="co">## 5               I          5           A 734.6950</span></span>
+<span><span class="co">## 6               I          6           A 714.2865</span></span></code></pre>
 <div class="sourceCode" id="cb22"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="fu"><a href="../reference/get_values.html">get_values</a></span><span class="op">(</span><span class="va">res_mod</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
-<pre><code><span><span class="co">##   markov_cycle .strategy_names value_names   value</span></span>
-<span><span class="co">## 1            1               I        cost 1388350</span></span>
-<span><span class="co">## 2            2               I        cost 1650745</span></span>
-<span><span class="co">## 3            3               I        cost 1834422</span></span>
-<span><span class="co">## 4            4               I        cost 1962995</span></span>
-<span><span class="co">## 5            5               I        cost 2052997</span></span>
-<span><span class="co">## 6            6               I        cost 2115998</span></span></code></pre>
+<pre><code><span><span class="co">##   model_time .strategy_names value_names   value</span></span>
+<span><span class="co">## 1          1               I        cost 1388350</span></span>
+<span><span class="co">## 2          2               I        cost 1650745</span></span>
+<span><span class="co">## 3          3               I        cost 1834422</span></span>
+<span><span class="co">## 4          4               I        cost 1962995</span></span>
+<span><span class="co">## 5          5               I        cost 2052997</span></span>
+<span><span class="co">## 6          6               I        cost 2115998</span></span></code></pre>
 </div>
 <div class="section level2">
 <h2 id="convenience-functions">Convenience functions<a class="anchor" aria-label="anchor" href="#convenience-functions"></a>
 </h2>
-<p>Convenience functions are available to easily compute transition probabilities from indidence rates, OR, RR, or probabilities estimated on a different timeframe.</p>
-<p>Example : convert an incidence rate of <em>162</em> cases per <em>1,000</em> person-years to a 5-year probability.</p>
+<p>Convenience functions are available to easily compute transition
+probabilities from indidence rates, OR, RR, or probabilities estimated
+on a different timeframe.</p>
+<p>Example : convert an incidence rate of <em>162</em> cases per
+<em>1,000</em> person-years to a 5-year probability.</p>
 <div class="sourceCode" id="cb24"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/probability.html">rate_to_prob</a></span><span class="op">(</span>r <span class="op">=</span> <span class="fl">162</span>, per <span class="op">=</span> <span class="fl">1000</span>, to <span class="op">=</span> <span class="fl">5</span><span class="op">)</span></span></code></pre></div>
 <pre><code><span><span class="co">## [1] 0.5551419</span></span></code></pre>
-<p>See <code><a href="../reference/probability.html">?probability</a></code> to see a list of the convenience functions available.</p>
+<p>See <code><a href="../reference/probability.html">?probability</a></code> to see a list of the convenience
+functions available.</p>
 </div>
 <div class="section level2">
 <h2 id="external-data">External data<a class="anchor" aria-label="anchor" href="#external-data"></a>
 </h2>
-<p>Mortality rates by age and sex (often used as transition probabilities) can be downloaded from the WHO online database with the function <code><a href="../reference/who_mortality.html">get_who_mr()</a></code>.</p>
-<p>External data contained in user-defined data frames can be referenced in a model with the function <code><a href="../reference/look_up.html">look_up()</a></code>.</p>
+<p>Mortality rates by age and sex (often used as transition
+probabilities) can be downloaded from the WHO online database with the
+function <code><a href="../reference/who_mortality.html">get_who_mr()</a></code>.</p>
+<p>External data contained in user-defined data frames can be referenced
+in a model with the function <code><a href="../reference/look_up.html">look_up()</a></code>.</p>
 </div>
 <div class="section level2">
 <h2 id="compare-strategies">Compare strategies<a class="anchor" aria-label="anchor" href="#compare-strategies"></a>
 </h2>
-<p>In order to compare different strategies it is possible to run a model with multiple strategies in parallel, examples are provided in <code>vignette("c-homogeneous", "heemod")</code> or <code>vignette("d-non-homogeneous", "heemod")</code>.</p>
+<p>In order to compare different strategies it is possible to run a
+model with multiple strategies in parallel, examples are provided in
+<code>vignette("c-homogeneous", "heemod")</code> or
+<code>vignette("d-non-homogeneous", "heemod")</code>.</p>
 </div>
 <div class="section level2">
 <h2 id="time-variability">Time-variability<a class="anchor" aria-label="anchor" href="#time-variability"></a>
 </h2>
-<p>Time varying transition probabilities and state values are available through the <code>markov_cycle</code> and <code>state_cycle</code> variables. Time-varying probabilities and values are explained in <code>vignette("b-time-dependency", "heemod")</code>.</p>
+<p>Time varying transition probabilities and state values are available
+through the <code>model_time</code> and <code>state_time</code>
+variables. Time-varying probabilities and values are explained in
+<code>vignette("b-time-dependency", "heemod")</code>.</p>
 </div>
 <div class="section level2">
 <h2 id="transition-costs">Transition costs<a class="anchor" aria-label="anchor" href="#transition-costs"></a>
 </h2>
-<p>Transition costs between states can be defined by adding an additional state called a transition state. This is a special case of a tunnel state. A situation where the transtion from <code>A</code> to <code>B</code> (noted <code>A-&gt;B</code>) costs $100 and reduces utility by 0.1 points compared to the usual values of <code>B</code> can be modelled by adding a state <code>B_trans</code>.</p>
-<p>The cost and utility of <code>B_trans</code> are the same as those of <code>B</code> +$100 and -0.1 QALY respectively. <code>A-&gt;B_trans</code> is equal to the former value of <code>A-&gt;B</code>. <code>A-&gt;B</code> is set to 0 (all transitions from <code>A</code> to <code>B</code> must pass through <code>B_trans</code> from now on). The probability to stay in <code>B_trans</code> is 0, <code>B_trans-&gt;B</code> is equal to <code>B-&gt;B</code> and similarly all <code>B_trans-&gt;*</code> are equal to <code>B-&gt;*</code>.</p>
+<p>Transition costs between states can be defined by adding an
+additional state called a transition state. This is a special case of a
+tunnel state. A situation where the transtion from <code>A</code> to
+<code>B</code> (noted <code>A-&gt;B</code>) costs $100 and reduces
+utility by 0.1 points compared to the usual values of <code>B</code> can
+be modelled by adding a state <code>B_trans</code>.</p>
+<p>The cost and utility of <code>B_trans</code> are the same as those of
+<code>B</code> +$100 and -0.1 QALY respectively.
+<code>A-&gt;B_trans</code> is equal to the former value of
+<code>A-&gt;B</code>. <code>A-&gt;B</code> is set to 0 (all transitions
+from <code>A</code> to <code>B</code> must pass through
+<code>B_trans</code> from now on). The probability to stay in
+<code>B_trans</code> is 0, <code>B_trans-&gt;B</code> is equal to
+<code>B-&gt;B</code> and similarly all <code>B_trans-&gt;*</code> are
+equal to <code>B-&gt;*</code>.</p>
 </div>
 <div class="section level2">
 <h2 id="parallel-computing">Parallel computing<a class="anchor" aria-label="anchor" href="#parallel-computing"></a>
 </h2>
-<p>Some operation such as PSA can be significantly sped up using parallel computing. This can be done in the following way:</p>
+<p>Some operation such as PSA can be significantly sped up using
+parallel computing. This can be done in the following way:</p>
 <ul>
-<li>Define a cluster with the <code><a href="../reference/cluster.html">use_cluster()</a></code> functions (i.e. <code>use_cluster(4)</code> to use 4 cores).</li>
+<li>Define a cluster with the <code><a href="../reference/cluster.html">use_cluster()</a></code> functions
+(i.e. <code>use_cluster(4)</code> to use 4 cores).</li>
 <li>Run the analysis as usual.</li>
-<li>To stop using parallel computing use the <code><a href="../reference/cluster.html">close_cluster()</a></code> function.</li>
+<li>To stop using parallel computing use the
+<code><a href="../reference/cluster.html">close_cluster()</a></code> function.</li>
 </ul>
-<p>Results may vary depending on the machine, but we found speed gains to be quite limited beyond 4 cores.</p>
+<p>Results may vary depending on the machine, but we found speed gains
+to be quite limited beyond 4 cores.</p>
 </div>
 <div class="section level2">
 <h2 id="going-further">Going further<a class="anchor" aria-label="anchor" href="#going-further"></a>
 </h2>
-<p>Probabilistic uncertainty analysis <code>vignette("e-probabilistic", "heemod")</code> and deterministic sensitivity analysis <code>vignette("f-sensitivity", "heemod")</code> can be performed. Population-level estimates and heterogeneity can be computed : <code>vignette("g-heterogeneity", "heemod")</code>.</p>
+<p>Probabilistic uncertainty analysis
+<code>vignette("e-probabilistic", "heemod")</code> and deterministic
+sensitivity analysis <code>vignette("f-sensitivity", "heemod")</code>
+can be performed. Population-level estimates and heterogeneity can be
+computed : <code>vignette("g-heterogeneity", "heemod")</code>.</p>
 </div>
   </div>
 

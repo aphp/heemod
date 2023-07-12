@@ -33,7 +33,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">heemod</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.15.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.16.0</span>
       </span>
     </div>
 
@@ -71,7 +71,7 @@
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>Time-varying values</h1>
             
-            <h4 data-toc-skip class="date">2023-02-14</h4>
+            <h4 data-toc-skip class="date">2023-07-12</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/aphp/heemod/blob/HEAD/vignettes/b_time_dependency.Rmd" class="external-link"><code>vignettes/b_time_dependency.Rmd</code></a></small>
       <div class="hidden name"><code>b_time_dependency.Rmd</code></div>
@@ -80,17 +80,29 @@
 
     
     
-<p>In more complex Markov models state values or transition probabilities can vary with time. These models are called <em>non-homogeneous</em> or <em>time-inhomogeneous</em> Markov models. A further distinction can be made depending on whether state values or transition probabilities:</p>
+<p>In more complex Markov models state values or transition
+probabilities can vary with time. These models are called
+<em>non-homogeneous</em> or <em>time-inhomogeneous</em> Markov models. A
+further distinction can be made depending on whether state values or
+transition probabilities:</p>
 <ol style="list-style-type: decimal">
-<li>depend on how long <strong>the entire model</strong> has been running (model-time dependency);</li>
-<li>depend on how long <strong>an individual</strong> has been in a given <strong>state</strong> (state-time dependency).</li>
+<li>depend on how long <strong>the entire model</strong> has been
+running (model-time dependency);</li>
+<li>depend on how long <strong>an individual</strong> has been in a
+given <strong>state</strong> (state-time dependency).</li>
 </ol>
-<p>These two situations can be modelled using the <code>model_time</code> (or its alias <code>markov_cycle</code>) and <code>state_time</code> variables, respectively.</p>
+<p>These two situations can be modelled using the
+<code>model_time</code> (or its alias <code>model_time</code>) and
+<code>state_time</code> variables, respectively.</p>
 <div class="section level2">
 <h2 id="how-to-specifiy-time-dependency">How to specifiy time-dependency<a class="anchor" aria-label="anchor" href="#how-to-specifiy-time-dependency"></a>
 </h2>
-<p>These variables takes increasing values with each cycles, starting from 1. For example the age of individuals at any moment can be defined as <code>Initial age + model_time</code>. The time an individual spends in a state is equal to <code>state_time</code>.</p>
-<p>Both variables can be used in <code><a href="../reference/define_parameters.html">define_parameters()</a></code>, <code><a href="../reference/define_state.html">define_state()</a></code>, or <code><a href="../reference/define_transition.html">define_transition()</a></code>:</p>
+<p>These variables takes increasing values with each cycles, starting
+from 1. For example the age of individuals at any moment can be defined
+as <code>Initial age + model_time</code>. The time an individual spends
+in a state is equal to <code>state_time</code>.</p>
+<p>Both variables can be used in <code><a href="../reference/define_parameters.html">define_parameters()</a></code>,
+<code><a href="../reference/define_state.html">define_state()</a></code>, or <code><a href="../reference/define_transition.html">define_transition()</a></code>:</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/define_parameters.html">define_parameters</a></span><span class="op">(</span></span>
 <span>  mr <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Log.html" class="external-link">exp</a></span><span class="op">(</span><span class="op">-</span> <span class="va">state_time</span> <span class="op">*</span> <span class="va">lambda</span><span class="op">)</span>,</span>
@@ -126,9 +138,22 @@
 <div class="section level2">
 <h2 id="details">Details<a class="anchor" aria-label="anchor" href="#details"></a>
 </h2>
-<p>Using <code>model_time</code> in a model does not change the execution speed of the analysis. On the other hand adding <code>state_time</code> may slow down the analysis, especially if the model is run for many cycles <strong>and</strong> a transition probability depends on <code>state_time</code>.<a href="#fn1" class="footnote-ref" id="fnref1"><sup>1</sup></a></p>
-<p>To mitigate this drawback it is possible to limit the number of state expansion with <code>state_time_limit</code>. Because most time-varying values reach an asymptotic value quite fast, it is unnecessary to expand the states any further. The last cycle value is repeated until the end.</p>
-<p>The limit can be defined globally, per state, or per model and state. In the following example probabilities are kept constant after <em>10</em> cycles for state <strong>B</strong> and <em>20</em> cycles for state <strong>D</strong> in strategy <strong>I</strong>, and <em>15</em> cycles in state <strong>B</strong> in strategy <strong>II</strong>.</p>
+<p>Using <code>model_time</code> in a model does not change the
+execution speed of the analysis. On the other hand adding
+<code>state_time</code> may slow down the analysis, especially if the
+model is run for many cycles <strong>and</strong> a transition
+probability depends on <code>state_time</code>.<a href="#fn1" class="footnote-ref" id="fnref1"><sup>1</sup></a></p>
+<p>To mitigate this drawback it is possible to limit the number of state
+expansion with <code>state_time_limit</code>. Because most time-varying
+values reach an asymptotic value quite fast, it is unnecessary to expand
+the states any further. The last cycle value is repeated until the
+end.</p>
+<p>The limit can be defined globally, per state, or per model and state.
+In the following example probabilities are kept constant after
+<em>10</em> cycles for state <strong>B</strong> and <em>20</em> cycles
+for state <strong>D</strong> in strategy <strong>I</strong>, and
+<em>15</em> cycles in state <strong>B</strong> in strategy
+<strong>II</strong>.</p>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/run_model.html">run_model</a></span><span class="op">(</span></span>
 <span>  I <span class="op">=</span>  <span class="va">strat_1</span>,</span>
@@ -140,10 +165,11 @@
 <span>  <span class="op">)</span></span>
 <span><span class="op">)</span></span></code></pre></div>
 </div>
-<div class="footnotes">
+<div class="footnotes footnotes-end-of-document">
 <hr>
 <ol>
-<li id="fn1"><p>In this situation the complexity is proportional to the square of the number of cycles.<a href="#fnref1" class="footnote-back">↩︎</a></p></li>
+<li id="fn1"><p>In this situation the complexity is proportional to the
+square of the number of cycles.<a href="#fnref1" class="footnote-back">↩︎</a></p></li>
 </ol>
 </div>
   </div>
