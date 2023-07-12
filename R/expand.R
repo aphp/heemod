@@ -276,7 +276,7 @@ all.funs <- function(expr) {
   uan <- unique(an)
   with_funs <- tabulate(factor(an, levels = uan))
   without_funs <- tabulate(factor(all.names(expr, functions = FALSE), levels = uan), 
-                           nbin = length(uan))
+                           nbins = length(uan))
   res <- with_funs - without_funs
 
   names(res) <- uan
