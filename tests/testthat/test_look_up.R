@@ -1,5 +1,3 @@
-context("Test look-up")
-
 ## set test sets
 tempdf <- expand.grid(arg1 = c("A", "B", "C"), arg2 = 1:4, arg3 = 1:5)
 tempdf$value <- 1:60

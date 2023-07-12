@@ -1,5 +1,3 @@
-context("Test tabular input")
-
 testdir <- file.path(tempdir(), "tabular", "test")
 
 state_spec_file <- file.path(
@@ -471,13 +469,14 @@ test_that(
       run_model_tabular(
         file.path(testdir, "test_no_overwrite"),
         save = TRUE, overwrite = FALSE, run_psa = FALSE, run_demo = FALSE
-      )
+      ), "overwrite"
     )
     expect_warning(
       run_model_tabular(
         file.path(testdir, "test_no_output_dir"),
         save = TRUE, overwrite = TRUE, run_psa = FALSE, run_demo = FALSE
-      )
+      ),
+      "Output directory not defined"
     )
   }
 )
@@ -509,7 +508,8 @@ test_that(
         "edited_ref.csv"
       )),
       "Using absolute path for state, tm, parameters, demographics, data, output"
-    )
+    ) %>% 
+      suppressMessages()
     options(op)
   }
 )
@@ -754,16 +754,15 @@ tXLSX <- heemod:::read_file(file.path(testdir,
 
 test_that(
   "Columns that start with '.comment' in their header are ignored.", {
-    expect_that(
+    expect_equal(
       names(tCSV),
-      equals(c(".model", "state", "cost", "qaly", ".discount.cost", ".discount.qaly", "valid.column")))
-    expect_that(
+      c(".model", "state", "cost", "qaly", ".discount.cost", ".discount.qaly", "valid.column"))
+    expect_equal(
       names(tXLS),
-      equals(c(".model", "state", "cost", "qaly", ".discount.cost", ".discount.qaly", "valid.column")))
-    expect_that(
+      c(".model", "state", "cost", "qaly", ".discount.cost", ".discount.qaly", "valid.column"))
+    expect_equal(
       names(tXLSX),
-      equals(c(".model", "state", "cost", "qaly", ".discount.cost", ".discount.qaly", "valid.column"))
-    )
+      c(".model", "state", "cost", "qaly", ".discount.cost", ".discount.qaly", "valid.column"))
   }
 )
 

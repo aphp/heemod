@@ -1,5 +1,3 @@
-context("DMHEE reproduction")
-
 test_that("exactly match HIV model",
           ## compare Decision Modelling for Health Economic Evaluation 
           ##  (Handbooks in Health Economic Evaluation)  1st ed. 2006

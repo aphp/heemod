@@ -1,5 +1,3 @@
-context("Test model")
-
 test_that(
   "Model definition", {
     mat1 <- define_transition(
@@ -114,9 +112,10 @@ test_that(
     expect_equal(
       round(e_mod$run_model$.effect), 1515
     )
-    expect_equivalent(
+    expect_equal(
       heemod:::get_eval_init(heemod:::get_eval_strategy_list(e_mod)[[1]]),
-      c(1, 0)
+      c(1, 0),
+      ignore_attr = TRUE
     )
     
     s_mod <- summary(e_mod)
@@ -215,9 +214,10 @@ test_that(
     expect_equal(
       round(e_mod2$run_model$.effect), c(1515, 615)
     )
-    expect_equivalent(
+    expect_equal(
       heemod:::get_eval_init(heemod:::get_eval_strategy_list(e_mod2)[[1]]),
-      c(1, 0)
+      c(1, 0),
+      ignore_attr = TRUE
     )
     
     s_mod2 <- summary(e_mod2)
@@ -326,29 +326,33 @@ test_that(
         lm, init = c(10, 0), method = "life-table", inflow = infw) %>% 
           heemod:::correct_counts(method = "life-table") %>%
           magrittr::extract2("counts")),
-      c(2L, 2L)
+      c(2L, 2L),
+      ignore_attr = TRUE
     )
     
-    expect_equivalent(
+    expect_equal(
       unlist(heemod:::compute_counts(
         lm, init = c(10, 0), method = "beginning", inflow = infw) %>% 
           heemod:::correct_counts(method = "beginning") %>%
           magrittr::extract2("counts")),
-      c(10, 5, 0, 5)
+      c(10, 5, 0, 5),
+      ignore_attr = TRUE
     )
-    expect_equivalent(
+    expect_equal(
       unlist(heemod:::compute_counts(
         lm, init = c(10, 0), method = "end", inflow = infw) %>% 
           heemod:::correct_counts(method = "end") %>%
           magrittr::extract2("counts")),
-      c(5.00, 4.35, 5.00, 5.65)
+      c(5.00, 4.35, 5.00, 5.65),
+      ignore_attr = TRUE
     )
-    expect_equivalent(
+    expect_equal(
       unlist(heemod:::compute_counts(
         lm, init = c(10, 0), method = "life-table", inflow = infw) %>% 
           heemod:::correct_counts(method = "life-table") %>%
           magrittr::extract2("counts")),
-      c(7.500, 4.675, 2.500, 5.325)
+      c(7.500, 4.675, 2.500, 5.325),
+      ignore_attr = TRUE
     )
   }
 )

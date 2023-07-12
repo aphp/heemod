@@ -1,5 +1,3 @@
-context("Sensitivity analysis")
-
 test_that(
   "define sensitivity", {
     se1 <- define_dsa(
@@ -10,7 +8,7 @@ test_that(
       dim(se1$dsa),
       c(4L, 2L)
     )
-    expect_is(
+    expect_type(
       se1$dsa$a,
       "list"
     )

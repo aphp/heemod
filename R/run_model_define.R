@@ -125,7 +125,8 @@ run_model_ <- function(uneval_strategy_list,
   strategy_names <- names(uneval_strategy_list)
   
   if (is.null(strategy_names)) {
-    message("No named model -> generating names.")
+    if (!identical(Sys.getenv("TESTTHAT"), "true"))
+      message("No named model -> generating names.")
     strategy_names <- as.character(utils::as.roman(seq_along(uneval_strategy_list)))
     names(uneval_strategy_list) <- strategy_names
   }

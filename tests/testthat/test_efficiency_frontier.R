@@ -1,5 +1,3 @@
-context("Cost Effective Frontier")
-
 test_that(
   "Identify Frontier Scenarios",{
     
@@ -14,9 +12,10 @@ test_that(
     
     result1 <- get_frontier(test1)
     
-    expect_equivalent(
+    expect_equal(
       result1,
-      c("Scenario 1", "Scenario 5", "Scenario 8")
+      c("Scenario 1", "Scenario 5", "Scenario 8"),
+      ignore_attr = TRUE
     )  
     
     # Special Case:       Least effective strategy is not the least cost
@@ -30,9 +29,10 @@ test_that(
       .effect=c(9.13,9.635,11.1654,11.5152,11.582), stringsAsFactors=FALSE)
     
     result2 <- get_frontier(test2)
-    expect_equivalent(
+    expect_equal(
       result2,
-      c("Scenario 2", "Scenario 5")
+      c("Scenario 2", "Scenario 5"),
+      ignore_attr = TRUE
     )
     
     # Special Case:       No strongly dominated strategies
@@ -44,9 +44,10 @@ test_that(
                       .effect=c(10.2497,11.1654,11.3,11.6588,11.7,12.1), stringsAsFactors=FALSE)
     
     result3 <- get_frontier(test3)
-    expect_equivalent(
+    expect_equal(
       result3,
-      c("Scenario 1", "Scenario 2", "Scenario 4", "Scenario 6")
+      c("Scenario 1", "Scenario 2", "Scenario 4", "Scenario 6"),
+      ignore_attr = TRUE
     )
     
     # Special Case:       S5 and S6 have the same QALYs but
@@ -59,9 +60,10 @@ test_that(
                         .effect=c(10.2497,11.1654,11.5152,11.6248,11.6296,11.6296), stringsAsFactors=FALSE)
     
     result4 <- get_frontier(test4)    
-    expect_equivalent(
+    expect_equal(
       result4,
-      c("Scenario 1", "Scenario 6")
+      c("Scenario 1", "Scenario 6"),
+      ignore_attr = TRUE
     )
     
     # Special Case:       All scenario on the frontier
@@ -73,9 +75,10 @@ test_that(
                       .effect=c(10.2497,11.1654,11.6296,11.7,11.8), stringsAsFactors=FALSE)
     
     result5 <- get_frontier(test5)
-    expect_equivalent(
+    expect_equal(
       result5,
-      c("Scenario 1", "Scenario 2", "Scenario 3", "Scenario 4", "Scenario 5")
+      c("Scenario 1", "Scenario 2", "Scenario 3", "Scenario 4", "Scenario 5"),
+      ignore_attr = TRUE
     )
     
     # Special Case:       two pairs of scenarios with the same 
@@ -89,9 +92,10 @@ test_that(
                       stringsAsFactors=FALSE)
     
     result6 <- get_frontier(test6)
-    expect_equivalent(
+    expect_equal(
       result6,
-      c("Scenario 1",  "Scenario 4", "Scenario 7")
+      c("Scenario 1",  "Scenario 4", "Scenario 7"),
+      ignore_attr = TRUE
     )
     
     # Special Case:       two identical scenarios (S4 and S5)
@@ -106,9 +110,10 @@ test_that(
                       .effect=c(10.2497,10.25,11.3,11.6588,11.6588,11.7,12.1),
                       stringsAsFactors=FALSE)
     result7 <- get_frontier(test7)
-    expect_equivalent(
+    expect_equal(
       result7,
-      c("Scenario 2", "Scenario 4","Scenario 5", "Scenario 7")
+      c("Scenario 2", "Scenario 4","Scenario 5", "Scenario 7"),
+      ignore_attr = TRUE
     )
     
     # Special Case:       Two Scenarios, both on frontier
@@ -120,9 +125,10 @@ test_that(
                       .effect=c(10.2497,11.1654), stringsAsFactors=FALSE)
     
     result8<-get_frontier(test8)
-    expect_equivalent(
+    expect_equal(
       result8,
-      c("Scenario 1", "Scenario 2")
+      c("Scenario 1", "Scenario 2"),
+      ignore_attr = TRUE
     )
     
     
@@ -135,9 +141,10 @@ test_that(
                       .effect=c(10.2497,11.1654), stringsAsFactors=FALSE)
     
     result9<-get_frontier(test9)
-    expect_equivalent(
+    expect_equal(
       result9,
-      c("Scenario 2")
+      c("Scenario 2"),
+      ignore_attr = TRUE
     )
     
     
@@ -150,9 +157,10 @@ test_that(
                        .effect=c(10.2497,11.1654,11.5), stringsAsFactors=FALSE)
     
     result10<-get_frontier(test10)
-    expect_equivalent(
+    expect_equal(
       result10,
-      c("Scenario 3")
+      c("Scenario 3"),
+      ignore_attr = TRUE
     )
     
     
@@ -165,9 +173,10 @@ test_that(
                        .effect=c(10.2497,11.1654,11.5), stringsAsFactors=FALSE)
     
     result11<-get_frontier(test11)
-    expect_equivalent(
+    expect_equal(
       result11,
-      c("Scenario 3")
+      c("Scenario 3"),
+      ignore_attr = TRUE
     )
     
     # Special Case:       Just one strategy
@@ -179,9 +188,10 @@ test_that(
                        .effect=c(10.2497), stringsAsFactors=FALSE)
     
     result12<-get_frontier(test12)
-    expect_equivalent(
+    expect_equal(
       result12,
-      c("Scenario 1")
+      c("Scenario 1"),
+      ignore_attr = TRUE
     )
     
     # Special Case:       Three Scenarios, one dominated with same effectiveness
@@ -193,9 +203,10 @@ test_that(
                          .effect = c(12, 12, 15), stringsAsFactors=FALSE)
     
     result13<-get_frontier(test13)
-    expect_equivalent(
+    expect_equal(
       result13,
-      c("Scenario 2","Scenario 3")
+      c("Scenario 2","Scenario 3"),
+      ignore_attr = TRUE
     )
   }
 )

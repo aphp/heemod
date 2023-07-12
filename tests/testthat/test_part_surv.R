@@ -1,5 +1,3 @@
-context("Partitioned Survival Model")
-
 surv_dist1 <- define_survival(
   distribution = "exp",
   rate = .003
@@ -153,46 +151,51 @@ test_that(
 )
 
 suppressMessages({
+  suppressMessages(
   ps <- define_part_surv(
     pfs = join(surv_dist3),
     os = join(surv_dist1),
     state_names = c("ProgressionFree", "Progressive", "Death"),
     cycle_length = c(365, 365)
-  )
+  ))
 })
 test_that(
   "errors with inappropriate state names", {
     expect_error(
+      suppressMessages(
       define_part_surv(
         pfs = join(surv_dist3),
         os = join(surv_dist1),
         state_names = c("NoDisease", "Progressive", "Death"),
         cycle_length = c(365, 365)
-      ),
+      )),
       "Progression free state (only) must have 'free' in its name",
       fixed = TRUE
     )
     expect_error(
+      suppressMessages(
       define_part_surv(
         pfs = join(surv_dist3),
         os = join(surv_dist1),
         state_names = c("ProgressionFree", "Progressive", "Kaput"),
         cycle_length = c(365, 365)
-      ),
+      )),
       "State name representing death"
     )
     expect_error(
+      suppressMessages(
       define_part_surv(
         pfs = join(surv_dist3),
         os = join(surv_dist1),
         state_names = c("ProgressionFree", "Progressive",
                         "uh-oh", "Death"),
         cycle_length = c(365, 365)
-      ),
+      )),
       "If there are 4 states, a state must be called 'terminal'",
       fixed = TRUE
     )
     expect_error(
+      suppressMessages(
       define_part_surv(
         pfs = join(surv_dist3),
         os = join(surv_dist1),
@@ -203,7 +206,7 @@ test_that(
           "Death"
         ),
         cycle_length = c(365, 365)
-      ),
+      )),
       "Progression free state (only) must have 'free' in its name",
       fixed = TRUE
     )
@@ -287,12 +290,12 @@ test_that("we can run construct_part_surv_tib",
             ref <- read_file(system.file("tabular/surv",
                                          "example_oncSpecs_explicit_dists.csv",
                                          package = "heemod"))
-            explicit_dist_part_surv <- 
+            suppressMessages(explicit_dist_part_surv <- 
               construct_part_surv_tib(use_fits, ref,             
                                     state_names <- c("ProgressionFree", 
                                                      "ProgressiveDisease", 
                                                       "Terminal", "Death")
-            )
+            ))
             for_A <- dplyr::filter(explicit_dist_part_surv, .strategy == "A")
             for_B <- dplyr::filter(explicit_dist_part_surv, .strategy == "B")
             expect_equal(round(compute_surv(for_A[["part_surv"]][[1]]$pfs, 1), 4), 0.0332)
@@ -308,12 +311,12 @@ test_that("we can run construct_part_surv_tib",
                                          package = "heemod"))
             ref$full_file <- file.path(system.file("tabular/surv", package = "heemod"),
                                                    ref$file)
-            mixed_dist_part_surv <- 
+            suppressMessages( mixed_dist_part_surv <- 
               construct_part_surv_tib(use_fits, ref,             
                                       state_names <- c("ProgressionFree", 
                                                        "ProgressiveDisease", 
                                                        "Terminal", "Death")
-              )
+              ))
             expect_identical(class(mixed_dist_part_surv[["part_surv"]][[1]]$os)[1],
                              "quosure")
             expect_identical(eval_tidy(mixed_dist_part_surv[["part_surv"]][[1]]$pfs),
@@ -352,12 +355,12 @@ test_that("making part_surv from survival fits works",
                                                   "fake_fit_tib.csv", 
                                                   package = "heemod"))
             
-            these_part_survs <-
+            suppressMessages( these_part_survs <-
               part_survs_from_surv_inputs(fake_fit_tib,
                                           c("ProgressionFree",
                                             "Progressive",
                                             "Terminal",
-                                            "Death"))
+                                            "Death")))
             expect_equal(nrow(these_part_survs), 14)
             expect_identical(
               names(these_part_survs),

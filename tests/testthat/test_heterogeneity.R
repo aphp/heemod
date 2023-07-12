@@ -1,5 +1,3 @@
-context("Heterogeneity & Demographic")
-
 test_that(
   "Demographic analysis", {
     mod1 <- define_strategy(

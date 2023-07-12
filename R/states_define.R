@@ -140,7 +140,8 @@ define_state_list_ <- function(.dots) {
   state_names <- names(states)
   
   if (is.null(state_names)) {
-    message("No named state -> generating names.")
+    if (!identical(Sys.getenv("TESTTHAT"), "true"))
+      message("No named state -> generating names.")
     state_names <- LETTERS[seq_along(states)]
     names(states) <- state_names
   }

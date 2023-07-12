@@ -26,6 +26,7 @@ run_dsa <- function(model, dsa) {
   list_res <- list()
   e_newdata <- list()
   for (n in strategy_names) {
+    if (!identical(Sys.getenv("TESTTHAT"), "true")) 
     message(sprintf(
       "Running DSA on strategy '%s'...", n
     ))

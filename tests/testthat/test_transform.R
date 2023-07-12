@@ -1,5 +1,3 @@
-context("Transformation functions")
-
 # from https://www.hsrd.research.va.gov/for_researchers/cyber_seminars/archives/819-notes.pdf
 test_that(
   "Transformation functions produce correct results", {

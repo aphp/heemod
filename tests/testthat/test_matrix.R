@@ -1,6 +1,3 @@
-context("Matrix objects")
-
-
 test_that(
   "Matrix definition", {
     mat1 <- define_transition(

@@ -1,6 +1,3 @@
-context("Test state cycle expansion")
-
-
 sn <- LETTERS[1:5]
 mn <- c("I", "II", "III")
 
@@ -211,9 +208,10 @@ test_that(
       ),
       "expanding state: B\\."
     )
-    expect_equivalent(
+    expect_equal(
       round(unlist(res$run_model[c(".cost", ".effect")]), 2),
-      c(37697.04, 66908.88)
+      c(37697.04, 66908.88),
+      ignore_attr = TRUE
     )
     
     expect_message(
@@ -227,9 +225,10 @@ test_that(
         ),
       "expanding state: A\\."
     )
-    expect_equivalent(
+    expect_equal(
       round(unlist(res$run_model[c(".cost", ".effect")]), 2),
-      c(20552.39, 81562.5)
+      c(20552.39, 81562.5),
+      ignore_attr = TRUE
     )
     
     expect_message(
@@ -243,9 +242,10 @@ test_that(
       ),
       "expanding states: A, B\\."
     )
-    expect_equivalent(
+    expect_equal(
       round(unlist(res$run_model[c(".cost", ".effect")]), 2),
-      c(21488.12, 82302.96)
+      c(21488.12, 82302.96),
+      ignore_attr = TRUE
     )
     
     
@@ -258,9 +258,10 @@ test_that(
       cost = c, effect = e,
       state_time_limit = c(A = 3, B = 8)
     )
-    expect_equivalent(
+    expect_equal(
       round(unlist(res$run_model[c(".cost", ".effect")]), 2),
-      c(21487.09, 82302.96)
+      c(21487.09, 82302.96),
+      ignore_attr = TRUE
     )
     
     res1 <- run_model(
@@ -281,8 +282,9 @@ test_that(
       cost = c, effect = e,
       state_time_limit = c(A = 5, B = 5)
     )
-    expect_equivalent(
-      res1$run_model, res2$run_model
+    expect_equal(
+      res1$run_model, res2$run_model,
+      ignore_attr = TRUE
     )
     
     res1 <- run_model(
@@ -303,8 +305,9 @@ test_that(
       cost = c, effect = e,
       state_time_limit = c(A = 10, B = 7)
     )
-    expect_equivalent(
-      res1$run_model, res2$run_model
+    expect_equal(
+      res1$run_model, res2$run_model,
+      ignore_attr = TRUE
     )
     
     

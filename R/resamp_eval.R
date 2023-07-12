@@ -32,7 +32,8 @@ run_psa <- function(model, psa, N, resample) {
   list_res <- list()
   
   for (n in get_strategy_names(model)) {
-    message(sprintf("Resampling strategy '%s'...", n))
+    if (!identical(Sys.getenv("TESTTHAT"), "true"))
+      message(sprintf("Resampling strategy '%s'...", n))
     list_res <- c(
       list_res,
       list(

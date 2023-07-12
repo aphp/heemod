@@ -36,7 +36,7 @@ eval_strategy_newdata <- function(x, strategy = 1, newdata) {
     cl <- get_cluster()
     
     num_cores <- length(cl)
-    
+    if (!identical(Sys.getenv("TESTTHAT"), "true"))
     message(paste("Using a cluster with", num_cores, "cores."))
     
     split_vec <- rep(1:num_cores, each = nrow(newdata) %/% num_cores)

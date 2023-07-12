@@ -1,5 +1,3 @@
-context("Starting values")
-
 par1 <- define_parameters(
   a = .1,
   b = 1 / (markov_cycle + 1)

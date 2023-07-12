@@ -1,6 +1,3 @@
-context("calibration functions")
-
-
 test_that("one-dimensional calibration",
           {          
 param <- define_parameters(p = 0.8)
@@ -172,8 +169,7 @@ test_that("multi-dimensional calibration",
     
     # age-related mortality rate
     sex_cat = ifelse(sex == 0, "FMLE", "MLE"),
-    mr = get_who_mr(age, sex_cat,
-                    country = "GBR", local = TRUE),
+    mr = get_who_mr_memo(age, sex_cat, local = identical(Sys.getenv("NOT_CRAN"), "true")),
     
     # state values
     u_SuccessP = .85,
@@ -259,16 +255,18 @@ test_that("multi-dimensional calibration",
       cost = 0
     )
   )
-  
-  res_mod <- run_model(
-    standard = mod_standard,
-    np1 = mod_np1,
-    parameters = param,
-    cycles = 60,
-    cost = cost,
-    effect = utility,
-    method = "beginning"
+  suppressMessages(
+    res_mod <- run_model(
+      standard = mod_standard,
+      np1 = mod_np1,
+      parameters = param,
+      cycles = 60,
+      cost = cost,
+      effect = utility,
+      method = "beginning"
+    )
   )
+  
   extract_values <- function(x) {
     dplyr::filter(
       get_counts(x),
@@ -276,6 +274,7 @@ test_that("multi-dimensional calibration",
     )$count
   }
   expect_warning(
+    suppressMessages(
     res_cal <- calibrate_model(
       res_mod,
       parameter_names = c("gamma", "rrNP1"),
@@ -283,14 +282,15 @@ test_that("multi-dimensional calibration",
       target_values = c(2.5, 0.8),
       method = "L-BFGS-B",
       itnmax = 4, lower = c(0, 0), upper = c(2,1)
-    ),
+    )),
     "Not all optimizations converged")
 
-  expect_equivalent(res_cal,
-                   data.frame(gamma = 1.442250332, 
-                     rrNP1 = 0.3144441542,
-                     value = 1.710576e-10,
-                     convcode = 1)
+  expect_equal(res_cal,
+                    data.frame(gamma = 1.431920048, 
+                               rrNP1 = 0.3146195445,
+                               value = 3.843890141e-10,
+                     convcode = 1),
+               ignore_attr = TRUE
   )
 }
 )

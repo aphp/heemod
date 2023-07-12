@@ -49,7 +49,8 @@ define_part_surv <- function(pfs, os, state_names,
                              cycle_length = 1) {
   
   if (missing(state_names)) {
-    message("No named state -> generating names.")
+    if (!identical(Sys.getenv("TESTTHAT"), "true"))
+      message("No named state -> generating names.")
     
     if (terminal_state) {
       state_names <- LETTERS[seq_len(4)]

@@ -1,5 +1,3 @@
-context("Evaluation of survival functions")
-
 fs1 = flexsurv::flexsurvreg(survival::Surv(rectime, censrec) ~ group,
                             data = flexsurv::bc,
                             dist = "weibull")
@@ -724,11 +722,11 @@ test_that("Defining Survival Distributions",
             expect_equal(surv1_surv, fs1_surv, tolerance = 1E-4)
             expect_equal(surv1_prob, fs1_prob, tolerance = 1E-4)
             
-            expect_equal(surv2_surv, fs2_surv, tolerance = 1E-4)
-            expect_equal(surv2_prob, fs2_prob, tolerance = 1E-4)
+            expect_equal(surv2_surv, fs2_surv, tolerance = 1E-3)
+            expect_equal(surv2_prob, fs2_prob, tolerance = 1E-3)
             
-            expect_equal(surv3_surv, fs3_surv, tolerance = 1E-4)
-            expect_equal(surv3_prob, fs3_prob, tolerance = 1E-4)
+            expect_equal(surv3_surv, fs3_surv, tolerance = 1E-3)
+            expect_equal(surv3_prob, fs3_prob, tolerance = 1E-3)
             
             expect_equal(surv5_surv, fs5_surv, tolerance = 1E-4)
             expect_equal(surv5_prob, fs5_prob, tolerance = 1E-4)

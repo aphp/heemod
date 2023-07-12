@@ -69,6 +69,7 @@ use_cluster <- function(num_cores, cluster = NULL, close = TRUE) {
   
   if (! is.null(cluster)) {
     set_cluster(cluster)
+    if (!identical(Sys.getenv("TESTTHAT"), "true"))
     message(paste("Using a cluster with", length(cluster), "cores."))
     
   } else {
@@ -88,7 +89,7 @@ use_cluster <- function(num_cores, cluster = NULL, close = TRUE) {
     parallel::clusterEvalQ(cl, library(dplyr))
     
     set_cluster(cl)
-    
+    if (!identical(Sys.getenv("TESTTHAT"), "true"))
     message(paste("Using a cluster with", num_cores, "cores."))
   }
   

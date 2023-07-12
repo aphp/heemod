@@ -1,5 +1,3 @@
-context("Init checking")
-
 test_that(
   "check_init() works", {
     init1 <- define_init(a = 1, b = 0, c = 0)

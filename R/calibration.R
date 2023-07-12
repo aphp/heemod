@@ -141,6 +141,7 @@ calibrate_model <- function(x, parameter_names,
       seq_len(nrow(initial_values)),
       function(i) {
         if (nrow(initial_values) > 1) {
+          if (!identical(Sys.getenv("TESTTHAT"), "true")) 
           message(sprintf(
             "Running calibration with initial values #%i.", i
           ))
@@ -160,7 +161,7 @@ calibrate_model <- function(x, parameter_names,
         
         if (optim_output$convcode != 0 &&
             ! is.null(m <- unlist(attr(optim_output, "details")[, "message"]))) {
-          message(sprintf("Message: %s.", m))
+            message(sprintf("Message: %s.", m))
         }
         
         optim_output[c(parameter_names, "value", "convcode")]
@@ -174,9 +175,10 @@ calibrate_model <- function(x, parameter_names,
       seq_len(nrow(initial_values)),
       function(i) {
         if (nrow(initial_values) > 1) {
-          message(sprintf(
-            "Running calibration with initial values #%i.", i
-          ))
+          if (!identical(Sys.getenv("TESTTHAT"), "true")) 
+            message(sprintf(
+              "Running calibration with initial values #%i.", i
+            ))
         }
         
         optim_output <- stats::optimise(

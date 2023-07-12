@@ -1,5 +1,3 @@
-context("State testing")
-
 test_that(
   "State definition", {
     s1 <- define_state(
@@ -290,7 +288,9 @@ test_that(
       run_model(
         mod1, mod2,
         parameters = par1, cost = x, effect = y
-      )
-    )
+      ),
+      "version"
+    ) %>% 
+      suppressWarnings()
   }
 )

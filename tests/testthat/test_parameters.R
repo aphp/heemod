@@ -1,5 +1,3 @@
-context("Parameters definition")
-
 test_that(
   "Parameter definition and update", {
     par1 <- define_parameters(

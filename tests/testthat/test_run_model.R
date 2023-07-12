@@ -1,5 +1,3 @@
-context("Running model")
-
 test_that(
   "Strange inputs generate errors", {
     par1 <- define_parameters(
@@ -133,15 +131,20 @@ test_that(
       run_model(
         mod1, mod2,
         parameters = par1
-      )
-    )
+      ),  "cannot find root strategy."
+    ) %>% 
+      expect_warning("cannot find noncomparable strategy") %>% 
+      expect_warning( "cannot find root strategy.")
     expect_warning(
       run_model(
         mod1, mod2,
         parameters = par1,
         cost = x
-      )
-    )
+      ),
+      "cannot find noncomparable strategy."
+    ) %>% 
+      expect_warning("cannot find root strategy") %>% 
+      expect_warning("cannot find root strategy.")
   }
 )
 
@@ -201,8 +204,12 @@ test_that(
     )
     expect_warning(
       summary(run_model(mod1, mod2,
-                         parameters = par1))
-    )
+                         parameters = par1)),
+      "model summary unavailable"
+    ) %>% 
+      expect_warning("cannot find noncomparable strategy") %>% 
+      expect_warning("cannot find root strategy") %>% 
+      expect_warning("cannot find root strategy")
     expect_equal(
       run_model(mod1, mod2,
                 parameters = par1, cost = x, effect = y,
@@ -263,16 +270,18 @@ test_that(
     rm <- run_model(mod1, mod2,
                      parameters = par1, cost = x, effect = y,
                      cycles = 5)
-    expect_equivalent(
+    expect_equal(
       round(get_counts(rm, 1)$count),
       c(950, 888, 879, 885, 890, 950,
         888, 879, 885, 890, 50, 112, 
-        121, 115, 110, 50, 112, 121, 115, 110)
+        121, 115, 110, 50, 112, 121, 115, 110),
+      ignore_attr = TRUE
     )
     
-    expect_equivalent(
+    expect_equal(
       get_eval_init(get_eval_strategy_list(rm)[[1]]),
-      c(1000, 0)
+      c(1000, 0),
+      ignore_attr = TRUE
     )
     
     

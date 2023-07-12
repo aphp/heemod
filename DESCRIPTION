@@ -20,13 +20,13 @@ Description: An implementation of the modelling and reporting features described
     (semi-Markov and non-homogeneous Markov models), etc.
 Depends: R (>= 3.6.0)
 Imports:
-    dplyr (>= 1.0.9),
-    ggplot2 (>= 3.3.3),
+    dplyr (>= 1.1.0),
+    ggplot2 (>= 3.4.0),
     memoise (>= 2.0.0),
     mvnfast (>= 0.2.5),
-    tibble (>= 3.0.6),
-    rlang (>= 1.0.2), 
-    purrr (>= 0.3.4)
+    tibble (>= 3.2.0),
+    rlang (>= 1.1.0), 
+    purrr (>= 1.0.0)
 License: GPL (>= 3) + file LICENCE.md
 LazyData: true
 VignetteBuilder: knitr
@@ -46,10 +46,11 @@ Suggests:
     rmarkdown,
     stringr,
     survival,
-    testthat,
+    testthat (>= 3.0.0),
     triangle,
     magrittr,
     cli
 BugReports: https://github.com/aphp/heemod/issues
 Roxygen: list(markdown = TRUE)
 Encoding: UTF-8
+Config/testthat/edition: 3

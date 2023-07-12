@@ -50,7 +50,8 @@ define_transition <- function(..., state_names) {
   .dots <- quos(...)
   
   if (missing(state_names)) {
-    message("No named state -> generating names.")
+    if (!identical(Sys.getenv("TESTTHAT"), "true"))
+      message("No named state -> generating names.")
     state_names <- LETTERS[seq_len(sqrt(length(.dots)))]
   }
   

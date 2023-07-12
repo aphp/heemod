@@ -1,6 +1,3 @@
-context("Probabilistic analysis")
-
-
 test_that(
   "Probabilistic analysis works", {
     mod1 <-
@@ -77,7 +74,8 @@ test_that(
     
     expect_equal(
       rsp2, 
-      rsp2_tidy
+      rsp2_tidy,
+      ignore_function_env = TRUE
     )
     set.seed(1)
     # with run_model result
@@ -108,7 +106,8 @@ test_that(
     
     expect_equal(
       x, 
-      x_tidy
+      x_tidy,
+      ignore_function_env = TRUE
     )
     
     set.seed(1)
