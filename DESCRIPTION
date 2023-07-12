@@ -1,6 +1,6 @@
 Package: heemod
 Title: Markov Models for Health Economic Evaluations
-Version: 0.15.1.9003
+Version: 0.16.0
 Authors@R: c(
     person("Kevin", "Zarca", email = "kevin.zarca@gmail.com", role = c("aut", "cre")),
     person("Antoine", "Filipovic-Pierucci", role = "aut"),
@@ -26,8 +26,9 @@ Imports:
     mvnfast (>= 0.2.5),
     tibble (>= 3.2.0),
     rlang (>= 1.1.0), 
-    purrr (>= 1.0.0)
-License: GPL (>= 3) + file LICENCE.md
+    purrr (>= 1.0.0),
+    glue (>= 1.6.0),
+    lifecycle (>= 1.0.0)
 LazyData: true
 VignetteBuilder: knitr
 RoxygenNote: 7.2.3
@@ -54,3 +55,4 @@ BugReports: https://github.com/aphp/heemod/issues
 Roxygen: list(markdown = TRUE)
 Encoding: UTF-8
 Config/testthat/edition: 3
+License: GPL (>= 3)
