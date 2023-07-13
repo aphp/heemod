@@ -76,7 +76,7 @@ test_that(
     )
     expect_output(
       str(as_tibble(e_par1)),
-      paste("\\[10", cli::symbol$times, "4\\]")
+      paste("\\[10", cli::symbol$times, "5\\]")
       
     )
     expect_equal(

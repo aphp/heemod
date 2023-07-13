@@ -70,20 +70,21 @@ define_parameters_ <- function(.dots) {
 get_parameter_names <- function(x) {
   UseMethod("get_parameter_names")
 }
-
+#' @export
 get_parameter_names.updated_model <- function(x) {
   get_parameter_names(get_model(x))
 }
 
+#' @export
 get_parameter_names.uneval_parameters <- function(x) {
   names(x)[! names(x) %in% c("markov_cycle", "strategy",
                              "model_time")]
 }
-
+#' @export
 get_parameter_names.eval_parameters <- function(x) {
   get_parameter_names.uneval_parameters(x)
 }
-
+#' @export
 get_parameter_names.run_model <- function(x) {
   get_parameter_names(get_parameters(x))
 }
@@ -118,6 +119,7 @@ modify.uneval_parameters <- function(.OBJECT, ...) {
   modify_(.OBJECT = .OBJECT, .dots = .dots)
 }
 
+#' @export
 modify_.uneval_parameters <- function(.OBJECT, .dots) {
   if (length(.dots)) {
     check_names(names(.dots))

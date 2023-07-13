@@ -147,11 +147,11 @@ check_names <- function(x) {
   if (any("" %in% x)) {
     stop("Empty string names are not allowed.")
   }
-  if (any("markov_model" %in% x)) {
+  if (any("model_time" %in% x)) {
     stop("'model_time' is a reserved name.")
   }
   if (any("markov_model" %in% x)) {
-    stop("'model_time' is a reserved name.")
+    stop("'markov_model' is a reserved name.")
   }
   if (any("state_cycle" %in% x)) {
     stop("'state_cycle' is a reserved name.")
