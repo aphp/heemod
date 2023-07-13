@@ -17,3 +17,4 @@
 ^CRAN-SUBMISSION$
 ^LICENSE\.md$
 ^\.github$
+^revdep$

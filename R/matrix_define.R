@@ -126,6 +126,7 @@ modify.uneval_matrix <- function(.OBJECT, ...){
   modify_(.OBJECT = .OBJECT, .dots = .dots)
 }
 
+#' @export
 modify_.uneval_matrix <- function(.OBJECT, .dots){
   
   # !mod!

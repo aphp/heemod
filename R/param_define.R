@@ -107,7 +107,7 @@ modify <- function(.OBJECT, ...) {
   UseMethod("modify")
 }
 
-modify_ <- function(.OBJECT, .dots, ...) {
+modify_ <- function(.OBJECT, .dots) {
   UseMethod("modify_")
 }
 

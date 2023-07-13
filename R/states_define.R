@@ -54,6 +54,7 @@ modify.state <- function(.OBJECT, ...) {
   modify_(.OBJECT = .OBJECT, .dots = .dots)
 }
 
+#' @export
 modify_.state <- function(.OBJECT, .dots) {
   check_names(names(.dots))
   
@@ -179,12 +180,14 @@ define_state_list_ <- function(.dots) {
 }
 
 #' @rdname define_state_list
+#' @export
 modify.uneval_state_list <- function(.OBJECT, ...) {
   .dots <- list(...)
   
   modify_(.OBJECT = .OBJECT, .dots = .dots)
 }
 
+#' @export
 modify_.uneval_state_list <- function(.OBJECT, .dots) {
   res <- utils::modifyList(.OBJECT, .dots)
   check_states(res)

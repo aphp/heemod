@@ -219,8 +219,9 @@ fn_calibrate <- function(x, ...) {
   UseMethod("fn_calibrate")
 }
 
+#' @export
 fn_calibrate.run_model <- function(x, parameter_names,
-                                   target_values, par, fn_values) {
+                                   target_values, par, fn_values, ...) {
   names(par) <- parameter_names
   parameters <- modify_(
     get_parameters(x),
@@ -245,8 +246,9 @@ fn_calibrate.run_model <- function(x, parameter_names,
   sum((values - target_values) ^ 2)
 }
 
+#' @export
 fn_calibrate.updated_model <- function(x, parameter_names,
-                                       target_values, par, fn_values) {
+                                       target_values, par, fn_values, ...) {
   updated_mod <- x
   x <- get_model(x)
   

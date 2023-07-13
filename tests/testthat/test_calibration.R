@@ -169,7 +169,7 @@ test_that("multi-dimensional calibration",
     
     # age-related mortality rate
     sex_cat = ifelse(sex == 0, "FMLE", "MLE"),
-    mr = get_who_mr_memo(age, sex_cat, local = identical(Sys.getenv("NOT_CRAN"), "true")),
+    mr = get_who_mr_memo(age, sex_cat, local = TRUE),
     
     # state values
     u_SuccessP = .85,

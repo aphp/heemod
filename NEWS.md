@@ -1,4 +1,4 @@
-## heemod 0.15.1.9000
+## heemod 0.16.0
   * Remove lazyeval, plyr and pryr dependency
   * For PSM, when OS is lower to PFS, force the transition probability to be 0 (#7 @william-rawlinson)
   * `get_who_mr()` is working again

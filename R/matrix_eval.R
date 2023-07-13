@@ -75,10 +75,11 @@ check_matrix <- function(x) {
 #'   transition matrices, one per cycle).
 #'   
 #' @keywords internal
-eval_transition <- function(x, ...) {
+eval_transition <- function(x, parameters) {
   UseMethod("eval_transition")
 }
 
+#' @export
 eval_transition.uneval_matrix <- function(x, parameters) {
   
   # update calls to dispatch_strategy()

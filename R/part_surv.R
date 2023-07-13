@@ -159,10 +159,12 @@ part_survs_from_surv_inputs <- function(surv_inputs, state_names) {
         .data, state_names = state_names))
 }
 
-get_state_names.part_surv <- function(x) {
+#' @export
+get_state_names.part_surv <- function(x, ...) {
   x$state_names
 }
 
+#' @export
 eval_transition.part_surv <- function(x, parameters) {
   
   time_ <- c(0, parameters$model_time)
@@ -200,8 +202,9 @@ eval_transition.part_surv <- function(x, parameters) {
     class = "eval_part_surv")
 }
 
+#' @export
 compute_counts.eval_part_surv <- function(x, init,
-                                          inflow) {
+                                          inflow, ...) {
   
   stopifnot(
     length(x$state_names) %in% 3:4,

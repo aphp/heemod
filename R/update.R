@@ -202,7 +202,9 @@ plot.updated_model <- function(x, type = c("simple", "difference",
     ggplot2::facet_grid(.strategy_names ~ .)
 }
 
-scale.updated_model <- function(x, scale = TRUE, center = TRUE) {
+
+#' @export
+scale.updated_model <- function(x, center = TRUE, scale = TRUE) {
   .bm <- get_root_strategy(get_model(x))
   
   res <- x$updated_model

@@ -213,7 +213,7 @@ interpolate.default <- function(x, more = NULL, ...) {
   for (i in seq_along(x)) {
     to_interp <- x[[i]]
     for_interp <- c(more, as_expr_list(res))
-    funs <- all.funs(get_expr(to_interp))
+    funs <- all_funs(get_expr(to_interp))
    
     if (any(pb <- funs %in% names(for_interp))) {
       stop(sprintf(
@@ -271,7 +271,7 @@ interpolate.uneval_state_list <- function(x, ...) {
   x
 }
 
-all.funs <- function(expr) {
+all_funs <- function(expr) {
   an <- all.names(expr)
   uan <- unique(an)
   with_funs <- tabulate(factor(an, levels = uan))

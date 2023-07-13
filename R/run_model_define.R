@@ -478,9 +478,10 @@ get_parameter_values.updated_model <- function(x, ...) {
   get_parameter_values(get_model(x), ...)
 }
 
+#' @export
 get_parameter_values.run_model <- function(x, parameter_names,
                                            cycles = rep(1, length(parameter_names)),
-                                           strategy = 1) {
+                                           strategy = 1, ...) {
   strategy <- check_strategy_index(x, strategy)
   
   stopifnot(

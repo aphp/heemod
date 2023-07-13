@@ -4,7 +4,7 @@
 \alias{eval_transition}
 \title{Evaluate Markov Model Transition Matrix}
 \usage{
-eval_transition(x, ...)
+eval_transition(x, parameters)
 }
 \arguments{
 \item{x}{an \code{uneval_matrix} object.}
