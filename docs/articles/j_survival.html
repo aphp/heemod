@@ -71,7 +71,7 @@
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>Survival models</h1>
             
-            <h4 data-toc-skip class="date">2023-07-12</h4>
+            <h4 data-toc-skip class="date">2023-07-18</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/aphp/heemod/blob/HEAD/vignettes/j_survival.Rmd" class="external-link"><code>vignettes/j_survival.Rmd</code></a></small>
       <div class="hidden name"><code>j_survival.Rmd</code></div>
@@ -286,7 +286,9 @@ piping operator.</p>
 <span>  cost <span class="op">=</span> <span class="va">cost</span>, effect <span class="op">=</span> <span class="va">ut</span></span>
 <span><span class="op">)</span></span></code></pre></div>
 <pre><code><span><span class="co">## No named model -&gt; generating names.</span></span></code></pre>
-<div class="sourceCode" id="cb23"><pre class="downlit sourceCode r">
+<pre><code><span><span class="co">## No covariates provided, returning aggregate survival across all subjects.</span></span>
+<span><span class="co">## No covariates provided, returning aggregate survival across all subjects.</span></span></code></pre>
+<div class="sourceCode" id="cb24"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">resTM</span><span class="op">)</span></span></code></pre></div>
 <p><img src="j_survival_files/figure-html/unnamed-chunk-10-1.png" width="576"></p>
 </div>
@@ -294,7 +296,7 @@ piping operator.</p>
 <h3 id="partitioned-survival-model">Partitioned survival model<a class="anchor" aria-label="anchor" href="#partitioned-survival-model"></a>
 </h3>
 <p>A partitioned survival model can also be computed:</p>
-<div class="sourceCode" id="cb24"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb25"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">ps</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/define_part_surv.html">define_part_surv</a></span><span class="op">(</span></span>
 <span>  pfs <span class="op">=</span> <span class="va">surv_dist_1</span>,</span>
 <span>  os  <span class="op">=</span> <span class="va">km_1</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
@@ -302,7 +304,7 @@ piping operator.</p>
 <span>  cycle_length <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">365</span><span class="op">)</span> <span class="co"># 1 for pfs, 365 for os</span></span>
 <span><span class="op">)</span></span></code></pre></div>
 <pre><code><span><span class="co">## No named state -&gt; generating names.</span></span></code></pre>
-<div class="sourceCode" id="cb26"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb27"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">stratPS</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/define_strategy.html">define_strategy</a></span><span class="op">(</span></span>
 <span>  transition <span class="op">=</span> <span class="va">ps</span>,</span>
 <span>  A <span class="op">=</span> <span class="va">sA</span>, B <span class="op">=</span> <span class="va">sB</span>, C <span class="op">=</span> <span class="va">sC</span></span>
@@ -314,7 +316,9 @@ piping operator.</p>
 <span>  cost <span class="op">=</span> <span class="va">cost</span>, effect <span class="op">=</span> <span class="va">ut</span></span>
 <span><span class="op">)</span></span></code></pre></div>
 <pre><code><span><span class="co">## No named model -&gt; generating names.</span></span></code></pre>
-<div class="sourceCode" id="cb28"><pre class="downlit sourceCode r">
+<pre><code><span><span class="co">## No covariates provided, returning aggregate survival across all subjects.</span></span>
+<span><span class="co">## No covariates provided, returning aggregate survival across all subjects.</span></span></code></pre>
+<div class="sourceCode" id="cb30"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">resPS</span><span class="op">)</span></span></code></pre></div>
 <p><img src="j_survival_files/figure-html/unnamed-chunk-11-1.png" width="576"></p>
 </div>
