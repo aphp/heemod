@@ -14,8 +14,8 @@
 #' 
 #' @examples
 #' 
-#' dist1 <- define_survival(distribution = "exp", rate = .5)
-#' dist2 <- define_survival(distribution = "gompertz", rate = .5, shape = 1)
+#' dist1 <- define_surv_dist(distribution = "exp", rate = .5)
+#' dist2 <- define_surv_dist(distribution = "gompertz", rate = .5, shape = 1)
 #' join_dist <- join(dist1, dist2, at=20)
 join <- function(..., at) {
   dots <- list(...)
@@ -91,8 +91,8 @@ project_fn <- function(dist1, dist2_list) {
 #' 
 #' @examples
 #' 
-#' dist1 <- define_survival(distribution = "exp", rate = .5)
-#' dist2 <- define_survival(distribution = "gompertz", rate = .5, shape = 1)
+#' dist1 <- define_surv_dist(distribution = "exp", rate = .5)
+#' dist2 <- define_surv_dist(distribution = "gompertz", rate = .5, shape = 1)
 #' pooled_dist <- mix(dist1, dist2, weights = c(0.25, 0.75))
 #' 
 mix <- function(..., weights = 1) {
@@ -136,7 +136,7 @@ mix_ <- function(dots, weights = 1) {
 #' 
 #' @examples
 #' 
-#' dist1 <- define_survival(distribution = "exp", rate = .25)
+#' dist1 <- define_surv_dist(distribution = "exp", rate = .25)
 #' ph_dist <- apply_hr(dist1, 0.5)
 #' 
 apply_hr <- function(dist, hr, log_hr = FALSE) {
@@ -178,7 +178,7 @@ apply_hr <- function(dist, hr, log_hr = FALSE) {
 #' 
 #' @examples
 #' 
-#' dist1 <- define_survival(distribution = "exp", rate = .25)
+#' dist1 <- define_surv_dist(distribution = "exp", rate = .25)
 #' aft_dist <- apply_af(dist1, 1.5)
 apply_af <- function(dist, af, log_af = FALSE) {
   
@@ -219,7 +219,7 @@ apply_af <- function(dist, af, log_af = FALSE) {
 #' 
 #' @examples
 #' 
-#' dist1 <- define_survival(distribution = "exp", rate = .25)
+#' dist1 <- define_surv_dist(distribution = "exp", rate = .25)
 #' po_dist <- apply_or(dist1, 1.2)
 apply_or = function(dist, or, log_or = FALSE) {
   
@@ -261,7 +261,7 @@ apply_or = function(dist, or, log_or = FALSE) {
 #' 
 #' @examples
 #' 
-#' dist1 <- define_survival(distribution = "gamma", rate = 0.25, shape = 3)
+#' dist1 <- define_surv_dist(distribution = "gamma", rate = 0.25, shape = 3)
 #' shift_dist <- apply_shift(dist1, 4)
 #' compute_surv(dist1, 1:10)
 #' compute_surv(shift_dist, 1:10)
@@ -299,8 +299,8 @@ apply_shift = function(dist, shift) {
 #' 
 #' @examples
 #' 
-#' dist1 <- define_survival(distribution = "exp", rate = .125)
-#' dist2 <- define_survival(distribution = "weibull", shape = 1.2, scale = 50)
+#' dist1 <- define_surv_dist(distribution = "exp", rate = .125)
+#' dist2 <- define_surv_dist(distribution = "weibull", shape = 1.2, scale = 50)
 #' combined_dist <- add_hazards(dist1, dist2)
 #' 
 add_hazards <- function(...) {

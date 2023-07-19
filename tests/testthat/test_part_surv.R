@@ -1,16 +1,16 @@
-surv_dist1 <- define_survival(
+surv_dist1 <- define_surv_dist(
   distribution = "exp",
   rate = .003
 )
-surv_dist2 <- define_survival(
+surv_dist2 <- define_surv_dist(
   distribution = "exp",
   rate = .002
 )
-surv_dist3 <- define_survival(
+surv_dist3 <- define_surv_dist(
   distribution = "exp",
   rate = .005
 )
-surv_dist4 <- define_survival(
+surv_dist4 <- define_surv_dist(
   distribution = "exp",
   rate = .004
 )
@@ -64,7 +64,7 @@ suppressMessages(
 test_that(
   "part surv works", {
     
-    surv_dist_1 <- define_survival(
+    surv_dist_1 <- define_surv_dist(
       distribution = "exp", rate = 0.5)
     fit_cov <- flexsurv::flexsurvreg(
       formula = survival::Surv(rectime, censrec) ~ group,
@@ -320,7 +320,7 @@ test_that("we can run construct_part_surv_tib",
             expect_identical(class(mixed_dist_part_surv[["part_surv"]][[1]]$os)[1],
                              "quosure")
             expect_identical(eval_tidy(mixed_dist_part_surv[["part_surv"]][[1]]$pfs),
-                             'define_survival(distribution = "exp", rate = 1/100)')
+                             'define_surv_dist(distribution = "exp", rate = 1/100)')
             expect_identical(class(eval_tidy(mixed_dist_part_surv[["part_surv"]][[1]]$os)),
                              "flexsurvreg")
             prob <- compute_surv(eval_tidy(mixed_dist_part_surv[["part_surv"]][[1]]$os), 1)

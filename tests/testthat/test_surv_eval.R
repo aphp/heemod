@@ -647,21 +647,21 @@ test_that(
 
 test_that("Defining Survival Distributions",
           {
-            surv1 = define_survival(dist = "weibull",
+            surv1 = define_surv_dist(dist = "weibull",
                                     shape = 1.3797,
                                     scale = 4169.3446)
             
-            surv2 = define_survival(dist = "weibullPH",
+            surv2 = define_surv_dist(dist = "weibullPH",
                                     shape = 1.38e+00,
                                     scale = 1.01e-05)
             
-            surv3 = define_spline_survival(
+            surv3 = define_surv_spline(
               scale = "odds",
               gamma = c(-23.5136, 3.4483, 0.4873,-0.3147),
               knots = c(4.276666, 6.219263, 6.771924, 7.806289)
             )
             
-            surv5 = define_survival(
+            surv5 = define_surv_dist(
               dist = "genf",
               mu = 6.96387,
               sigma = 1.17338,
@@ -718,7 +718,7 @@ test_that("Defining Survival Distributions",
               compute_surv(time = seq_len(10), cycle_length = 200)
             
             # Survival from flexsurv should equal equivalent from
-            # define_survival
+            # define_surv_dist
             expect_equal(surv1_surv, fs1_surv, tolerance = 1E-4)
             expect_equal(surv1_prob, fs1_prob, tolerance = 1E-4)
             

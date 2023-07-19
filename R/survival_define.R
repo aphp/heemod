@@ -1,3 +1,10 @@
+
+#' @export
+define_survival <- function(distribution, ...){
+  lifecycle::deprecate_warn("0.17.0", "define_survival()", "define_surv_dist()")
+  define_surv_dist(distribution, ...)
+}
+
 #' Define a Survival Distribution
 #' 
 #' Define a parametric survival distribution.
@@ -11,10 +18,10 @@
 #' 
 #' @examples
 #' 
-#' define_survival(distribution = "exp", rate = .5)
-#' define_survival(distribution = "gompertz", rate = .5, shape = 1)
+#' define_surv_dist(distribution = "exp", rate = .5)
+#' define_surv_dist(distribution = "gompertz", rate = .5, shape = 1)
 #' 
-define_survival <- function(distribution = c("exp", "weibull",
+define_surv_dist <- function(distribution = c("exp", "weibull",
                                              "weibullPH",
                                              "lnorm", "llogis",
                                              "gamma", "gompertz",
@@ -61,6 +68,13 @@ define_survival <- function(distribution = c("exp", "weibull",
   )
 }
 
+#' @export
+define_spline_survival <- function(scale, ...){
+  lifecycle::deprecate_warn("0.17.0", "define_spline_survival()", "define_surv_spline()")
+  tibble::tibble(...)
+}
+
+
 #' Define a Restricted Cubic Spline Survival Distribution
 #' 
 #' Define a restricted cubic spline parametric survival
@@ -78,19 +92,19 @@ define_survival <- function(distribution = c("exp", "weibull",
 #'   
 #' @examples
 #' 
-#' define_spline_survival(
+#' define_surv_spline(
 #'   scale = "hazard", 
 #'   gamma = c(-18.3122, 2.7511, 0.2292), 
 #'   knots=c(4.276666, 6.470800, 7.806289)
 #' )
-#' define_spline_survival(
+#' define_surv_spline(
 #'   scale = "odds", 
 #'   gamma = c(-18.5809, 2.7973, 0.2035), 
 #'   knots=c(4.276666, 6.470800, 7.806289)
 #' )
 #' 
 #' @export
-define_spline_survival <- function(scale = c("hazard", "odds", 
+define_surv_spline <- function(scale = c("hazard", "odds", 
                                              "normal"),
                                    ...) {
   

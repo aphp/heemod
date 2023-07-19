@@ -24,14 +24,14 @@ The `heemod` package provides a number of ways to estimate transition probabilit
 
 Once defined, each of these types of distributions can be combined and modified using a standard set of operations.
 
-User-defined parametric distributions are created using the `define_survival()` and `define_spline_survival()` functions:
+User-defined parametric distributions are created using the `define_surv_dist()` and `define_surv_spline()` functions:
 ```{r}
-surv_dist_1 <- define_survival(
+surv_dist_1 <- define_surv_dist(
   distribution = "exp",
   rate = .5
 )
 
-surv_dist_2 <- define_spline_survival(
+surv_dist_2 <- define_surv_spline(
   scale = "odds",
   gamma = c(-11.643, 1.843, 0.208),
   knots = c(4.077537, 5.883183, 6.458338)
