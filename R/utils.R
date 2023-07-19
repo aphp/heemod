@@ -611,7 +611,7 @@ matrix_expand_grid <- function(...){
 
 
 interp <-  function (x, ..., .values) {
-  .dots <- enexprs(...)
+  .dots <- rlang::exprs(...)
   values <- all_values(.values, .dots)
   expr <- substitute_(get_expr(x), values)
   x <- set_expr(x, expr)

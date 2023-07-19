@@ -2,16 +2,10 @@
 % Please edit documentation in R/survival_operations.R
 \name{join}
 \alias{join}
-\alias{project}
-\alias{project_}
 \alias{join_}
 \title{Project Beyond a Survival Distribution with Another}
 \usage{
 join(..., at)
-
-project(...)
-
-project_(...)
 
 join_(dots, at)
 }
