@@ -3,17 +3,11 @@
 \name{mix}
 \alias{mix}
 \alias{mix_}
-\alias{pool}
-\alias{pool_}
 \title{Mix Two or More Survival Distributions}
 \usage{
 mix(..., weights = 1)
 
 mix_(dots, weights = 1)
-
-pool(...)
-
-pool_(...)
 }
 \arguments{
 \item{...}{Survival distributions to be used in the

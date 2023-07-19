@@ -72,7 +72,7 @@ project_fn <- function(dist1, dist2_list) {
       dist2 = dist2_list$dist,
       at = dist2_list$at
     ),
-    class = "surv_projection"
+    class = c("surv_projection", "surv_object")
   )
 }
 
@@ -117,22 +117,8 @@ mix_ <- function(dots, weights = 1) {
       dists = dots,
       weights = weights
     ),
-    class = "surv_pooled"
+    class = c("surv_pooled", "surv_object")
   )
-}
-
-#' @export
-#' @rdname mix
-pool <- function(...) {
-  warning("'pool() is deprecated, use 'mix()' instead.")
-  mix(...)
-}
-
-#' @export
-#' @rdname mix
-pool_ <- function(...) {
-  warning("'pool_() is deprecated, use 'mix_()' instead.")
-  mix_(...)
 }
 
 #' Apply a Hazard Ratio
@@ -173,7 +159,7 @@ apply_hr <- function(dist, hr, log_hr = FALSE) {
       dist = dist,
       hr = hr
     ),
-    class = "surv_ph"
+    class = c("surv_ph", "surv_object")
   )
 }
 
@@ -214,7 +200,7 @@ apply_af <- function(dist, af, log_af = FALSE) {
       dist = dist,
       af = af
     ),
-    class = "surv_aft"
+    class = c("surv_aft", "surv_object")
   )
 }
 
@@ -256,7 +242,7 @@ apply_or = function(dist, or, log_or = FALSE) {
       dist = dist,
       or = or
     ),
-    class = "surv_po"
+    class = c("surv_po", "surv_object")
   )
 }
 
@@ -295,7 +281,7 @@ apply_shift = function(dist, shift) {
         dist = dist,
         shift = shift
       ),
-      class = "surv_shift"
+      class = c("surv_shift", "surv_object")
     )
 }
 
@@ -332,7 +318,7 @@ add_hazards_ <- function(dots) {
     list(
       dists = dots
     ),
-    class = "surv_add_haz"
+    class = c("surv_add_haz", "surv_object")
   )
 }
 
@@ -387,7 +373,7 @@ set_covariates_ <- function(dist, covariates, data = NULL) {
       dist = dist,
       covar = data
     ),
-    class = "surv_model"
+    class = c("surv_model", "surv_object")
   )
 }
 
@@ -411,7 +397,7 @@ set_covariates_ <- function(dist, covariates, data = NULL) {
 #' @return a [ggplot2::ggplot()] object.
 #' @export
 #'
-plot.surv_obj <- function(x, times, type = c("surv", "prob"), 
+plot.surv_object <- function(x, times, type = c("surv", "prob"), 
                           join_col = "red", join_pch = 20,
                           join_size = 3, ...){
   type <- match.arg(type)
@@ -436,14 +422,14 @@ plot.surv_obj <- function(x, times, type = c("surv", "prob"),
   
 }
 
-plot.surv_projection <- plot.surv_obj
-plot.surv_ph <- plot.surv_obj
-plot.surv_add_haz <- plot.surv_obj
-plot.surv_model <- plot.surv_obj
-plot.surv_po <- plot.surv_obj
-plot.surv_aft <- plot.surv_obj
-plot.surv_pooled <- plot.surv_obj
-plot.surv_shift <- plot.surv_obj
+plot.surv_projection <- plot.surv_object
+plot.surv_ph <- plot.surv_object
+plot.surv_add_haz <- plot.surv_object
+plot.surv_model <- plot.surv_object
+plot.surv_po <- plot.surv_object
+plot.surv_aft <- plot.surv_object
+plot.surv_pooled <- plot.surv_object
+plot.surv_shift <- plot.surv_object
 
 
 #' Summarize surv_shift objects

@@ -51,7 +51,7 @@ reference:
     - mix
     - join
     - set_covariates
-    - plot.surv_obj
+    - plot.surv_object
     - summary.surv_shift
   - title: Calibration
     contents:
