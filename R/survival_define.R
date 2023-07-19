@@ -1,3 +1,34 @@
+#' Define a Fitted Survival Model
+#' 
+#' Define a fitted survival models with a Kaplan-Meier estimator or 
+#' parametric distributions
+#' 
+#' @param x a survfit or flexsurvreg object
+#'   
+#' @return A \code{surv_object} object.
+#'   
+#' @examples
+#' 
+#' library(survival)
+#' 
+#' define_surv_fit(
+#'   survfit(Surv(time, status) ~ 1, data = colon)
+#' )
+#' 
+#' define_surv_fit(
+#'   flexsurv::flexsurvreg(Surv(time, status) ~ 1, data = colon, dist = "exp")
+#' )
+#' 
+#' @export
+define_surv_fit <- function(x){
+  enx <- rlang::enquo(x) 
+  stopifnot(rlang::call_name(enx) %in% c("survfit", "flexsurvreg", 
+                                         "flexsurvspline", "coxph"))
+  structure(enx,
+            class = c("quosure", "surv_fit", "surv_object"),
+            strata = x$strata)
+  
+}
 
 #' @export
 define_survival <- function(distribution, ...){

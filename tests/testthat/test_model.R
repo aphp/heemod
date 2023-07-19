@@ -309,22 +309,22 @@ test_that(
       lm, init = c(10, 0), method = "end", inflow = infw)), c("counts", "diff"))
     expect_identical(
       dim(heemod:::compute_counts(
-        lm, init = c(10, 0), method = "beginning", inflow = infw) %>% 
-          heemod:::correct_counts(method = "beginning") %>%
+        lm, init = c(10, 0), method = "beginning", inflow = infw) |> 
+          heemod:::correct_counts(method = "beginning") |>
           magrittr::extract2("counts")),
       c(2L, 2L)
     )
     expect_identical(
       dim(heemod:::compute_counts(
-        lm, init = c(10, 0), method = "end", inflow = infw) %>% 
-          heemod:::correct_counts(method = "end") %>%
+        lm, init = c(10, 0), method = "end", inflow = infw) |> 
+          heemod:::correct_counts(method = "end") |>
           magrittr::extract2("counts")) ,
       c(2L, 2L)
     )
     expect_identical(
       dim(heemod:::compute_counts(
-        lm, init = c(10, 0), method = "life-table", inflow = infw) %>% 
-          heemod:::correct_counts(method = "life-table") %>%
+        lm, init = c(10, 0), method = "life-table", inflow = infw) |> 
+          heemod:::correct_counts(method = "life-table") |>
           magrittr::extract2("counts")),
       c(2L, 2L),
       ignore_attr = TRUE
@@ -332,24 +332,24 @@ test_that(
     
     expect_equal(
       unlist(heemod:::compute_counts(
-        lm, init = c(10, 0), method = "beginning", inflow = infw) %>% 
-          heemod:::correct_counts(method = "beginning") %>%
+        lm, init = c(10, 0), method = "beginning", inflow = infw) |> 
+          heemod:::correct_counts(method = "beginning") |>
           magrittr::extract2("counts")),
       c(10, 5, 0, 5),
       ignore_attr = TRUE
     )
     expect_equal(
       unlist(heemod:::compute_counts(
-        lm, init = c(10, 0), method = "end", inflow = infw) %>% 
-          heemod:::correct_counts(method = "end") %>%
+        lm, init = c(10, 0), method = "end", inflow = infw) |> 
+          heemod:::correct_counts(method = "end") |>
           magrittr::extract2("counts")),
       c(5.00, 4.35, 5.00, 5.65),
       ignore_attr = TRUE
     )
     expect_equal(
       unlist(heemod:::compute_counts(
-        lm, init = c(10, 0), method = "life-table", inflow = infw) %>% 
-          heemod:::correct_counts(method = "life-table") %>%
+        lm, init = c(10, 0), method = "life-table", inflow = infw) |> 
+          heemod:::correct_counts(method = "life-table") |>
           magrittr::extract2("counts")),
       c(7.500, 4.675, 2.500, 5.325),
       ignore_attr = TRUE

@@ -3,7 +3,7 @@ testdir <- file.path(tempdir(), "tabular", "test")
 state_spec_file <- file.path(
   testdir,
   "THR_test_states.csv"
-) %>% 
+) |> 
   heemod:::read_file()
 
 state_spec <- data.frame(
@@ -508,7 +508,7 @@ test_that(
         "edited_ref.csv"
       )),
       "Using absolute path for state, tm, parameters, demographics, data, output"
-    ) %>% 
+    ) |> 
       suppressMessages()
     options(op)
   }
