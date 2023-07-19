@@ -13,12 +13,6 @@
 #' quantiles are calculated by linear
 #' interpolation.
 #' 
-#' [define_distribution()] takes as argument a 
-#' function with a single argument, `x`, 
-#' corresponding to a vector of quantiles. It 
-#' returns the distribution values for the given 
-#' quantiles. See examples.
-#' 
 #' @name distributions
 #' @param mean Distribution mean.
 #' @param sd Distribution standard deviation.
@@ -44,19 +38,14 @@
 #' @param smooth Use gaussian kernel smoothing?
 #'   
 #' @examples 
-#' define_distribution(
-#'   function(x) stats::qexp(p = x, rate = 0.5)
-#' )
 #' 
 #' # a mixture of 2 gaussians
 #' x <- c(rnorm(100), rnorm(100, 6))
 #' plot(density(x))
 #' 
 #' use_distribution(x)
+#' 
 normal <- function(mean, sd) {
-  list(r_normal(mean, sd))
-}
-r_normal <- function(mean, sd) {
   function(x) stats::qnorm(p = x, mean = mean, sd = sd)
 }
 
@@ -64,26 +53,18 @@ r_normal <- function(mean, sd) {
 lognormal <- function(mean, sd, meanlog, sdlog) {
   if (missing(sdlog)) sdlog <- sqrt(log(1 + sd^2/mean^2))
   if (missing(meanlog)) meanlog <- log(mean) - sdlog^2/2
-  
-  list(r_lognormal(meanlog, sdlog))
-}
-r_lognormal <- function(meanlog, sdlog) {
   function(x) stats::qlnorm(p = x, meanlog = meanlog, sdlog = sdlog)
 }
 
 #' @rdname distributions
 gamma <- function(mean, sd) {
-  list(r_gamma(mean^2/sd^2, sd^2/mean))
-}
-r_gamma <- function(shape, scale) {
+  shape <- mean^2/sd^2
+  scale <- sd^2/mean
   function(x) stats::qgamma(p = x, shape = shape, scale = scale)
 }
 
 #' @rdname distributions
 binomial <- function(prob, size) {
-  list(r_binomial(prob, size))
-}
-r_binomial <- function(prob, size) {
   function(x) stats::qbinom(p = x, size = size, prob = prob) / size
 }
 
@@ -106,17 +87,11 @@ logitnormal <- function(mu, sigma) {
     stop("'logitnorm' package required for logitnormal distributions.")
   }
   
-  list(r_logitnormal(mu, sigma))
-}
-r_logitnormal <- function(mu, sigma) {
   function(x) logitnorm::qlogitnorm(p = x, mu = mu, sigma = sigma)
 }
 
 #' @rdname distributions
 beta <- function(shape1, shape2){
-  list(r_beta(shape1, shape2))
-}
-r_beta <- function(shape1, shape2){
   function(x){stats::qbeta(p = x, shape1 = shape1, shape2 = shape2)}
 }
 
@@ -129,48 +104,13 @@ triangle <- function(lower, upper, peak = (lower + upper)/2) {
             upper >= peak,
             upper > lower
             )
-  list(r_triangle(lower, upper, peak))
-}
-r_triangle <- function(lower, upper, peak) {
   function(x) triangle::qtriangle(p = x, a = lower, b = upper, c = peak)
 }
 
 
 #' @rdname distributions
 poisson <- function(mean) {
-  list(r_poisson(mean))
-}
-r_poisson <- function(mean) {
   function(x) stats::qpois(p = x, lambda = mean)
-}
-
-#' @rdname distributions
-#' @export
-define_distribution <- function(x) {
-  list(x)
-}
-
-#' @rdname distributions
-beta <- function(shape1, shape2){
-  list(r_beta(shape1, shape2))
-}
-r_beta <- function(shape1, shape2){
-  function(x){stats::qbeta(p = x, shape1 = shape1, shape2 = shape2)}
-}
-
-#' @rdname distributions
-triangle <- function(lower, upper, peak = (lower + upper)/2) {
-  if (! requireNamespace("triangle")) {
-    stop("'triangle' package required for triangle distributions.")
-  }
-  stopifnot(peak >= lower,
-            upper >= peak,
-            upper > lower
-  )
-  list(r_triangle(lower, upper, peak))
-}
-r_triangle <- function(lower, upper, peak) {
-  function(x) triangle::qtriangle(p = x, a = lower, b = upper, c = peak)
 }
 
 #' @rdname distributions
@@ -178,7 +118,6 @@ r_triangle <- function(lower, upper, peak) {
 use_distribution <- function(distribution, smooth = TRUE) {
   distribution <- sort(distribution)
   
-  define_distribution(
     function(x) {
       if (smooth) {
         noise <- stats::rnorm(
@@ -194,5 +133,4 @@ use_distribution <- function(distribution, smooth = TRUE) {
         x = seq(0, 1, length = length(distribution)),
         y = distribution)(x) + noise
     }
-  )
 }

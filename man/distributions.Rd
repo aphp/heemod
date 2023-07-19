@@ -11,7 +11,6 @@
 \alias{beta}
 \alias{triangle}
 \alias{poisson}
-\alias{define_distribution}
 \alias{use_distribution}
 \title{Probability Density Functions for Probabilistic
 Uncertainty Analysis}
@@ -33,12 +32,6 @@ beta(shape1, shape2)
 triangle(lower, upper, peak = (lower + upper)/2)
 
 poisson(mean)
-
-define_distribution(x)
-
-beta(shape1, shape2)
-
-triangle(lower, upper, peak = (lower + upper)/2)
 
 use_distribution(distribution, smooth = TRUE)
 }
@@ -74,13 +67,13 @@ distribution.}
 
 \item{peak}{peak of triangular distribution.}
 
-\item{x}{A distribution function, see details.}
-
 \item{distribution}{A numeric vector of
 observations defining a distribution, usually
 the output from an MCMC fit.}
 
 \item{smooth}{Use gaussian kernel smoothing?}
+
+\item{x}{A distribution function, see details.}
 }
 \description{
 Define a distribution for PSA parameters.
@@ -95,21 +88,13 @@ smoothing with a bandwith parameter calculated
 by \code{\link[stats:density]{stats::density()}}. Values for unobserved
 quantiles are calculated by linear
 interpolation.
-
-\code{\link[=define_distribution]{define_distribution()}} takes as argument a
-function with a single argument, \code{x},
-corresponding to a vector of quantiles. It
-returns the distribution values for the given
-quantiles. See examples.
 }
 \examples{
-define_distribution(
-  function(x) stats::qexp(p = x, rate = 0.5)
-)
 
 # a mixture of 2 gaussians
 x <- c(rnorm(100), rnorm(100, 6))
 plot(density(x))
 
 use_distribution(x)
+
 }

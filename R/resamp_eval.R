@@ -12,12 +12,7 @@
 #' 
 #' @example inst/examples/example_run_psa.R
 #'   
-run_psa <- function(model, psa, N, resample) {
-  if (! missing(resample)) {
-    warning("Argument 'resample' is deprecated, use 'psa' instead.")
-    psa <- resample
-  }
-  
+run_psa <- function(model, psa, N) {
   stopifnot(
     N > 0,
     ! is.null(N)
