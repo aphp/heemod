@@ -274,6 +274,13 @@ compute_surv <- memoise::memoise(
   ~ memoise::timeout(options()$heemod.memotime)
 )
 
+
+#' @rdname eval_surv
+#' @export
+eval_surv.surv_fit <- function(x, time, ...){
+  eval_surv(eval_tidy(x), time, ...)
+}
+
 #' @rdname eval_surv
 #' @export
 eval_surv.survfit <- function(x, time,  ...) {
@@ -597,11 +604,12 @@ eval_surv.surv_table <- function(x, time, ...){
 }
 
 eval_surv.quosure <- function(x, ...){
-  dots <- list(...)
-  use_data <- list()
-  if("extra_env" %in% names(dots))
-    use_data <- as.list.environment(dots$extra_env)
-  eval_surv(eval_tidy(x, data = use_data), ...)
+  # dots <- list(...)
+  # use_data <- list()
+  # if("extra_env" %in% names(dots))
+  #   use_data <- as.list.environment(dots$extra_env)
+  #eval_surv(eval_tidy(x, data = use_data), ...)
+  eval_surv(eval_tidy(x), ...)
 }
 
 eval_surv.character <- function(x, ...){

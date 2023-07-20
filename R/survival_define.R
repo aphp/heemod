@@ -25,7 +25,7 @@ define_surv_fit <- function(x){
   stopifnot(rlang::call_name(enx) %in% c("survfit", "flexsurvreg", 
                                          "flexsurvspline", "coxph"))
   structure(enx,
-            class = c("quosure", "surv_fit", "surv_object"),
+            class = c("surv_fit", "surv_object", "quosure"),
             strata = x$strata)
   
 }

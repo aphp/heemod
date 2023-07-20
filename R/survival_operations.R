@@ -18,7 +18,7 @@
 #' dist2 <- define_surv_dist(distribution = "gompertz", rate = .5, shape = 1)
 #' join_dist <- join(dist1, dist2, at=20)
 join <- function(..., at) {
-  dots <- list(...)
+  dots <- quos(...)
   
   join_(dots, at)
 }
@@ -97,7 +97,7 @@ project_fn <- function(dist1, dist2_list) {
 #' 
 mix <- function(..., weights = 1) {
   
-  dots <- list(...)
+  dots <- quos(...)
   
   mix_(dots, weights)
 }
@@ -140,7 +140,7 @@ mix_ <- function(dots, weights = 1) {
 #' ph_dist <- apply_hr(dist1, 0.5)
 #' 
 apply_hr <- function(dist, hr, log_hr = FALSE) {
-  
+  dist <- enquo(dist)
   stopifnot(
     length(hr) == 1,
     is.finite(hr),
@@ -148,12 +148,12 @@ apply_hr <- function(dist, hr, log_hr = FALSE) {
   )
   if(log_hr) hr <- exp(hr)
   if(hr == 1) return(dist)
-  if(inherits(dist, "surv_ph")){
-    dist$hr <- dist$hr * hr
-    if(dist$hr == 1) return(dist$dist)
-    return(dist)
-  }
-  
+  # if(inherits(eval_tidy(dist), "surv_ph")){
+  #   dist <- eval_tidy(dist)
+  #   dist$hr <- dist$hr * hr
+  #   if(dist$hr == 1) return(dist$dist)
+  #   return(dist)
+  # }
   structure(
     list(
       dist = dist,
@@ -181,7 +181,7 @@ apply_hr <- function(dist, hr, log_hr = FALSE) {
 #' dist1 <- define_surv_dist(distribution = "exp", rate = .25)
 #' aft_dist <- apply_af(dist1, 1.5)
 apply_af <- function(dist, af, log_af = FALSE) {
-  
+  dist <- enquo(dist)
   stopifnot(
     length(af) == 1,
     is.finite(af),
@@ -189,11 +189,13 @@ apply_af <- function(dist, af, log_af = FALSE) {
   )
   if(log_af) af <- exp(af)
   if(af == 1) return(dist)
-  if(inherits(dist, "surv_aft")){
-    dist$af <- dist$af * af
-    if(dist$af == 1) return(dist$dist)
-    return(dist)
-  }
+  new_dist <- eval_tidy(dist)
+  # if(inherits(new_dist, "surv_aft")){
+  #   dist <- new_dist
+  #   dist$af <- dist$af * af
+  #   if(dist$af == 1) return(dist$dist)
+  #   return(dist)
+  # }
   
   structure(
     list(
@@ -222,6 +224,7 @@ apply_af <- function(dist, af, log_af = FALSE) {
 #' dist1 <- define_surv_dist(distribution = "exp", rate = .25)
 #' po_dist <- apply_or(dist1, 1.2)
 apply_or = function(dist, or, log_or = FALSE) {
+  dist <- enquo(dist) 
   
   stopifnot(
     length(or) == 1,
@@ -231,11 +234,12 @@ apply_or = function(dist, or, log_or = FALSE) {
   
   if(log_or) or <- exp(or)
   if(or == 1) return(dist)
-  if(inherits(dist, "surv_po")){
-    dist$or <- dist$or * or
-    if(dist$or == 1) return(dist$dist)
-    return(dist)
-  }
+  # if(inherits(eval_tidy(dist), "surv_po")){
+  #   dist <- eval_tidy(dist)
+  #   dist$or <- dist$or * or
+  #   if(dist$or == 1) return(dist$dist)
+  #   return(dist)
+  # }
   
   structure(
     list(
@@ -266,16 +270,18 @@ apply_or = function(dist, or, log_or = FALSE) {
 #' compute_surv(dist1, 1:10)
 #' compute_surv(shift_dist, 1:10)
 apply_shift = function(dist, shift) {
+  dist <- enquo(dist)
   stopifnot(
     length(shift) == 1,
     is.finite(shift)
   )
   if(shift == 0) return(dist)
-  if(inherits(dist, "surv_shift")){
-      dist$shift <- dist$shift + shift
-      if(dist$shift == 0) return(dist$dist)
-      else return(dist)
-  }  
+  # if(inherits(eval_tidy(dist), "surv_shift")){
+  #   dist <- eval_tidy(dist)
+  #     dist$shift <- dist$shift + shift
+  #     if(dist$shift == 0) return(dist$dist)
+  #     else return(dist)
+  # }  
   structure(
       list(
         dist = dist,
@@ -304,8 +310,7 @@ apply_shift = function(dist, shift) {
 #' combined_dist <- add_hazards(dist1, dist2)
 #' 
 add_hazards <- function(...) {
-  
-  dots <- list(...)
+  dots <- quos(...)
   
   add_hazards_(dots)
 }
@@ -355,7 +360,7 @@ add_hazards_ <- function(dots) {
 #' 
 set_covariates <- function(dist, ..., data = NULL) {
   covariates <- data.frame(...)
-  
+  dist <- enquo(dist)
   set_covariates_(dist, covariates, data)
 }
 
