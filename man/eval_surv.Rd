@@ -49,7 +49,7 @@ compute_surv_(x, time, cycle_length = 1, type = c("prob", "survival"), ...)
 \method{eval_surv}{surv_table}(x, time, ...)
 }
 \arguments{
-\item{x}{A survival distribution object}
+\item{x}{A survival object}
 
 \item{time}{The \code{model_time} or \code{state_time} for which
 to predict.}

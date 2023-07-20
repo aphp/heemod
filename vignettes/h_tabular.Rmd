@@ -51,7 +51,7 @@ Optionally, the following rows can be provided:
 
 ```{r echo = FALSE}
 heemod:::read_file(system.file("tabular/thr/REFERENCE.csv", package = "heemod")) |> 
-  format_na |> 
+  format_na() |> 
   knitr::kable()
 ```
 
@@ -67,7 +67,7 @@ Values specified for only one strategy will be carried over to others. Only valu
 
 ```{r echo = FALSE}
 heemod:::read_file(system.file("tabular/thr/THR_states.csv", package = "heemod")) |> 
-  format_na |> 
+  format_na() |> 
   knitr::kable()
 ```
 
@@ -84,7 +84,7 @@ A transition probabilities file contains 4 columns:
 
 ```{r echo = FALSE}
 heemod:::read_file(system.file("tabular/thr/THR_transition_probs.csv", package = "heemod")) |> 
-  format_na |> 
+  format_na() |> 
   knitr::kable()
 ```
 
@@ -100,7 +100,7 @@ Optional columns can be added to perform determinist or probabilist sensitivity 
 
 ```{r echo = FALSE}
 heemod:::read_file(system.file("tabular/thr/THR_parameters.csv", package = "heemod")) |> 
-  format_na |> 
+  format_na() |> 
   knitr::kable()
 ```
 
@@ -126,7 +126,7 @@ Models specified by tabular input will run with defaults options. The following 
 
 ```{r echo = FALSE}
 heemod:::read_file(system.file("tabular/thr/THR_options.csv", package = "heemod")) |> 
-  format_na |> 
+  format_na() |> 
   knitr::kable(row.names = FALSE)
 ```
 

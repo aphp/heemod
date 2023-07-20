@@ -18,8 +18,8 @@
 #' dist2 <- define_surv_dist(distribution = "gompertz", rate = .5, shape = 1)
 #' join_dist <- join(dist1, dist2, at=20)
 join <- function(..., at) {
-  dots <- quos(...)
-  
+  dots <- quos(...) %>% 
+    detect_dplyr_pipe()
   join_(dots, at)
 }
 
@@ -96,8 +96,8 @@ project_fn <- function(dist1, dist2_list) {
 #' pooled_dist <- mix(dist1, dist2, weights = c(0.25, 0.75))
 #' 
 mix <- function(..., weights = 1) {
-  
-  dots <- quos(...)
+  dots <- quos(...)%>% 
+    detect_dplyr_pipe()
   
   mix_(dots, weights)
 }
@@ -140,14 +140,15 @@ mix_ <- function(dots, weights = 1) {
 #' ph_dist <- apply_hr(dist1, 0.5)
 #' 
 apply_hr <- function(dist, hr, log_hr = FALSE) {
-  dist <- enquo(dist)
+  dist <- enquo(dist) %>% 
+    detect_dplyr_pipe()
   stopifnot(
     length(hr) == 1,
     is.finite(hr),
     log_hr | hr > 0
   )
   if(log_hr) hr <- exp(hr)
-  if(hr == 1) return(dist)
+  #if(hr == 1) return(dist)
   # if(inherits(eval_tidy(dist), "surv_ph")){
   #   dist <- eval_tidy(dist)
   #   dist$hr <- dist$hr * hr
@@ -181,14 +182,15 @@ apply_hr <- function(dist, hr, log_hr = FALSE) {
 #' dist1 <- define_surv_dist(distribution = "exp", rate = .25)
 #' aft_dist <- apply_af(dist1, 1.5)
 apply_af <- function(dist, af, log_af = FALSE) {
-  dist <- enquo(dist)
+  dist <- enquo(dist) %>% 
+    detect_dplyr_pipe()
   stopifnot(
     length(af) == 1,
     is.finite(af),
     log_af | af > 0
   )
   if(log_af) af <- exp(af)
-  if(af == 1) return(dist)
+  #if(af == 1) return(dist)
   new_dist <- eval_tidy(dist)
   # if(inherits(new_dist, "surv_aft")){
   #   dist <- new_dist
@@ -224,7 +226,8 @@ apply_af <- function(dist, af, log_af = FALSE) {
 #' dist1 <- define_surv_dist(distribution = "exp", rate = .25)
 #' po_dist <- apply_or(dist1, 1.2)
 apply_or = function(dist, or, log_or = FALSE) {
-  dist <- enquo(dist) 
+  dist <- enquo(dist) %>% 
+    detect_dplyr_pipe()
   
   stopifnot(
     length(or) == 1,
@@ -233,7 +236,7 @@ apply_or = function(dist, or, log_or = FALSE) {
   )
   
   if(log_or) or <- exp(or)
-  if(or == 1) return(dist)
+ # if(or == 1) return(dist)
   # if(inherits(eval_tidy(dist), "surv_po")){
   #   dist <- eval_tidy(dist)
   #   dist$or <- dist$or * or
@@ -270,7 +273,9 @@ apply_or = function(dist, or, log_or = FALSE) {
 #' compute_surv(dist1, 1:10)
 #' compute_surv(shift_dist, 1:10)
 apply_shift = function(dist, shift) {
-  dist <- enquo(dist)
+  dist <- enquo(dist)%>% 
+    detect_dplyr_pipe()
+  
   stopifnot(
     length(shift) == 1,
     is.finite(shift)
@@ -310,7 +315,8 @@ apply_shift = function(dist, shift) {
 #' combined_dist <- add_hazards(dist1, dist2)
 #' 
 add_hazards <- function(...) {
-  dots <- quos(...)
+  dots <- quos(...)%>% 
+    detect_dplyr_pipe()
   
   add_hazards_(dots)
 }
@@ -360,7 +366,8 @@ add_hazards_ <- function(dots) {
 #' 
 set_covariates <- function(dist, ..., data = NULL) {
   covariates <- data.frame(...)
-  dist <- enquo(dist)
+  dist <- enquo(dist)%>% 
+    detect_dplyr_pipe()
   set_covariates_(dist, covariates, data)
 }
 
@@ -402,9 +409,12 @@ set_covariates_ <- function(dist, covariates, data = NULL) {
 #' @return a [ggplot2::ggplot()] object.
 #' @export
 #'
-plot.surv_object <- function(x, times, type = c("surv", "prob"), 
+plot.surv_object <- function(x, times = seq.int(0, 30), type = c("surv", "prob"), 
                           join_col = "red", join_pch = 20,
                           join_size = 3, ...){
+  if (inherits(x, "surv_fit")){
+    return(plot(eval_tidy(x)))
+  }
   type <- match.arg(type)
   y_ax_label <- c(surv = "survival", prob = "probability")[type]
   res1 <- data.frame(times = times,
@@ -414,14 +424,14 @@ plot.surv_object <- function(x, times, type = c("surv", "prob"),
     ggplot2::ggplot(res1, ggplot2::aes(x = times, y = res)) + 
     ggplot2::geom_line() + 
     ggplot2::scale_x_continuous(name = "time") + 
-    ggplot2::scale_y_continuous(name = y_ax_label)
+    ggplot2::scale_y_continuous(name = y_ax_label, limits = c(0,1))
   
   if("at" %in% names(x))
     this_plot <- this_plot +
     ggplot2::geom_point(data = dplyr::filter(res1, times == x$at),
                         ggplot2::aes(x = times, y = res),
                         pch = "join_pch", size = "join_size", 
-                        col = "join_col")
+                        col = "join_col") 
   
   this_plot
   

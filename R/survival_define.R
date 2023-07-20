@@ -22,6 +22,7 @@
 #' @export
 define_surv_fit <- function(x){
   enx <- rlang::enquo(x) 
+  detect_dplyr_pipe(enx)
   stopifnot(rlang::call_name(enx) %in% c("survfit", "flexsurvreg", 
                                          "flexsurvspline", "coxph"))
   structure(enx,
@@ -30,7 +31,6 @@ define_surv_fit <- function(x){
   
 }
 
-#' @export
 define_survival <- function(distribution, ...){
   lifecycle::deprecate_warn("0.17.0", "define_survival()", "define_surv_dist()")
   define_surv_dist(distribution, ...)
@@ -99,10 +99,9 @@ define_surv_dist <- function(distribution = c("exp", "weibull",
   )
 }
 
-#' @export
 define_spline_survival <- function(scale, ...){
   lifecycle::deprecate_warn("0.17.0", "define_spline_survival()", "define_surv_spline()")
-  tibble::tibble(...)
+  define_surv_spline(scale, ...)
 }
 
 

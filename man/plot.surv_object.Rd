@@ -6,7 +6,7 @@
 \usage{
 \method{plot}{surv_object}(
   x,
-  times,
+  times = seq.int(0, 30),
   type = c("surv", "prob"),
   join_col = "red",
   join_pch = 20,

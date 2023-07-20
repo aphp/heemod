@@ -230,6 +230,12 @@ eval_surv <- function(x, time, ...) {
 compute_surv_ <- function(x, time, 
                           cycle_length = 1, 
                           type = c("prob", "survival"), ...){
+  
+  if (inherits(x, c("survfit", "flexsurvreg", "coxph", "flexsurvspline"))){
+    cli::cli_abort("{.var x} must be encapsulated within define_surv_fit()")
+  }
+  stopifnot("x must be a surv_object" = inherits(x, "surv_object"))
+  
   type <- match.arg(type)
   
   if (type == "prob") {
@@ -257,7 +263,7 @@ compute_surv_ <- function(x, time,
 #' `options("heemod.memotime")` (default: 1 hour) to 
 #' increase resampling performance.
 #' 
-#' @param x A survival distribution object
+#' @param x A survival object
 #' @param time The `model_time` or `state_time` for which
 #'   to predict.
 #' @param cycle_length The value of a Markov cycle in 
