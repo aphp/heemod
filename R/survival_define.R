@@ -95,7 +95,7 @@ define_surv_dist <- function(distribution = c("exp", "weibull",
       distribution = distribution,
       ...
     ),
-    class = c("surv_object", "surv_dist")
+    class = c("surv_dist", "surv_object")
   )
 }
 
@@ -166,7 +166,7 @@ define_surv_spline <- function(scale = c("hazard", "odds",
       scale = scale,
       ...
     ),
-    class = c("surv_object", "surv_dist")
+    class = c("surv_dist", "surv_object")
   )
 }
 

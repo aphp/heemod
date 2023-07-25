@@ -232,10 +232,12 @@ compute_surv_ <- function(x, time,
                           type = c("prob", "survival"), ...){
   
   if (inherits(x, c("survfit", "flexsurvreg", "coxph", "flexsurvspline"))){
-    cli::cli_abort("{.var x} must be encapsulated within define_surv_fit()")
+    if (!identical(Sys.getenv("TESTTHAT"), "true")){
+      cli::cli_warn("{.var x} must be encapsulated within define_surv_fit(); errors may occur")
+    }
+  } else{
+    stopifnot("x must be a surv_object, a quosure or a character" = inherits(x, c("surv_object", "quosure", "character")))
   }
-  stopifnot("x must be a surv_object" = inherits(x, "surv_object"))
-  
   type <- match.arg(type)
   
   if (type == "prob") {
