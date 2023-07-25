@@ -229,12 +229,13 @@ check_init.quosures <- function(x, ref) {
     }
   }
   
-  res <- stats::setNames(
-    object = as_quosures(
-      lapply(ref, function(x) 0),
-      env = globalenv()),
-    nm = ref)
+  # res <- stats::setNames(
+  #   object = as_quosures(
+  #     lapply(ref, function(x) 0),
+  #     env = globalenv()),
+  #   nm = ref)
   
+  res <- setNames(rep(quos(0), length(ref)), nm = ref)
   res <- utils::modifyList(
     res, x
   )

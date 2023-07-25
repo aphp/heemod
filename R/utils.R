@@ -28,6 +28,7 @@ get_mat_total <- function(x, init) {
 #'   
 #' @keywords internal
 get_counts_diff <- function(x, init, inflow) {
+  inflow <- as.matrix(inflow)
   lapply(seq(1, length(x) + 1), function(i){
     if (i == length(x) + 1) return(list(init, NULL))
     init <- init + unlist(inflow[i, ], use.names = FALSE)
@@ -612,7 +613,11 @@ matrix_expand_grid <- function(...){
 
 interp <-  function (x, ..., .values) {
   .dots <- rlang::exprs(...)
-  values <- all_values(.values, .dots)
+  values <- if (length(.dots)){
+    all_values(.values, .dots)
+  } else {
+    .values
+  }
   expr <- substitute_(get_expr(x), values)
   x <- set_expr(x, expr)
   x
