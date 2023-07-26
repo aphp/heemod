@@ -51,7 +51,13 @@ define_psa_ <- function(.dots = list(), correlation) {
   list_input <- lapply(
     eval_dots,
     function(x) {
-      eval(rhs(x), envir = asNamespace("heemod"))
+      rhsx <- rlang::f_rhs(x)
+      if (grepl("resample_surv", deparse(rhsx))){
+        lhs <- rlang::f_lhs(x)
+        rhsx <- rlang::call2(rhsx[[1]], lhs, !!!rlang::call_args(rhsx))
+      }
+      res <- eval(rhsx, envir = asNamespace("heemod"))
+      if (!inherits(res, "surv_psa")) res else structure(rhsx, class = class(res))
     })
   
   list_qdist <- unlist(
@@ -59,7 +65,7 @@ define_psa_ <- function(.dots = list(), correlation) {
     recursive = FALSE
   )
   lapply(list_qdist, function(x) {
-    if (! inherits(x, "function")) {
+    if (!rlang::is_callable(x)) {
       stop("Distributions must be defined as functions.")
     }
   })
@@ -96,8 +102,18 @@ define_psa_ <- function(.dots = list(), correlation) {
     ))
   }
   
+  is_surv <- unlist(lapply(
+    list_input,
+    inherits, "surv_psa"))
+  
+  list_surv <- purrr::map_chr(
+    eval_dots[is_surv],
+    function(x) all.vars(lhs(x), unique = FALSE)
+  )
+  
+  
   if (missing(correlation)){
-    correlation <- diag(length(list_qdist))
+    correlation <- diag(length(list_qdist) - length(list_surv))
   }
   
   if (any(duplicated(names(list_qdist)))) {
@@ -114,7 +130,7 @@ define_psa_ <- function(.dots = list(), correlation) {
   
   stopifnot(
     nrow(correlation) == ncol(correlation),
-    nrow(correlation) == length(list_qdist),
+    nrow(correlation) == length(list_qdist) - length(list_surv),
     all(correlation >= -1) & all(correlation <= 1),
     isTRUE(all.equal(as.vector(diag(correlation)),
                      rep(1, ncol(correlation))))
@@ -123,6 +139,7 @@ define_psa_ <- function(.dots = list(), correlation) {
   structure(
     list(
       list_qdist = list_qdist,
+      surv = list_surv,
       correlation = correlation,
       multinom = list_multi
     ),

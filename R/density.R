@@ -75,6 +75,7 @@ r_lognormal <- function(meanlog, sdlog) {
 gamma <- function(mean, sd) {
   list(r_gamma(mean^2/sd^2, sd^2/mean))
 }
+
 r_gamma <- function(shape, scale) {
   function(x) stats::qgamma(p = x, shape = shape, scale = scale)
 }
@@ -83,6 +84,7 @@ r_gamma <- function(shape, scale) {
 binomial <- function(prob, size) {
   list(r_binomial(prob, size))
 }
+
 r_binomial <- function(prob, size) {
   function(x) stats::qbinom(p = x, size = size, prob = prob) / size
 }
@@ -96,6 +98,7 @@ multinomial <- function(...) {
     class = "multinom_param"
   )
 }
+
 r_multinomial <- function(n) {
   function(x) stats::qgamma(x, shape = n, scale = 1)
 }
@@ -105,9 +108,9 @@ logitnormal <- function(mu, sigma) {
   if (! requireNamespace("logitnorm")) {
     stop("'logitnorm' package required for logitnormal distributions.")
   }
-  
   list(r_logitnormal(mu, sigma))
 }
+
 r_logitnormal <- function(mu, sigma) {
   function(x) logitnorm::qlogitnorm(p = x, mu = mu, sigma = sigma)
 }
@@ -116,6 +119,7 @@ r_logitnormal <- function(mu, sigma) {
 beta <- function(shape1, shape2){
   list(r_beta(shape1, shape2))
 }
+
 r_beta <- function(shape1, shape2){
   function(x){stats::qbeta(p = x, shape1 = shape1, shape2 = shape2)}
 }
@@ -128,7 +132,7 @@ triangle <- function(lower, upper, peak = (lower + upper)/2) {
   stopifnot(peak >= lower,
             upper >= peak,
             upper > lower
-            )
+  )
   list(r_triangle(lower, upper, peak))
 }
 r_triangle <- function(lower, upper, peak) {
@@ -195,4 +199,137 @@ use_distribution <- function(distribution, smooth = TRUE) {
         y = distribution)(x) + noise
     }
   )
+}
+
+boot_survfit <- function(surv_object){
+  init_surv_object <- surv_object
+  if (is.list(surv_object) && "dist" %in% names(surv_object)){
+    surv_object <- surv_object$dist
+  }
+  data <- rlang::call_standardise(surv_object) %>% 
+    rlang::call_args() %>% 
+    `[[`("data") %>% 
+    eval_tidy(env = get_env(surv_object))
+  if (is.null(attr(surv_object, "strata"))){
+    new_data <- data[sample.int(nrow(data), 
+                                replace = TRUE),]
+  } else {
+    strata <- 
+      names(attr(surv_object, "strata")) %>% strsplit(., ", ") %>% 
+      unlist(use.names = F) %>% 
+      gsub("=.*", "", .) %>%
+      unique()
+    new_data <-  data %>%
+      group_by(!!!syms(strata)) %>% 
+      dplyr::slice_sample(prop = 1, replace = TRUE) %>% 
+      ungroup()
+  }
+  new_env <- rlang::env()
+  assign("new_data", new_data, envir = new_env)
+  res <- rlang::call_modify(surv_object, data = quote(new_data))
+  res <- rlang::set_env(res, new_env)
+  if (is.list(init_surv_object) && "dist" %in% names(init_surv_object)){
+    structure(c(list(dist = res), 
+                init_surv_object[setdiff(names(init_surv_object), "dist")]),
+              class = class(init_surv_object))
+  } else res
+}
+
+
+#' Resample survival distribution
+#' 
+#' 
+#' @param x a `surv_object`
+#' @param dist a survival distribution, specified as a call to a random 
+#' generation function of the distribution
+#' @param n the number of observations to generate if dist is specified or x is a `surv_dist`
+#' object
+#' 
+#' 
+#' @details 
+#' `resample_surv()` is used for a `surv_object`, making use of bootstrapping.
+#' To simulate a survival distribution, the appropriate function is `use_surv_dist`
+#' 
+#' The lower n is, the higher is the variability
+#' @export
+#'
+
+#' @seealso plot.surv_psa
+#' 
+#' @examples
+#' surv <- define_surv_dist("exp", rate = 0.5))
+#' 
+#' ## Should return a similar distribution
+#' use_surv_dist(rexp(100, .5))
+#' resample_surv(surv, n = 100)
+#' 
+#' library(survival)
+#' sf <- survfit(Surv(time, status) ~ 1, data = colon)
+#' resample_surv(sf)
+
+resample_surv <- function(x, ...){
+  UseMethod("resample_surv")
+}
+
+#' @rdname resample_surv
+#' @export
+resample_surv.default <- function(x, ...){
+  structure(list(r_use_psa_surv(x)),
+            class = c("surv_psa",class(x)))
+  
+}
+
+
+#' @rdname resample_surv
+#' @export
+resample_surv.surv_pooled  <- function(x, ...){
+  structure(c(list(dists = lapply(x$dists, function(y){
+    resample_surv(y, ...)
+  })), x[setdiff(names(x), "dists")]), class = c("surv_psa", class(x)))
+}
+
+#' @rdname resample_surv
+#' @export
+resample_surv.surv_add_haz <- resample_surv.surv_pooled
+
+
+#' @rdname resample_surv
+#' @export
+resample_surv.surv_dist <- function(x, n){
+  if (! requireNamespace("flexsurv")) {
+    stop("'flexsurv' package required.")
+  }
+  
+  pf <- get(paste0("r", x$distribution),
+            envir = asNamespace("flexsurv"))
+  
+  args <- x[- match("distribution", names(x))]
+  ret <- do.call(pf, c(n, args))
+  structure(list(r_use_psa_surv(ret)),
+            class = c("surv_psa", "surv_dist", "surv_object"))
+  
+}
+
+#' @rdname resample_surv
+#' @export
+use_surv_dist <- function(dist){
+  if (! requireNamespace("flexsurv")) {
+    stop("'flexsurv' package required.")
+  }
+  structure(list(r_use_psa_surv(dist)),
+            class = c("surv_psa", "surv_dist", "surv_object"))
+}
+
+r_use_psa_surv <- function(distribution){
+  boot <- ifelse(is.numeric(distribution) | inherits(distribution, "surv_dist"), FALSE, TRUE)  
+  if (boot){
+    return(
+      structure(
+        function(x) boot_survfit(distribution),
+        class=c("surv_psa", "boot_surv", "function"))
+    )
+  }
+  structure(
+    function(x) ecdf(distribution)(x),
+    class=c("surv_psa", "function"))
 }

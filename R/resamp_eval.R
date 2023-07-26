@@ -12,12 +12,7 @@
 #' 
 #' @example inst/examples/example_run_psa.R
 #'   
-run_psa <- function(model, psa, N, resample) {
-  if (! missing(resample)) {
-    warning("Argument 'resample' is deprecated, use 'psa' instead.")
-    psa <- resample
-  }
-  
+run_psa <- function(model, psa, N) {
   stopifnot(
     N > 0,
     ! is.null(N)
@@ -141,39 +136,57 @@ eval_correlation <- function(x, var_names) {
 #' @keywords internal
 eval_resample <- function(psa, N) {
   
-  mat_p <- stats::pnorm(
-    mvnfast::rmvn(
-      n = N,
-      mu = rep(0, length(psa$list_qdist)),
-      sigma = psa$correlation
+  list_qdist_filter <- psa$list_qdist[setdiff(names(psa$list_qdist), psa$surv)]
+  res <- data.frame(._start = logical(N))
+  if (length(list_qdist_filter)){
+    mat_p <- stats::pnorm(
+      mvnfast::rmvn(
+        n = N,
+        mu = rep(0, length(list_qdist_filter)),
+        sigma = psa$correlation
+      )
     )
-  )
   
-  list_res <- mapply(
-    function(i, f) f(mat_p[, i]),
-    seq_len(ncol(mat_p)),
-    psa$list_qdist
-  )
-  
-  if (length(dim(list_res)) < 2) {
-    list_res <- matrix(list_res, ncol = length(list_res))
+    list_res <- mapply(
+      function(i, f) f(mat_p[, i]),
+      seq_len(ncol(mat_p)),
+      list_qdist_filter
+    )
+    
+    if (length(dim(list_res)) < 2) {
+      list_res <- matrix(list_res, ncol = length(list_res))
+    }
+    
+    colnames(list_res) <- names(list_qdist_filter)
+    res <- as.data.frame(list_res)
+    
+    for (m in psa$multinom) {
+      call_denom <- make_call(m, "+")
+      list_expr <- as_quosures(
+        c(list(
+          .denom = call_denom),
+        stats::setNames(
+          lapply(
+            m,
+            function(x) as.call(list(as.name("/"), as.name(x), as.name(".denom")))),
+          m)), env = parent.frame()) 
+      res <- dplyr::mutate(res, !!!list_expr) %>% 
+        dplyr::select(-.denom)
+    }
+    res$.denom <- NULL
   }
   
-  colnames(list_res) <- names(psa$list_qdist)
-  res <- as.data.frame(list_res)
-  
-  for (m in psa$multinom) {
-    call_denom <- make_call(m, "+")
-    list_expr <- as_quosures(
-      c(list(
-        .denom = call_denom),
-      stats::setNames(
-        lapply(
-          m,
-          function(x) as.call(list(as.name("/"), as.name(x), as.name(".denom")))),
-        m)), env = parent.frame()) 
-    res <- dplyr::mutate(res, !!!list_expr) %>% 
-      dplyr::select(-.denom)
+  loc <- list()
+  for (s in psa$surv){
+    res[[s]] <- replicate(N, eval(psa$list_qdist[[s]]), simplify = F) %>%
+      map(function(.x){
+        if (inherits(.x[[1]], "boot_surv")){
+          tmp <- .x[[1]]()
+          structure(list(function(x) tmp), class = c(class(.x), "surv_psa"))
+        } else .x
+      })
+    #loc[[s]] <- 
   }
+  res$._start <- NULL
   res
 }

@@ -247,7 +247,6 @@ compute_surv_ <- function(x, time,
   }
   
   check_cycle_inputs(time_, cycle_length)
-  
   ret <- eval_surv(x, cycle_length * time_, ...)
   if (type == "prob") {
     # Calculate per-cycle failure prob
@@ -283,10 +282,41 @@ compute_surv <- memoise::memoise(
 )
 
 
+
+#' @rdname eval_surv
+#' @export
+eval_surv.surv_psa <- function(x, time, ...){
+  if (inherits(x, c("surv_pooled", "surv_add_haz"))){
+    res <- if (inherits(x, "surv_pooled")){
+      mix_(x$dists, weights = x$weights)
+    } else {
+      add_hazards_(x$dists)
+    }
+    return(eval_surv(res, time))
+  }
+  
+  ret <- x[[1]](time)
+  eval_surv(ret, time, ...)
+}
+
 #' @rdname eval_surv
 #' @export
 eval_surv.surv_fit <- function(x, time, ...){
   eval_surv(eval_tidy(x), time, ...)
+}
+
+
+#' @rdname eval_surv
+#' @export
+eval_surv.default <- function(x, ...){
+  ret <- 1-sort(x)
+  # if(any(ret == 0, na.rm = TRUE) & length(x) > 2){
+  #   for (i in seq_along(ret)){
+  #     x <- ret[[i]]
+  #    ret[[i]] <- ifelse(x == 0, ((ret[[i-1]])^2)/ret[[i-2]], x)
+  #   }
+  # }
+  ret
 }
 
 #' @rdname eval_surv
