@@ -14,12 +14,12 @@
 #' 
 #' @examples
 #' 
-#' dist1 <- define_survival(distribution = "exp", rate = .5)
-#' dist2 <- define_survival(distribution = "gompertz", rate = .5, shape = 1)
+#' dist1 <- define_surv_dist(distribution = "exp", rate = .5)
+#' dist2 <- define_surv_dist(distribution = "gompertz", rate = .5, shape = 1)
 #' join_dist <- join(dist1, dist2, at=20)
 join <- function(..., at) {
-  dots <- list(...)
-  
+  dots <- quos(...) %>% 
+    detect_dplyr_pipe()
   join_(dots, at)
 }
 
@@ -72,7 +72,7 @@ project_fn <- function(dist1, dist2_list) {
       dist2 = dist2_list$dist,
       at = dist2_list$at
     ),
-    class = "surv_projection"
+    class = c("surv_projection", "surv_object")
   )
 }
 
@@ -91,13 +91,13 @@ project_fn <- function(dist1, dist2_list) {
 #' 
 #' @examples
 #' 
-#' dist1 <- define_survival(distribution = "exp", rate = .5)
-#' dist2 <- define_survival(distribution = "gompertz", rate = .5, shape = 1)
+#' dist1 <- define_surv_dist(distribution = "exp", rate = .5)
+#' dist2 <- define_surv_dist(distribution = "gompertz", rate = .5, shape = 1)
 #' pooled_dist <- mix(dist1, dist2, weights = c(0.25, 0.75))
 #' 
 mix <- function(..., weights = 1) {
-  
-  dots <- list(...)
+  dots <- quos(...)%>% 
+    detect_dplyr_pipe()
   
   mix_(dots, weights)
 }
@@ -117,22 +117,8 @@ mix_ <- function(dots, weights = 1) {
       dists = dots,
       weights = weights
     ),
-    class = "surv_pooled"
+    class = c("surv_pooled", "surv_object")
   )
-}
-
-#' @export
-#' @rdname mix
-pool <- function(...) {
-  warning("'pool() is deprecated, use 'mix()' instead.")
-  mix(...)
-}
-
-#' @export
-#' @rdname mix
-pool_ <- function(...) {
-  warning("'pool_() is deprecated, use 'mix_()' instead.")
-  mix_(...)
 }
 
 #' Apply a Hazard Ratio
@@ -150,30 +136,31 @@ pool_ <- function(...) {
 #' 
 #' @examples
 #' 
-#' dist1 <- define_survival(distribution = "exp", rate = .25)
+#' dist1 <- define_surv_dist(distribution = "exp", rate = .25)
 #' ph_dist <- apply_hr(dist1, 0.5)
 #' 
 apply_hr <- function(dist, hr, log_hr = FALSE) {
-  
+  dist <- enquo(dist) %>% 
+    detect_dplyr_pipe()
   stopifnot(
     length(hr) == 1,
     is.finite(hr),
     log_hr | hr > 0
   )
   if(log_hr) hr <- exp(hr)
-  if(hr == 1) return(dist)
-  if(inherits(dist, "surv_ph")){
-    dist$hr <- dist$hr * hr
-    if(dist$hr == 1) return(dist$dist)
-    return(dist)
-  }
-  
+  #if(hr == 1) return(dist)
+  # if(inherits(eval_tidy(dist), "surv_ph")){
+  #   dist <- eval_tidy(dist)
+  #   dist$hr <- dist$hr * hr
+  #   if(dist$hr == 1) return(dist$dist)
+  #   return(dist)
+  # }
   structure(
     list(
       dist = dist,
       hr = hr
     ),
-    class = "surv_ph"
+    class = c("surv_ph", "surv_object")
   )
 }
 
@@ -192,29 +179,32 @@ apply_hr <- function(dist, hr, log_hr = FALSE) {
 #' 
 #' @examples
 #' 
-#' dist1 <- define_survival(distribution = "exp", rate = .25)
+#' dist1 <- define_surv_dist(distribution = "exp", rate = .25)
 #' aft_dist <- apply_af(dist1, 1.5)
 apply_af <- function(dist, af, log_af = FALSE) {
-  
+  dist <- enquo(dist) %>% 
+    detect_dplyr_pipe()
   stopifnot(
     length(af) == 1,
     is.finite(af),
     log_af | af > 0
   )
   if(log_af) af <- exp(af)
-  if(af == 1) return(dist)
-  if(inherits(dist, "surv_aft")){
-    dist$af <- dist$af * af
-    if(dist$af == 1) return(dist$dist)
-    return(dist)
-  }
+  #if(af == 1) return(dist)
+  new_dist <- eval_tidy(dist)
+  # if(inherits(new_dist, "surv_aft")){
+  #   dist <- new_dist
+  #   dist$af <- dist$af * af
+  #   if(dist$af == 1) return(dist$dist)
+  #   return(dist)
+  # }
   
   structure(
     list(
       dist = dist,
       af = af
     ),
-    class = "surv_aft"
+    class = c("surv_aft", "surv_object")
   )
 }
 
@@ -233,9 +223,11 @@ apply_af <- function(dist, af, log_af = FALSE) {
 #' 
 #' @examples
 #' 
-#' dist1 <- define_survival(distribution = "exp", rate = .25)
+#' dist1 <- define_surv_dist(distribution = "exp", rate = .25)
 #' po_dist <- apply_or(dist1, 1.2)
 apply_or = function(dist, or, log_or = FALSE) {
+  dist <- enquo(dist) %>% 
+    detect_dplyr_pipe()
   
   stopifnot(
     length(or) == 1,
@@ -244,19 +236,20 @@ apply_or = function(dist, or, log_or = FALSE) {
   )
   
   if(log_or) or <- exp(or)
-  if(or == 1) return(dist)
-  if(inherits(dist, "surv_po")){
-    dist$or <- dist$or * or
-    if(dist$or == 1) return(dist$dist)
-    return(dist)
-  }
+ # if(or == 1) return(dist)
+  # if(inherits(eval_tidy(dist), "surv_po")){
+  #   dist <- eval_tidy(dist)
+  #   dist$or <- dist$or * or
+  #   if(dist$or == 1) return(dist$dist)
+  #   return(dist)
+  # }
   
   structure(
     list(
       dist = dist,
       or = or
     ),
-    class = "surv_po"
+    class = c("surv_po", "surv_object")
   )
 }
 
@@ -275,27 +268,31 @@ apply_or = function(dist, or, log_or = FALSE) {
 #' 
 #' @examples
 #' 
-#' dist1 <- define_survival(distribution = "gamma", rate = 0.25, shape = 3)
+#' dist1 <- define_surv_dist(distribution = "gamma", rate = 0.25, shape = 3)
 #' shift_dist <- apply_shift(dist1, 4)
 #' compute_surv(dist1, 1:10)
 #' compute_surv(shift_dist, 1:10)
 apply_shift = function(dist, shift) {
+  dist <- enquo(dist)%>% 
+    detect_dplyr_pipe()
+  
   stopifnot(
     length(shift) == 1,
     is.finite(shift)
   )
   if(shift == 0) return(dist)
-  if(inherits(dist, "surv_shift")){
-      dist$shift <- dist$shift + shift
-      if(dist$shift == 0) return(dist$dist)
-      else return(dist)
-  }  
+  # if(inherits(eval_tidy(dist), "surv_shift")){
+  #   dist <- eval_tidy(dist)
+  #     dist$shift <- dist$shift + shift
+  #     if(dist$shift == 0) return(dist$dist)
+  #     else return(dist)
+  # }  
   structure(
       list(
         dist = dist,
         shift = shift
       ),
-      class = "surv_shift"
+      class = c("surv_shift", "surv_object")
     )
 }
 
@@ -313,13 +310,13 @@ apply_shift = function(dist, shift) {
 #' 
 #' @examples
 #' 
-#' dist1 <- define_survival(distribution = "exp", rate = .125)
-#' dist2 <- define_survival(distribution = "weibull", shape = 1.2, scale = 50)
+#' dist1 <- define_surv_dist(distribution = "exp", rate = .125)
+#' dist2 <- define_surv_dist(distribution = "weibull", shape = 1.2, scale = 50)
 #' combined_dist <- add_hazards(dist1, dist2)
 #' 
 add_hazards <- function(...) {
-  
-  dots <- list(...)
+  dots <- quos(...)%>% 
+    detect_dplyr_pipe()
   
   add_hazards_(dots)
 }
@@ -332,7 +329,7 @@ add_hazards_ <- function(dots) {
     list(
       dists = dots
     ),
-    class = "surv_add_haz"
+    class = c("surv_add_haz", "surv_object")
   )
 }
 
@@ -369,7 +366,8 @@ add_hazards_ <- function(dots) {
 #' 
 set_covariates <- function(dist, ..., data = NULL) {
   covariates <- data.frame(...)
-  
+  dist <- enquo(dist)%>% 
+    detect_dplyr_pipe()
   set_covariates_(dist, covariates, data)
 }
 
@@ -387,7 +385,7 @@ set_covariates_ <- function(dist, covariates, data = NULL) {
       dist = dist,
       covar = data
     ),
-    class = "surv_model"
+    class = c("surv_model", "surv_object")
   )
 }
 
@@ -411,9 +409,12 @@ set_covariates_ <- function(dist, covariates, data = NULL) {
 #' @return a [ggplot2::ggplot()] object.
 #' @export
 #'
-plot.surv_obj <- function(x, times, type = c("surv", "prob"), 
+plot.surv_object <- function(x, times = seq.int(0, 30), type = c("surv", "prob"), 
                           join_col = "red", join_pch = 20,
                           join_size = 3, ...){
+  if (inherits(x, "surv_fit")){
+    return(plot(eval_tidy(x)))
+  }
   type <- match.arg(type)
   y_ax_label <- c(surv = "survival", prob = "probability")[type]
   res1 <- data.frame(times = times,
@@ -423,27 +424,27 @@ plot.surv_obj <- function(x, times, type = c("surv", "prob"),
     ggplot2::ggplot(res1, ggplot2::aes(x = times, y = res)) + 
     ggplot2::geom_line() + 
     ggplot2::scale_x_continuous(name = "time") + 
-    ggplot2::scale_y_continuous(name = y_ax_label)
+    ggplot2::scale_y_continuous(name = y_ax_label, limits = c(0,1))
   
   if("at" %in% names(x))
     this_plot <- this_plot +
     ggplot2::geom_point(data = dplyr::filter(res1, times == x$at),
                         ggplot2::aes(x = times, y = res),
                         pch = "join_pch", size = "join_size", 
-                        col = "join_col")
+                        col = "join_col") 
   
   this_plot
   
 }
 
-plot.surv_projection <- plot.surv_obj
-plot.surv_ph <- plot.surv_obj
-plot.surv_add_haz <- plot.surv_obj
-plot.surv_model <- plot.surv_obj
-plot.surv_po <- plot.surv_obj
-plot.surv_aft <- plot.surv_obj
-plot.surv_pooled <- plot.surv_obj
-plot.surv_shift <- plot.surv_obj
+plot.surv_projection <- plot.surv_object
+plot.surv_ph <- plot.surv_object
+plot.surv_add_haz <- plot.surv_object
+plot.surv_model <- plot.surv_object
+plot.surv_po <- plot.surv_object
+plot.surv_aft <- plot.surv_object
+plot.surv_pooled <- plot.surv_object
+plot.surv_shift <- plot.surv_object
 
 
 #' Summarize surv_shift objects

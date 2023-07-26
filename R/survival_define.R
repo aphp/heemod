@@ -1,3 +1,41 @@
+#' Define a Fitted Survival Model
+#' 
+#' Define a fitted survival models with a Kaplan-Meier estimator or 
+#' parametric distributions
+#' 
+#' @param x a survfit or flexsurvreg object
+#'   
+#' @return A \code{surv_object} object.
+#'   
+#' @examples
+#' 
+#' library(survival)
+#' 
+#' define_surv_fit(
+#'   survfit(Surv(time, status) ~ 1, data = colon)
+#' )
+#' 
+#' define_surv_fit(
+#'   flexsurv::flexsurvreg(Surv(time, status) ~ 1, data = colon, dist = "exp")
+#' )
+#' 
+#' @export
+define_surv_fit <- function(x){
+  enx <- rlang::enquo(x) 
+  detect_dplyr_pipe(enx)
+  stopifnot(rlang::call_name(enx) %in% c("survfit", "flexsurvreg", 
+                                         "flexsurvspline", "coxph"))
+  structure(enx,
+            class = c("surv_fit", "surv_object", "quosure"),
+            strata = x$strata)
+  
+}
+
+define_survival <- function(distribution, ...){
+  lifecycle::deprecate_warn("0.17.0", "define_survival()", "define_surv_dist()")
+  define_surv_dist(distribution, ...)
+}
+
 #' Define a Survival Distribution
 #' 
 #' Define a parametric survival distribution.
@@ -11,10 +49,10 @@
 #' 
 #' @examples
 #' 
-#' define_survival(distribution = "exp", rate = .5)
-#' define_survival(distribution = "gompertz", rate = .5, shape = 1)
+#' define_surv_dist(distribution = "exp", rate = .5)
+#' define_surv_dist(distribution = "gompertz", rate = .5, shape = 1)
 #' 
-define_survival <- function(distribution = c("exp", "weibull",
+define_surv_dist <- function(distribution = c("exp", "weibull",
                                              "weibullPH",
                                              "lnorm", "llogis",
                                              "gamma", "gompertz",
@@ -57,9 +95,15 @@ define_survival <- function(distribution = c("exp", "weibull",
       distribution = distribution,
       ...
     ),
-    class = c("surv_object", "surv_dist")
+    class = c("surv_dist", "surv_object")
   )
 }
+
+define_spline_survival <- function(scale, ...){
+  lifecycle::deprecate_warn("0.17.0", "define_spline_survival()", "define_surv_spline()")
+  define_surv_spline(scale, ...)
+}
+
 
 #' Define a Restricted Cubic Spline Survival Distribution
 #' 
@@ -78,19 +122,19 @@ define_survival <- function(distribution = c("exp", "weibull",
 #'   
 #' @examples
 #' 
-#' define_spline_survival(
+#' define_surv_spline(
 #'   scale = "hazard", 
 #'   gamma = c(-18.3122, 2.7511, 0.2292), 
 #'   knots=c(4.276666, 6.470800, 7.806289)
 #' )
-#' define_spline_survival(
+#' define_surv_spline(
 #'   scale = "odds", 
 #'   gamma = c(-18.5809, 2.7973, 0.2035), 
 #'   knots=c(4.276666, 6.470800, 7.806289)
 #' )
 #' 
 #' @export
-define_spline_survival <- function(scale = c("hazard", "odds", 
+define_surv_spline <- function(scale = c("hazard", "odds", 
                                              "normal"),
                                    ...) {
   
@@ -122,7 +166,7 @@ define_spline_survival <- function(scale = c("hazard", "odds",
       scale = scale,
       ...
     ),
-    class = c("surv_object", "surv_dist")
+    class = c("surv_dist", "surv_object")
   )
 }
 

@@ -132,8 +132,8 @@ test_that(
         mod1, mod2,
         parameters = par1
       ),  "cannot find root strategy."
-    ) %>% 
-      expect_warning("cannot find noncomparable strategy") %>% 
+    ) |> 
+      expect_warning("cannot find noncomparable strategy") |> 
       expect_warning( "cannot find root strategy.")
     expect_warning(
       run_model(
@@ -142,8 +142,8 @@ test_that(
         cost = x
       ),
       "cannot find noncomparable strategy."
-    ) %>% 
-      expect_warning("cannot find root strategy") %>% 
+    ) |> 
+      expect_warning("cannot find root strategy") |> 
       expect_warning("cannot find root strategy.")
   }
 )
@@ -206,9 +206,9 @@ test_that(
       summary(run_model(mod1, mod2,
                          parameters = par1)),
       "model summary unavailable"
-    ) %>% 
-      expect_warning("cannot find noncomparable strategy") %>% 
-      expect_warning("cannot find root strategy") %>% 
+    ) |> 
+      expect_warning("cannot find noncomparable strategy") |> 
+      expect_warning("cannot find root strategy") |> 
       expect_warning("cannot find root strategy")
     expect_equal(
       run_model(mod1, mod2,

@@ -59,7 +59,7 @@ y = 123',
       get_state_value_names(s1),
       c("x", "y")
     )
-    expect_output(print(s2 %>%
+    expect_output(print(s2 |>
                           modify(starting_values = define_starting_values(x = 100))),
                   "A state with 2 values and 1 starting value.
 
@@ -67,7 +67,7 @@ x = 987
 y = 1726
 Start
 x = 100", fixed = TRUE)
-    expect_error(s2 %>%
+    expect_error(s2 |>
                    modify(starting_values = list(x = 100)), "Incorrect length", fixed = TRUE)
   }
 )
@@ -290,7 +290,7 @@ test_that(
         parameters = par1, cost = x, effect = y
       ),
       "version"
-    ) %>% 
+    ) |> 
       suppressWarnings()
   }
 )

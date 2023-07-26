@@ -1,16 +1,16 @@
-surv_dist1 <- define_survival(
+surv_dist1 <- define_surv_dist(
   distribution = "exp",
   rate = .003
 )
-surv_dist2 <- define_survival(
+surv_dist2 <- define_surv_dist(
   distribution = "exp",
   rate = .002
 )
-surv_dist3 <- define_survival(
+surv_dist3 <- define_surv_dist(
   distribution = "exp",
   rate = .005
 )
-surv_dist4 <- define_survival(
+surv_dist4 <- define_surv_dist(
   distribution = "exp",
   rate = .004
 )
@@ -25,8 +25,8 @@ suppressMessages(
 )
 suppressMessages(
   ps1 <- define_part_surv(
-    pfs = join(surv_dist3, surv_dist4, at=365) %>% apply_hr(0.8),
-    os = join(surv_dist1, surv_dist2, at=365) %>% apply_hr(0.8),
+    pfs = join(surv_dist3, surv_dist4, at=365) |> apply_hr(0.8),
+    os = join(surv_dist1, surv_dist2, at=365) |> apply_hr(0.8),
     cycle_length = c(365, 365)
   )
 )
@@ -64,22 +64,24 @@ suppressMessages(
 test_that(
   "part surv works", {
     
-    surv_dist_1 <- define_survival(
+    surv_dist_1 <- define_surv_dist(
       distribution = "exp", rate = 0.5)
     fit_cov <- flexsurv::flexsurvreg(
       formula = survival::Surv(rectime, censrec) ~ group,
       dist = "weibull", 
-      data = flexsurv::bc)
+      data = flexsurv::bc) |> 
+      define_surv_fit()
     fitcov_medium <- set_covariates(fit_cov, group = "Medium")
     km_cov <- survival::survfit(
       formula = survival::Surv(rectime, censrec) ~ group,
-      data = flexsurv::bc)
+      data = flexsurv::bc) |> 
+      define_surv_fit()
     km_medium <- set_covariates(km_cov, group = "Medium")
     
     suppressMessages({
       ps <- define_part_surv(
         pfs = surv_dist_1,
-        os = km_medium %>%
+        os = km_medium |>
           join(fitcov_medium, 
                   at = 730),
         cycle_length = c(1, 365)  # 1 for pfs, 365 for os
@@ -97,7 +99,7 @@ test_that(
         time = model_time  # can also be state_time
       ),
       p2 = compute_surv(
-        km_medium %>%
+        km_medium |>
           join(fitcov_medium, 
                   at = 730),
         time = model_time, cycle_length = 365  # time is in days in km_medium, in years in model_time
@@ -320,7 +322,7 @@ test_that("we can run construct_part_surv_tib",
             expect_identical(class(mixed_dist_part_surv[["part_surv"]][[1]]$os)[1],
                              "quosure")
             expect_identical(eval_tidy(mixed_dist_part_surv[["part_surv"]][[1]]$pfs),
-                             'define_survival(distribution = "exp", rate = 1/100)')
+                             'define_surv_dist(distribution = "exp", rate = 1/100)')
             expect_identical(class(eval_tidy(mixed_dist_part_surv[["part_surv"]][[1]]$os)),
                              "flexsurvreg")
             prob <- compute_surv(eval_tidy(mixed_dist_part_surv[["part_surv"]][[1]]$os), 1)

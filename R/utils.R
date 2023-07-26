@@ -657,3 +657,17 @@ deprecated_x_cycle <- function(.dots){
     lifecycle::deprecate_warn("0.16.0", I("state_cycle"), I("state_time"), user_env = caller_env(3))
   }
 }
+
+detect_dplyr_pipe <- function(x){
+  predicate <- function(y) identical(get_expr(y), quote(.))
+  if (is.list(x)) {
+    purrr::modify_if(x, predicate, alert_pipe)
+  } else {
+    if (predicate(x)) alert_pipe() else x
+  }
+}
+
+alert_pipe <- function(...){
+  cli::cli_abort(c(x = "dplyr's pipe %>% is not supported for chaining survival operations. ",
+       "Please use the new pipe |> instead."), call=NULL)
+}

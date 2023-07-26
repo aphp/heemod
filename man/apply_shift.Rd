@@ -24,7 +24,7 @@ If \code{shift == 0}, \code{dist} is returned unchanged.
 }
 \examples{
 
-dist1 <- define_survival(distribution = "gamma", rate = 0.25, shape = 3)
+dist1 <- define_surv_dist(distribution = "gamma", rate = 0.25, shape = 3)
 shift_dist <- apply_shift(dist1, 4)
 compute_surv(dist1, 1:10)
 compute_surv(shift_dist, 1:10)

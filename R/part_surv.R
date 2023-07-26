@@ -8,7 +8,7 @@ allowed_fit_distributions <- c("exp", "weibull", "lnorm", "llogis",
 #' 
 #' @param pfs,os Either results from 
 #'   [flexsurv::flexsurvreg()] or 
-#'   [define_survival()].
+#'   [define_surv_dist()].
 #' @param state_names named character vector, length 3 or 4.
 #'   State names for progression-free state, progression, 
 #'   (optionally terminal) and death respectively. Elements 
@@ -24,8 +24,8 @@ allowed_fit_distributions <- c("exp", "weibull", "lnorm", "llogis",
 #' @export
 #' 
 #' @examples
-#' dist_pfs <- define_survival("exp", rate = 1)
-#' dist_os <- define_survival("exp", rate = .5)
+#' dist_pfs <- define_surv_dist("exp", rate = 1)
+#' dist_os <- define_surv_dist("exp", rate = .5)
 #' 
 #' define_part_surv(
 #'   pfs = dist_pfs,
@@ -357,10 +357,10 @@ construct_part_surv_tib <-
     surv_def <- tibble::as_tibble(surv_def)
     
     ## we handle directly defined distributions
-    ##   (those defined with define_survival())
+    ##   (those defined with define_surv_dist())
     ##   separately from fits
-    with_direct_dist <- dplyr::filter(surv_def, grepl("^define_survival", dist))
-    should_be_fits <- dplyr::filter(surv_def, !grepl("^define_survival", dist))
+    with_direct_dist <- dplyr::filter(surv_def, grepl("^define_surv_dist", dist))
+    should_be_fits <- dplyr::filter(surv_def, !grepl("^define_surv_dist", dist))
     
     should_be_fits_3 <- should_be_fits
     if (nrow(should_be_fits) > 0) {
