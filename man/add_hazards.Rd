@@ -24,8 +24,8 @@ hazards from two or more survival distributions.
 }
 \examples{
 
-dist1 <- define_survival(distribution = "exp", rate = .125)
-dist2 <- define_survival(distribution = "weibull", shape = 1.2, scale = 50)
+dist1 <- define_surv_dist(distribution = "exp", rate = .125)
+dist2 <- define_surv_dist(distribution = "weibull", shape = 1.2, scale = 50)
 combined_dist <- add_hazards(dist1, dist2)
 
 }

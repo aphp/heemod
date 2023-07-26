@@ -40,8 +40,9 @@ reference:
     - update_model
   - title: Survival data
     contents:
-    - define_survival
-    - define_spline_survival
+    - define_surv_dist
+    - define_surv_fit
+    - define_surv_spline
     - compute_surv
     - apply_af
     - apply_hr
@@ -51,7 +52,7 @@ reference:
     - mix
     - join
     - set_covariates
-    - plot.surv_obj
+    - plot.surv_object
     - summary.surv_shift
   - title: Calibration
     contents:

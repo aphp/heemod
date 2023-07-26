@@ -213,20 +213,25 @@ interpolate.default <- function(x, more = NULL, ...) {
   for (i in seq_along(x)) {
     to_interp <- x[[i]]
     for_interp <- c(more, as_expr_list(res))
-    funs <- all_funs(get_expr(to_interp))
-   
-    if (any(pb <- funs %in% names(for_interp))) {
-      stop(sprintf(
-        "Some parameters are named like a function, this is incompatible with the use of 'state_time': %s.",
-        paste(funs[pb], collapse = ", ")
-      ))
+    expr_to_interp <- get_expr(to_interp)
+    if (is.numeric(expr_to_interp)){
+      new <- setNames(list(to_interp), names(x)[i])
+    } else {
+      funs <- all_funs(expr_to_interp)
+     
+      if (any(pb <- funs %in% names(for_interp))) {
+        stop(sprintf(
+          "Some parameters are named like a function, this is incompatible with the use of 'state_time': %s.",
+          paste(funs[pb], collapse = ", ")
+        ))
+      }
+      
+      new <- setNames(list(interp(
+        to_interp,
+        .values = for_interp
+      )
+      ), names(x)[i])
     }
-    
-    new <- setNames(list(interp(
-      to_interp,
-      .values = for_interp
-    )
-    ), names(x)[i])
     res <- c(res, new)
     
   }

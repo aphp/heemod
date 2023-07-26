@@ -230,6 +230,14 @@ eval_surv <- function(x, time, ...) {
 compute_surv_ <- function(x, time, 
                           cycle_length = 1, 
                           type = c("prob", "survival"), ...){
+  
+  if (inherits(x, c("survfit", "flexsurvreg", "coxph", "flexsurvspline"))){
+    if (!identical(Sys.getenv("TESTTHAT"), "true")){
+      cli::cli_warn("{.var x} must be encapsulated within define_surv_fit(); errors may occur")
+    }
+  } else{
+    stopifnot("x must be a surv_object, a quosure or a character" = inherits(x, c("surv_object", "quosure", "character")))
+  }
   type <- match.arg(type)
   
   if (type == "prob") {
@@ -257,7 +265,7 @@ compute_surv_ <- function(x, time,
 #' `options("heemod.memotime")` (default: 1 hour) to 
 #' increase resampling performance.
 #' 
-#' @param x A survival distribution object
+#' @param x A survival object
 #' @param time The `model_time` or `state_time` for which
 #'   to predict.
 #' @param cycle_length The value of a Markov cycle in 
@@ -273,6 +281,13 @@ compute_surv <- memoise::memoise(
   compute_surv_,
   ~ memoise::timeout(options()$heemod.memotime)
 )
+
+
+#' @rdname eval_surv
+#' @export
+eval_surv.surv_fit <- function(x, time, ...){
+  eval_surv(eval_tidy(x), time, ...)
+}
 
 #' @rdname eval_surv
 #' @export
@@ -597,11 +612,12 @@ eval_surv.surv_table <- function(x, time, ...){
 }
 
 eval_surv.quosure <- function(x, ...){
-  dots <- list(...)
-  use_data <- list()
-  if("extra_env" %in% names(dots))
-    use_data <- as.list.environment(dots$extra_env)
-  eval_surv(eval_tidy(x, data = use_data), ...)
+  # dots <- list(...)
+  # use_data <- list()
+  # if("extra_env" %in% names(dots))
+  #   use_data <- as.list.environment(dots$extra_env)
+  #eval_surv(eval_tidy(x, data = use_data), ...)
+  eval_surv(eval_tidy(x), ...)
 }
 
 eval_surv.character <- function(x, ...){

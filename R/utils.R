@@ -28,6 +28,7 @@ get_mat_total <- function(x, init) {
 #'   
 #' @keywords internal
 get_counts_diff <- function(x, init, inflow) {
+  inflow <- as.matrix(inflow)
   lapply(seq(1, length(x) + 1), function(i){
     if (i == length(x) + 1) return(list(init, NULL))
     init <- init + unlist(inflow[i, ], use.names = FALSE)
@@ -612,7 +613,11 @@ matrix_expand_grid <- function(...){
 
 interp <-  function (x, ..., .values) {
   .dots <- rlang::exprs(...)
-  values <- all_values(.values, .dots)
+  values <- if (length(.dots)){
+    all_values(.values, .dots)
+  } else {
+    .values
+  }
   expr <- substitute_(get_expr(x), values)
   x <- set_expr(x, expr)
   x
@@ -651,4 +656,18 @@ deprecated_x_cycle <- function(.dots){
   if(any(grepl("state_dcyle", deparse(.dots)))){
     lifecycle::deprecate_warn("0.16.0", I("state_cycle"), I("state_time"), user_env = caller_env(3))
   }
+}
+
+detect_dplyr_pipe <- function(x){
+  predicate <- function(y) identical(get_expr(y), quote(.))
+  if (is.list(x)) {
+    purrr::modify_if(x, predicate, alert_pipe)
+  } else {
+    if (predicate(x)) alert_pipe() else x
+  }
+}
+
+alert_pipe <- function(...){
+  cli::cli_abort(c(x = "dplyr's pipe %>% is not supported for chaining survival operations. ",
+       "Please use the new pipe |> instead."), call=NULL)
 }

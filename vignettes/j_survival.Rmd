@@ -18,27 +18,27 @@ library(heemod)
 
 The `heemod` package provides a number of ways to estimate transition probabilities from survival distributions.  Survival distributions can come from at least three different sources:
 
-  * User-definded parametric distributions.
-  * Fitted parametric distributions with `flexsurv::flexsurvreg()`.
-  * Fitted Kaplan-Meiers with `survival::survfit()`.
-
+  * User-defined parametric distributions with `define_surv_dist()` or `define_surv_spline()`.
+  * Fitted survival models with a Kaplan-Meier estimator or parametric distributions with `define_surv_fit()`
+  * Survival Tables with `define_surv_table()`
+  
 Once defined, each of these types of distributions can be combined and modified using a standard set of operations.
 
-User-defined parametric distributions are created using the `define_survival()` and `define_spline_survival()` functions:
+User-defined parametric distributions are created using the `define_surv_dist()` and `define_surv_spline()` functions:
 ```{r}
-surv_dist_1 <- define_survival(
+surv_dist_1 <- define_surv_dist(
   distribution = "exp",
   rate = .5
 )
 
-surv_dist_2 <- define_spline_survival(
+surv_dist_2 <- define_surv_spline(
   scale = "odds",
   gamma = c(-11.643, 1.843, 0.208),
   knots = c(4.077537, 5.883183, 6.458338)
 )
 ```
 
-Fitted parametric models are created using `flexsurv::flexsurvreg()` and `flexsurv::flexsurvspline()`:
+Fitted Kaplan-Meier curves are created using `survival::survfit()` wrapped into `define_surv_fit()`
 
 ```{r fig.width=6, fig.height=6}
 library(flexsurv)
@@ -46,14 +46,18 @@ library(flexsurv)
 fit_w <- flexsurvreg(
   formula = Surv(futime, fustat) ~ 1,
   data = ovarian, dist = "weibull"
-)
+) |> 
+  define_surv_fit()
+
 plot(fit_w)
 fit_spl <- flexsurvspline(
   formula = Surv(futime, fustat) ~ 1,
   data = ovarian,
   scale = "odds",
   k=1
-)
+) |> 
+  define_surv_fit()
+
 plot(fit_spl)
 ```
 
@@ -64,25 +68,30 @@ fit_cov <- flexsurvreg(
   formula = Surv(rectime, censrec) ~ group,
   dist = "weibull",
   data = bc
-)
+)|> 
+  define_surv_fit()
 plot(fit_cov)
 fitcov_good   <- set_covariates(fit_cov, group = "Good")
 fitcov_medium <- set_covariates(fit_cov, group = "Medium")
 fitcov_poor   <- set_covariates(fit_cov, group = "Poor")
 ```
 
-Similar functionality is also available for Kaplan-Meiers created using `survival::survfit()`
+Similar functionality is also available for fitted parametric models created using 
+`flexsurv::flexsurvreg()` and  `flexsurv::flexsurvspline()` wrapped into `define_surv_fit()`
+
 ```{r fig.width=6, fig.height=6}
 library(survival)
 
 km_1 <- survfit(
   formula = Surv(futime, fustat) ~ 1,
   data = ovarian
-)
+) |> 
+      define_surv_fit()
 km_cov <- survfit(
   formula = Surv(rectime, censrec) ~ group,
   data = bc
-)
+) |> 
+      define_surv_fit()
 plot(km_cov)
 km_good   <- set_covariates(km_cov, group = "Good")
 km_medium <- set_covariates(km_cov, group = "Medium")
@@ -129,23 +138,23 @@ The transition or survival probabilities are computed with `compute_surv()`. Tim
 compute_surv(surv_dist_2, time = 1:5)
 ```
 
-All these operations can be chained with the `%>%` piping operator.
+All these operations can be chained with the `|>` piping operator.
 
 ```{r}
-fit_cov %>% 
-  set_covariates(group = "Good") %>% 
-  apply_hr(hr = 2) %>% 
+fit_cov |> 
+  set_covariates(group = "Good") |> 
+  apply_hr(hr = 2) |> 
   join(
     fitcov_poor,
     at = 3
-  ) %>%
+  ) |>
   mix(
     fitcov_medium,
     weights = c(0.25, 0.75)
-  ) %>%
+  ) |>
   add_hazards(
     fit_w
-  ) %>% 
+  ) |> 
   compute_surv(time = 1:5)
 ```
 
@@ -161,8 +170,8 @@ param <- define_parameters(
     surv_dist_1,
     time = model_time # can also be state_time
   ),
-  p2 = km_1 %>%
-    join(fit_w, at = 730) %>%
+  p2 = km_1 |>
+    join(fit_w, at = 730) |>
     compute_surv(
       time = model_time,
       cycle_length = 365  # time is in days in km_medium, in years in model_time
@@ -211,7 +220,7 @@ A partitioned survival model can also be computed:
 ```{r fig.width=6, fig.height=4}
 ps <- define_part_surv(
   pfs = surv_dist_1,
-  os  = km_1 %>%
+  os  = km_1 |>
     join(fit_w, at = 730),
   cycle_length = c(1, 365) # 1 for pfs, 365 for os
 )

@@ -3,17 +3,11 @@
 \name{mix}
 \alias{mix}
 \alias{mix_}
-\alias{pool}
-\alias{pool_}
 \title{Mix Two or More Survival Distributions}
 \usage{
 mix(..., weights = 1)
 
 mix_(dots, weights = 1)
-
-pool(...)
-
-pool_(...)
 }
 \arguments{
 \item{...}{Survival distributions to be used in the
@@ -32,8 +26,8 @@ weights.
 }
 \examples{
 
-dist1 <- define_survival(distribution = "exp", rate = .5)
-dist2 <- define_survival(distribution = "gompertz", rate = .5, shape = 1)
+dist1 <- define_surv_dist(distribution = "exp", rate = .5)
+dist2 <- define_surv_dist(distribution = "gompertz", rate = .5, shape = 1)
 pooled_dist <- mix(dist1, dist2, weights = c(0.25, 0.75))
 
 }

@@ -161,7 +161,7 @@ We will calibrate the parameters `gamma` (a Weibull survival parameter) and `rrN
 The original number of patients with a THR revision after 20 cycles are found in this way:
 ```{r get_counts, message=FALSE}
 library(dplyr)
-get_counts(res_mod) %>% 
+get_counts(res_mod) |> 
   dplyr::filter(model_time == 20 & state_names == "RevisionTHR")
 ```
 We want to calibrate `gamma` and `rrNP1` to obtain 3 patients for the `standard` strategy and 1 patient for the `np1` strategy at time 20. We need to define a function to extract the values we want to change from the model and return them as a numeric vector:
