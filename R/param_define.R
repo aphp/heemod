@@ -42,7 +42,7 @@
 #' @example inst/examples/example_define_parameters.R
 #'   
 define_parameters <- function(...) {
-  .dots <- quos(...)
+  .dots <- exprs(...)
   deprecated_x_cycle(.dots)
   define_parameters_(.dots)
 }

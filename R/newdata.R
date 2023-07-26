@@ -109,6 +109,10 @@ eval_newdata <- function(new_parameters, strategy, old_parameters,
     function(x) all(rlang::is_call(x) || ! is.na(x)),
     new_parameters
   )
+  surv_new_parameters <- Filter(function(x) inherits(x, "surv_psa"), new_parameters)
+  list2env(surv_new_parameters, envir = rlang::env_parent(rlang::current_env(), 2))
+  #rlang::new_environment(surv_new_parameters, parent = rlang::env_parent(rlang::current_env()))
+  new_parameters <- setdiff(new_parameters, surv_new_parameters)
   
   tidy_new_param <- to_dots(new_parameters)
   

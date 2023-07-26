@@ -235,7 +235,7 @@ interpolate.default <- function(x, more = NULL, ...) {
     res <- c(res, new)
     
   }
-  as_quosures(res)
+  res
 }
 
 
