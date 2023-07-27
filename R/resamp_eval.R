@@ -29,14 +29,17 @@ run_psa <- function(model, psa, N) {
   for (n in get_strategy_names(model)) {
     if (!identical(Sys.getenv("TESTTHAT"), "true"))
       message(sprintf("Resampling strategy '%s'...", n))
+    e_newdata <- eval_strategy_newdata(
+      x = model,
+      strategy = n,
+      newdata = newdata
+    )
+    message(sprintf("Resampling strategy '%s'...", n))
     list_res <- c(
       list_res,
       list(
-        eval_strategy_newdata(
-          x = model,
-          strategy = n,
-          newdata = newdata
-        ) %>% 
+        e_newdata
+        %>% 
           dplyr::rowwise() %>% 
           dplyr::do(get_total_state_values(.data$.mod)) %>% 
           dplyr::bind_cols(newdata) %>% 
@@ -62,6 +65,7 @@ run_psa <- function(model, psa, N) {
   run_model <- res %>% 
     dplyr::select(-.index) %>% 
     dplyr::group_by(.data$.strategy_names) %>%
+    dplyr::select_if(is.numeric) %>%
     dplyr::summarise_all(mean) %>% 
     as.data.frame()
   

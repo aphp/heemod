@@ -6,7 +6,6 @@
 \alias{resample_surv.surv_pooled}
 \alias{resample_surv.surv_add_haz}
 \alias{resample_surv.surv_dist}
-\alias{use_surv_dist}
 \title{Resample survival distribution}
 \usage{
 resample_surv(x, ...)
@@ -18,32 +17,22 @@ resample_surv(x, ...)
 \method{resample_surv}{surv_add_haz}(x, ...)
 
 \method{resample_surv}{surv_dist}(x, n)
-
-use_surv_dist(dist)
 }
 \arguments{
 \item{x}{a \code{surv_object}}
 
 \item{n}{the number of observations to generate if dist is specified or x is a \code{surv_dist}
-object}
+object
 
-\item{dist}{a survival distribution, specified as a call to a random
-generation function of the distribution}
+The lower n is, the higher is the variability}
 }
 \description{
 Resample survival distribution
 }
-\details{
-\code{resample_surv()} is used for a \code{surv_object}, making use of bootstrapping.
-To simulate a survival distribution, the appropriate function is \code{use_surv_dist}
-
-The lower n is, the higher is the variability
-}
 \examples{
-surv <- define_surv_dist("exp", rate = 0.5))
+surv <- define_surv_dist("exp", rate = 0.5)
 
 ## Should return a similar distribution
-use_surv_dist(rexp(100, .5))
 resample_surv(surv, n = 100)
 
 library(survival)

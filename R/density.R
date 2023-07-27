@@ -240,15 +240,10 @@ boot_survfit <- function(surv_object){
 #' 
 #' 
 #' @param x a `surv_object`
-#' @param dist a survival distribution, specified as a call to a random 
-#' generation function of the distribution
 #' @param n the number of observations to generate if dist is specified or x is a `surv_dist`
 #' object
 #' 
 #' 
-#' @details 
-#' `resample_surv()` is used for a `surv_object`, making use of bootstrapping.
-#' To simulate a survival distribution, the appropriate function is `use_surv_dist`
 #' 
 #' The lower n is, the higher is the variability
 #' @export
@@ -257,10 +252,9 @@ boot_survfit <- function(surv_object){
 #' @seealso plot.surv_psa
 #' 
 #' @examples
-#' surv <- define_surv_dist("exp", rate = 0.5))
+#' surv <- define_surv_dist("exp", rate = 0.5)
 #' 
 #' ## Should return a similar distribution
-#' use_surv_dist(rexp(100, .5))
 #' resample_surv(surv, n = 100)
 #' 
 #' library(survival)
@@ -305,22 +299,28 @@ resample_surv.surv_dist <- function(x, n){
   
   args <- x[- match("distribution", names(x))]
   ret <- do.call(pf, c(n, args))
-  structure(list(r_use_psa_surv(ret)),
-            class = c("surv_psa", "surv_dist", "surv_object"))
+  structure(list(r_resample_surv_dist(ret, x$distribution, args)),
+            class = c("surv_psa"))
   
 }
 
-#' @rdname resample_surv
-#' @export
-use_surv_dist <- function(dist){
-  if (! requireNamespace("flexsurv")) {
-    stop("'flexsurv' package required.")
+r_resample_surv_dist <- function(distribution, type, args){
+  if (!missing(args)){
+    y <- seq.int(1L,100L)/100
+    x <- quantile(distribution, probs = y, names = FALSE)
+    df <- list(x = x, y = y)
+    args2 <- setNames(syms(names(args)), names(args))
+    rhs <- rlang::call2(paste0("p", type), quote(x), !!!args2)
+    formula <- rlang::new_formula(quote(y), rhs, env = asNamespace("flexsurv"))
+    fit <- nls(
+      formula, 
+      data = df, start = args
+    )
+    return(do.call(define_surv_dist, c(type, as.list(coef(fit)))))
   }
-  structure(list(r_use_psa_surv(dist)),
-            class = c("surv_psa", "surv_dist", "surv_object"))
 }
 
-r_use_psa_surv <- function(distribution){
+r_use_psa_surv <- function(distribution, type, args){
   boot <- ifelse(is.numeric(distribution) | inherits(distribution, "surv_dist"), FALSE, TRUE)  
   if (boot){
     return(
@@ -328,8 +328,9 @@ r_use_psa_surv <- function(distribution){
         function(x) boot_survfit(distribution),
         class=c("surv_psa", "boot_surv", "function"))
     )
-  }
+  } else{
   structure(
     function(x) ecdf(distribution)(x),
     class=c("surv_psa", "function"))
+  }
 }
