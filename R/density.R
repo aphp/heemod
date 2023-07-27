@@ -201,40 +201,6 @@ use_distribution <- function(distribution, smooth = TRUE) {
   )
 }
 
-boot_survfit <- function(surv_object){
-  init_surv_object <- surv_object
-  if (is.list(surv_object) && "dist" %in% names(surv_object)){
-    surv_object <- surv_object$dist
-  }
-  data <- rlang::call_standardise(surv_object) %>% 
-    rlang::call_args() %>% 
-    `[[`("data") %>% 
-    eval_tidy(env = get_env(surv_object))
-  if (is.null(attr(surv_object, "strata"))){
-    new_data <- data[sample.int(nrow(data), 
-                                replace = TRUE),]
-  } else {
-    strata <- 
-      names(attr(surv_object, "strata")) %>% strsplit(., ", ") %>% 
-      unlist(use.names = F) %>% 
-      gsub("=.*", "", .) %>%
-      unique()
-    new_data <-  data %>%
-      group_by(!!!syms(strata)) %>% 
-      dplyr::slice_sample(prop = 1, replace = TRUE) %>% 
-      ungroup()
-  }
-  new_env <- rlang::env()
-  assign("new_data", new_data, envir = new_env)
-  res <- rlang::call_modify(surv_object, data = quote(new_data))
-  res <- rlang::set_env(res, new_env)
-  if (is.list(init_surv_object) && "dist" %in% names(init_surv_object)){
-    structure(c(list(dist = res), 
-                init_surv_object[setdiff(names(init_surv_object), "dist")]),
-              class = class(init_surv_object))
-  } else res
-}
-
 
 #' Resample survival distribution
 #' 
@@ -324,13 +290,45 @@ r_use_psa_surv <- function(distribution, type, args){
   boot <- ifelse(is.numeric(distribution) | inherits(distribution, "surv_dist"), FALSE, TRUE)  
   if (boot){
     return(
-      structure(
-        function(x) boot_survfit(distribution),
-        class=c("surv_psa", "boot_surv", "function"))
+      r_boot_survfit(distribution)
     )
   } else{
   structure(
     function(x) ecdf(distribution)(x),
     class=c("surv_psa", "function"))
   }
+}
+
+r_boot_survfit <- function(surv_object){
+  init_surv_object <- surv_object
+  if (is.list(surv_object) && "dist" %in% names(surv_object)){
+    surv_object <- surv_object$dist
+  }
+  data <- rlang::call_standardise(surv_object) %>% 
+    rlang::call_args() %>% 
+    `[[`("data") %>% 
+    eval_tidy(env = get_env(surv_object))
+  if (is.null(attr(surv_object, "strata"))){
+    new_data <- data[sample.int(nrow(data), 
+                                replace = TRUE),]
+  } else {
+    strata <- 
+      names(attr(surv_object, "strata")) %>% strsplit(., ", ") %>% 
+      unlist(use.names = F) %>% 
+      gsub("=.*", "", .) %>%
+      unique()
+    new_data <-  data %>%
+      group_by(!!!syms(strata)) %>% 
+      dplyr::slice_sample(prop = 1, replace = TRUE) %>% 
+      ungroup()
+  }
+  new_env <- rlang::env()
+  assign("new_data", new_data, envir = new_env)
+  res <- rlang::call_modify(surv_object, data = quote(new_data))
+  res <- rlang::set_env(res, new_env)
+  if (is.list(init_surv_object) && "dist" %in% names(init_surv_object)){
+    structure(c(list(dist = res), 
+                init_surv_object[setdiff(names(init_surv_object), "dist")]),
+              class = class(init_surv_object))
+  } else res
 }

@@ -282,22 +282,22 @@ compute_surv <- memoise::memoise(
 )
 
 
-
-#' @rdname eval_surv
-#' @export
-eval_surv.surv_psa <- function(x, time, ...){
-  if (inherits(x, c("surv_pooled", "surv_add_haz"))){
-    res <- if (inherits(x, "surv_pooled")){
-      mix_(x$dists, weights = x$weights)
-    } else {
-      add_hazards_(x$dists)
-    }
-    return(eval_surv(res, time))
-  }
-  
-  ret <- x[[1]](time)
-  eval_surv(ret, time, ...)
-}
+#' 
+#' #' @rdname eval_surv
+#' #' @export
+#' eval_surv.surv_psa <- function(x, time, ...){
+#'   if (inherits(x, c("surv_pooled", "surv_add_haz"))){
+#'     res <- if (inherits(x, "surv_pooled")){
+#'       mix_(x$dists, weights = x$weights)
+#'     } else {
+#'       add_hazards_(x$dists)
+#'     }
+#'     return(eval_surv(res, time))
+#'   }
+#'   
+#'   ret <- x[[1]](time)
+#'   eval_surv(ret, time, ...)
+#' }
 
 #' @rdname eval_surv
 #' @export

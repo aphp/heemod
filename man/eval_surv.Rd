@@ -3,7 +3,6 @@
 \name{eval_surv}
 \alias{eval_surv}
 \alias{compute_surv_}
-\alias{eval_surv.surv_psa}
 \alias{eval_surv.surv_fit}
 \alias{eval_surv.default}
 \alias{eval_surv.survfit}
@@ -18,13 +17,25 @@
 \alias{eval_surv.surv_add_haz}
 \alias{eval_surv.surv_dist}
 \alias{eval_surv.surv_table}
-\title{Evaluate Survival Distributions}
+\title{#' @rdname eval_surv
+#' @export
+eval_surv.surv_psa <- function(x, time, ...){
+if (inherits(x, c("surv_pooled", "surv_add_haz"))){
+res <- if (inherits(x, "surv_pooled")){
+mix_(x$dists, weights = x$weights)
+} else {
+add_hazards_(x$dists)
+}
+return(eval_surv(res, time))
+}
+
+ret <- x[\link{1}](time)
+eval_surv(ret, time, ...)
+}}
 \usage{
 eval_surv(x, time, ...)
 
 compute_surv_(x, time, cycle_length = 1, type = c("prob", "survival"), ...)
-
-\method{eval_surv}{surv_psa}(x, time, ...)
 
 \method{eval_surv}{surv_fit}(x, time, ...)
 
