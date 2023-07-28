@@ -67,7 +67,7 @@ run_model <- function(...,
   
   init <- check_init(init, get_state_names(uneval_strategy_list[[1]]))
   inflow <- check_inflow(inflow, get_state_names(uneval_strategy_list[[1]]))
-
+  
   run_model_(
     uneval_strategy_list = uneval_strategy_list,
     parameters = parameters,
@@ -155,6 +155,8 @@ run_model_ <- function(uneval_strategy_list,
   )
   
   eval_strategy_list <- list()
+  
+  copy_surv_env()
   
   for (n in names(uneval_strategy_list)) {
     eval_strategy_list[[n]] <- eval_strategy(

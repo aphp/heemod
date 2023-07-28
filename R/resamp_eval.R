@@ -185,7 +185,7 @@ eval_resample <- function(psa, N) {
     x <- psa$list_qdist[[s]]
     lhs <- as.name(s)
     rhs <- rlang::call2(x[[1]], lhs, !!!rlang::call_args(x))
-    res[[s]] <- replicate(N, eval(rhs, envir = asNamespace("heemod")), simplify = F) %>%
+    res[[s]] <- replicate(N, eval(rhs, envir = getOption("heemod.env")), simplify = F) %>%
       map(function(.x){
         if (inherits(.x[[1]], "boot_surv")){
           tmp <- .x[[1]]()

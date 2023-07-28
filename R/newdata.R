@@ -110,7 +110,7 @@ eval_newdata <- function(new_parameters, strategy, old_parameters,
     new_parameters
   )
   surv_new_parameters <- Filter(function(x) inherits(x, "surv_psa"), new_parameters)
-  list2env(map(surv_new_parameters,1), envir = rlang::env_parent(rlang::current_env(), 2))
+  list2env(map(surv_new_parameters,1), envir = getOption("heemod.env"))
   #rlang::new_environment(surv_new_parameters, parent = rlang::env_parent(rlang::current_env()))
   new_parameters <- setdiff(new_parameters, surv_new_parameters)
   

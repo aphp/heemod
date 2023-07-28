@@ -30,12 +30,12 @@ eval_parameters <- function(x, cycles = 1,
     #tibble::as_tibble()
   
   x_tidy <- x
-  
   # other datastructure?
   res <- try({
     lapply(seq_along(x_tidy), function(i){
       #parameters[names(x)[i]] <<- eval(rlang::quo_squash(x_tidy[[i]]), parameters)
-      start_tibble[names(x)[i]] <<- rlang::eval_tidy(x_tidy[[i]], data = start_tibble)
+      start_tibble[names(x)[i]] <<- rlang::eval_tidy(x_tidy[[i]], data = start_tibble, 
+                                                     env=getOption("heemod.env"))
     })
     start_tibble
   }, silent = TRUE

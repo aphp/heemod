@@ -671,3 +671,19 @@ alert_pipe <- function(...){
   cli::cli_abort(c(x = "dplyr's pipe %>% is not supported for chaining survival operations. ",
        "Please use the new pipe |> instead."), call=NULL)
 }
+
+copy_surv_env <- function(){
+  new_env <- getOption("heemod.env")
+  n <- 0
+  repeat({
+    n <- n + 1
+    env <- rlang::caller_env(n)
+    purrr::walk(ls(env, all.names = TRUE), function(y){
+      if (!inherits(try(env[[y]], silent = TRUE), "try-error") && 
+          inherits(env[[y]], "surv_object")) {
+        assign(y, get(y, env), new_env)
+      }
+    })
+    if(identical(env, globalenv())) return(new_env)
+  })
+}

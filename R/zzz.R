@@ -10,3 +10,9 @@
   
   invisible()
 }
+
+.onAttach <- function(libname, pkgname) {
+  options("heemod.env" =  rlang::new_environment(parent = asNamespace("heemod")))
+  invisible()
+}
+
