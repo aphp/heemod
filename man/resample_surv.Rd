@@ -2,6 +2,7 @@
 % Please edit documentation in R/density.R
 \name{resample_surv}
 \alias{resample_surv}
+\alias{resample_surv.numeric}
 \alias{resample_surv.default}
 \alias{resample_surv.surv_pooled}
 \alias{resample_surv.surv_add_haz}
@@ -9,6 +10,8 @@
 \title{Resample survival distribution}
 \usage{
 resample_surv(x, ...)
+
+\method{resample_surv}{numeric}(x, ...)
 
 \method{resample_surv}{default}(x, ...)
 

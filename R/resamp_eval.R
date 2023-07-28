@@ -182,7 +182,10 @@ eval_resample <- function(psa, N) {
   
   loc <- list()
   for (s in psa$surv){
-    res[[s]] <- replicate(N, eval(psa$list_qdist[[s]]), simplify = F) %>%
+    x <- psa$list_qdist[[s]]
+    lhs <- as.name(s)
+    rhs <- rlang::call2(x[[1]], lhs, !!!rlang::call_args(x))
+    res[[s]] <- replicate(N, eval(rhs, envir = asNamespace("heemod")), simplify = F) %>%
       map(function(.x){
         if (inherits(.x[[1]], "boot_surv")){
           tmp <- .x[[1]]()

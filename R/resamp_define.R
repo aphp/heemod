@@ -52,12 +52,12 @@ define_psa_ <- function(.dots = list(), correlation) {
     eval_dots,
     function(x) {
       rhsx <- rlang::f_rhs(x)
-      if (grepl("resample_surv", deparse(rhsx))){
-        lhs <- rlang::f_lhs(x)
-        rhsx <- rlang::call2(rhsx[[1]], lhs, !!!rlang::call_args(rhsx))
-      }
-      res <- eval(rhsx, envir = asNamespace("heemod"))
-      if (!inherits(res, "surv_psa")) res else structure(rhsx, class = class(res))
+      # if (grepl("resample_surv", deparse(rhsx))){
+      #   lhs <- rlang::f_lhs(x)
+      #   rhsx <- rlang::call2(rhsx[[1]], lhs, !!!rlang::call_args(rhsx))
+      # }
+      res <- eval_tidy(rhsx)
+     # if (!inherits(res, "surv_psa")) res else structure(rhsx, class = class(res))
     })
   
   list_qdist <- unlist(

@@ -233,6 +233,14 @@ resample_surv <- function(x, ...){
 
 #' @rdname resample_surv
 #' @export
+resample_surv.numeric <- function(x, ...){
+  structure(expr(resample_surv(!!x)),
+            class = c("surv_psa"))
+  
+}
+
+#' @rdname resample_surv
+#' @export
 resample_surv.default <- function(x, ...){
   structure(list(r_use_psa_surv(x)),
             class = c("surv_psa",class(x)))
