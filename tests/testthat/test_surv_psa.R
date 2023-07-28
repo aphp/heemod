@@ -201,10 +201,12 @@ test_that("psa surv_fit is correct", {
   expect_gt(sd(resPSA$psa$ut), 0)
   expect_equal(identical(resPSA$run_model, resPSA$model$run_model), FALSE)
 
-  # km_2 <- km_1 |>
-  #   set_covariates(rx = "Lev+5FU")
-  # psa <- define_psa(km_2 ~ resample_surv())
-  # resPSA <- run_psa(resTM, psa, 10, keep = T)
+   km_2 <- km_1 |>
+     set_covariates(rx = "Lev+5FU")
+   
+   psa <- define_psa(km_2 ~ resample_surv())
+   
+   resPSA <- run_psa(resTM, psa, 10)
   ### do some tests here
 })
 # 

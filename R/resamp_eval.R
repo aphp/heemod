@@ -13,6 +13,7 @@
 #' @example inst/examples/example_run_psa.R
 #'   
 run_psa <- function(model, psa, N) {
+  copy_surv_env
   stopifnot(
     N > 0,
     ! is.null(N)

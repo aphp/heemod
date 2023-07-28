@@ -18,7 +18,7 @@
 #' dist2 <- define_surv_dist(distribution = "gompertz", rate = .5, shape = 1)
 #' join_dist <- join(dist1, dist2, at=20)
 join <- function(..., at) {
-  dots <- quos(...) %>% 
+  dots <- exprs(...) %>% 
     detect_dplyr_pipe()
   join_(dots, at)
 }
@@ -96,7 +96,7 @@ project_fn <- function(dist1, dist2_list) {
 #' pooled_dist <- mix(dist1, dist2, weights = c(0.25, 0.75))
 #' 
 mix <- function(..., weights = 1) {
-  dots <- quos(...)%>% 
+  dots <- exprs(...)%>% 
     detect_dplyr_pipe()
   
   mix_(dots, weights)
@@ -140,7 +140,7 @@ mix_ <- function(dots, weights = 1) {
 #' ph_dist <- apply_hr(dist1, 0.5)
 #' 
 apply_hr <- function(dist, hr, log_hr = FALSE) {
-  dist <- enquo(dist) %>% 
+  dist <- enexpr(dist) %>% 
     detect_dplyr_pipe()
   stopifnot(
     length(hr) == 1,
@@ -182,7 +182,7 @@ apply_hr <- function(dist, hr, log_hr = FALSE) {
 #' dist1 <- define_surv_dist(distribution = "exp", rate = .25)
 #' aft_dist <- apply_af(dist1, 1.5)
 apply_af <- function(dist, af, log_af = FALSE) {
-  dist <- enquo(dist) %>% 
+  dist <- enexpr(dist) %>% 
     detect_dplyr_pipe()
   stopifnot(
     length(af) == 1,
@@ -226,7 +226,7 @@ apply_af <- function(dist, af, log_af = FALSE) {
 #' dist1 <- define_surv_dist(distribution = "exp", rate = .25)
 #' po_dist <- apply_or(dist1, 1.2)
 apply_or = function(dist, or, log_or = FALSE) {
-  dist <- enquo(dist) %>% 
+  dist <- enexpr(dist) %>% 
     detect_dplyr_pipe()
   
   stopifnot(
@@ -273,7 +273,7 @@ apply_or = function(dist, or, log_or = FALSE) {
 #' compute_surv(dist1, 1:10)
 #' compute_surv(shift_dist, 1:10)
 apply_shift = function(dist, shift) {
-  dist <- enquo(dist)%>% 
+  dist <- enexpr(dist)%>% 
     detect_dplyr_pipe()
   
   stopifnot(
@@ -315,7 +315,7 @@ apply_shift = function(dist, shift) {
 #' combined_dist <- add_hazards(dist1, dist2)
 #' 
 add_hazards <- function(...) {
-  dots <- quos(...)%>% 
+  dots <- exprs(...)%>% 
     detect_dplyr_pipe()
   
   add_hazards_(dots)
@@ -366,7 +366,7 @@ add_hazards_ <- function(dots) {
 #' 
 set_covariates <- function(dist, ..., data = NULL) {
   covariates <- data.frame(...)
-  dist <- enquo(dist)%>% 
+  dist <- enexpr(dist)%>% 
     detect_dplyr_pipe()
   set_covariates_(dist, covariates, data)
 }
