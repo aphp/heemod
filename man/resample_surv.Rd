@@ -2,7 +2,6 @@
 % Please edit documentation in R/density.R
 \name{resample_surv}
 \alias{resample_surv}
-\alias{resample_surv.numeric}
 \alias{resample_surv.default}
 \alias{resample_surv.surv_pooled}
 \alias{resample_surv.surv_add_haz}
@@ -10,8 +9,6 @@
 \title{Resample survival distribution}
 \usage{
 resample_surv(x, ...)
-
-\method{resample_surv}{numeric}(x, ...)
 
 \method{resample_surv}{default}(x, ...)
 
@@ -31,6 +28,14 @@ The lower n is, the higher is the variability}
 }
 \description{
 Resample survival distribution
+
+#' @rdname resample_surv
+#' @export
+resample_surv.numeric <- function(x, ...){
+structure(expr(resample_surv(!!x)),
+class = c("surv_psa"))
+
+}
 }
 \examples{
 surv <- define_surv_dist("exp", rate = 0.5)

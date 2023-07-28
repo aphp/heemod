@@ -228,6 +228,10 @@ use_distribution <- function(distribution, smooth = TRUE) {
 #' resample_surv(sf)
 
 resample_surv <- function(x, ...){
+  if (missing(x)) return(
+    structure(expr(resample_surv()),
+              class = c("surv_psa"))
+  )
   UseMethod("resample_surv")
 }
 
@@ -243,7 +247,7 @@ resample_surv.numeric <- function(x, ...){
 #' @export
 resample_surv.default <- function(x, ...){
   structure(list(r_use_psa_surv(x)),
-            class = c("surv_psa",class(x)))
+            class = c("surv_psa"))
   
 }
 
@@ -314,10 +318,11 @@ r_boot_survfit <- function(surv_object){
   }
   data <- rlang::call_standardise(surv_object) %>% 
     rlang::call_args() %>% 
-    `[[`("data") %>% 
-    eval_tidy(env = get_env(surv_object))
+    `[[`("data") 
+  e_data <- data %>% 
+    eval_tidy()
   if (is.null(attr(surv_object, "strata"))){
-    new_data <- data[sample.int(nrow(data), 
+    new_data <- e_data[sample.int(nrow(e_data), 
                                 replace = TRUE),]
   } else {
     strata <- 
@@ -325,17 +330,18 @@ r_boot_survfit <- function(surv_object){
       unlist(use.names = F) %>% 
       gsub("=.*", "", .) %>%
       unique()
-    new_data <-  data %>%
+    new_data <-  e_data %>%
       group_by(!!!syms(strata)) %>% 
       dplyr::slice_sample(prop = 1, replace = TRUE) %>% 
       ungroup()
   }
+ # assign(deparse(data), new_data, envir = getOption("heemod.env"))
   new_env <- rlang::env()
   assign("new_data", new_data, envir = new_env)
   res <- rlang::call_modify(surv_object, data = quote(new_data))
-  res <- rlang::set_env(res, new_env)
+  res <- new_quosure(res, new_env)
   if (is.list(init_surv_object) && "dist" %in% names(init_surv_object)){
-    structure(c(list(dist = res), 
+    structure(c(list(dist = res),
                 init_surv_object[setdiff(names(init_surv_object), "dist")]),
               class = class(init_surv_object))
   } else res

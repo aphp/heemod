@@ -156,56 +156,56 @@ test_that("psa surv_dist is correct", {
   # })
 })
 
-# test_that("psa surv_fit is correct", {
-#   param <- define_parameters(
-#     p1 = heemod:::compute_surv_(
-#       km_1,
-#       time = model_time,
-#       cycle_length = 30
-#     )
-#   )
-# 
-#   tm <- define_transition(
-#     C, p1,
-#     0, C
-#   )
-# 
-#   tm2 <- define_transition(
-#     C, p2,
-#     0, C
-#   )
-# 
-#   sA <-  define_state(
-#     cost = 10, ut = 1
-#   )
-#   sB <-  define_state(
-#     cost = 20, ut = .5
-#   )
-# 
-#   stratTM <- define_strategy(
-#     transition = tm,
-#     A = sA, B = sB
-#   )
-#   resTM <- run_model(
-#     parameters = param,
-#     stratTM,
-#     cycles = 15,
-#     cost = cost, effect = ut
-#   )
-#   set.seed(1)
-#   psa <- define_psa(km_1 ~ resample_surv())
-#   resPSA <- run_psa(resTM, psa, 10)
-#   expect_length(unique(resPSA$psa$ut), 10)
-#   
-#   expect_gt(sd(resPSA$psa$cost), 0)
-#   expect_gt(sd(resPSA$psa$ut), 0)
-#   expect_equal(identical(resPSA$run_model, resPSA$model$run_model), FALSE)
-# 
-#   # km_2 <- km_1 |>
-#   #   set_covariates(rx = "Lev+5FU")
-#   # psa <- define_psa(km_2 ~ resample_surv())
-#   # resPSA <- run_psa(resTM, psa, 10, keep = T)
-#   ### do some tests here
-# })
+test_that("psa surv_fit is correct", {
+  param <- define_parameters(
+    p1 = heemod:::compute_surv_(
+      km_1,
+      time = model_time,
+      cycle_length = 30
+    )
+  )
+
+  tm <- define_transition(
+    C, p1,
+    0, C
+  )
+
+  tm2 <- define_transition(
+    C, p2,
+    0, C
+  )
+
+  sA <-  define_state(
+    cost = 10, ut = 1
+  )
+  sB <-  define_state(
+    cost = 20, ut = .5
+  )
+
+  stratTM <- define_strategy(
+    transition = tm,
+    A = sA, B = sB
+  )
+  resTM <- run_model(
+    parameters = param,
+    stratTM,
+    cycles = 15,
+    cost = cost, effect = ut
+  )
+  set.seed(1)
+  psa <- define_psa(km_1 ~ resample_surv())
+  resPSA <- run_psa(resTM, psa, 10)
+  expect_length(unique(resPSA$psa$ut), 10)
+
+  expect_gt(sd(resPSA$psa$cost), 0)
+  expect_gt(sd(resPSA$psa$ut), 0)
+  expect_equal(identical(resPSA$run_model, resPSA$model$run_model), FALSE)
+
+  # km_2 <- km_1 |>
+  #   set_covariates(rx = "Lev+5FU")
+  # psa <- define_psa(km_2 ~ resample_surv())
+  # resPSA <- run_psa(resTM, psa, 10, keep = T)
+  ### do some tests here
+})
 # 
 

@@ -21,12 +21,12 @@
 #' 
 #' @export
 define_surv_fit <- function(x){
-  enx <- rlang::enquo(x) 
+  enx <- rlang::enexpr(x) 
   detect_dplyr_pipe(enx)
   stopifnot(rlang::call_name(enx) %in% c("survfit", "flexsurvreg", 
                                          "flexsurvspline", "coxph"))
   structure(enx,
-            class = c("surv_fit", "surv_object", "quosure"),
+            class = c("surv_fit", "surv_object"),
             strata = x$strata)
   
 }
