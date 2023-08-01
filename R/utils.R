@@ -687,3 +687,48 @@ copy_surv_env <- function(){
     if(identical(env, globalenv())) return(new_env)
   })
 }
+
+copy_param_env <- function(param){
+  UseMethod("copy_param_env")
+}
+
+# copy_param_env.name <- function(param){
+#   copy_param_env.default(param)
+# }
+
+#' @export
+copy_param_env.name <- function(param){
+  copy_param_env.default(all.vars(param))
+}
+
+#' @export
+copy_param_env.call <- function(param){
+  copy_param_env.default(all.vars(param))
+}
+
+#' @export
+copy_param_env.uneval_parameters <- function(param){
+  list_vars <- map(param, all.vars) 
+  to_find <- unlist(list_vars, use.names = F)
+  not_found <- setdiff(to_find, c(names(list_vars), "model_time", "state_time"))
+  copy_param_env.default(not_found)
+}
+
+#' @export
+copy_param_env.default <- function(param){
+  new_env <- getOption("heemod.env")
+  n <- 0
+  repeat({
+    n <- n + 1
+    env <- rlang::caller_env(n)
+    for (x in param){
+      if (exists(x, env)) {
+        assign(x, get(x, env), new_env)
+        ls(getOption("heemod.env"))
+      }
+      setdiff(x, param)
+    }
+    
+    if (!length(param) || identical(env, globalenv())) return(new_env)
+  }) 
+}

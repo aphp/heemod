@@ -150,13 +150,17 @@ replace_C <- function(x) {
   x
 }
 
+#' @export
 get_state_names.eval_matrix <- function(x, ...){
   attr(x, "state_names")
 }
+
+#' @export
 get_state_names.array <- function(x, ...){
   attr(x, "state_names")
 }
 
+#' @export
 get_matrix_order.eval_matrix <- function(x){
   ncol(x[[1]])
 }

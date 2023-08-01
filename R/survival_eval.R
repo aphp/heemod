@@ -113,11 +113,10 @@ extract_params <- function(obj, data = NULL) {
 #' Extract Product-Limit Table for a Stratum
 #' 
 #' Extracts the product-limit table from a survfit object 
-#' for a given stratum. Only [survival::survfit()] and
-#' unstratified [survival::survfit.coxph()] objects are
+#' for a given stratum. Only [survival::survfit()] objects are
 #' supported.
 #' 
-#' @param sf A survit object.
+#' @param sf A survfit object.
 #' @param index The index number of the strata to extract.
 #'   
 #' @return A data frame of the product-limit table for the 
@@ -231,7 +230,7 @@ compute_surv_ <- function(x, time,
                           cycle_length = 1, 
                           type = c("prob", "survival"), ...){
   
-  if (inherits(x, c("survfit", "flexsurvreg", "coxph", "flexsurvspline"))){
+  if (inherits(x, c("survfit", "flexsurvreg", "flexsurvspline"))){
     if (!identical(Sys.getenv("TESTTHAT"), "true")){
       cli::cli_warn("{.var x} must be encapsulated within define_surv_fit(); errors may occur")
     }
@@ -245,7 +244,6 @@ compute_surv_ <- function(x, time,
   } else {
     time_ = time
   }
-  
   check_cycle_inputs(time_, cycle_length)
   ret <- eval_surv(x, cycle_length * time_, ...)
   if (type == "prob") {
@@ -302,7 +300,7 @@ compute_surv <- memoise::memoise(
 #' @rdname eval_surv
 #' @export
 eval_surv.surv_fit <- function(x, time, ...){
-  eval_surv(eval_tidy(x), time, ...)
+  eval_surv(eval_tidy(x, env = getOption("heemod.env")), time, ...)
 }
 
 
@@ -641,15 +639,32 @@ eval_surv.surv_table <- function(x, time, ...){
   look_up(data = x, time = time, bin = "time", value = "survival")
 }
 
+#' @export
 eval_surv.quosure <- function(x, ...){
   # dots <- list(...)
   # use_data <- list()
   # if("extra_env" %in% names(dots))
   #   use_data <- as.list.environment(dots$extra_env)
   #eval_surv(eval_tidy(x, data = use_data), ...)
-  eval_surv(eval_tidy(x), ...)
+  eval_surv(eval_tidy(x, env = getOption("heemod.env")), ...)
 }
 
+#' @export
+eval_surv.name <- function(x, ...){
+  copy_param_env(x)
+  
+  # dots <- list(...)
+  # use_data <- list()
+  # if("extra_env" %in% names(dots))
+  #   use_data <- as.list.environment(dots$extra_env)
+  #eval_surv(eval_tidy(x, data = use_data), ...)
+  eval_surv(eval_tidy(x, env=getOption("heemod.env")), ...)
+}
+
+#' @export
+eval_surv.call <- eval_surv.name
+
+#' @export
 eval_surv.character <- function(x, ...){
   eval_surv(eval(parse(text = x)), ...)
 }

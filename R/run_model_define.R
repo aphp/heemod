@@ -156,7 +156,7 @@ run_model_ <- function(uneval_strategy_list,
   
   eval_strategy_list <- list()
   
-  copy_surv_env()
+  copy_param_env(parameters)
   
   for (n in names(uneval_strategy_list)) {
     eval_strategy_list[[n]] <- eval_strategy(
