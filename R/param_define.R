@@ -42,7 +42,8 @@
 #' @example inst/examples/example_define_parameters.R
 #'   
 define_parameters <- function(...) {
-  .dots <- quos(...)
+  .dots <- exprs(...)
+  .dots <- as_quosures(.dots, getOption("heemod.env"))
   deprecated_x_cycle(.dots)
   define_parameters_(.dots)
 }

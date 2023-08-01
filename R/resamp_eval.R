@@ -69,6 +69,7 @@ run_psa <- function(model, psa, N) {
   }
   
   names(list_res) <- get_strategy_names(model)
+  
   index <- seq_len(N)
   
   for (n in names(list_res)) {
