@@ -1,3 +1,20 @@
+remove_undefined_psa <- function(psa, param){
+  list_vars <- map(param, all.vars) 
+  all_vars <- c(unlist(list_vars, use.names = F), names(list_vars))
+  not_found <- setdiff(names(psa$list_qdist), all_vars)
+  if (!length(not_found)) return(psa)
+    cli::cli_warn(glue::glue('{paste(not_found, collapse = ", ")} \\
+                                      not previously defined within define_parameters. \\
+                                      Will be skipped.'))
+    psa$list_qdist <- psa$list_qdist[-which(names(psa$list_qdist) %in% not_found)]
+    if (!length(psa$list_qdist)) {
+      cli::cli_abort("No defined parameter to resample")
+    }
+    psa$surv <- psa$surv[-which(psa$surv %in% not_found)]
+    psa$multinom <- psa$multinom[-which(psa$multinom %in% not_found)]
+    psa
+}
+
 #' Run Probabilistic Uncertainty Analysis
 #' 
 #' @param model The result of [run_model()].
@@ -13,7 +30,6 @@
 #' @example inst/examples/example_run_psa.R
 #'   
 run_psa <- function(model, psa, N) {
-  copy_surv_env
   stopifnot(
     N > 0,
     ! is.null(N)
@@ -22,6 +38,9 @@ run_psa <- function(model, psa, N) {
   if (! all(c(".cost", ".effect") %in% names(get_model_results(model)))) {
     stop("No cost and/or effect defined, probabilistic analysis unavailable.")
   }
+  
+  copy_param_env(model$parameters)
+  psa <- remove_undefined_psa(psa, model$parameters)
   
   newdata <- eval_resample(psa, N)
   

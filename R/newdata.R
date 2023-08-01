@@ -110,7 +110,20 @@ eval_newdata <- function(new_parameters, strategy, old_parameters,
     new_parameters
   )
   surv_new_parameters <- Filter(function(x) inherits(x, "surv_psa"), new_parameters)
-  list2env(map(surv_new_parameters,1), envir = getOption("heemod.env"))
+  
+  new_list <- map(surv_new_parameters,1)
+  
+  quo_surv <- Filter(is_quosure, new_list)
+  non_quo_surv <- setdiff(quo_surv, new_list)
+    
+  nm <- map(quo_surv, function(x){
+      deparse(get_expr(x))
+  })
+  data_surv <- map(seq_along(quo_surv), function(i){
+    get_env(quo_surv[[i]])[[nm[[i]]]]
+   }) %>% setNames(nm)
+    
+  list2env(c(non_quo_surv, data_surv), envir = getOption("heemod.env"))
   #rlang::new_environment(surv_new_parameters, parent = rlang::env_parent(rlang::current_env()))
   new_parameters <- setdiff(new_parameters, surv_new_parameters)
   

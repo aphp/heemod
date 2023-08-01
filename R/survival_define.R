@@ -23,8 +23,14 @@
 define_surv_fit <- function(x){
   enx <- rlang::enexpr(x) 
   detect_dplyr_pipe(enx)
-  stopifnot(rlang::call_name(enx) %in% c("survfit", "flexsurvreg", 
-                                         "flexsurvspline", "coxph"))
+  fun <- rlang::call_name(enx) 
+  stopifnot(fun %in% c("survfit", "flexsurvreg", 
+                                         "flexsurvspline"))
+  data <-rlang::call_args(enx) %>% 
+    `[[`("data") 
+  if (is.null(data)){
+    cli::cli_abort("Please explicit the {.arg data} argument within the {.fun {fun}} function")
+  }
   structure(enx,
             class = c("surv_fit", "surv_object"),
             strata = x$strata)

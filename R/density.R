@@ -311,22 +311,41 @@ r_use_psa_surv <- function(distribution, type, args){
   }
 }
 
-r_boot_survfit <- function(surv_object){
-  init_surv_object <- surv_object
-  if (is.list(surv_object) && "dist" %in% names(surv_object)){
-    surv_object <- surv_object$dist
+r_boot_survfit <- function(x){
+  UseMethod("r_boot_survfit")
+}
+# 
+# r_boot_survfit.call <- function(x){
+#   x <- eval_tidy(x, env = getOption("heemod.env"))
+#   r_boot_survfit(x)
+# }
+# 
+# r_boot_survfit.name <- function(x){
+#   x <- eval_tidy(x, env = getOption("heemod.env"))
+#   r_boot_survfit(x)
+# }
+# 
+# r_boot_survfit.list <- function(x){
+#   stopifnot("dist" %in% names(x))
+#   x <- eval_tidy(x$dist, env = getOption("heemod.env"))
+#   r_boot_survfit(x)
+# }
+
+r_boot_survfit.surv_object <- function(x){
+  init_surv_object <- x
+  if (is.list(x) && "dist" %in% names(x)){
+    x <- eval_tidy(x$dist, env = getOption("heemod.env"))
   }
-  data <- rlang::call_standardise(surv_object) %>% 
-    rlang::call_args() %>% 
+  data <- rlang::call_args(x) %>% 
     `[[`("data") 
   e_data <- data %>% 
     eval_tidy()
-  if (is.null(attr(surv_object, "strata"))){
+  if (is.null(attr(x, "strata"))){
     new_data <- e_data[sample.int(nrow(e_data), 
                                 replace = TRUE),]
   } else {
     strata <- 
-      names(attr(surv_object, "strata")) %>% strsplit(., ", ") %>% 
+      names(attr(x, "strata")) %>% strsplit(., ", ") %>% 
       unlist(use.names = F) %>% 
       gsub("=.*", "", .) %>%
       unique()
@@ -336,13 +355,18 @@ r_boot_survfit <- function(surv_object){
       ungroup()
   }
  # assign(deparse(data), new_data, envir = getOption("heemod.env"))
-  new_env <- rlang::env()
-  assign("new_data", new_data, envir = new_env)
-  res <- rlang::call_modify(surv_object, data = quote(new_data))
-  res <- new_quosure(res, new_env)
-  if (is.list(init_surv_object) && "dist" %in% names(init_surv_object)){
-    structure(c(list(dist = res),
-                init_surv_object[setdiff(names(init_surv_object), "dist")]),
-              class = class(init_surv_object))
-  } else res
+  
+   new_env <- rlang::env()
+   assign(deparse(data), new_data, envir = new_env)
+  # res <- rlang::call_modify(x, data = quote(new_data))
+  # res <- new_quosure(res, new_env)
+  
+  res <- new_quosure(data, env = new_env)
+  
+  # if (is.list(init_surv_object) && "dist" %in% names(init_surv_object)){
+  #   structure(c(list(dist = res),
+  #               init_surv_object[setdiff(names(init_surv_object), "dist")]),
+  #             class = class(init_surv_object))
+  # } else res
+  res
 }
