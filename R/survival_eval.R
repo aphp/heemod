@@ -651,7 +651,7 @@ eval_surv.quosure <- function(x, ...){
 
 #' @export
 eval_surv.name <- function(x, ...){
-  copy_param_env(x)
+  copy_param_env(x, overwrite = FALSE)
   
   # dots <- list(...)
   # use_data <- list()

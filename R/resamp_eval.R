@@ -1,10 +1,12 @@
 remove_undefined_psa <- function(psa, param){
   list_vars <- map(param, all.vars) 
-  all_vars <- c(unlist(list_vars, use.names = F), names(list_vars))
+  all_vars <- unique(c(unlist(list_vars, use.names = F), 
+                       names(list_vars), 
+                       ls(getOption("heemod.env"))))
   not_found <- setdiff(names(psa$list_qdist), all_vars)
   if (!length(not_found)) return(psa)
     cli::cli_warn(glue::glue('{paste(not_found, collapse = ", ")} \\
-                                      not previously defined within define_parameters. \\
+                                      not previously defined or used by define_parameters. \\
                                       Will be skipped.'))
     psa$list_qdist <- psa$list_qdist[-which(names(psa$list_qdist) %in% not_found)]
     if (!length(psa$list_qdist)) {
@@ -39,7 +41,7 @@ run_psa <- function(model, psa, N) {
     stop("No cost and/or effect defined, probabilistic analysis unavailable.")
   }
   
-  copy_param_env(model$parameters)
+  copy_param_env(model$parameters, overwrite = FALSE)
   psa <- remove_undefined_psa(psa, model$parameters)
   
   newdata <- eval_resample(psa, N)

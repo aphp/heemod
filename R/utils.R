@@ -688,7 +688,7 @@ copy_surv_env <- function(){
   })
 }
 
-copy_param_env <- function(param){
+copy_param_env <- function(param, ...){
   UseMethod("copy_param_env")
 }
 
@@ -697,25 +697,35 @@ copy_param_env <- function(param){
 # }
 
 #' @export
-copy_param_env.name <- function(param){
-  copy_param_env.default(all.vars(param))
+copy_param_env.name <- function(param, ...){
+  copy_param_env.default(all.vars(param), ...)
 }
 
 #' @export
-copy_param_env.call <- function(param){
-  copy_param_env.default(all.vars(param))
+copy_param_env.call <- function(param, ...){
+  copy_param_env.default(all.vars(param), ...)
 }
 
 #' @export
-copy_param_env.uneval_parameters <- function(param){
+copy_param_env.uneval_parameters <- function(param, ...){
   list_vars <- map(param, all.vars) 
   to_find <- unlist(list_vars, use.names = F)
-  not_found <- setdiff(to_find, c(names(list_vars), "model_time", "state_time"))
-  copy_param_env.default(not_found)
+  not_found <- setdiff(to_find, 
+                       c(names(list_vars), 
+                         "model_time", 
+                         "state_time"
+                         ))
+  copy_param_env.default(not_found, ...)
 }
 
 #' @export
-copy_param_env.default <- function(param){
+copy_param_env.default <- function(param, ...){
+  .dots <- list(...)
+  overwrite <- ifelse(is.null(.dots$overwrite), TRUE, .dots$overwrite)
+  
+  if(!overwrite) {
+    param <- setdiff(param, ls(getOption("heemod.env")))
+  }
   new_env <- getOption("heemod.env")
   n <- 0
   repeat({
@@ -724,9 +734,8 @@ copy_param_env.default <- function(param){
     for (x in param){
       if (exists(x, env)) {
         assign(x, get(x, env), new_env)
-        ls(getOption("heemod.env"))
       }
-      setdiff(x, param)
+#      setdiff(x, param)
     }
     
     if (!length(param) || identical(env, globalenv())) return(new_env)
