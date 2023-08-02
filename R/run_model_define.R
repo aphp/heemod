@@ -416,6 +416,7 @@ get_uneval_init <- function(x) {
   UseMethod("get_uneval_init")
 }
 
+#' @export
 get_uneval_init.default <- function(x) {
   x$init
 }
@@ -424,6 +425,7 @@ get_uneval_inflow <- function(x) {
   UseMethod("get_uneval_inflow")
 }
 
+#' @export
 get_uneval_inflow.default <- function(x) {
   x$inflow
 }
@@ -448,6 +450,7 @@ get_cycles <- function(x) {
   UseMethod("get_cycles")
 }
 
+#' @export
 get_cycles.run_model <- function(x) {
   x$cycles
 }
@@ -455,10 +458,13 @@ get_cycles.run_model <- function(x) {
 get_method <- function(x) {
   UseMethod("get_method")
 }
+
+#' @export
 get_method.run_model <- function(x) {
   x$method
 }
 
+#' @export
 get_state_names.run_model <- function(x, ...) {
   get_state_names(get_states(x$uneval_strategy_list[[1]]))
 }
@@ -476,6 +482,7 @@ get_parameter_values <- function(x, ...) {
   UseMethod("get_parameter_values")
 }
 
+#' @export
 get_parameter_values.updated_model <- function(x, ...) {
   get_parameter_values(get_model(x), ...)
 }

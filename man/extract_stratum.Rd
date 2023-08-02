@@ -7,7 +7,7 @@
 extract_stratum(sf, index)
 }
 \arguments{
-\item{sf}{A survit object.}
+\item{sf}{A survfit object.}
 
 \item{index}{The index number of the strata to extract.}
 }
@@ -17,8 +17,7 @@ given stratum.
 }
 \description{
 Extracts the product-limit table from a survfit object
-for a given stratum. Only \code{\link[survival:survfit]{survival::survfit()}} and
-unstratified \code{\link[survival:survfit.coxph]{survival::survfit.coxph()}} objects are
+for a given stratum. Only \code{\link[survival:survfit]{survival::survfit()}} objects are
 supported.
 }
 \keyword{internal}

@@ -528,7 +528,7 @@ test_that("Combining Survival Distributions",
             # Adding exponential hazards to itself same as applying a HR of 2
             exp_double1_prob <- fs4 |>
               set_covariates(group = "Medium")
-            exp_double1_prob <- add_hazards(exp_double1_prob,exp_double1_prob) %>%
+            exp_double1_prob <- add_hazards(exp_double1_prob,exp_double1_prob) |>
               compute_surv_(time = seq_len(10), cycle_length = 200)
 
             exp_double2_prob = fs4 |>

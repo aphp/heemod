@@ -4,8 +4,6 @@
 \alias{resample_surv}
 \alias{resample_surv.numeric}
 \alias{resample_surv.default}
-\alias{resample_surv.surv_pooled}
-\alias{resample_surv.surv_add_haz}
 \alias{resample_surv.surv_dist}
 \title{Resample survival distribution}
 \usage{
@@ -14,10 +12,6 @@ resample_surv(x, ...)
 \method{resample_surv}{numeric}(x, ...)
 
 \method{resample_surv}{default}(x, ...)
-
-\method{resample_surv}{surv_pooled}(x, ...)
-
-\method{resample_surv}{surv_add_haz}(x, ...)
 
 \method{resample_surv}{surv_dist}(x, n)
 }
@@ -30,7 +24,9 @@ object
 The lower n is, the higher is the variability}
 }
 \description{
-Resample survival distribution
+#' @rdname resample_surv
+#' @export
+resample_surv.surv_add_haz <- resample_surv.surv_pooled
 }
 \examples{
 surv <- define_surv_dist("exp", rate = 0.5)

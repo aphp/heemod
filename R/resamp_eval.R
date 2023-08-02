@@ -1,3 +1,13 @@
+alert_psa_surv <- function(psa){
+  list_vars <- map(psa$surv, function(x){
+    var <- getOption("heemod.env")[[x]]
+    if(!inherits(var, c("surv_dist", "surv_fit"))){
+      cli::cli_abort("{.var {x}} must be a {.cls surv_fit} or {.cls surv_dist} object, i.e the initial survival \\
+      distribution before the modification leading to the creation of a {.cls {class(var)[[1]]}} object")
+    }
+    })
+}
+
 remove_undefined_psa <- function(psa, param){
   list_vars <- map(param, all.vars) 
   all_vars <- unique(c(unlist(list_vars, use.names = F), 
@@ -36,14 +46,13 @@ run_psa <- function(model, psa, N) {
     N > 0,
     ! is.null(N)
   )
-  
   if (! all(c(".cost", ".effect") %in% names(get_model_results(model)))) {
     stop("No cost and/or effect defined, probabilistic analysis unavailable.")
   }
-  
-  copy_param_env(model$parameters, overwrite = FALSE)
+  copy_param_env(model$parameters)
+  on.exit(copy_param_env(model$parameters))
   psa <- remove_undefined_psa(psa, model$parameters)
-  
+  alert_psa_surv(psa)
   newdata <- eval_resample(psa, N)
   
   list_res <- list()
@@ -92,6 +101,8 @@ run_psa <- function(model, psa, N) {
     dplyr::summarise_all(mean) %>% 
     as.data.frame()
   
+   # restore environment
+  
   structure(
     list(
       psa = res,
@@ -108,34 +119,42 @@ get_model <- function(x) {
   UseMethod("get_model")
 }
 
+#' @export
 get_model.psa <- function(x) {
   x$model
 }
 
+#' @export
 get_model_results.psa <- function(x) {
   x$run_model
 }
 
+#' @export
 get_cycles.psa <- function(x) {
   get_cycles(get_model(x))
 }
 
+#' @export
 get_uneval_init.psa <- function(x) {
   get_uneval_init(get_model(x))
 }
 
+#' @export
 get_method.psa <- function(x) {
   get_method(get_model(x))
 }
 
+#' @export
 get_central_strategy.psa <- function(x, ...) {
   get_central_strategy(get_model(x))
 }
 
+#' @export
 get_noncomparable_strategy.psa <- function(x, ...) {
   get_noncomparable_strategy(summary(x, ...)$res_comp)
 }
 
+#' @export
 get_root_strategy.psa <- function(x, ...) {
   get_root_strategy(summary(x, ...)$res_comp)
 }
@@ -162,7 +181,6 @@ eval_correlation <- function(x, var_names) {
 #'   
 #' @keywords internal
 eval_resample <- function(psa, N) {
-  
   list_qdist_filter <- psa$list_qdist[setdiff(names(psa$list_qdist), psa$surv)]
   res <- data.frame(._start = logical(N))
   if (length(list_qdist_filter)){

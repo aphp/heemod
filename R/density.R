@@ -246,23 +246,23 @@ resample_surv.numeric <- function(x, ...){
 #' @rdname resample_surv
 #' @export
 resample_surv.default <- function(x, ...){
-  structure(list(r_use_psa_surv(x)),
+  structure(list(r_boot_survfit(x)),
             class = c("surv_psa"))
   
 }
 
-
-#' @rdname resample_surv
-#' @export
-resample_surv.surv_pooled  <- function(x, ...){
-  structure(c(list(dists = lapply(x$dists, function(y){
-    resample_surv(y, ...)
-  })), x[setdiff(names(x), "dists")]), class = c("surv_psa", class(x)))
-}
-
-#' @rdname resample_surv
-#' @export
-resample_surv.surv_add_haz <- resample_surv.surv_pooled
+#' 
+#' #' @rdname resample_surv
+#' #' @export
+#' resample_surv.surv_pooled  <- function(x, ...){
+#'   structure(c(list(dists = lapply(x$dists, function(y){
+#'     resample_surv(y, ...)
+#'   })), x[setdiff(names(x), "dists")]), class = c("surv_psa", class(x)))
+#' }
+#' 
+#' #' @rdname resample_surv
+#' #' @export
+#' resample_surv.surv_add_haz <- resample_surv.surv_pooled
 
 
 #' @rdname resample_surv
@@ -298,44 +298,8 @@ r_resample_surv_dist <- function(distribution, type, args){
   }
 }
 
-r_use_psa_surv <- function(distribution, type, args){
-  boot <- ifelse(is.numeric(distribution) | inherits(distribution, "surv_dist"), FALSE, TRUE)  
-  if (boot){
-    return(
-      r_boot_survfit(distribution)
-    )
-  } else{
-  structure(
-    function(x) ecdf(distribution)(x),
-    class=c("surv_psa", "function"))
-  }
-}
-
 r_boot_survfit <- function(x){
-  UseMethod("r_boot_survfit")
-}
-# 
-# r_boot_survfit.call <- function(x){
-#   x <- eval_tidy(x, env = getOption("heemod.env"))
-#   r_boot_survfit(x)
-# }
-# 
-# r_boot_survfit.name <- function(x){
-#   x <- eval_tidy(x, env = getOption("heemod.env"))
-#   r_boot_survfit(x)
-# }
-# 
-# r_boot_survfit.list <- function(x){
-#   stopifnot("dist" %in% names(x))
-#   x <- eval_tidy(x$dist, env = getOption("heemod.env"))
-#   r_boot_survfit(x)
-# }
-
-r_boot_survfit.surv_object <- function(x){
   init_surv_object <- x
-  if (is.list(x) && "dist" %in% names(x)){
-    x <- eval_tidy(x$dist, env = getOption("heemod.env"))
-  }
   data <- rlang::call_args(x) %>% 
     `[[`("data") 
   e_data <- data %>% 

@@ -89,10 +89,10 @@ test_that("psa surv_dist is correct", {
   )
   
   test_that("survival operations work with run_psa and surv_dist", {
-    or_surv <- apply_or(surv_dist_1,3)
+    modified_surv <- apply_or(surv_dist_1,3)
     param <- define_parameters(
           p1 = heemod:::compute_surv_(
-            or_surv,
+            modified_surv,
             time = model_time
           ), 
           p2 = heemod:::compute_surv_(
@@ -103,21 +103,58 @@ test_that("psa surv_dist is correct", {
 
         resTM <- run_model(
           parameters = param,
-          stratTM,
           stratTM2,
+          stratTM,
           cycles = 15,
           cost = cost, effect = ut
         )
-        set.seed(1)
-        psa <- define_psa(surv_dist_1 ~ resample_surv(10000))
 
+        psa <- define_psa(modified_surv ~ resample_surv(10000))
+      
+        expect_error(run_psa(resTM, psa, 10), "the initial survival distribution")
+    
+        psa <- define_psa(surv_dist_1 ~ resample_surv(10000))
+        
+        set.seed(1)            
         resPSA <- run_psa(resTM, psa, 10)
-        tbl <- resPSA$psa %>% 
-          group_by(.strategy_names) %>% 
+        
+        tbl <- resPSA$psa %>%
+          group_by(.strategy_names) %>%
           dplyr::summarise(m = mean(.cost),
                     sd = sd(.cost))
+        
         expect_true(all(tbl$sd > 0))
+        
         expect_true(all(abs(resPSA$run_model$cost - resPSA$model$run_model$cost) < 100))
+        
+        
+        set.seed(1)
+        list_new <- eval_resample(psa, 10)$surv_dist_1
+        list_surv_1 <- map(list_new, function(x){
+          structure(x[[1]], class = c("surv_dist", "surv_object"))
+        })
+        list_surv_modified <- map(list_new, function(x){
+          structure(list(dist = x[[1]], or = 3), class = c("surv_po", "surv_object"))
+        })
+       res <- purrr::map2(list_surv_1, list_surv_modified, function(x, y){
+          surv_dist_1 <- x
+          modified_surv <- y
+          run_model(
+            parameters = param,
+            stratTM2,
+            stratTM,
+            cycles = 15,
+            cost = cost, effect = ut
+          ) %>% 
+            `[[`("run_model")
+        }) %>% 
+         dplyr::bind_rows() %>% 
+         dplyr::arrange(.strategy_names) %>% 
+         dplyr::select(cost, ut) %>% 
+         as_tibble()
+       expect_equal(resPSA$psa %>% 
+         dplyr::select(cost, ut), res)
+
   })
 # 
 # test_that("join_surv works with run_psa with use_surv_dist and resample_surv", {
@@ -191,10 +228,6 @@ test_that("psa surv_fit is correct", {
     0, C
   )
 
-  tm2 <- define_transition(
-    C, p2,
-    0, C
-  )
 
   sA <-  define_state(
     cost = 10, ut = 1
@@ -226,6 +259,8 @@ test_that("psa surv_fit is correct", {
     sd(resPSA$psa$cost) > 0
   )
 
+  
+  test_that("errors run_psa resample", {
    km_2 <- km_1 |>
      set_covariates(rx = "Lev+5FU")
    
@@ -238,7 +273,113 @@ test_that("psa surv_fit is correct", {
                      )
    
    expect_warning(run_psa(resTM, psa, 10), "km_2 not previously defined")
-  ### do some tests here
+   
+   param <- define_parameters(
+     p1 = heemod:::compute_surv_(
+       km_2,
+       time = model_time,
+       cycle_length = 30
+     )
+   )
+   
+   resTM <- run_model(
+     parameters = param,
+     stratTM,
+     cycles = 15,
+     cost = cost, effect = ut
+   )
+   expect_error(run_psa(resTM, psa, 10), 
+                cli::cli_text("`km_2` must be a {.cls surv_fit}"))
+  })
+  
+  test_that("survival operations work with run_psa and surv_fit", {
+    modified_surv <- apply_or(km_1,3) |>
+      set_covariates(rx = "Lev+5FU")
+    
+    param <- define_parameters(
+      p1 = heemod:::compute_surv_(
+        km_1,
+        time = model_time,
+        cycle_length = 30
+      ),
+        p2 = heemod:::compute_surv_(
+          modified_surv,
+          time = model_time,
+          cycle_length = 30
+      )
+    ) 
+    tm2 <- define_transition(
+      C, p2,
+      0, C
+    )
+    
+    sA <-  define_state(
+      cost = 10, ut = 1
+    )
+    sB <-  define_state(
+      cost = 20, ut = .5
+    )
+    
+    stratTM <- define_strategy(
+      transition = tm,
+      A = sA, B = sB
+    )
+    
+    stratTM2 <- define_strategy(
+      transition = tm2,
+      A = sA, B = sB
+    )
+    
+    
+    resTM <- run_model(
+      parameters = param,
+      stratTM2,
+      stratTM,
+      cycles = 15,
+      cost = cost, effect = ut
+    )
+    
+    psa <- define_psa(km_1 ~ resample_surv())
+    
+    set.seed(1)            
+    resPSA <- run_psa(resTM, psa, 10)
+    
+    tbl <- resPSA$psa %>%
+      group_by(.strategy_names) %>%
+      dplyr::summarise(m = mean(.cost),
+                       sd = sd(.cost))
+    
+    expect_true(all(tbl$sd > 0))
+    
+    expect_true(all(abs(resPSA$run_model$cost - resPSA$model$run_model$cost) < 5000))
+    
+    
+    set.seed(1)
+    list_new <- eval_resample(psa, 10)$km_1
+    colons <- map(list_new, function(x){
+      eval_tidy(x[[1]])
+    })
+    res <- purrr::map(colons, function(x){
+      assign("colon", x, getOption("heemod.env"))
+      mod <- run_model(
+        parameters = param,
+        stratTM2,
+        stratTM,
+        cycles = 15,
+        cost = cost, effect = ut
+      ) %>% 
+        `[[`("run_model")
+      rm(colon, envir = getOption("heemod.env"))
+      mod
+    }) %>% 
+      dplyr::bind_rows() %>% 
+      dplyr::arrange(.strategy_names) %>% 
+      dplyr::select(cost, ut) %>% 
+      as_tibble()
+    expect_equal(resPSA$psa %>% 
+                   dplyr::select(cost, ut), res)
+    
+  })
 })
 # 
 

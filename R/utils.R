@@ -727,17 +727,17 @@ copy_param_env.default <- function(param, ...){
     param <- setdiff(param, ls(getOption("heemod.env")))
   }
   new_env <- getOption("heemod.env")
-  n <- 0
+
+  for (x in param){
+    n <- 0
   repeat({
     n <- n + 1
     env <- rlang::caller_env(n)
-    for (x in param){
-      if (exists(x, env)) {
-        assign(x, get(x, env), new_env)
-      }
-#      setdiff(x, param)
+    if (exists(x, envir = env,, inherits = FALSE)) {
+      assign(x, get(x, env), new_env)
+      break
     }
-    
-    if (!length(param) || identical(env, globalenv())) return(new_env)
+    if (identical(env, globalenv())) break
   }) 
+  }
 }
