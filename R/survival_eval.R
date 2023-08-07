@@ -300,6 +300,8 @@ compute_surv <- memoise::memoise(
 #' @rdname eval_surv
 #' @export
 eval_surv.surv_fit <- function(x, time, ...){
+  .dots <- list(...)
+  env <- .dots$env %||% getOption("heemod.env")
   eval_surv(eval_tidy(x, env = getOption("heemod.env")), time, ...)
 }
 
@@ -641,24 +643,28 @@ eval_surv.surv_table <- function(x, time, ...){
 
 #' @export
 eval_surv.quosure <- function(x, ...){
+  .dots <- list(...)
+  env <- .dots$env %||% getOption("heemod.env")
   # dots <- list(...)
   # use_data <- list()
   # if("extra_env" %in% names(dots))
   #   use_data <- as.list.environment(dots$extra_env)
   #eval_surv(eval_tidy(x, data = use_data), ...)
-  eval_surv(eval_tidy(x, env = getOption("heemod.env")), ...)
+  eval_surv(eval_tidy(x, env = env), ...)
 }
 
 #' @export
 eval_surv.name <- function(x, ...){
-  copy_param_env(x, overwrite = FALSE)
+  .dots <- list(...)
+  env <- .dots$env %||% getOption("heemod.env")
+  copy_param_env(x, overwrite = FALSE, env = env)
   
   # dots <- list(...)
   # use_data <- list()
   # if("extra_env" %in% names(dots))
   #   use_data <- as.list.environment(dots$extra_env)
   #eval_surv(eval_tidy(x, data = use_data), ...)
-  eval_surv(eval_tidy(x, env=getOption("heemod.env")), ...)
+  eval_surv(eval_tidy(x, env=env), ...)
 }
 
 #' @export

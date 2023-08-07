@@ -4,7 +4,7 @@
 \alias{run_psa}
 \title{Run Probabilistic Uncertainty Analysis}
 \usage{
-run_psa(model, psa, N)
+run_psa(model, psa, N, keep = FALSE)
 }
 \arguments{
 \item{model}{The result of \code{\link[=run_model]{run_model()}}.}
@@ -14,11 +14,21 @@ by \code{\link[=define_psa]{define_psa()}}.}
 
 \item{N}{> 0. Number of simulation to run.}
 
+\item{keep}{logical; if TRUE, all models will be returned}
+
 \item{resample}{Deprecated. Resampling distribution for
 parameters defined by \code{\link[=define_psa]{define_psa()}}.}
 }
 \value{
-A list with one \code{data.frame} per model.
+A list with the following elements
+\itemize{
+\item psa:  a \code{data.frame} with one row per model.
+\item run_model: a \code{data.frame} with mean cost and utility for each strategy
+\item model: the initial model object
+\item N: the number of simulations ran
+\item resamp_par: the resampled parameters
+\item full: if \code{keep} is TRUE, a list of each model objects created at each iteration
+}
 }
 \description{
 Run Probabilistic Uncertainty Analysis

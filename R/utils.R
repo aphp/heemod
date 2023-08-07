@@ -722,11 +722,12 @@ copy_param_env.uneval_parameters <- function(param, ...){
 copy_param_env.default <- function(param, ...){
   .dots <- list(...)
   overwrite <- ifelse(is.null(.dots$overwrite), TRUE, .dots$overwrite)
+  env <- .dots$env %||% getOption("heemod.env")
   
   if(!overwrite) {
-    param <- setdiff(param, ls(getOption("heemod.env")))
+    param <- setdiff(param, ls(env))
   }
-  new_env <- getOption("heemod.env")
+  new_env <- env
 
   for (x in param){
     n <- 0

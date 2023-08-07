@@ -23,7 +23,6 @@
 #' @keywords internal
 eval_strategy_newdata <- function(x, strategy = 1, newdata) {
   strategy <- check_strategy_index(x = x, i = strategy)
-  
   cycles <- get_cycles(x)
   init <- get_uneval_init(x)
   inflow <- get_inflow(x)
@@ -101,7 +100,7 @@ eval_strategy_newdata <- function(x, strategy = 1, newdata) {
   res
 }
 
-get_new_surv_parameters <- function(new_parameters){
+get_new_surv_parameters <- function(new_parameters, env = getOption("heemod.env")){
   surv_new_parameters <- Filter(function(x) inherits(x, "surv_psa"), new_parameters)
   
   new_list <- map(surv_new_parameters,1)
@@ -116,7 +115,7 @@ get_new_surv_parameters <- function(new_parameters){
     get_env(quo_surv[[i]])[[nm[[i]]]]
   }) %>% setNames(nm)
   
-  list2env(c(non_quo_surv, data_surv), envir = getOption("heemod.env"))
+  list2env(c(non_quo_surv, data_surv), envir = env)
   
   surv_new_parameters
 }
