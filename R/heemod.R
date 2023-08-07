@@ -83,7 +83,7 @@
 #' 
 #' @importFrom rlang sym syms quo .data quos quos as_quosures enexprs 
 #' set_expr as_label as_quosure get_expr is_quosure expr eval_tidy new_quosure
-#' parse_exprs get_env call_match caller_env enquo exprs enexpr
+#' parse_exprs get_env call_match caller_env enquo exprs enexpr "%||%"
 #'
 #' @importFrom purrr map map_chr map_dbl map_lgl
 NULL

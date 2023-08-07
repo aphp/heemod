@@ -257,3 +257,21 @@ eval_resample <- function(psa, N) {
   res$._start <- NULL
   res
 }
+
+
+#' @export
+compute_surv_ci <- function(x, times, type, psa, Nrep){
+  resamples <- eval_resample(psa, Nrep)
+  env <- rlang::env()
+  res <- map(seq_len(nrow(resamples)), function(i){
+    get_new_surv_parameters(resamples[i, ] %>% 
+                              setNames(colnames(resamples)), env = env)
+    compute_surv_(eval_tidy(x, env = env), times, type = type, env = env)
+  })
+  unlist(res, use.names = FALSE) %>% 
+    matrix(ncol = Nrep) %>% 
+    apply(MARGIN = 1, FUN = function(x) c(quantile(x,c(0.025, 0.975), na.rm = TRUE)), simplify = T)%>%
+    t() %>% 
+    as.data.frame%>%
+    dplyr::mutate(times = times)
+}

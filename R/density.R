@@ -290,10 +290,18 @@ r_resample_surv_dist <- function(distribution, type, args){
     args2 <- setNames(syms(names(args)), names(args))
     rhs <- rlang::call2(paste0("p", type), quote(x), !!!args2)
     formula <- rlang::new_formula(quote(y), rhs, env = asNamespace("flexsurv"))
-    fit <- nls(
+    fit <- try(nls(
       formula, 
       data = df, start = args
-    )
+    ), silent = TRUE)
+    if (inherits(fit, "try-error")){
+      fit <- nls(
+        formula, 
+        data = df, start = args,
+        algorithm = "port",
+        lower = 0
+      )
+    }
     return(do.call(define_surv_dist, c(type, as.list(coef(fit)))))
   }
 }
