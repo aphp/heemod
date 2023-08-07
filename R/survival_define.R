@@ -34,7 +34,6 @@ define_surv_fit <- function(x){
   structure(enx,
             class = c("surv_fit", "surv_object"),
             strata = x$strata)
-  
 }
 
 define_survival <- function(distribution, ...){

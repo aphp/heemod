@@ -156,62 +156,63 @@ test_that("psa surv_dist is correct", {
          dplyr::select(cost, ut), res)
 
   })
-# 
-# test_that("join_surv works with run_psa with use_surv_dist and resample_surv", {
-#   join_surv <- join(surv_dist_1, surv_dist_2, surv_dist_1, at = c(2,5))
-# 
-#   param <- define_parameters(
-#     p1 = heemod:::compute_surv_(
-#       join_surv,
-#       time = model_time
-#     )
-#   )
-# 
-#   resTM <- run_model(
-#     parameters = param,
-#     stratTM,
-#     cycles = 15,
-#     cost = cost, effect = ut
-#   )
-#   set.seed(1)
-#   psa <- define_psa(surv_dist_1 ~ resample_surv(10000),
-#                     surv_dist_2 ~ resample_surv(1000))
-# 
-# 
-#   resPSA <- run_psa(resTM, psa, 10)
-#   for (i in 1:10){
-#     pars <- resPSA$full[[1]][[i]]$parameters$p1
-#     expect_true(all(pars[c(1,2, 6:15)] < 0.5))
-#     expect_true(all(pars[c(3:5)] > 0.5))
-#   }
-# })
-#   # 
-#   # 
-#   # test_that("dots is working for join_surv",{
-#   #   
-#   #   join_surv2 <- join_surv |>
-#   #     join(surv_dist_2, at = 10)
-#   #   
-#   #   param <- define_parameters(
-#   #     p1 = heemod:::compute_surv_(
-#   #       join_surv2,
-#   #       time = model_time
-#   #     )
-#   #   )
-#   #   
-#   #   resTM <- run_model(
-#   #     parameters = param,
-#   #     stratTM,
-#   #     cycles = 15,
-#   #     cost = cost, effect = ut
-#   #   )
-#   #   
-#   #   resPSA <- run_psa(resTM, psa, 10, TRUE)
-#   #   pars <- resPSA$full[[1]][[1]]$parameters$p1
-#   #   expect_true(all(pars[c(1,2, 6:9)] < 0.5))
-#   #   expect_true(all(pars[c(3:5)] > 0.4))
-#   #   expect_true(all(pars[c(11:15)] == 0))
-#   # })
+
+test_that("join_surv works with run_psa with use_surv_dist and resample_surv", {
+  join_surv <- join(surv_dist_1, surv_dist_2, surv_dist_1, at = c(2,5))
+
+  param <- define_parameters(
+    p1 = heemod:::compute_surv_(
+      join_surv,
+      time = model_time
+    )
+  )
+
+  resTM <- run_model(
+    parameters = param,
+    stratTM,
+    cycles = 15,
+    cost = cost, effect = ut
+  )
+  set.seed(1)
+  psa <- define_psa(surv_dist_1 ~ resample_surv(10000),
+                    surv_dist_2 ~ resample_surv(1000))
+
+
+  resPSA <- run_psa(resTM, psa, 10, keep = TRUE)
+  set.seed(1)
+  for (i in 1:10){
+    pars <- resPSA$full[[1]][[i]]$parameters$p1
+    expect_true(all(pars[c(1,2, 6:15)] < 0.5))
+    expect_true(all(pars[c(3:5)] > 0.4))
+  }
+})
+
+
+  test_that("dots is working for join_surv",{
+
+    join_surv2 <- join_surv |>
+      join(surv_dist_2, at = 10)
+
+    param <- define_parameters(
+      p1 = heemod:::compute_surv_(
+        join_surv2,
+        time = model_time
+      )
+    )
+
+    resTM <- run_model(
+      parameters = param,
+      stratTM,
+      cycles = 15,
+      cost = cost, effect = ut
+    )
+
+    resPSA <- run_psa(resTM, psa, 10, keep = TRUE)
+    pars <- resPSA$full[[1]][[1]]$parameters$p1
+    expect_true(all(pars[c(1,2, 6:9)] < 0.5))
+    expect_true(all(pars[c(3:5)] > 0.4))
+    expect_true(all(pars[c(11:15)] > 0.4))
+  })
 })
 
 test_that("psa surv_fit is correct", {

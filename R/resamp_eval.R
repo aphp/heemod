@@ -35,13 +35,21 @@ remove_undefined_psa <- function(psa, param){
 #' @param resample Deprecated. Resampling distribution for
 #'   parameters defined by [define_psa()].
 #' @param N &gt; 0. Number of simulation to run.
+#' @param keep logical; if TRUE, all models will be returned
 #'   
-#' @return A list with one `data.frame` per model.
+#' @return A list with the following elements
+#' * psa:  a `data.frame` with one row per model.
+#' * run_model: a `data.frame` with mean cost and utility for each strategy
+#' * model: the initial model object 
+#' * N: the number of simulations ran
+#' * resamp_par: the resampled parameters
+#' * full: if `keep` is TRUE, a list of each model objects created at each iteration
+#' 
 #' @export
 #' 
 #' @example inst/examples/example_run_psa.R
 #'   
-run_psa <- function(model, psa, N) {
+run_psa <- function(model, psa, N, keep = FALSE) {
   stopifnot(
     N > 0,
     ! is.null(N)
@@ -55,7 +63,7 @@ run_psa <- function(model, psa, N) {
   alert_psa_surv(psa)
   newdata <- eval_resample(psa, N)
   
-  list_res <- list()
+  list_res <- list_full <- list()
   
   for (n in get_strategy_names(model)) {
     if (!identical(Sys.getenv("TESTTHAT"), "true"))
@@ -77,10 +85,18 @@ run_psa <- function(model, psa, N) {
           dplyr::ungroup()
       )
     )
+    if (keep){
+      list_full <- c(
+        list_full, 
+        list(
+          e_newdata$.mod
+        )
+      )
+    }
   }
   
   names(list_res) <- get_strategy_names(model)
-  
+  if (keep) names(list_full) <- get_strategy_names(model)
   index <- seq_len(N)
   
   for (n in names(list_res)) {
@@ -104,12 +120,15 @@ run_psa <- function(model, psa, N) {
    # restore environment
   
   structure(
-    list(
+    c(list(
       psa = res,
       run_model = run_model[names(get_model_results(model))],
       model = model,
       N = N,
       resamp_par = names(newdata)
+    ),
+    if (keep)
+      list(full = list_full)
     ),
     class = c("psa", class(list()))
   )
