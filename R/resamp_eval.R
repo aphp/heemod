@@ -264,9 +264,8 @@ compute_surv_ci <- function(x, times, type, psa, Nrep){
   resamples <- eval_resample(psa, Nrep)
   env <- rlang::env()
   res <- map(seq_len(nrow(resamples)), function(i){
-    get_new_surv_parameters(resamples[i, ] %>% 
-                              setNames(colnames(resamples)), env = env)
-    compute_surv_(eval_tidy(x, env = env), times, type = type, env = env)
+    get_new_surv_parameters(map(resamples,i), env = env)
+    suppressMessages(compute_surv_(eval_tidy(x, env = env), times, type = type, env = env))
   })
   unlist(res, use.names = FALSE) %>% 
     matrix(ncol = Nrep) %>% 

@@ -228,7 +228,7 @@ use_distribution <- function(distribution, smooth = TRUE) {
 #' resample_surv(sf)
 
 resample_surv <- function(x, ...){
-  if (missing(x)) return(
+  if (missing(x) && !length(list(...))) return(
     structure(expr(resample_surv()),
               class = c("surv_psa"))
   )
@@ -238,6 +238,10 @@ resample_surv <- function(x, ...){
 #' @rdname resample_surv
 #' @export
 resample_surv.numeric <- function(x, ...){
+  .dots <- list(...)
+  if (missing(x) & "n" %in% names(.dots)){
+    x <- .dots$n
+  }
   structure(expr(resample_surv(!!x)),
             class = c("surv_psa"))
   
@@ -299,7 +303,7 @@ r_resample_surv_dist <- function(distribution, type, args){
         formula, 
         data = df, start = args,
         algorithm = "port",
-        lower = 0
+        lower = 0.01
       )
     }
     return(do.call(define_surv_dist, c(type, as.list(coef(fit)))))

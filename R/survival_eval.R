@@ -302,7 +302,7 @@ compute_surv <- memoise::memoise(
 eval_surv.surv_fit <- function(x, time, ...){
   .dots <- list(...)
   env <- .dots$env %||% getOption("heemod.env")
-  eval_surv(eval_tidy(x, env = getOption("heemod.env")), time, ...)
+  eval_surv(eval_tidy(x, env = env), time, ...)
 }
 
 
@@ -469,13 +469,12 @@ eval_surv.surv_model <- function(x, time,  ...) {
 #' @export
 eval_surv.surv_projection <- function(x, time, ...) {
   ret <- numeric(length(time))
-  
-  surv1 <- eval_surv(
+  .surv1 <- eval_surv(
     x$dist1,
     time = time,
     ...
   )
-  surv2 <- eval_surv(
+  .surv2 <- eval_surv(
     x$dist2,
     time = time,
     ...
@@ -495,8 +494,8 @@ eval_surv.surv_projection <- function(x, time, ...) {
     ...,
     .internal = TRUE)
   
-  ret[ind_s1] <- surv1[ind_s1]
-  ret[ind_s2] <- (surv2 * surv1_p_at / surv2_p_at)[ind_s2]
+  ret[ind_s1] <- .surv1[ind_s1]
+  ret[ind_s2] <- (.surv2 * surv1_p_at / surv2_p_at)[ind_s2]
   
   ret
 }
