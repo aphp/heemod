@@ -17,21 +17,7 @@
 \alias{eval_surv.surv_add_haz}
 \alias{eval_surv.surv_dist}
 \alias{eval_surv.surv_table}
-\title{#' @rdname eval_surv
-#' @export
-eval_surv.surv_psa <- function(x, time, ...){
-if (inherits(x, c("surv_pooled", "surv_add_haz"))){
-res <- if (inherits(x, "surv_pooled")){
-mix_(x$dists, weights = x$weights)
-} else {
-add_hazards_(x$dists)
-}
-return(eval_surv(res, time))
-}
-
-ret <- x[\link{1}](time)
-eval_surv(ret, time, ...)
-}}
+\title{Evaluate Survival Distributions}
 \usage{
 eval_surv(x, time, ...)
 

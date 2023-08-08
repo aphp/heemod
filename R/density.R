@@ -209,8 +209,7 @@ use_distribution <- function(distribution, smooth = TRUE) {
 #' object
 #' 
 #' The lower n is, the higher is the variability
-#' @keywords internal
-#' @seealso plot.surv_psa
+#' @export
 resample_surv <- function(n){
   if (missing(n)) return(
     structure(expr(resample_surv_boot()),
@@ -222,6 +221,7 @@ resample_surv <- function(n){
 
 
 #' @rdname resample_surv
+#' @keywords internal
 resample_surv_boot <- function(x){
   structure(list(r_boot_survfit(x)),
             class = c("surv_psa"))
@@ -230,7 +230,7 @@ resample_surv_boot <- function(x){
 
 
 #' @rdname resample_surv
-#' @export
+#' @keywords internal
 resample_surv_dist <- function(x, n){
   if (! requireNamespace("flexsurv")) {
     stop("'flexsurv' package required.")
@@ -245,6 +245,8 @@ resample_surv_dist <- function(x, n){
             class = c("surv_psa"))
 }
 
+#' @rdname resample_surv
+#' @keywords internal
 r_resample_surv_dist <- function(distribution, type, args){
   if (!missing(args)){
     y <- ecdf(distribution)(distribution)
@@ -268,6 +270,8 @@ r_resample_surv_dist <- function(distribution, type, args){
   }
 }
 
+#' @rdname resample_surv
+#' @keywords internal
 r_boot_survfit <- function(x){
   init_surv_object <- x
   data <- rlang::call_args(x) %>% 

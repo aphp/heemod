@@ -10,10 +10,7 @@
   type = c("surv", "prob"),
   psa,
   Nrep = 100,
-  join_opts,
-  join_col = "red",
-  join_pch = 20,
-  join_size = 3,
+  join_opts = list(join_col = "red", join_pch = 20, join_size = 3),
   ...
 )
 }
@@ -30,8 +27,8 @@ you want to plot survival from the start or conditional probabilities.}
 
 \item{Nrep}{The number of replications to estimate the variability of \code{x}}
 
-\item{join_col, join_pch, join_size}{graphical parameters for points
-marking points at which different survival functions are joined.}
+\item{join_opts}{A list of 3 graphical parameters for points at which different
+survival functions are joined: join_col, join_pch and join_size.}
 
 \item{...}{additional arguments to pass to \code{ggplot2} functions.}
 }
@@ -44,11 +41,11 @@ Plot general survival models
 \details{
 The function currently only highlights join points that are at
 the top level; that is, for objects with class \code{surv_projection}.
-
 To avoid plotting the join points, set join_size to a negative number.
 }
 \examples{
 ## Evaluation of the variability of the survival distribution
+\dontrun{
 surv1 <- define_surv_dist("exp", rate = 0.1)
 psa <- define_psa(surv1 ~ resample_surv(n = 100))
 plot(surv1, psa=psa)
@@ -60,7 +57,11 @@ plot(join(surv1, surv2, at = 2), psa = psa, Nrep = 50)
 ## surv_fit object
 library(survival)
 km <- define_surv_fit(survfit(formula = Surv(time, status) ~ 1, data = aml))
-fs <- define_surv_fit(flexsurv::flexsurvreg(formula = Surv(time, status) ~ 1, data = aml, dist = "weibull"))
+fs <- flexsurv::flexsurvreg(formula = Surv(time, status) ~ 1, 
+                        data = aml, 
+                        dist = "weibull") |>
+  define_surv_fit()
+
 psa2 <- define_psa(km ~ resample_surv(),
                    fs ~ resample_surv(),
                    surv1 ~ resample_surv(100))
@@ -68,4 +69,5 @@ plot(km, psa = psa2)
 
 plot(join(km, surv1, at = 6), psa = psa2)
 plot(join(fs, surv1, at = 6), psa = psa2)
+}
 }

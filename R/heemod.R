@@ -48,7 +48,9 @@
 #' @importFrom stats coef
 #' @importFrom stats model.matrix
 #' @importFrom stats formula
-#' @importFrom stats stepfun
+#' @importFrom stats ecdf
+#' @importFrom stats nls
+#' @importFrom stats quantile
 #'   
 #' @importFrom mvnfast rmvn
 #'   
@@ -90,3 +92,5 @@ NULL
 
 #' @export
 dplyr::`%>%`
+
+utils::globalVariables(".")

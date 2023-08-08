@@ -399,14 +399,14 @@ set_covariates_ <- function(dist, covariates, data = NULL) {
 #'   you want to plot survival from the start or conditional probabilities.
 #' @param psa a `define_psa` object
 #' @param Nrep The number of replications to estimate the variability of `x`
-#' @param join_col,join_pch,join_size graphical parameters for points
-#'   marking points at which different survival functions are joined.
+#' @param join_opts A list of 3 graphical parameters for points at which different
+#' survival functions are joined: join_col, join_pch and join_size. 
 #' @param ... additional arguments to pass to `ggplot2` functions.
 #'   
 #' @details The function currently only highlights join points that are at
 #'   the top level; that is, for objects with class `surv_projection`.
-#'   
 #'   To avoid plotting the join points, set join_size to a negative number.  
+#'   
 #'
 #' @return a [ggplot2::ggplot()] object.
 #' @example inst/examples/example_plot.surv_object.R
@@ -414,9 +414,10 @@ set_covariates_ <- function(dist, covariates, data = NULL) {
 #'
 plot.surv_object <- function(x, times = seq.int(0, 30), type = c("surv", "prob"), 
                              psa, Nrep = 100,
-                             join_opts,
-                          join_col = "red", join_pch = 20,
-                          join_size = 3, ...){
+                             join_opts = list(join_col = "red", 
+                                              join_pch = 20,
+                                              join_size = 3),
+                           ...){
   type <- match.arg(type)
   res <- data.frame(times = times,
                      baseline = compute_surv(x, times, ..., type = type))
@@ -430,34 +431,24 @@ plot.surv_object <- function(x, times = seq.int(0, 30), type = c("surv", "prob")
   y_ax_label <- c(surv = "survival", prob = "probability")[type]
   
   this_plot <- 
-    ggplot2::ggplot(res, ggplot2::aes(x = times, y = baseline)) + 
+    ggplot2::ggplot(res, ggplot2::aes(x = times, y = .data$baseline)) + 
     ggplot2::geom_line() + 
     ggplot2::scale_x_continuous(name = "time") + 
     ggplot2::scale_y_continuous(name = y_ax_label, limits = c(0,1))
     if (!missing(psa)){
     this_plot <- this_plot + ggplot2::geom_ribbon(alpha=0.25, colour = NA, show.legend = FALSE,
-                                         aes(ymin = `2.5%`, ymax = `97.5%`))
+                                         aes(ymin = .data$`2.5%`, ymax = .data$`97.5%`))
     }
   if("at" %in% names(x))
     this_plot <- this_plot +
     ggplot2::geom_point(data = dplyr::filter(res, times == x$at),
-                        ggplot2::aes(x = times, y = baseline),
-                        pch = join_pch, size = join_size, 
-                        col = join_col) 
+                        ggplot2::aes(x = times, y = .data$baseline),
+                        pch = join_opts$join_pch, size = join_opts$join_size, 
+                        col = join_opts$join_col) 
   
   this_plot
   
 }
-
-plot.surv_projection <- plot.surv_object
-plot.surv_ph <- plot.surv_object
-plot.surv_add_haz <- plot.surv_object
-plot.surv_model <- plot.surv_object
-plot.surv_po <- plot.surv_object
-plot.surv_aft <- plot.surv_object
-plot.surv_pooled <- plot.surv_object
-plot.surv_shift <- plot.surv_object
-
 
 #' Summarize surv_shift objects
 #'

@@ -32,8 +32,6 @@ remove_undefined_psa <- function(psa, param){
 #' @param model The result of [run_model()].
 #' @param psa Resampling distribution for parameters defined
 #'   by [define_psa()].
-#' @param resample Deprecated. Resampling distribution for
-#'   parameters defined by [define_psa()].
 #' @param N &gt; 0. Number of simulation to run.
 #' @param keep logical; if TRUE, all models will be returned
 #'   
@@ -259,7 +257,7 @@ eval_resample <- function(psa, N) {
 }
 
 
-#' @export
+#' @keywords internal
 compute_surv_ci <- function(x, times, type, psa, Nrep){
   resamples <- eval_resample(psa, Nrep)
   env <- rlang::env()

@@ -4,6 +4,8 @@
 \alias{resample_surv}
 \alias{resample_surv_boot}
 \alias{resample_surv_dist}
+\alias{r_resample_surv_dist}
+\alias{r_boot_survfit}
 \title{Resample survival distribution}
 \usage{
 resample_surv(n)
@@ -11,6 +13,10 @@ resample_surv(n)
 resample_surv_boot(x)
 
 resample_surv_dist(x, n)
+
+r_resample_surv_dist(distribution, type, args)
+
+r_boot_survfit(x)
 }
 \arguments{
 \item{n}{the number of observations to generate if dist is specified or x is a \code{surv_dist}
@@ -22,8 +28,5 @@ The lower n is, the higher is the variability}
 }
 \description{
 Resample survival distribution
-}
-\seealso{
-plot.surv_psa
 }
 \keyword{internal}
