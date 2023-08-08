@@ -1,12 +1,21 @@
-# heemod (development version)
+# Changelog
 
-# Changlog
+## heemod 0.16.9000
+### Breaking changes
+ * dplyr's pipe now causes an error when chaining survival operation. The new pipe
+is required in this situation.
+ * `define_survival` has been renamed `define_surv_dist` for naming consistency
+ * It is now necessary to use `define_surv_fit` to specify a survival fit created
+ with `survfit`, `flexsurvreg` or `flexsurvspline`
+
+### Other changes
+ * All operation functions on survival objects are now of class `surv_object`
 
 ## heemod 0.16.0
-  * Remove lazyeval, plyr and pryr dependency
-  * For PSM, when OS is lower to PFS, force the transition probability to be 0 (#7 @william-rawlinson)
-  * `get_who_mr()` is working again
-  * Mortality rates gathered with `get_who_mr(..., local = TRUE)` are only available as     
+ * Remove lazyeval, plyr and pryr dependency
+ * For PSM, when OS is lower to PFS, force the transition probability to be 0 (#7 @william-rawlinson)
+ * `get_who_mr()` is working again
+ * Mortality rates gathered with `get_who_mr(..., local = TRUE)` are only available as     
  pooled for high income countries.
  * `prop`, `multinom` and `make_gamma`, deprecated since a long time are now unavailable,
  to be replaced with `binomial`, `multinomial` and `gamma`, respectively.
