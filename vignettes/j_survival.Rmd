@@ -138,7 +138,7 @@ The transition or survival probabilities are computed with `compute_surv()`. Tim
 compute_surv(surv_dist_2, time = 1:5)
 ```
 
-All these operations can be chained with the `|>` piping operator.
+All these operations can be chained with the `|>` pipe operator.
 
 ```{r}
 fit_cov |> 
