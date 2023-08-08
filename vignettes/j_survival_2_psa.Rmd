@@ -31,14 +31,13 @@ is then fitted.
 
 ```{r}
 surv_dist <- define_surv_dist("gamma", shape = 2, rate = 0.1)
-psa <- define_psa(surv_dist ~ resample_surv(100))
+psa <- define_psa(surv_dist ~ resample_surv(n = 500))
 ```
 
 You can display the distribution and its confidence interval using the `plot()` 
 function. This is useful to check the expected variability of your model.
 ```{r}
-set.seed(2)
-psa2 <- define_psa(surv_dist ~ resample_surv(10))
+psa2 <- define_psa(surv_dist ~ resample_surv(n = 50))
 plot(surv_dist, psa = psa)
 plot(surv_dist, psa = psa2)
 ```
