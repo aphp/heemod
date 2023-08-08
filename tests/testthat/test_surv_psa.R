@@ -17,11 +17,11 @@ km_1 <- survfit(
 
 test_that("define_psa gives correct output", {
   psa <- define_psa(surv_dist_1 ~ resample_surv(1000))
-  expect_equal(psa$list_qdist$surv_dist_1, quote(resample_surv(1000)), ignore_attr = TRUE)
+  expect_equal(psa$list_qdist$surv_dist_1, quote(resample_surv_dist(1000)), ignore_attr = TRUE)
   expect_equal(psa$surv, "surv_dist_1", ignore_attr = TRUE)
   psa <- define_psa(surv_dist_1 ~  resample_surv(1000),
                     g + h ~ multinomial(5,12))
-  expect_equal(psa$list_qdist$surv_dist_1, quote(resample_surv(1000)), ignore_attr = TRUE)
+  expect_equal(psa$list_qdist$surv_dist_1, quote(resample_surv_dist(1000)), ignore_attr = TRUE)
   expect_equal(names(psa$list_qdist), c("surv_dist_1", "g", "h"))
   expect_equal(psa$surv, "surv_dist_1", ignore_attr = TRUE)
 })

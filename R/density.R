@@ -201,7 +201,6 @@ use_distribution <- function(distribution, smooth = TRUE) {
   )
 }
 
-
 #' Resample survival distribution
 #' 
 #' 
@@ -209,69 +208,30 @@ use_distribution <- function(distribution, smooth = TRUE) {
 #' @param n the number of observations to generate if dist is specified or x is a `surv_dist`
 #' object
 #' 
-#' 
-#' 
 #' The lower n is, the higher is the variability
-#' @export
-#'
-
+#' @keywords internal
 #' @seealso plot.surv_psa
-#' 
-#' @examples
-#' surv <- define_surv_dist("exp", rate = 0.5)
-#' 
-#' ## Should return a similar distribution
-#' resample_surv(surv, n = 100)
-#' 
-#' library(survival)
-#' sf <- survfit(Surv(time, status) ~ 1, data = colon)
-#' resample_surv(sf)
-
-resample_surv <- function(x, ...){
-  if (missing(x) && !length(list(...))) return(
-    structure(expr(resample_surv()),
+resample_surv <- function(n){
+  if (missing(n)) return(
+    structure(expr(resample_surv_boot()),
               class = c("surv_psa"))
-  )
-  UseMethod("resample_surv")
-}
-
-#' @rdname resample_surv
-#' @export
-resample_surv.numeric <- function(x, ...){
-  .dots <- list(...)
-  if (missing(x) & "n" %in% names(.dots)){
-    x <- .dots$n
-  }
-  structure(expr(resample_surv(!!x)),
+  ) 
+  structure(expr(resample_surv_dist(!!n)),
             class = c("surv_psa"))
-  
 }
 
+
 #' @rdname resample_surv
-#' @export
-resample_surv.default <- function(x, ...){
+resample_surv_boot <- function(x){
   structure(list(r_boot_survfit(x)),
             class = c("surv_psa"))
   
 }
 
-#' 
-#' #' @rdname resample_surv
-#' #' @export
-#' resample_surv.surv_pooled  <- function(x, ...){
-#'   structure(c(list(dists = lapply(x$dists, function(y){
-#'     resample_surv(y, ...)
-#'   })), x[setdiff(names(x), "dists")]), class = c("surv_psa", class(x)))
-#' }
-#' 
-#' #' @rdname resample_surv
-#' #' @export
-#' resample_surv.surv_add_haz <- resample_surv.surv_pooled
-
 
 #' @rdname resample_surv
 #' @export
-resample_surv.surv_dist <- function(x, n){
+resample_surv_dist <- function(x, n){
   if (! requireNamespace("flexsurv")) {
     stop("'flexsurv' package required.")
   }
@@ -283,14 +243,12 @@ resample_surv.surv_dist <- function(x, n){
   ret <- do.call(pf, c(n, args))
   structure(list(r_resample_surv_dist(ret, x$distribution, args)),
             class = c("surv_psa"))
-  
 }
 
 r_resample_surv_dist <- function(distribution, type, args){
   if (!missing(args)){
-    y <- seq.int(1L,100L)/100
-    x <- quantile(distribution, probs = y, names = FALSE)
-    df <- list(x = x, y = y)
+    y <- ecdf(distribution)(distribution)
+    df <- list(x = distribution, y = y)
     args2 <- setNames(syms(names(args)), names(args))
     rhs <- rlang::call2(paste0("p", type), quote(x), !!!args2)
     formula <- rlang::new_formula(quote(y), rhs, env = asNamespace("flexsurv"))
@@ -303,7 +261,7 @@ r_resample_surv_dist <- function(distribution, type, args){
         formula, 
         data = df, start = args,
         algorithm = "port",
-        lower = 0.01
+        lower = 1E-6
       )
     }
     return(do.call(define_surv_dist, c(type, as.list(coef(fit)))))

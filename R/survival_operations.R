@@ -409,7 +409,7 @@ set_covariates_ <- function(dist, covariates, data = NULL) {
 #'   To avoid plotting the join points, set join_size to a negative number.  
 #'
 #' @return a [ggplot2::ggplot()] object.
-#' @example inst/example/example_plot.surv_object
+#' @example inst/examples/example_plot.surv_object.R
 #' @export
 #'
 plot.surv_object <- function(x, times = seq.int(0, 30), type = c("surv", "prob"), 

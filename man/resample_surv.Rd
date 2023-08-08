@@ -2,42 +2,28 @@
 % Please edit documentation in R/density.R
 \name{resample_surv}
 \alias{resample_surv}
-\alias{resample_surv.numeric}
-\alias{resample_surv.default}
-\alias{resample_surv.surv_dist}
+\alias{resample_surv_boot}
+\alias{resample_surv_dist}
 \title{Resample survival distribution}
 \usage{
-resample_surv(x, ...)
+resample_surv(n)
 
-\method{resample_surv}{numeric}(x, ...)
+resample_surv_boot(x)
 
-\method{resample_surv}{default}(x, ...)
-
-\method{resample_surv}{surv_dist}(x, n)
+resample_surv_dist(x, n)
 }
 \arguments{
-\item{x}{a \code{surv_object}}
-
 \item{n}{the number of observations to generate if dist is specified or x is a \code{surv_dist}
 object
 
 The lower n is, the higher is the variability}
+
+\item{x}{a \code{surv_object}}
 }
 \description{
-#' @rdname resample_surv
-#' @export
-resample_surv.surv_add_haz <- resample_surv.surv_pooled
-}
-\examples{
-surv <- define_surv_dist("exp", rate = 0.5)
-
-## Should return a similar distribution
-resample_surv(surv, n = 100)
-
-library(survival)
-sf <- survfit(Surv(time, status) ~ 1, data = colon)
-resample_surv(sf)
+Resample survival distribution
 }
 \seealso{
 plot.surv_psa
 }
+\keyword{internal}
