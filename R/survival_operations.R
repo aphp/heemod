@@ -401,7 +401,7 @@ set_covariates_ <- function(dist, covariates, data = NULL) {
 #' @param Nrep The number of replications to estimate the variability of `x`
 #' @param join_opts A list of 3 graphical parameters for points at which different
 #' survival functions are joined: join_col, join_pch and join_size. 
-#' @param ... additional arguments to pass to `ggplot2` functions.
+#' @param ... additional arguments to pass to `compute_surv` functions.
 #'   
 #' @details The function currently only highlights join points that are at
 #'   the top level; that is, for objects with class `surv_projection`.
@@ -420,7 +420,7 @@ plot.surv_object <- function(x, times = seq.int(0, 30), type = c("surv", "prob")
                            ...){
   type <- match.arg(type)
   res <- data.frame(times = times,
-                     baseline = compute_surv(x, times, ..., type = type))
+                     baseline = compute_surv_(x, times, ..., type = type))
   if (!missing(psa)){
     res <- merge(res,
       compute_surv_ci(substitute(x), times, type, psa, Nrep),

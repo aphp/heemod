@@ -30,7 +30,7 @@ you want to plot survival from the start or conditional probabilities.}
 \item{join_opts}{A list of 3 graphical parameters for points at which different
 survival functions are joined: join_col, join_pch and join_size.}
 
-\item{...}{additional arguments to pass to \code{ggplot2} functions.}
+\item{...}{additional arguments to pass to \code{compute_surv} functions.}
 }
 \value{
 a \code{\link[ggplot2:ggplot]{ggplot2::ggplot()}} object.
@@ -45,7 +45,7 @@ To avoid plotting the join points, set join_size to a negative number.
 }
 \examples{
 ## Evaluation of the variability of the survival distribution
-\dontrun{
+\donttest{
 surv1 <- define_surv_dist("exp", rate = 0.1)
 psa <- define_psa(surv1 ~ resample_surv(n = 100))
 plot(surv1, psa=psa)

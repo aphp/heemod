@@ -31,6 +31,10 @@ define_surv_fit <- function(x){
   if (is.null(data)){
     cli::cli_abort("Please explicit the {.arg data} argument within the {.fun {fun}} function")
   }
+  if (!rlang::is_symbol(data)){
+    cli::cli_warn("{.arg data} includes the package environment. If you need to \
+    perform PSA, you need to remove it.")
+  }
   structure(enx,
             class = c("surv_fit", "surv_object"),
             strata = x$strata)

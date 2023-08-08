@@ -4,9 +4,17 @@
 ### Breaking changes
  * dplyr's pipe now causes an error when chaining survival operation. The new pipe
 is required in this situation.
- * `define_survival` has been renamed `define_surv_dist` for naming consistency
- * It is now necessary to use `define_surv_fit` to specify a survival fit created
- with `survfit`, `flexsurvreg` or `flexsurvspline`
+ * `define_survival()` has been renamed `define_surv_dist()` for naming consistency
+ * It is now necessary to use `define_surv_fit()` to specify a survival fit created
+ with `survfit()`, `flexsurvreg()` or `flexsurvspline()`
+ 
+### New Features
+ * It is now possible to run probabilistic sensitivity analysis (PSA) with survival
+ objects - either created from a parametric distribution (with `define_surv_dist`)
+ or with real data fitted with `survfit()` or `flexsurvreg()`. 
+ See `vignette("j-survival_2_psa")`
+ * `plot.surv_object()` gains `psa` argument allowing to plot the distribution to
+ check for its variability.
 
 ### Other changes
  * All operation functions on survival objects are now of class `surv_object`

@@ -225,17 +225,22 @@ resample_surv <- function(n){
 resample_surv_boot <- function(x){
   structure(list(r_boot_survfit(x)),
             class = c("surv_psa"))
-  
 }
 
 
 #' @rdname resample_surv
 #' @keywords internal
 resample_surv_dist <- function(x, n){
+  if (inherits(x, "surv_fit")){
+    cli::cli_warn("{.fn resample_surv} should not contain the {.arg n} argument \
+                  for {.cls surv_fit} object",
+                  .frequency = "regularly",
+                  .frequency_id = "resample_surv_dist")
+    return(resample_surv_boot(x))
+  }
   if (! requireNamespace("flexsurv")) {
     stop("'flexsurv' package required.")
   }
-  
   pf <- get(paste0("r", x$distribution),
             envir = asNamespace("flexsurv"))
   
@@ -263,7 +268,7 @@ r_resample_surv_dist <- function(distribution, type, args){
         formula, 
         data = df, start = args,
         algorithm = "port",
-        lower = 1E-6
+        lower = 1E-1
       )
     }
     return(do.call(define_surv_dist, c(type, as.list(coef(fit)))))

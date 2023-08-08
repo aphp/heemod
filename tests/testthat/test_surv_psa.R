@@ -291,6 +291,15 @@ test_that("psa surv_fit is correct", {
    )
    expect_error(run_psa(resTM, psa, 10), 
                 cli::cli_text("`km_2` must be a {.cls surv_fit}"))
+   
+   psa <- define_psa(km_1 ~ resample_surv(n = 100))
+   expect_warning(eval_resample(psa, 2), "should not contain the `n` argument")
+   
+    survfit(
+     formula = Surv(time, status) ~ 1,
+     data = survival::colon) |>
+     define_surv_fit() |>
+    expect_warning("includes the package environment")
   })
   
   test_that("survival operations work with run_psa and surv_fit", {
