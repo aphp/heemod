@@ -1,3 +1,5 @@
+library(flexsurv)
+
 surv_dist1 <- define_surv_dist(
   distribution = "exp",
   rate = .003
@@ -66,15 +68,15 @@ test_that(
     
     surv_dist_1 <- define_surv_dist(
       distribution = "exp", rate = 0.5)
-    fit_cov <- flexsurv::flexsurvreg(
+    fit_cov <- flexsurvreg(
       formula = survival::Surv(rectime, censrec) ~ group,
       dist = "weibull", 
-      data = flexsurv::bc) |> 
+      data = bc) |> 
       define_surv_fit()
     fitcov_medium <- set_covariates(fit_cov, group = "Medium")
     km_cov <- survival::survfit(
       formula = survival::Surv(rectime, censrec) ~ group,
-      data = flexsurv::bc) |> 
+      data = bc) |> 
       define_surv_fit()
     km_medium <- set_covariates(km_cov, group = "Medium")
     

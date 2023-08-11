@@ -16,7 +16,7 @@ remove_undefined_psa <- function(psa, param){
   not_found <- setdiff(names(psa$list_qdist), all_vars)
   if (!length(not_found)) return(psa)
     cli::cli_warn(glue::glue('{paste(not_found, collapse = ", ")} \\
-                                      not previously defined or used by define_parameters. \\
+                                      neither used by define_parameters nor found in the environment. \\
                                       Will be skipped.'))
     psa$list_qdist <- psa$list_qdist[-which(names(psa$list_qdist) %in% not_found)]
     if (!length(psa$list_qdist)) {

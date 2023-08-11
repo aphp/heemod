@@ -23,17 +23,23 @@
 define_surv_fit <- function(x){
   enx <- rlang::enexpr(x) 
   detect_dplyr_pipe(enx)
+  if (!rlang::is_call(enx)){
+    cli::cli_abort(c("{.arg x} must not be the object created by the function evaluation,
+                but by the {.fun survfit}, {.fun flexsurvreg} or {.fun flexsurvspline} call:",
+                   "x" = "{.code m <- survfit(Surv(time, status) ~ 1, data = colon); define_surv_fit(m)}",
+                   "v" = "{.code define_surv_fit(survfit(Surv(time, status) ~ 1, data = colon))}"))
+  }
   fun <- rlang::call_name(enx) 
   stopifnot(fun %in% c("survfit", "flexsurvreg", 
                                          "flexsurvspline"))
-  data <-rlang::call_args(enx) %>% 
+  data <- rlang::call_args(enx) %>% 
     `[[`("data") 
   if (is.null(data)){
     cli::cli_abort("Please explicit the {.arg data} argument within the {.fun {fun}} function")
   }
   if (!rlang::is_symbol(data)){
-    cli::cli_warn("{.arg data} includes the package environment. If you need to \
-    perform PSA, you need to remove it.")
+    cli::cli_inform("{.arg {deparse(data)}} is a complex expression. If you need to \
+    perform PSA, please make sure the data.frame does not include the package environment, i.e. is not preceded by `::`.")
   }
   structure(enx,
             class = c("surv_fit", "surv_object"),

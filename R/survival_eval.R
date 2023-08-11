@@ -160,7 +160,7 @@ extract_stratum <- function(sf, index) {
     )
   )
   
-  return(do.call(tibble, arg_list))
+  return(do.call(data.frame, arg_list))
 }
 
 #' Extract Product-Limit Tables
@@ -180,10 +180,11 @@ extract_strata <- function(sf) {
   if (is.null(sf$strata)) {
     extract_stratum(sf, 1)
   } else {
-    purrr::map_dfr(
+    lapply(
       seq_len(length(sf$strata)),
       function(i) extract_stratum(sf, i)
-    )
+    ) %>% 
+      bind_rows()
   }
 }
 
@@ -301,8 +302,32 @@ eval_surv.default <- function(x, ...){
   ret
 }
 
-#' @rdname eval_surv
-#' @export
+
+#' #' @rdname eval_surv
+#' #' @export
+#' #'
+#' eval_surv.survfit2 <- function(x, time,  ...) {
+#'   .dots <- list(...)
+#'   x <- summary(x, time)
+#'   n <- x$n
+#'   strata <- x$strata
+#'   df <- data.frame(n = x$n, surv=x$surv, time = x$time, strata)
+#'   if (is.null(.dots$covar)) {
+#'     if (!is.null(strata)){
+#'       message("No covariates provided, returning aggregate survival across all subjects.")
+#'     }
+#'   } else {
+#'     strsplit(as.character(x$strata), ", ") %>% map(strsplit, "=") %>% unlist(use.names = F) -> v
+#'     nm <- unique(v[c(TRUE, FALSE)])
+#'     cbind(df,
+#'           matrix(v[c(FALSE, TRUE)], ncol = length(nm), byrow = TRUE,
+#'            dimnames = list(NULL, nm) )) %>%
+#'       merge(.dots$covar) %>%
+#'       dplyr::group_by(time) %>%
+#'       dplyr::summarise(value = sum(surv * n/sum(n))) %>%
+#'       dplyr::pull(value)
+#'   }
+#' }
 eval_surv.survfit <- function(x, time,  ...) {
   
   dots <- list(...)
@@ -324,7 +349,7 @@ eval_surv.survfit <- function(x, time,  ...) {
   surv_df <- pl_table %>%
     split(pl_table[terms]) %>% 
     lapply(function(x){
-      c(as.list(x[terms][1, ]),
+      c(as.list(x[terms][1, , drop=FALSE]),
         list(
           maxtime = max(x$time),
           value = stats::stepfun(x$time[-1], x$surv)( time ),
@@ -336,18 +361,22 @@ eval_surv.survfit <- function(x, time,  ...) {
     bind_rows() 
   value <- ifelse(surv_df$selector, as.numeric(NA), surv_df$value)
   surv_df$value <- value
-  surv_df <- surv_df %>%   
-    dplyr::select(-maxtime, -selector)
+  # surv_df <- surv_df %>%   
+  #   dplyr::select(-maxtime, -selector)
   
   if (is.null(dots$covar)) {
     if (length(terms) > 0) {
       message("No covariates provided, returning aggregate survival across all subjects.")
     }
     # If covariates are not provided, do weighted average for each time.
+    # agg_df <- surv_df %>%
+    #   dplyr::group_by(t) %>%
+    #   dplyr::summarize(value = sum(.data$value * n) / sum(n))
+    
     agg_df <- surv_df %>%
-      tibble::as_tibble() %>% 
-      dplyr::group_by(t) %>%
-      dplyr::summarize(value = sum(.data$value * n) / sum(n))
+      split(.$t) %>%
+      lapply(function(x) value = sum(x$value * x$n) / sum(x$n)) %>%
+      data.frame(value = unlist(., use.names = FALSE))
   } else {
     
     # If covariates are provided, join the predictions to them and then
@@ -355,8 +384,11 @@ eval_surv.survfit <- function(x, time,  ...) {
     
     agg_df <- clean_factors(dots$covar) %>% 
       dplyr::left_join(surv_df, by = terms, relationship = "many-to-many") %>%
-      dplyr::group_by(t) %>%
-      dplyr::summarize(value = mean(.data$value))
+      split(.$t) %>%
+      lapply(function(x) value = mean(x$value)) %>%
+      data.frame(value = unlist(., use.names = FALSE))
+      # dplyr::group_by(t) %>%
+      # dplyr::summarize(value = mean(.data$value))
   }
   
   # Get the vector of predictions

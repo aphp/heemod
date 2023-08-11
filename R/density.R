@@ -293,9 +293,11 @@ r_boot_survfit <- function(x){
       gsub("=.*", "", .) %>%
       unique()
     new_data <-  e_data %>%
-      group_by(!!!syms(strata)) %>% 
-      dplyr::slice_sample(prop = 1, replace = TRUE) %>% 
-      ungroup()
+      split(.[[strata]]) %>% 
+      lapply(function(x){
+        x[sample.int(nrow(x), replace = TRUE),]
+      }) %>% 
+      bind_rows()
   }
  # assign(deparse(data), new_data, envir = getOption("heemod.env"))
   

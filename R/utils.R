@@ -734,7 +734,7 @@ copy_param_env.default <- function(param, ...){
   repeat({
     n <- n + 1
     env <- rlang::caller_env(n)
-    if (exists(x, envir = env,, inherits = FALSE)) {
+    if (exists(x, envir = env, inherits = FALSE)) {
       assign(x, get(x, env), new_env)
       break
     }

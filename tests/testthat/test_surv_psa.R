@@ -14,7 +14,6 @@ km_1 <- survfit(
   data = colon) |>
   define_surv_fit()
 
-
 test_that("define_psa gives correct output", {
   psa <- define_psa(surv_dist_1 ~ resample_surv(1000))
   expect_equal(psa$list_qdist$surv_dist_1, quote(resample_surv_dist(1000)), ignore_attr = TRUE)
@@ -273,7 +272,7 @@ test_that("psa surv_fit is correct", {
                      km_1 ~ resample_surv()
                      )
    
-   expect_warning(run_psa(resTM, psa, 10), "km_2 not previously defined")
+   expect_warning(run_psa(resTM, psa, 10), "km_2 neither used by define_parameters")
    
    param <- define_parameters(
      p1 = heemod:::compute_surv_(
@@ -299,7 +298,7 @@ test_that("psa surv_fit is correct", {
      formula = Surv(time, status) ~ 1,
      data = survival::colon) |>
      define_surv_fit() |>
-    expect_warning("includes the package environment")
+    expect_message("include the package environment")
   })
   
   test_that("survival operations work with run_psa and surv_fit", {

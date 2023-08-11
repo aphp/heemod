@@ -1,36 +1,38 @@
-fs1 = flexsurv::flexsurvreg(survival::Surv(rectime, censrec) ~ group,
-                            data = flexsurv::bc,
+library(flexsurv)
+
+fs1 = flexsurvreg(Surv(rectime, censrec) ~ group,
+                            data = bc,
                             dist = "weibull")|> 
   define_surv_fit()
-fs2 = flexsurv::flexsurvreg(survival::Surv(rectime, censrec) ~ group,
-                            data = flexsurv::bc,
+fs2 = flexsurvreg(Surv(rectime, censrec) ~ group,
+                            data = bc,
                             dist = "weibullPH") |> 
   define_surv_fit()
-fs3 = flexsurv::flexsurvspline(
-  survival::Surv(rectime, censrec) ~ group,
-  data = flexsurv::bc,
+fs3 = flexsurvspline(
+  Surv(rectime, censrec) ~ group,
+  data = bc,
   scale = "odds",
   k = 2
 )|> 
   define_surv_fit()
-fs4 = flexsurv::flexsurvreg(survival::Surv(rectime, censrec) ~ group,
-                            data = flexsurv::bc,
+fs4 = flexsurvreg(Surv(rectime, censrec) ~ group,
+                            data = bc,
                             dist = "exp")|> 
   define_surv_fit()
-fs5 = flexsurv::flexsurvreg(survival::Surv(rectime, censrec) ~ 1,
-                            data = flexsurv::bc,
+fs5 = flexsurvreg(Surv(rectime, censrec) ~ 1,
+                            data = bc,
                             dist = "genf")|> 
   define_surv_fit()
-fs6 = flexsurv::flexsurvreg(survival::Surv(time, status == 1) ~ age + sex,
-                            data = survival::cancer,
+fs6 = flexsurvreg(Surv(time, status == 1) ~ age + sex,
+                            data = cancer,
                             dist = "gompertz")|> 
   define_surv_fit()
 
-km = survival::survfit(survival::Surv(rectime, censrec) ~ group, data =
-                         flexsurv::bc) |> 
+km = survfit(Surv(rectime, censrec) ~ group, data =
+                         bc) |> 
   define_surv_fit()
-km_good = survival::survfit(survival::Surv(rectime, censrec) ~ group,
-                            data = flexsurv::bc |> dplyr::filter(group == "Good"))|> 
+km_good = survfit(Surv(rectime, censrec) ~ group,
+                            data = bc |> dplyr::filter(group == "Good"))|> 
   define_surv_fit()
 
 test_that("Flexsurvreg",
