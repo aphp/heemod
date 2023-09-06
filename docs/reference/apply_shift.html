@@ -17,7 +17,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">heemod</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.16.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.16.0.9001</span>
       </span>
     </div>
 
@@ -85,7 +85,7 @@ If <code>shift == 0</code>, <code>dist</code> is returned unchanged.</p>
     <div id="ref-examples">
     <h2>Examples</h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="va">dist1</span> <span class="op">&lt;-</span> <span class="fu"><a href="define_survival.html">define_survival</a></span><span class="op">(</span>distribution <span class="op">=</span> <span class="st">"gamma"</span>, rate <span class="op">=</span> <span class="fl">0.25</span>, shape <span class="op">=</span> <span class="fl">3</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">dist1</span> <span class="op">&lt;-</span> <span class="fu"><a href="define_surv_dist.html">define_surv_dist</a></span><span class="op">(</span>distribution <span class="op">=</span> <span class="st">"gamma"</span>, rate <span class="op">=</span> <span class="fl">0.25</span>, shape <span class="op">=</span> <span class="fl">3</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="va">shift_dist</span> <span class="op">&lt;-</span> <span class="fu">apply_shift</span><span class="op">(</span><span class="va">dist1</span>, <span class="fl">4</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="fu"><a href="compute_surv.html">compute_surv</a></span><span class="op">(</span><span class="va">dist1</span>, <span class="fl">1</span><span class="op">:</span><span class="fl">10</span><span class="op">)</span></span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Loading required namespace: flexsurv</span>

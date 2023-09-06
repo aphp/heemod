@@ -18,7 +18,7 @@ survival and overall survival."><!-- mathjax --><script src="https://cdnjs.cloud
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">heemod</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.16.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.16.0.9001</span>
       </span>
     </div>
 
@@ -74,7 +74,7 @@ survival and overall survival.</p>
     <dl><dt>pfs, os</dt>
 <dd><p>Either results from
 <code><a href="https://rdrr.io/pkg/flexsurv/man/flexsurvreg.html" class="external-link">flexsurv::flexsurvreg()</a></code> or
-<code><a href="define_survival.html">define_survival()</a></code>.</p></dd>
+<code><a href="define_surv_dist.html">define_surv_dist()</a></code>.</p></dd>
 
 
 <dt>state_names</dt>
@@ -105,8 +105,8 @@ absolute time units.</p></dd>
 
     <div id="ref-examples">
     <h2>Examples</h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="va">dist_pfs</span> <span class="op">&lt;-</span> <span class="fu"><a href="define_survival.html">define_survival</a></span><span class="op">(</span><span class="st">"exp"</span>, rate <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></span></span>
-<span class="r-in"><span><span class="va">dist_os</span> <span class="op">&lt;-</span> <span class="fu"><a href="define_survival.html">define_survival</a></span><span class="op">(</span><span class="st">"exp"</span>, rate <span class="op">=</span> <span class="fl">.5</span><span class="op">)</span></span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="va">dist_pfs</span> <span class="op">&lt;-</span> <span class="fu"><a href="define_surv_dist.html">define_surv_dist</a></span><span class="op">(</span><span class="st">"exp"</span>, rate <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">dist_os</span> <span class="op">&lt;-</span> <span class="fu"><a href="define_surv_dist.html">define_surv_dist</a></span><span class="op">(</span><span class="st">"exp"</span>, rate <span class="op">=</span> <span class="fl">.5</span><span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="fu">define_part_surv</span><span class="op">(</span></span></span>
 <span class="r-in"><span>  pfs <span class="op">=</span> <span class="va">dist_pfs</span>,</span></span>
@@ -121,12 +121,12 @@ absolute time units.</p></dd>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $pfs</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="font-weight: bold;">&lt;quosure&gt;</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> expr: <span style="color: #0000BB;">^dist_pfs</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> env:  <span style="color: #0000BB;">0x55c00b75e568</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> env:  <span style="color: #0000BB;">0x55696c08e8f0</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $os</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="font-weight: bold;">&lt;quosure&gt;</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> expr: <span style="color: #0000BB;">^dist_os</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> env:  <span style="color: #0000BB;">0x55c00b75e568</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> env:  <span style="color: #0000BB;">0x55696c08e8f0</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $state_names</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> progression_free      progression         terminal            death </span>
@@ -147,12 +147,12 @@ absolute time units.</p></dd>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $pfs</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="font-weight: bold;">&lt;quosure&gt;</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> expr: <span style="color: #0000BB;">^dist_pfs</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> env:  <span style="color: #0000BB;">0x55c00b75e568</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> env:  <span style="color: #0000BB;">0x55696c08e8f0</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $os</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="font-weight: bold;">&lt;quosure&gt;</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> expr: <span style="color: #0000BB;">^dist_os</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> env:  <span style="color: #0000BB;">0x55c00b75e568</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> env:  <span style="color: #0000BB;">0x55696c08e8f0</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $state_names</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> progression_free      progression         terminal            death </span>

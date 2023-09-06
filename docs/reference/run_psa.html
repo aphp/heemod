@@ -17,7 +17,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">heemod</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.16.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.16.0.9001</span>
       </span>
     </div>
 
@@ -56,7 +56,7 @@
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">run_psa</span><span class="op">(</span><span class="va">model</span>, <span class="va">psa</span>, <span class="va">N</span>, <span class="va">resample</span><span class="op">)</span></span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">run_psa</span><span class="op">(</span><span class="va">model</span>, <span class="va">psa</span>, <span class="va">N</span>, keep <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
@@ -74,17 +74,21 @@ by <code><a href="define_psa.html">define_psa()</a></code>.</p></dd>
 <dd><p>&gt; 0. Number of simulation to run.</p></dd>
 
 
-<dt>resample</dt>
-<dd><p>Deprecated. Resampling distribution for
-parameters defined by <code><a href="define_psa.html">define_psa()</a></code>.</p></dd>
+<dt>keep</dt>
+<dd><p>logical; if TRUE, all models will be returned</p></dd>
 
 </dl></div>
     <div id="value">
     <h2>Value</h2>
     
 
-<p>A list with one <code>data.frame</code> per model.</p>
-    </div>
+<p>A list with the following elements</p><ul><li><p>psa:  a <code>data.frame</code> with one row per model.</p></li>
+<li><p>run_model: a <code>data.frame</code> with mean cost and utility for each strategy</p></li>
+<li><p>model: the initial model object</p></li>
+<li><p>N: the number of simulations ran</p></li>
+<li><p>resamp_par: the resampled parameters</p></li>
+<li><p>full: if <code>keep</code> is TRUE, a list of each model objects created at each iteration</p></li>
+</ul></div>
 
     <div id="ref-examples">
     <h2>Examples</h2>
@@ -156,6 +160,8 @@ parameters defined by <code><a href="define_psa.html">define_psa()</a></code>.</
 <span class="r-in"><span><span class="co"># (only 10 resample for speed)</span></span></span>
 <span class="r-in"><span><span class="va">ndt1</span> <span class="op">&lt;-</span> <span class="fu">run_psa</span><span class="op">(</span><span class="va">res2</span>, psa <span class="op">=</span> <span class="va">rsp</span>, N <span class="op">=</span> <span class="fl">10</span><span class="op">)</span></span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Resampling strategy 'I'...</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Resampling strategy 'I'...</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Resampling strategy 'II'...</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Resampling strategy 'II'...</span>
 </code></pre></div>
     </div>

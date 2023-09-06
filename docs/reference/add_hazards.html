@@ -18,7 +18,7 @@ hazards from two or more survival distributions."><!-- mathjax --><script src="h
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">heemod</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.16.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.16.0.9001</span>
       </span>
     </div>
 
@@ -84,8 +84,8 @@ projection.</p></dd>
     <div id="ref-examples">
     <h2>Examples</h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="va">dist1</span> <span class="op">&lt;-</span> <span class="fu"><a href="define_survival.html">define_survival</a></span><span class="op">(</span>distribution <span class="op">=</span> <span class="st">"exp"</span>, rate <span class="op">=</span> <span class="fl">.125</span><span class="op">)</span></span></span>
-<span class="r-in"><span><span class="va">dist2</span> <span class="op">&lt;-</span> <span class="fu"><a href="define_survival.html">define_survival</a></span><span class="op">(</span>distribution <span class="op">=</span> <span class="st">"weibull"</span>, shape <span class="op">=</span> <span class="fl">1.2</span>, scale <span class="op">=</span> <span class="fl">50</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">dist1</span> <span class="op">&lt;-</span> <span class="fu"><a href="define_surv_dist.html">define_surv_dist</a></span><span class="op">(</span>distribution <span class="op">=</span> <span class="st">"exp"</span>, rate <span class="op">=</span> <span class="fl">.125</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">dist2</span> <span class="op">&lt;-</span> <span class="fu"><a href="define_surv_dist.html">define_surv_dist</a></span><span class="op">(</span>distribution <span class="op">=</span> <span class="st">"weibull"</span>, shape <span class="op">=</span> <span class="fl">1.2</span>, scale <span class="op">=</span> <span class="fl">50</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="va">combined_dist</span> <span class="op">&lt;-</span> <span class="fu">add_hazards</span><span class="op">(</span><span class="va">dist1</span>, <span class="va">dist2</span><span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
 </code></pre></div>

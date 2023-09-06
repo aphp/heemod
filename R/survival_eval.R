@@ -303,31 +303,8 @@ eval_surv.default <- function(x, ...){
 }
 
 
-#' #' @rdname eval_surv
-#' #' @export
-#' #'
-#' eval_surv.survfit2 <- function(x, time,  ...) {
-#'   .dots <- list(...)
-#'   x <- summary(x, time)
-#'   n <- x$n
-#'   strata <- x$strata
-#'   df <- data.frame(n = x$n, surv=x$surv, time = x$time, strata)
-#'   if (is.null(.dots$covar)) {
-#'     if (!is.null(strata)){
-#'       message("No covariates provided, returning aggregate survival across all subjects.")
-#'     }
-#'   } else {
-#'     strsplit(as.character(x$strata), ", ") %>% map(strsplit, "=") %>% unlist(use.names = F) -> v
-#'     nm <- unique(v[c(TRUE, FALSE)])
-#'     cbind(df,
-#'           matrix(v[c(FALSE, TRUE)], ncol = length(nm), byrow = TRUE,
-#'            dimnames = list(NULL, nm) )) %>%
-#'       merge(.dots$covar) %>%
-#'       dplyr::group_by(time) %>%
-#'       dplyr::summarise(value = sum(surv * n/sum(n))) %>%
-#'       dplyr::pull(value)
-#'   }
-#' }
+#' @rdname eval_surv
+#' @export
 eval_surv.survfit <- function(x, time,  ...) {
   
   dots <- list(...)
