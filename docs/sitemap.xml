@@ -40,6 +40,9 @@
     <loc>/articles/j_survival.html</loc>
   </url>
   <url>
+    <loc>/articles/j_survival_2_psa.html</loc>
+  </url>
+  <url>
     <loc>/articles/k_calibration.html</loc>
   </url>
   <url>
@@ -172,9 +175,6 @@
     <loc>/reference/define_psa.html</loc>
   </url>
   <url>
-    <loc>/reference/define_spline_survival.html</loc>
-  </url>
-  <url>
     <loc>/reference/define_starting_values.html</loc>
   </url>
   <url>
@@ -187,10 +187,16 @@
     <loc>/reference/define_strategy.html</loc>
   </url>
   <url>
-    <loc>/reference/define_surv_table.html</loc>
+    <loc>/reference/define_surv_dist.html</loc>
   </url>
   <url>
-    <loc>/reference/define_survival.html</loc>
+    <loc>/reference/define_surv_fit.html</loc>
+  </url>
+  <url>
+    <loc>/reference/define_surv_spline.html</loc>
+  </url>
+  <url>
+    <loc>/reference/define_surv_table.html</loc>
   </url>
   <url>
     <loc>/reference/define_transition.html</loc>
@@ -295,7 +301,7 @@
     <loc>/reference/get_values.html</loc>
   </url>
   <url>
-    <loc>/reference/heemod.html</loc>
+    <loc>/reference/heemod-package.html</loc>
   </url>
   <url>
     <loc>/reference/heemod_scale.html</loc>
@@ -349,7 +355,7 @@
     <loc>/reference/plot.run_model.html</loc>
   </url>
   <url>
-    <loc>/reference/plot.surv_obj.html</loc>
+    <loc>/reference/plot.surv_object.html</loc>
   </url>
   <url>
     <loc>/reference/plur.html</loc>
@@ -368,6 +374,9 @@
   </url>
   <url>
     <loc>/reference/reindent_transition.html</loc>
+  </url>
+  <url>
+    <loc>/reference/resample_surv.html</loc>
   </url>
   <url>
     <loc>/reference/rescale_discount_rate.html</loc>

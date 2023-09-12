@@ -33,7 +33,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">heemod</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.16.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.16.0.9001</span>
       </span>
     </div>
 
@@ -71,7 +71,7 @@
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>Heterogeneity &amp; Demographic Analysis</h1>
             
-            <h4 data-toc-skip class="date">2023-07-18</h4>
+            <h4 data-toc-skip class="date">2023-09-12</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/aphp/heemod/blob/HEAD/vignettes/g_heterogeneity.Rmd" class="external-link"><code>vignettes/g_heterogeneity.Rmd</code></a></small>
       <div class="hidden name"><code>g_heterogeneity.Rmd</code></div>
@@ -110,16 +110,16 @@ with varying sex and age, specified in the data frame
 <pre><code><span><span class="co">## <span style="color: #949494;"># A tibble: 100 × 2</span></span></span>
 <span><span class="co">##      age   sex</span></span>
 <span><span class="co">##    <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;int&gt;</span></span></span>
-<span><span class="co">## <span style="color: #BCBCBC;"> 1</span>    67     1</span></span>
-<span><span class="co">## <span style="color: #BCBCBC;"> 2</span>    57     0</span></span>
-<span><span class="co">## <span style="color: #BCBCBC;"> 3</span>    61     1</span></span>
-<span><span class="co">## <span style="color: #BCBCBC;"> 4</span>    73     1</span></span>
-<span><span class="co">## <span style="color: #BCBCBC;"> 5</span>    66     0</span></span>
-<span><span class="co">## <span style="color: #BCBCBC;"> 6</span>    70     0</span></span>
-<span><span class="co">## <span style="color: #BCBCBC;"> 7</span>    64     0</span></span>
-<span><span class="co">## <span style="color: #BCBCBC;"> 8</span>    51     0</span></span>
-<span><span class="co">## <span style="color: #BCBCBC;"> 9</span>    66     1</span></span>
-<span><span class="co">## <span style="color: #BCBCBC;">10</span>    49     1</span></span>
+<span><span class="co">## <span style="color: #BCBCBC;"> 1</span>    54     0</span></span>
+<span><span class="co">## <span style="color: #BCBCBC;"> 2</span>    78     0</span></span>
+<span><span class="co">## <span style="color: #BCBCBC;"> 3</span>    72     1</span></span>
+<span><span class="co">## <span style="color: #BCBCBC;"> 4</span>    56     0</span></span>
+<span><span class="co">## <span style="color: #BCBCBC;"> 5</span>    58     0</span></span>
+<span><span class="co">## <span style="color: #BCBCBC;"> 6</span>    69     0</span></span>
+<span><span class="co">## <span style="color: #BCBCBC;"> 7</span>    56     1</span></span>
+<span><span class="co">## <span style="color: #BCBCBC;"> 8</span>    85     0</span></span>
+<span><span class="co">## <span style="color: #BCBCBC;"> 9</span>    63     1</span></span>
+<span><span class="co">## <span style="color: #BCBCBC;">10</span>    83     0</span></span>
 <span><span class="co">## <span style="color: #949494;"># ℹ 90 more rows</span></span></span></code></pre>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://ggplot2.tidyverse.org" class="external-link">ggplot2</a></span><span class="op">)</span></span>
@@ -154,28 +154,28 @@ model.</p>
 <span><span class="co">## </span></span>
 <span><span class="co">## * Values distribution:</span></span>
 <span><span class="co">## </span></span>
-<span><span class="co">##                                  Min.      1st Qu.     Median        Mean</span></span>
-<span><span class="co">## standard - Cost          470.23578695  605.0062810 626.353775 688.5285957</span></span>
-<span><span class="co">## standard - Effect          5.05860925   23.3226486  26.729786  25.8835617</span></span>
-<span><span class="co">## standard - Cost Diff.               -            -          -           -</span></span>
-<span><span class="co">## standard - Effect Diff.             -            -          -           -</span></span>
-<span><span class="co">## standard - Icer                     -            -          -           -</span></span>
-<span><span class="co">## np1 - Cost               599.19333183  635.5509751 641.354798 659.3377784</span></span>
-<span><span class="co">## np1 - Effect               5.07524179   23.4706053  27.104563  26.1396394</span></span>
-<span><span class="co">## np1 - Cost Diff.        -159.96283707  -99.5031416  15.001022 -29.1908173</span></span>
-<span><span class="co">## np1 - Effect Diff.         0.01663254    0.1948185   0.220806   0.2560777</span></span>
-<span><span class="co">## np1 - Icer              -351.98058303 -304.0330575  65.667990  44.1628674</span></span>
+<span><span class="co">##                                  Min.      1st Qu.      Median        Mean</span></span>
+<span><span class="co">## standard - Cost          438.70535048  605.0062810 668.4111712 695.9263974</span></span>
+<span><span class="co">## standard - Effect          6.12465030   24.4991251  26.7297859  25.6686621</span></span>
+<span><span class="co">## standard - Cost Diff.               -            -           -           -</span></span>
+<span><span class="co">## standard - Effect Diff.             -            -           -           -</span></span>
+<span><span class="co">## standard - Icer                     -            -           -           -</span></span>
+<span><span class="co">## np1 - Cost               590.76054210  635.5509751 653.8138400 661.4710625</span></span>
+<span><span class="co">## np1 - Effect               6.13624942   24.8264025  27.1045630  25.9310183</span></span>
+<span><span class="co">## np1 - Cost Diff.        -163.38052116 -105.3260667 -14.5973312 -34.4553349</span></span>
+<span><span class="co">## np1 - Effect Diff.         0.01159912    0.1948185   0.2284374   0.2623562</span></span>
+<span><span class="co">## np1 - Icer              -353.62679735 -309.9367104 -61.2755700 111.6529946</span></span>
 <span><span class="co">##                             3rd Qu.         Max.</span></span>
-<span><span class="co">## standard - Cost         786.6690449  871.1621236</span></span>
-<span><span class="co">## standard - Effect        29.0596426   31.5292548</span></span>
+<span><span class="co">## standard - Cost         794.8012271   875.943516</span></span>
+<span><span class="co">## standard - Effect        29.0596426    31.299481</span></span>
 <span><span class="co">## standard - Cost Diff.             -            -</span></span>
 <span><span class="co">## standard - Effect Diff.           -            -</span></span>
 <span><span class="co">## standard - Icer                   -            -</span></span>
-<span><span class="co">## np1 - Cost              687.1659033  711.1992865</span></span>
-<span><span class="co">## np1 - Effect             29.2683350   31.7651919</span></span>
-<span><span class="co">## np1 - Cost Diff.         30.5446941  128.9575449</span></span>
-<span><span class="co">## np1 - Effect Diff.        0.3272774    0.4544649</span></span>
-<span><span class="co">## np1 - Icer              156.7853582 7753.3265967</span></span>
+<span><span class="co">## np1 - Cost              689.4751604   712.562995</span></span>
+<span><span class="co">## np1 - Effect             29.2683350    31.532860</span></span>
+<span><span class="co">## np1 - Cost Diff.         30.5446941   152.055192</span></span>
+<span><span class="co">## np1 - Effect Diff.        0.3391523     0.462014</span></span>
+<span><span class="co">## np1 - Icer              156.7853582 13109.195655</span></span>
 <span><span class="co">## </span></span>
 <span><span class="co">## * Combined result:</span></span>
 <span><span class="co">## </span></span>
@@ -194,8 +194,8 @@ model.</p>
 <span><span class="co">## Values:</span></span>
 <span><span class="co">## </span></span>
 <span><span class="co">##           utility     cost</span></span>
-<span><span class="co">## standard 25883.56 688528.6</span></span>
-<span><span class="co">## np1      26139.64 659337.8</span></span>
+<span><span class="co">## standard 25668.66 695926.4</span></span>
+<span><span class="co">## np1      25931.02 661471.1</span></span>
 <span><span class="co">## </span></span>
 <span><span class="co">## Efficiency frontier:</span></span>
 <span><span class="co">## </span></span>
@@ -203,8 +203,8 @@ model.</p>
 <span><span class="co">## </span></span>
 <span><span class="co">## Differences:</span></span>
 <span><span class="co">## </span></span>
-<span><span class="co">##     Cost Diff. Effect Diff.     ICER     Ref.</span></span>
-<span><span class="co">## np1  -29.19082    0.2560777 -113.992 standard</span></span></code></pre>
+<span><span class="co">##     Cost Diff. Effect Diff.      ICER     Ref.</span></span>
+<span><span class="co">## np1  -34.45533    0.2623562 -131.3304 standard</span></span></code></pre>
 <p>The variation of cost or effect can then be plotted.</p>
 <div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">res_h</span>, result <span class="op">=</span> <span class="st">"effect"</span>, binwidth <span class="op">=</span> <span class="fl">5</span><span class="op">)</span></span></code></pre></div>
@@ -241,16 +241,16 @@ of each strata in the target population.</p>
 <pre><code><span><span class="co">## <span style="color: #949494;"># A tibble: 100 × 3</span></span></span>
 <span><span class="co">##      age   sex .weights</span></span>
 <span><span class="co">##    <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;int&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span></span>
-<span><span class="co">## <span style="color: #BCBCBC;"> 1</span>    55     0   0.656 </span></span>
-<span><span class="co">## <span style="color: #BCBCBC;"> 2</span>    56     0   0.519 </span></span>
-<span><span class="co">## <span style="color: #BCBCBC;"> 3</span>    65     1   0.122 </span></span>
-<span><span class="co">## <span style="color: #BCBCBC;"> 4</span>    59     0   0.042<span style="text-decoration: underline;">7</span></span></span>
-<span><span class="co">## <span style="color: #BCBCBC;"> 5</span>    60     1   0.327 </span></span>
-<span><span class="co">## <span style="color: #BCBCBC;"> 6</span>    62     1   0.721 </span></span>
-<span><span class="co">## <span style="color: #BCBCBC;"> 7</span>    70     0   0.483 </span></span>
-<span><span class="co">## <span style="color: #BCBCBC;"> 8</span>    66     1   0.347 </span></span>
-<span><span class="co">## <span style="color: #BCBCBC;"> 9</span>    54     1   0.981 </span></span>
-<span><span class="co">## <span style="color: #BCBCBC;">10</span>    70     1   0.796 </span></span>
+<span><span class="co">## <span style="color: #BCBCBC;"> 1</span>    67     0    0.409</span></span>
+<span><span class="co">## <span style="color: #BCBCBC;"> 2</span>    55     0    0.774</span></span>
+<span><span class="co">## <span style="color: #BCBCBC;"> 3</span>    49     1    0.751</span></span>
+<span><span class="co">## <span style="color: #BCBCBC;"> 4</span>    52     0    0.625</span></span>
+<span><span class="co">## <span style="color: #BCBCBC;"> 5</span>    70     1    0.271</span></span>
+<span><span class="co">## <span style="color: #BCBCBC;"> 6</span>    50     1    0.193</span></span>
+<span><span class="co">## <span style="color: #BCBCBC;"> 7</span>    60     0    0.735</span></span>
+<span><span class="co">## <span style="color: #BCBCBC;"> 8</span>    62     0    0.743</span></span>
+<span><span class="co">## <span style="color: #BCBCBC;"> 9</span>    80     1    0.747</span></span>
+<span><span class="co">## <span style="color: #BCBCBC;">10</span>    67     1    0.391</span></span>
 <span><span class="co">## <span style="color: #949494;"># ℹ 90 more rows</span></span></span></code></pre>
 <div class="sourceCode" id="cb18"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">res_w</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/update.html" class="external-link">update</a></span><span class="op">(</span><span class="va">res_mod</span>, newdata <span class="op">=</span> <span class="va">tab_indiv_w</span><span class="op">)</span></span></code></pre></div>
@@ -263,34 +263,34 @@ of each strata in the target population.</p>
 <span><span class="co">## * Weigths distribution:</span></span>
 <span><span class="co">## </span></span>
 <span><span class="co">##     Min.  1st Qu.   Median     Mean  3rd Qu.     Max. </span></span>
-<span><span class="co">## 0.001138 0.245415 0.476403 0.474141 0.718583 0.991073 </span></span>
+<span><span class="co">## 0.007604 0.210005 0.466281 0.478954 0.748734 0.985413 </span></span>
 <span><span class="co">## </span></span>
-<span><span class="co">## Total weight: 47.41415</span></span>
+<span><span class="co">## Total weight: 47.89537</span></span>
 <span><span class="co">## </span></span>
 <span><span class="co">## * Values distribution:</span></span>
 <span><span class="co">## </span></span>
 <span><span class="co">##                                  Min.      1st Qu.     Median        Mean</span></span>
-<span><span class="co">## standard - Cost          500.08967163  621.5892423  749.32457 709.3469205</span></span>
-<span><span class="co">## standard - Effect         10.06345874   21.9825691   25.98577  25.4435029</span></span>
+<span><span class="co">## standard - Cost          470.23578695  605.0062810 621.589242 678.1902966</span></span>
+<span><span class="co">## standard - Effect          5.05860925   24.4991251  27.780658  26.1857366</span></span>
 <span><span class="co">## standard - Cost Diff.               -            -          -           -</span></span>
 <span><span class="co">## standard - Effect Diff.             -            -          -           -</span></span>
 <span><span class="co">## standard - Icer                     -            -          -           -</span></span>
-<span><span class="co">## np1 - Cost               607.16692250  640.0588497  676.58901 665.2233198</span></span>
-<span><span class="co">## np1 - Effect              10.13073146   22.2578591   26.16142  25.7128284</span></span>
-<span><span class="co">## np1 - Cost Diff.        -159.96283707  -99.5031416  -72.73556 -44.1236006</span></span>
-<span><span class="co">## np1 - Effect Diff.         0.05767389    0.2109055    0.27529   0.2693255</span></span>
-<span><span class="co">## np1 - Icer              -351.98058303 -304.0330575 -264.21430 -79.4663633</span></span>
-<span><span class="co">##                             3rd Qu.         Max.</span></span>
-<span><span class="co">## standard - Cost         786.6690449  871.1621236</span></span>
-<span><span class="co">## standard - Effect        29.0596426   31.6837747</span></span>
-<span><span class="co">## standard - Cost Diff.             -            -</span></span>
-<span><span class="co">## standard - Effect Diff.           -            -</span></span>
-<span><span class="co">## standard - Icer                   -            -</span></span>
-<span><span class="co">## np1 - Cost              687.1659033  711.1992865</span></span>
-<span><span class="co">## np1 - Effect             29.2683350   31.9214350</span></span>
-<span><span class="co">## np1 - Cost Diff.         18.4696074  107.0772509</span></span>
-<span><span class="co">## np1 - Effect Diff.        0.3272774    0.4544649</span></span>
-<span><span class="co">## np1 - Icer               83.6463073 1856.5985016</span></span>
+<span><span class="co">## np1 - Cost               599.19333183  635.5509751 640.058850 656.4006656</span></span>
+<span><span class="co">## np1 - Effect               5.07524179   24.8264025  27.975477  26.4360269</span></span>
+<span><span class="co">## np1 - Cost Diff.        -163.38052116  -99.5031416  18.469607 -21.7896310</span></span>
+<span><span class="co">## np1 - Effect Diff.         0.01663254    0.1948185   0.220806   0.2502903</span></span>
+<span><span class="co">## np1 - Icer              -353.62679735 -304.0330575  83.646307 141.8261022</span></span>
+<span><span class="co">##                             3rd Qu.        Max.</span></span>
+<span><span class="co">## standard - Cost         786.6690449  875.943516</span></span>
+<span><span class="co">## standard - Effect        29.6867852   31.529255</span></span>
+<span><span class="co">## standard - Cost Diff.             -           -</span></span>
+<span><span class="co">## standard - Effect Diff.           -           -</span></span>
+<span><span class="co">## standard - Icer                   -           -</span></span>
+<span><span class="co">## np1 - Cost              687.1659033  712.562995</span></span>
+<span><span class="co">## np1 - Effect             30.1262538   31.765192</span></span>
+<span><span class="co">## np1 - Cost Diff.         30.5446941  128.957545</span></span>
+<span><span class="co">## np1 - Effect Diff.        0.3272774    0.462014</span></span>
+<span><span class="co">## np1 - Icer              156.7853582 7753.326597</span></span>
 <span><span class="co">## </span></span>
 <span><span class="co">## * Combined result:</span></span>
 <span><span class="co">## </span></span>
@@ -309,8 +309,8 @@ of each strata in the target population.</p>
 <span><span class="co">## Values:</span></span>
 <span><span class="co">## </span></span>
 <span><span class="co">##           utility     cost</span></span>
-<span><span class="co">## standard 25443.50 709346.9</span></span>
-<span><span class="co">## np1      25712.83 665223.3</span></span>
+<span><span class="co">## standard 26185.74 678190.3</span></span>
+<span><span class="co">## np1      26436.03 656400.7</span></span>
 <span><span class="co">## </span></span>
 <span><span class="co">## Efficiency frontier:</span></span>
 <span><span class="co">## </span></span>
@@ -318,8 +318,8 @@ of each strata in the target population.</p>
 <span><span class="co">## </span></span>
 <span><span class="co">## Differences:</span></span>
 <span><span class="co">## </span></span>
-<span><span class="co">##     Cost Diff. Effect Diff.    ICER     Ref.</span></span>
-<span><span class="co">## np1   -44.1236    0.2693255 -163.83 standard</span></span></code></pre>
+<span><span class="co">##     Cost Diff. Effect Diff.      ICER     Ref.</span></span>
+<span><span class="co">## np1  -21.78963    0.2502903 -87.05743 standard</span></span></code></pre>
 </div>
 <div class="section level2">
 <h2 id="parallel-computing">Parallel computing<a class="anchor" aria-label="anchor" href="#parallel-computing"></a>

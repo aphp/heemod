@@ -88,6 +88,7 @@ articles:
     - a_introduction
     - b_time_dependency
     - j_survival
+    - j_survival_2_psa
   - title: Examples
     contents:
     - c_homogeneous

@@ -8,9 +8,11 @@
 #' on state-time and model-time (semi-Markov
 #' and non-homogeneous Markov models), etc.
 #' 
-#' @docType package
-#' @name heemod
-#'   
+#' @keywords internal
+"_PACKAGE"
+
+## usethis namespace: start
+
 #' @importFrom dplyr mutate_
 #' @importFrom dplyr n
 #' @importFrom dplyr group_by
@@ -88,6 +90,7 @@
 #' parse_exprs get_env call_match caller_env enquo exprs enexpr "%||%"
 #'
 #' @importFrom purrr map map_chr map_dbl map_lgl
+## usethis namespace: end
 NULL
 
 #' @export
