@@ -742,3 +742,12 @@ copy_param_env.default <- function(param, ...){
   }) 
   }
 }
+
+#' @export
+c.uneval_parameters <- function(...){
+  .dots <- list(...)
+  stopifnot("all elements must be specified with define_parameters" = all(lapply(.dots, function(x){
+    inherits(x, "uneval_parameters")
+  }) %>% as.logical()))
+  structure(.Data = vctrs:::c.vctrs_vctr(..., recursive = FALSE), class = class(.dots[[1]]))
+}
