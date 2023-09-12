@@ -28,7 +28,8 @@ Imports:
     rlang (>= 1.1.0), 
     purrr (>= 1.0.0),
     glue (>= 1.6.0),
-    lifecycle (>= 1.0.0)
+    lifecycle (>= 1.0.0),
+    vctrs (>= 0.6.0)
 LazyData: true
 VignetteBuilder: knitr
 RoxygenNote: 7.2.3

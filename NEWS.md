@@ -15,7 +15,8 @@ is required in this situation.
  See `vignette("j-survival_2_psa")`
  * `plot.surv_object()` gains `psa` argument allowing to plot the distribution to
  check for its variability.
-
+ * created method `c.uneval_parameters()` to combine outputs of `define_parameters()`.
+ 
 ### Other changes
  * All operation functions on survival objects are now of class `surv_object`
 
