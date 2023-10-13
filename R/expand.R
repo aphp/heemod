@@ -252,7 +252,7 @@ interpolate.state <- function(x, ...) {
   res <- structure(
     list(
     .dots = interpolate.default(x$.dots, ...),
-    starting_values = x$starting_values
+    starting_values = interpolate.default(x$starting_values, ...)
     )
   )
   define_state_(res)
