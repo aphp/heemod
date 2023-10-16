@@ -22,11 +22,13 @@ eval_parameters <- function(x, cycles = 1,
   # if (length(x)) x <- structure(x[!has_state_time(x)],
   #                          class = old_classes)
   
-  start_tibble <- data.frame(
+  he <-  getOption("heemod.env")
+  
+  assign("start_tibble", data.frame(
     model_time = seq_len(cycles),
     markov_cycle = seq_len(cycles),
     strategy = strategy_name,row.names = NULL,stringsAsFactors = F
-  ) #%>% 
+  ), envir = he) #%>% 
     #tibble::as_tibble()
   
   x_tidy <- x
@@ -34,10 +36,10 @@ eval_parameters <- function(x, cycles = 1,
   res <- try({
     lapply(seq_along(x_tidy), function(i){
       #parameters[names(x)[i]] <<- eval(rlang::quo_squash(x_tidy[[i]]), parameters)
-      start_tibble[names(x)[i]] <<- rlang::eval_tidy(x_tidy[[i]], data = start_tibble, 
-                                                     env=getOption("heemod.env"))
+      he$start_tibble[names(x)[i]] <<- rlang::eval_tidy(x_tidy[[i]], data = he$start_tibble, 
+                                                     env=he)
     })
-    start_tibble
+    he$start_tibble
   }, silent = TRUE
     # dplyr::mutate(
     #   start_tibble,
@@ -69,7 +71,7 @@ eval_parameters <- function(x, cycles = 1,
       seq_along(x),
       function(i) {
         try(dplyr::mutate(
-          start_tibble,
+          he$start_tibble,
           !!!x_tidy[seq_len(i)]
         ), silent = TRUE)
       }

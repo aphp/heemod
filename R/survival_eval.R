@@ -521,12 +521,12 @@ eval_surv.surv_pooled <- function(x, time, ...) {
 #' @rdname eval_surv
 #' @export
 eval_surv.surv_ph <- function(x, time, ...) {
-  
+  he <- getOption("heemod.env")
   ret <- eval_surv(
     x$dist,
     time = time,
     ...
-  ) ^ x$hr
+  ) ^ eval_tidy(x$hr, data = he$start_tibble[1, ], he)
   
   ret
 }
@@ -534,9 +534,9 @@ eval_surv.surv_ph <- function(x, time, ...) {
 #' @rdname eval_surv
 #' @export
 eval_surv.surv_shift <- function(x, time, ...) {
-  
+  he <- getOption("heemod.env")
   time_ <- time
-  time_ <- time_ - x$shift
+  time_ <- time_ - eval_tidy(x$shift, he$start_tibble[1, ], he)
   ret <- rep(1, length(time_))
   keep_me <- time_ >= 0
   if(any(keep_me)){
@@ -556,10 +556,10 @@ eval_surv.surv_shift <- function(x, time, ...) {
 #' @rdname eval_surv
 #' @export
 eval_surv.surv_aft <- function(x, time, ...) {
-  
+  he <- getOption("heemod.env")
   ret <- eval_surv(
     x$dist,
-    time = time/x$af 
+    time = time/eval_tidy(x$af, he$start_tibble[1, ], he)
   )
   
   ret
@@ -568,7 +568,7 @@ eval_surv.surv_aft <- function(x, time, ...) {
 #' @rdname eval_surv
 #' @export
 eval_surv.surv_po <- function(x, time, ...) {
-  
+  he <- getOption("heemod.env")
   dots <- list(...)
   
   p <- eval_surv(
@@ -577,7 +577,7 @@ eval_surv.surv_po <- function(x, time, ...) {
     ...
   )
   
-  ret <- 1 / ((((1 - p) / p) * x$or) + 1)
+  ret <- 1 / ((((1 - p) / p) * eval_tidy(x$or, he$start_tibble[1, ], he)) + 1)
   
   ret
 }

@@ -389,6 +389,45 @@ test_that("psa surv_fit is correct", {
                    dplyr::select(cost, ut), res)
     
   })
+  
+  test_that("modifiers work with a variable name", {
+    tm <- define_transition(
+      C, p1,
+      0, C
+    )
+    modified_surv <- apply_hr(km_1, hr) 
+    
+    param <- define_parameters(
+      hr = 3,
+      p1 = heemod:::compute_surv_(
+        modified_surv,
+        time = model_time,
+        cycle_length = 30
+      )
+    )
+    sA <-  define_state(
+      cost = 10, ut = 1
+    )
+    sB <-  define_state(
+      cost = 20, ut = .5
+    )
+    
+    stratTM <- define_strategy(
+      transition = tm,
+      A = sA, B = sB
+    )
+    resTM <- run_model(
+      parameters = param,
+      stratTM,
+      cycles = 15,
+      cost = cost, effect = ut
+    )
+    psa <- define_psa(hr ~ lognormal(3, 1))
+    
+    set.seed(1)            
+    resPSA <- run_psa(resTM, psa, 10)
+    expect_gt(sd(resPSA$psa$cost), 0)
+  })
 })
 # 
 

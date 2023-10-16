@@ -57,7 +57,7 @@ test_that("Flexsurvreg",
 test_that("Applying treatment effects",
           {
             # Testing apply_hr, apply_af, apply_or against flexsurvreg output to see
-            # that it is consitent.
+            # that it is consistent.
 
             surv1_medium_surv = fs1 |>
               set_covariates(group = "Medium") |>

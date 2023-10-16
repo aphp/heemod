@@ -735,7 +735,13 @@ copy_param_env.default <- function(param, ...){
     n <- n + 1
     env <- rlang::caller_env(n)
     if (exists(x, envir = env, inherits = FALSE)) {
-      assign(x, get(x, env), new_env)
+      tmp <- get(x, env)
+      # if (inherits(tmp, "surv_object")){
+      #   unlist(tmp) %>% 
+      #     Filter(function(x) !is.numeric(x), .) %>% 
+      #     copy_param_env()
+      # }
+      assign(x, tmp, new_env)
       break
     }
     if (identical(env, globalenv())) break

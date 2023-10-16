@@ -13,6 +13,7 @@
 
 .onAttach <- function(libname, pkgname) {
   options("heemod.env" =  rlang::new_environment(parent = asNamespace("heemod")))
+  assign("start_tibble", data.frame(), getOption("heemod.env"))
   invisible()
 }
 

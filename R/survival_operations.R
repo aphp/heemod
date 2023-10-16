@@ -26,7 +26,6 @@ join <- function(..., at) {
 #' @export
 #' @rdname join
 join_ <- function(dots, at) {
-  
   stopifnot(
     all(at > 0),
     all(is.finite(at)),
@@ -115,7 +114,7 @@ mix_ <- function(dots, weights = 1) {
   structure(
     list(
       dists = dots,
-      weights = weights
+      weights =  weights
     ),
     class = c("surv_pooled", "surv_object")
   )
@@ -142,12 +141,13 @@ mix_ <- function(dots, weights = 1) {
 apply_hr <- function(dist, hr, log_hr = FALSE) {
   dist <- enexpr(dist) %>% 
     detect_dplyr_pipe()
-  stopifnot(
-    length(hr) == 1,
-    is.finite(hr),
-    log_hr | hr > 0
-  )
-  if(log_hr) hr <- exp(hr)
+  #stopifnot(
+   # length(hr) == 1#,
+    # is.finite(hr),
+    # log_hr | hr > 0
+  #)
+  hr <- enexpr(hr)
+  if(log_hr) hr <- rlang::call2(exp, hr)
   #if(hr == 1) return(dist)
   # if(inherits(eval_tidy(dist), "surv_ph")){
   #   dist <- eval_tidy(dist)
@@ -184,14 +184,14 @@ apply_hr <- function(dist, hr, log_hr = FALSE) {
 apply_af <- function(dist, af, log_af = FALSE) {
   dist <- enexpr(dist) %>% 
     detect_dplyr_pipe()
-  stopifnot(
-    length(af) == 1,
-    is.finite(af),
-    log_af | af > 0
-  )
-  if(log_af) af <- exp(af)
+  # stopifnot(
+  #   length(af) == 1,
+  #   is.finite(af),
+  #   log_af | af > 0
+  # )
+  af <- enexpr(af)
+  if(log_af) af <- rlang::call2(exp, af)
   #if(af == 1) return(dist)
-  new_dist <- eval_tidy(dist)
   # if(inherits(new_dist, "surv_aft")){
   #   dist <- new_dist
   #   dist$af <- dist$af * af
@@ -229,13 +229,13 @@ apply_or = function(dist, or, log_or = FALSE) {
   dist <- enexpr(dist) %>% 
     detect_dplyr_pipe()
   
-  stopifnot(
-    length(or) == 1,
-    is.finite(or),
-    log_or | or > 0
-  )
-  
-  if(log_or) or <- exp(or)
+  # stopifnot(
+  #   length(or) == 1,
+  #   is.finite(or),
+  #   log_or | or > 0
+  # )
+  or <- enexpr(or)
+  if(log_or) or <- rlang::call2(exp, or)
  # if(or == 1) return(dist)
   # if(inherits(eval_tidy(dist), "surv_po")){
   #   dist <- eval_tidy(dist)
@@ -276,10 +276,12 @@ apply_shift = function(dist, shift) {
   dist <- enexpr(dist)%>% 
     detect_dplyr_pipe()
   
-  stopifnot(
-    length(shift) == 1,
-    is.finite(shift)
-  )
+  # stopifnot(
+  #   length(shift) == 1,
+  #   is.finite(shift)
+  # )
+  
+  shift <- enexpr(shift)
   if(shift == 0) return(dist)
   # if(inherits(eval_tidy(dist), "surv_shift")){
   #   dist <- eval_tidy(dist)
@@ -374,7 +376,6 @@ set_covariates <- function(dist, ..., data = NULL) {
 #' @export
 #' @rdname set_covariates
 set_covariates_ <- function(dist, covariates, data = NULL) {
-  
   data <- rbind(
     covariates,
     data
