@@ -224,10 +224,30 @@ eval_surv <- function(x, time, ...) {
   UseMethod("eval_surv")
 }
 
-#' @inherit compute_surv
-#' @name eval_surv
-#' @keywords internal
-compute_surv_ <- function(x, time, 
+
+
+#' Evaluate Survival Distributions
+#' 
+#' Generate either survival probabilities or conditional
+#' probabilities of event for each model cycle.
+#' 
+#' The results of `compute_surv()` are memoised for 
+#' `options("heemod.memotime")` (default: 1 hour) to 
+#' increase resampling performance.
+#' 
+#' @param x A survival object
+#' @param time The `model_time` or `state_time` for which
+#'   to predict.
+#' @param cycle_length The value of a Markov cycle in 
+#'   absolute time units.
+#' @param type Either `prob`, for transition probabilities,
+#'   or `surv`, for survival.
+#' @param ... arguments passed to methods.
+#'   
+#' @return Returns either the survival probalities or
+#'   conditional probabilities of event for each cycle.
+#' @export
+compute_surv <- function(x, time, 
                           cycle_length = 1, 
                           type = c("prob", "survival"), ...){
   
@@ -254,31 +274,9 @@ compute_surv_ <- function(x, time,
   ret
 }
 
-#' Evaluate Survival Distributions
-#' 
-#' Generate either survival probabilities or conditional
-#' probabilities of event for each model cycle.
-#' 
-#' The results of `compute_surv()` are memoised for 
-#' `options("heemod.memotime")` (default: 1 hour) to 
-#' increase resampling performance.
-#' 
-#' @param x A survival object
-#' @param time The `model_time` or `state_time` for which
-#'   to predict.
-#' @param cycle_length The value of a Markov cycle in 
-#'   absolute time units.
-#' @param type Either `prob`, for transition probabilities,
-#'   or `surv`, for survival.
-#' @param ... arguments passed to methods.
-#'   
-#' @return Returns either the survival probalities or
-#'   conditional probabilities of event for each cycle.
+#' @rdname eval_surv
 #' @export
-compute_surv <- memoise::memoise(
-  compute_surv_,
-  ~ memoise::timeout(options()$heemod.memotime)
-)
+compute_surv_ <- compute_surv
 
 #' @rdname eval_surv
 #' @export
