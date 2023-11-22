@@ -92,7 +92,7 @@ eval_transition.uneval_matrix <- function(x, parameters) {
   nr <- nrow(p2)
   
   tab_res <- lapply(x_tidy, function(x){
-    res <- rlang::eval_tidy(x, data = p2)
+    res <- rlang::eval_tidy(x, data = p2, env = getOption("heemod.env"))
     if (length(res) == 1){
       return(rep(res, nr))
     }

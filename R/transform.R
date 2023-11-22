@@ -60,7 +60,8 @@ or_to_prob <- function(or, p) {
     p >= 0,
     p <= 1
   )
-  res <- 1 / (1 + exp(- log(p / (1 - p) + log(or))))
+  
+  res <- plogis(qlogis(p) + log(or))
   
   stopifnot(
     res >= 0,

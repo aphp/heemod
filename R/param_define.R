@@ -43,6 +43,12 @@
 #'   
 define_parameters <- function(...) {
   .dots <- exprs(...)
+  lapply(.dots, function(x){
+    if(identical(x[[1]], quote(`<-`))) {
+      cli::cli_abort("use of assignment symbol (`<-`) for variable {.var {x[[2]]}}. 
+                     Replace with `=` symbol.")
+    }
+  })
   .dots <- as_quosures(.dots, getOption("heemod.env"))
   deprecated_x_cycle(.dots)
   define_parameters_(.dots)

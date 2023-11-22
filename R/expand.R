@@ -26,8 +26,9 @@ has_state_time.state <- function(x, ...) {
 }
 
 substitute_dots <- function(.dots, .values) {
-  as_quosures(
-    lapply(.dots, interp, .values = .values)
+  structure(
+    lapply(.dots, interp, .values = .values),
+    class = c("quosures", "list")
   )
 }
 
