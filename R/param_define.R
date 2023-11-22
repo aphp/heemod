@@ -44,6 +44,7 @@
 define_parameters <- function(...) {
   .dots <- exprs(...)
   lapply(.dots, function(x){
+    if (is.symbol(x)) return(TRUE)
     if(identical(x[[1]], quote(`<-`))) {
       cli::cli_abort("use of assignment symbol (`<-`) for variable {.var {x[[2]]}}. 
                      Replace with `=` symbol.")
