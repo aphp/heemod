@@ -17,7 +17,7 @@ test_that(
     
     expect_equal(
       round(or_to_prob(or = 36, .2), 2),
-      .79
+      .9
     )
   }
 )
