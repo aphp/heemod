@@ -1,12 +1,14 @@
 vswitch <- function(x, ...)
   UseMethod("vswitch")
 
+#' @export
 vswitch.factor <- function(x, ...) {
   x <- levels(x)[x]
   
   vswitch(x, ...)
 }
 
+#' @export
 vswitch.character <- function(x, ...) {
   listRes <- list(...)
   nRes <- names(listRes)
@@ -20,6 +22,7 @@ vswitch.character <- function(x, ...) {
   do.call(vswitch, c(list(x = x), listRes))
 }
 
+#' @export
 vswitch.default <- function(x, ...) {
   listRes <- lapply(list(...),
                     function(x) rep(x, length.out = length(x)))

@@ -114,6 +114,7 @@ get_eval_inflow <- function(x) {
   UseMethod("get_eval_inflow")
 }
 
+#' @export
 get_eval_inflow.eval_strategy <- function(x) {
   x$e_inflow
 }
@@ -122,6 +123,7 @@ get_n_indiv <- function(x) {
   UseMethod("get_n_indiv")
 }
 
+#' @export
 get_n_indiv.eval_strategy <- function(x) {
   x$n_indiv
 }
@@ -152,6 +154,7 @@ compute_counts <- function(x, ...) {
   UseMethod("compute_counts")
 }
 
+#' @rdname compute_counts
 #' @export
 compute_counts.eval_matrix <- function(x, init, inflow, ...) {
   
@@ -198,8 +201,9 @@ compute_counts.eval_matrix <- function(x, init, inflow, ...) {
 #' per cycle.
 #' 
 #' @param states An object of class `eval_state_list`.
-#' @param counts An object of class `cycle_counts`.
-#'   
+#' @param count_list An object of class `cycle_counts`.
+#' @param strategy_starting_values An object of class `uneval_starting_values`
+
 #' @return A data.frame of state values, one column per 
 #'   state value and one row per cycle.
 #'   

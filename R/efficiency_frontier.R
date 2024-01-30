@@ -10,6 +10,7 @@ get_frontier <- function(x) {
   UseMethod("get_frontier")
 }
 
+#' @export
 get_frontier.default <- function(x) {
   # recursive function
   # if  all strat have same effect

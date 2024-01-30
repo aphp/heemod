@@ -238,7 +238,6 @@ get_state_number <- function(x){
 #' Return Names of State Values
 #' 
 #' @param x An object containing states.
-#' @param ... Additional arguments passed to methods.
 #'   
 #' @return A character vector of state value names.
 #'   
@@ -247,10 +246,12 @@ get_state_value_names <- function(x){
   UseMethod("get_state_value_names")
 }
 
+#' @export
 get_state_value_names.uneval_state_list <- function(x) {
   names(x[[1]][[1]])
 }
 
+#' @export
 get_state_value_names.state <- function(x){
   names(x[[1]])
 }

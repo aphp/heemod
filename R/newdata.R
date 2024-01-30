@@ -9,9 +9,9 @@
 #' replace existing parameters.
 #' 
 #' @param x Result from [run_model()].
-#' @param model Name or index of model to recompute.
+#' @param strategy Name or index of model to recompute.
 #' @param newdata a data.frame whose names match parameters 
-#'   names. `model` will be evaluated iteratively, 
+#'   names. `strategy` will be evaluated iteratively, 
 #'   taking successive values from each row.
 #'   
 #' @return A data.frame containing the values of 

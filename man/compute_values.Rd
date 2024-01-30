@@ -9,7 +9,9 @@ compute_values(states, count_list, strategy_starting_values)
 \arguments{
 \item{states}{An object of class \code{eval_state_list}.}
 
-\item{counts}{An object of class \code{cycle_counts}.}
+\item{count_list}{An object of class \code{cycle_counts}.}
+
+\item{strategy_starting_values}{An object of class \code{uneval_starting_values}}
 }
 \value{
 A data.frame of state values, one column per

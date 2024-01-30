@@ -1,6 +1,7 @@
 par1 <- define_parameters(
   a = .1,
-  b = 1 / (model_time + 1)
+  b = 1 / (model_time + 1),
+  delta = 0.02
 )
 
 mat1 <- define_transition(
@@ -195,3 +196,54 @@ test_that("starting_values works with expanded states", {
   expect_equal(val2$x, val1$x)
   expect_equal(floor(val2$y - val1$y), c(2500, 3333, 1363, 1013, 961, 942, 898, 838, 775, 719))
 })
+
+test_that("starting_values works with psa", {
+  par1 <- define_parameters(
+    a = .1,
+    b = 1 / (model_time + 1),
+    delta = 0.02,
+    alpha = 1237,
+    beta = 4543,
+    gamma = 543
+  )
+  
+  mat1 <- define_transition(
+    state_names = c("X1", "X2"),
+    1-a, a,
+    1-b, b
+  )
+  
+
+  mod1 <- define_strategy(
+    transition = mat1,
+    X1 = define_state(
+      x = 234,
+      y = 123,
+      z = 369
+    ),
+    X2 = define_state(
+      x = 987,
+      y = 1726,
+      z = 963
+    )
+  )
+  mod5 = define_strategy(
+    transition = mat1,
+    X1 = define_state(
+      x = 234,
+      y = 123,
+      z = 369
+    ),
+    X2 = define_state(
+      x = alpha,
+      y = beta,
+      z = gamma,
+      starting_values = define_starting_values(
+        y = delta
+      )
+    )
+  )
+  ru0 <- run_model(mod5, mod1, parameters = par1, cost = x, effect = y, cycles = 50, state_time_limit = 12)
+  psa <- define_psa(delta ~ normal(0.02, 0.01))
+  run_psa(ru0, psa = psa, N = 12)
+  })

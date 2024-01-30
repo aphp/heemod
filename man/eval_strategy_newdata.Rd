@@ -10,11 +10,11 @@ eval_strategy_newdata(x, strategy = 1, newdata)
 \arguments{
 \item{x}{Result from \code{\link[=run_model]{run_model()}}.}
 
-\item{newdata}{a data.frame whose names match parameters
-names. \code{model} will be evaluated iteratively,
-taking successive values from each row.}
+\item{strategy}{Name or index of model to recompute.}
 
-\item{model}{Name or index of model to recompute.}
+\item{newdata}{a data.frame whose names match parameters
+names. \code{strategy} will be evaluated iteratively,
+taking successive values from each row.}
 }
 \value{
 A data.frame containing the values of

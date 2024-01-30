@@ -220,6 +220,7 @@ check_init <- function(x, ref) {
   UseMethod("check_init")
 }
 
+#' @export
 check_init.quosures <- function(x, ref) {
   original_class <- class(x)
   
@@ -251,6 +252,7 @@ check_init.quosures <- function(x, ref) {
   structure(res, class = original_class)
 }
 
+#' @export
 check_init.default <- function(x, ref) {
   
   if (! length(x) == length(ref)) {

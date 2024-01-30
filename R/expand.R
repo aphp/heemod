@@ -6,6 +6,7 @@ has_state_time <- function(x, ...) {
 has_state_time.uneval_matrix <- function(x, ...) {
   unlist(lapply(x, function(y) "state_time" %in% all.vars(get_expr(y))))}
 
+#' @export
 has_state_time.uneval_parameters <- function(x, ...) {
   unlist(lapply(x, function(y) "state_time" %in% all.vars(y$expr)))
 }

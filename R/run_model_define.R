@@ -232,6 +232,7 @@ get_strategy_count <- function(x) {
   nrow(get_model_results(x))
 }
 
+#' @export
 get_state_value_names.run_model <- function(x) {
   get_state_value_names(x$uneval_strategy_list[[1]])
 }
@@ -253,6 +254,7 @@ get_root_strategy <- function(x, ...) {
   UseMethod("get_root_strategy")
 }
 
+#' @export
 get_root_strategy.default <- function(x, ...) {
   if (! all(c(".cost", ".effect") %in% names(x))) {
     warning("No cost and/or effect defined, cannot find root strategy.")
@@ -262,14 +264,17 @@ get_root_strategy.default <- function(x, ...) {
       dplyr::arrange(.data$.cost, desc(.data$.effect)))$.strategy_names[1]
 }
 
+#' @export
 get_root_strategy.run_model <- function(x, ...) {
   x$root_strategy
 }
 
+#' @export
 get_noncomparable_strategy <- function(x, ...) {
   UseMethod("get_noncomparable_strategy")
 }
 
+#' @export
 get_noncomparable_strategy.default <- function(x, ...) {
   if (! ".effect" %in% names(x)) {
     warning("No effect defined, cannot find noncomparable strategy.")
@@ -280,18 +285,22 @@ get_noncomparable_strategy.default <- function(x, ...) {
       dplyr::slice(1))$.strategy_names
 }
 
+#' @export
 get_noncomparable_strategy.run_model <- function(x, ...) {
   x$noncomparable_strategy
 }
 
+#' @export
 get_central_strategy <- function(x, ...) {
   UseMethod("get_central_strategy")
 }
 
+#' @export
 get_central_strategy.default <- function(x, ...) {
   get_root_strategy(x)
 }
 
+#' @export
 get_central_strategy.run_model <- function(x, ...) {
   x$central_strategy
 }
@@ -300,10 +309,12 @@ get_effect <- function(x) {
   get_model_results(x)$.effect
 }
 
+#' @export
 get_n_indiv.default <- function(x) {
   get_model_results(x)$.n_indiv
 }
 
+#' @export
 get_n_indiv.combined_model <- function(x) {
   get_n_indiv.default(x)
 }

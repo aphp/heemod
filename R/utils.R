@@ -442,12 +442,14 @@ to_dots <- function(x) {
   UseMethod("to_dots")
 }
 
+#' @export
 to_dots.default <- function(x) {
   as_quosures(lapply(
     x, function(x) x
   ))
 }
 
+#' @export
 to_dots.list <- function(x) {
   f <- function(x) {
     if (inherits(x, "character") || inherits(x, "factor")) {
