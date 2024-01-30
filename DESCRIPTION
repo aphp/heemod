@@ -57,3 +57,4 @@ Roxygen: list(markdown = TRUE)
 Encoding: UTF-8
 Config/testthat/edition: 3
 License: GPL (>= 3)
+URL: https://aphp.github.io/heemod/
