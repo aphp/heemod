@@ -166,6 +166,7 @@ print.psa <- function(x, ...) {
   print(summary(x), ...)
 }
 
+#' @export
 get_frontier.psa <- function(x) {
   get_frontier(get_model_results(x))
 }

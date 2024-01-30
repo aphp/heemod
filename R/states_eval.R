@@ -35,6 +35,7 @@ eval_state_list <- function(x, parameters) {
             class = c("eval_state_list", class(res)))
 }
 
+#' @export
 get_state_value_names.eval_state_list <- function(x){
   names(x$.dots[[1]])[-1]
 }

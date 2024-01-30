@@ -442,12 +442,14 @@ to_dots <- function(x) {
   UseMethod("to_dots")
 }
 
+#' @export
 to_dots.default <- function(x) {
   as_quosures(lapply(
     x, function(x) x
   ))
 }
 
+#' @export
 to_dots.list <- function(x) {
   f <- function(x) {
     if (inherits(x, "character") || inherits(x, "factor")) {
@@ -755,5 +757,5 @@ c.uneval_parameters <- function(...){
   stopifnot("all elements must be specified with define_parameters" = all(lapply(.dots, function(x){
     inherits(x, "uneval_parameters")
   }) %>% as.logical()))
-  structure(.Data = vctrs:::c.vctrs_vctr(..., recursive = FALSE), class = class(.dots[[1]]))
+  structure(.Data = vctrs::vec_c(...), class = class(.dots[[1]]))
 }

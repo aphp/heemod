@@ -12,8 +12,6 @@ create_demographic_table(newdata, params)
 \item{params}{Parameters of a model, to check that all
 the columns in the demographic table (other than the
 weight column) are in the model.}
-
-\item{...}{catches other, unwanted arguments.}
 }
 \value{
 A data frame.

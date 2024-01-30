@@ -85,6 +85,7 @@ get_transition <- function(x){
   UseMethod("get_transition")
 }
 
+#' @export
 get_transition.default <- function(x){
   x$transition
 }
@@ -93,6 +94,7 @@ set_transition <- function(x, m) {
   UseMethod("set_transition")
 }
 
+#' @export
 set_transition.default <- function(x, m) {
   x$transition <- m
   x
@@ -102,6 +104,7 @@ get_states <- function(x){
   UseMethod("get_states")
 }
 
+#' @export
 get_states.default <- function(x) {
   x$states
 }
@@ -110,15 +113,18 @@ set_states <- function(x, s) {
   UseMethod("set_states")
 }
 
+#' @export
 set_states.default <- function(x, s) {
   x$states <- s
   x
 }
 
+#' @export
 get_state_value_names.uneval_model <- function(x) {
   get_state_value_names(get_states(x))
 }
 
+#' @export
 get_state_names.uneval_model <- function(x, ...) {
   get_state_names(get_states(x))
 }

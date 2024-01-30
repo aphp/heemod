@@ -13,7 +13,7 @@
 
 ## usethis namespace: start
 
-#' @importFrom dplyr mutate_
+#' @importFrom dplyr mutate
 #' @importFrom dplyr n
 #' @importFrom dplyr group_by
 #' @importFrom dplyr as_tibble
@@ -21,7 +21,7 @@
 #' @importFrom dplyr as_data_frame
 #' @importFrom dplyr bind_rows
 #' @importFrom dplyr left_join
-#' @importFrom dplyr "%>%"
+#' @importFrom dplyr %>%
 #' @importFrom dplyr desc
 #' @importFrom dplyr ungroup
 #' @importFrom dplyr mutate_if
@@ -53,6 +53,8 @@
 #' @importFrom stats ecdf
 #' @importFrom stats nls
 #' @importFrom stats quantile
+#' @importFrom stats plogis
+#' @importFrom stats qlogis
 #'   
 #' @importFrom mvnfast rmvn
 #'   
@@ -65,7 +67,7 @@
 #' @importFrom ggplot2 ylab
 #' @importFrom ggplot2 aes
 #' @importFrom ggplot2 xlim
-#' @importFrom ggplot2 "%+replace%"
+#' @importFrom ggplot2 %+replace%
 #'   
 #' @importFrom memoise memoise
 #' @importFrom memoise timeout
@@ -87,7 +89,7 @@
 #' 
 #' @importFrom rlang sym syms quo .data quos quos as_quosures enexprs 
 #' set_expr as_label as_quosure get_expr is_quosure expr eval_tidy new_quosure
-#' parse_exprs get_env call_match caller_env enquo exprs enexpr "%||%"
+#' parse_exprs get_env call_match caller_env enquo exprs enexpr %||%
 #'
 #' @importFrom purrr map map_chr map_dbl map_lgl
 ## usethis namespace: end

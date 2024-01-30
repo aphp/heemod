@@ -108,10 +108,12 @@ combine_models <- function(newmodels, weights, oldmodel) {
   )
 }
 
+#' @export
 get_frontier.combined_model <- function(x) {
   x$frontier
 }
 
+#' @export
 get_model_results.combined_model <- function(x) {
   get_model_results.run_model(x)
 }
@@ -120,12 +122,17 @@ get_oldmodel <- function(x) {
   x$oldmodel
 }
 
+#' @export
 get_central_strategy.combined_model <- function(x, ...) {
   get_central_strategy.run_model(x, ...)
 }
+
+#' @export
 get_root_strategy.combined_model <- function(x, ...) {
   get_root_strategy.run_model(x, ...)
 }
+
+#' @export
 get_noncomparable_strategy.combined_model <- function(x, ...) {
   get_noncomparable_strategy.run_model(x, ...)
 }
@@ -133,18 +140,27 @@ get_noncomparable_strategy.combined_model <- function(x, ...) {
 get_parameters.combined_model <- function(x) {
   get_parameters(get_oldmodel(x))
 }
+
+#' @export
 get_uneval_init.combined_model <- function(x) {
   get_uneval_init(get_oldmodel(x))
 }
+
+#' @export
 get_eval_init.combined_model <- function(x) {
   get_eval_init(get_oldmodel(x))
 }
+
+#' @export
 get_cycles.combined_model <- function(x) {
   get_cycles(get_oldmodel(x))
 }
+
+#' @export
 get_method.combined_model <- function(x) {
   get_method(get_oldmodel(x))
 }
+
 get_ce.combined_model <- function(x) {
   get_ce(get_oldmodel(x))
 }
@@ -193,6 +209,7 @@ get_values.combined_model <- function(x, ...) {
   get_values.run_model(x)
 }
 
+#' @export
 get_state_value_names.combined_model <- function(x) {
   get_state_value_names(get_oldmodel(x))
 }

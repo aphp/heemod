@@ -8,8 +8,6 @@ get_state_value_names(x)
 }
 \arguments{
 \item{x}{An object containing states.}
-
-\item{...}{Additional arguments passed to methods.}
 }
 \value{
 A character vector of state value names.

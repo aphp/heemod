@@ -202,6 +202,7 @@ eval_transition.part_surv <- function(x, parameters) {
     class = "eval_part_surv")
 }
 
+#' @rdname compute_counts
 #' @export
 compute_counts.eval_part_surv <- function(x, init,
                                           inflow, ...) {

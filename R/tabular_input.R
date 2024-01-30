@@ -1013,8 +1013,6 @@ parse_multi_spec <- function(multi_spec,
 #' @param params Parameters of a model, to check that all
 #'   the columns in the demographic table (other than the
 #'   weight column) are in the model.
-#' @param ... catches other, unwanted arguments.
-#'   
 #' @return  A data frame.
 #'   
 #' @keywords internal
