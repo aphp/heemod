@@ -1,0 +1,21 @@
+pandoc: 2.19.2
+pkgdown: 2.0.7
+pkgdown_sha: ~
+articles:
+  a_introduction: a_introduction.html
+  b_time_dependency: b_time_dependency.html
+  c_homogeneous: c_homogeneous.html
+  d_non_homogeneous: d_non_homogeneous.html
+  e_probabilistic: e_probabilistic.html
+  f_sensitivity: f_sensitivity.html
+  g_heterogeneity: g_heterogeneity.html
+  h_tabular: h_tabular.html
+  i_reproduction: i_reproduction.html
+  j_survival: j_survival.html
+  j_survival_2_psa: j_survival_2_psa.html
+  k_calibration: k_calibration.html
+last_built: 2024-01-30T15:47Z
+urls:
+  reference: https://aphp.github.io/heemod/reference
+  article: https://aphp.github.io/heemod/articles
+
