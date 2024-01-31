@@ -39,7 +39,7 @@ get_counts_diff <- function(x, init, inflow) {
   })
 }
 
-#' Check Wholenumbers
+#' Check whole Numbers
 #' 
 #' @param x numeric.
 #' @param tol the smallest positive floating-point number x 
@@ -228,7 +228,7 @@ check_strategy_index <- function(x, i, allow_multiple = FALSE) {
 #' 
 #' Compute a weighted summary of a numeric vector.
 #' 
-#' If `weights` is `NULL` an unweighted summar is
+#' If `weights` is `NULL` an unweighted summary is
 #' returned.
 #' 
 #' @param x A numeric vector.

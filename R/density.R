@@ -8,7 +8,7 @@
 #' function use [define_distribution()].
 #' 
 #' [use_distribution()] uses gaussian kernel 
-#' smoothing with a bandwith parameter calculated 
+#' smoothing with a bandwidth parameter calculated 
 #' by [stats::density()]. Values for unobserved
 #' quantiles are calculated by linear
 #' interpolation.

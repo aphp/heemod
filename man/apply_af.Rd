@@ -11,7 +11,7 @@ apply_af(dist, af, log_af = FALSE)
 
 \item{af}{An acceleration factor to be applied.}
 
-\item{log_af}{If \code{TRUE}, the accleration factor is
+\item{log_af}{If \code{TRUE}, the acceleration factor is
 exponentiated before being applied.}
 }
 \value{

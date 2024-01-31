@@ -16,7 +16,7 @@ define_transition_(.dots, state_names)
 \method{plot}{uneval_matrix}(x, relsize = 0.75, shadow.size = 0, latex = TRUE, ...)
 }
 \arguments{
-\item{...}{Name-value pairs of expressions definig matrix
+\item{...}{Name-value pairs of expressions defining matrix
 cells. Can refer to parameters defined with
 \code{\link[=define_parameters]{define_parameters()}}. For \code{plot}, additional arguments
 passed to \code{\link[diagram:plotmat]{diagram::plotmat()}}.}

@@ -10,7 +10,7 @@
 #' optional column `.weights` can give the respective
 #' weight of each row in the target population.
 #' 
-#' Weights are automatillcally scaled. If no weights are
+#' Weights are automatically scaled. If no weights are
 #' provided equal weights are used for each strata.
 #' 
 #' For the plotting function, the `type` argument can
@@ -31,7 +31,7 @@
 #' @param result The the result to plot (see details).
 #' @param type Plot simple values or differences?
 #' @param ... Additional arguments passed to
-#'   `geom_histogram`. Especially usefull to specify
+#'   `geom_histogram`. Especially useful to specify
 #'   `binwidth`.
 #'   
 #' @section Warning:
@@ -330,7 +330,7 @@ print.summary_updated_model <- function(x, ...) {
   if (! object$has_weights) {
     cat("* Unweighted analysis.")
   } else {
-    cat("* Weigths distribution:\n\n")
+    cat("* Weights distribution:\n\n")
     print(summary(object$weights))
     cat(sprintf("\nTotal weight: %s",
                 format(sum(object$weights))))

@@ -11,7 +11,7 @@
 #' If no correlation matrix is specified parameters are 
 #' assumed to be independant.
 #' 
-#' The correlation patrix need only be specified for 
+#' The correlation matrix need only be specified for 
 #' correlated parameters.
 #' 
 #' @param ... Formulas defining parameter distributions.
@@ -155,7 +155,7 @@ define_psa_ <- function(.dots = list(), correlation) {
 #' 0.
 #' 
 #' @param ... A list of parameter names and correlation 
-#'   coeficients of the form \code{var1, var2, cor(var1, 
+#'   coefficients of the form \code{var1, var2, cor(var1, 
 #'   var2), var3, var4, cor(var3, var4), ...}.
 #' @param .dots Used to work around non-standard evaluation.
 #'   

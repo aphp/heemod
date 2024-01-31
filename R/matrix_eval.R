@@ -1,6 +1,6 @@
 #' Check Markov Model Transition Matrix
 #' 
-#' Check whether a matrix fullfills the conditions to be a 
+#' Check whether a matrix fulfills the conditions to be a 
 #' transition matrix.
 #' 
 #' This function is called by [eval_transition()]

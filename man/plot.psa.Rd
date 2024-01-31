@@ -31,7 +31,7 @@
 \item{diff}{Logical, perform covariance analysis on
 strategy differences?}
 
-\item{threshold}{When \code{diff = TRUE}, threshlod value
+\item{threshold}{When \code{diff = TRUE}, threshold value
 for net monetary benefit computation.}
 
 \item{bw}{Black & white plot for publications?}

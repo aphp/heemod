@@ -153,7 +153,7 @@ In this example we will study the sensitivity of cost to 4 parameters:
   * `cost_zido` and `cost_lami`, the drug costs.
   * `dr`, the discount rate.
 
-Upper and lower values for the paramters are given to `define_dsa()`.
+Upper and lower values for the parameters are given to `define_dsa()`.
 
 ```{r}
 se <- define_dsa(
@@ -185,7 +185,7 @@ res_dsa
 
 Two distinct plot types are available. The basic plot (`type = "simple"`) displays cost variations for each model, around the base cost.
 
-As expected `mono` model costs are not senstive to `cost_lami`, since this drug was not given to this group. Similarly it is not sensitive to `rr`, because this parameters only modifies transition probabilities in the other model.
+As expected `mono` model costs are not sensitive to `cost_lami`, since this drug was not given to this group. Similarly it is not sensitive to `rr`, because this parameters only modifies transition probabilities in the other model.
 
 ```{r, fig.width = 6, fig.align='center'}
 plot(res_dsa,

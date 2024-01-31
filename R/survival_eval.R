@@ -169,7 +169,7 @@ extract_stratum <- function(sf, index) {
 #' for all strata. Only `survfit` and unstratified
 #' `survfit.coxph` objects are supported.
 #' 
-#' @param sf A survit object.
+#' @param sf A survfit object.
 #'   
 #' @return A tidy data.frame of the product-limit tables for
 #'   all strata.
@@ -244,7 +244,7 @@ eval_surv <- function(x, time, ...) {
 #'   or `surv`, for survival.
 #' @param ... arguments passed to methods.
 #'   
-#' @return Returns either the survival probalities or
+#' @return Returns either the survival probabilities or
 #'   conditional probabilities of event for each cycle.
 #' @export
 compute_surv <- function(x, time, 

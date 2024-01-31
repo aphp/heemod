@@ -96,7 +96,7 @@ As with the state file above probabilities specified for only one strategy will 
 
 A parameter file contains 2 mandatory columns: the parameter names `parameter` and the values `value`.
 
-Optional columns can be added to perform determinist or probabilist sensitivity analysis (DSA and PSA). `low` and `high` columns specify the lower and upper bounds of parameter values for DSA, while `psa` contains the parameter distribution for PSA.
+Optional columns can be added to perform deterministic or probabilistic sensitivity analysis (DSA and PSA). `low` and `high` columns specify the lower and upper bounds of parameter values for DSA, while `psa` contains the parameter distribution for PSA.
 
 ```{r echo = FALSE}
 heemod:::read_file(system.file("tabular/thr/THR_parameters.csv", package = "heemod")) |> 

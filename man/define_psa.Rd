@@ -35,7 +35,7 @@ The distributions must be defined within \code{heemod}
 If no correlation matrix is specified parameters are
 assumed to be independant.
 
-The correlation patrix need only be specified for
+The correlation matrix need only be specified for
 correlated parameters.
 }
 \examples{

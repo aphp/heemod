@@ -10,7 +10,7 @@ combine_models(newmodels, weights, oldmodel)
 \item{newmodels}{A list of models run over a set of
 multiple parameters.}
 
-\item{weights}{A vector of weigths, same length as the
+\item{weights}{A vector of weights, same length as the
 number of parameter sets.}
 
 \item{oldmodel}{The original model.}

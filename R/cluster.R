@@ -34,7 +34,7 @@ set_cluster <- function(x) {
 #' `heemod`. When the cluster is created it is 
 #' automagically used by `heemod` functions.
 #' 
-#' The usual wokflow is to create the cluster with 
+#' The usual workflow is to create the cluster with 
 #' `use_cluster`, then run functions such as 
 #' [run_psa()] that make use of the cluster. To 
 #' stop using the cluster run [close_cluster()].
@@ -42,7 +42,7 @@ set_cluster <- function(x) {
 #' The cluster status is given by `status_cluster`.
 #' 
 #' A custom cluster can be passed to `use_cluster` with
-#' the `cluster` argument. This custom custer needs to 
+#' the `cluster` argument. This custom cluster needs to 
 #' work with [parallel::parLapply()].
 #' 
 #' @name cluster

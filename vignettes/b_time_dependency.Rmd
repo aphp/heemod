@@ -21,7 +21,7 @@ In more complex Markov models state values or transition probabilities can vary 
   
 These two situations can be modelled using the `model_time` (or its alias `model_time`) and `state_time` variables, respectively.
 
-## How to specifiy time-dependency
+## How to specify time-dependency
 
 These variables takes increasing values with each cycles, starting from 1. For example the age of individuals at any moment can be defined as `Initial age + model_time`. The time an individual spends in a state is equal to `state_time`.
 

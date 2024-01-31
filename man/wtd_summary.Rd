@@ -20,7 +20,7 @@ A vector with values \code{Min., 1st Qu., Median,
 Compute a weighted summary of a numeric vector.
 }
 \details{
-If \code{weights} is \code{NULL} an unweighted summar is
+If \code{weights} is \code{NULL} an unweighted summary is
 returned.
 }
 \keyword{internal}

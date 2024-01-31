@@ -17,6 +17,7 @@ and non-homogeneous Markov models), etc.
 \seealso{
 Useful links:
 \itemize{
+  \item \url{https://aphp.github.io/heemod/}
   \item Report bugs at \url{https://github.com/aphp/heemod/issues}
 }
 

@@ -22,9 +22,9 @@ This example is an implementation of the assessment of a new total hip replaceme
 This model has 5 states:
 
   * Primary THR: starting state, individuals receive either the standard or the new THR (called NP1), outcomes are either success of primary THR or death (the operative mortality rate of primary THR will be called `omrPTHR`);
-  * Success of primary THR: state after receiving primary THR if the surgery is successfull, individuals can stay in that state, need a THR revision, or die of other causes;
+  * Success of primary THR: state after receiving primary THR if the surgery is successful, individuals can stay in that state, need a THR revision, or die of other causes;
   * Revision of primary THR: for individuals whose primary THR needed revision, outcomes are either success of revision THR or death (the operative mortality rate of revision THR will be called `omrRTHR`);
-  * Success of revision THR: state after receiving revision THR if the surgery is successfull, individuals can stay in that state, need a THR re-revision, or die of other causes;
+  * Success of revision THR: state after receiving revision THR if the surgery is successful, individuals can stay in that state, need a THR re-revision, or die of other causes;
   * Death (either caused by THR or another cause).
   
 Two transition probabilities are time-varying in this model:

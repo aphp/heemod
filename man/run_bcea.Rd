@@ -9,7 +9,7 @@ run_bcea(x, ...)
 \arguments{
 \item{x}{Output from \code{\link[=run_psa]{run_psa()}}.}
 
-\item{...}{Additional arguemnts passed to \code{\link[BCEA:bcea]{BCEA::bcea()}}.}
+\item{...}{Additional arguments passed to \code{\link[BCEA:bcea]{BCEA::bcea()}}.}
 }
 \value{
 A BCEA analysis.

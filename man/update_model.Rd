@@ -25,7 +25,7 @@ An optional \code{.weights} column can be included for
 a weighted analysis.}
 
 \item{...}{Additional arguments passed to
-\code{geom_histogram}. Especially usefull to specify
+\code{geom_histogram}. Especially useful to specify
 \code{binwidth}.}
 
 \item{x}{Updated model to plot.}
@@ -51,7 +51,7 @@ names used in \code{\link[=define_parameters]{define_parameters()}}; and an
 optional column \code{.weights} can give the respective
 weight of each row in the target population.
 
-Weights are automatillcally scaled. If no weights are
+Weights are automatically scaled. If no weights are
 provided equal weights are used for each strata.
 
 For the plotting function, the \code{type} argument can

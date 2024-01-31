@@ -6,7 +6,7 @@
 #' 
 #' @param newmodels A list of models run over a set of 
 #'   multiple parameters.
-#' @param weights A vector of weigths, same length as the
+#' @param weights A vector of weights, same length as the
 #'   number of parameter sets.
 #' @param oldmodel The original model.
 #'   

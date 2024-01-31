@@ -61,7 +61,7 @@ fit_spl <- flexsurvspline(
 plot(fit_spl)
 ```
 
-Fitted models can include covariates. In order to use a model with covariates in heemod, you can use the `set_covariates()` function on the fitted model and provide as additional arguments the covariate values you want to model. You can also provide a data frame of covariate levels to aggregate survival probabilites over different groups.  By default, heemod will aggregate over predicted survival probabilities for each subject in the dataset to which the model was fit.
+Fitted models can include covariates. In order to use a model with covariates in heemod, you can use the `set_covariates()` function on the fitted model and provide as additional arguments the covariate values you want to model. You can also provide a data frame of covariate levels to aggregate survival probabilities over different groups.  By default, heemod will aggregate over predicted survival probabilities for each subject in the dataset to which the model was fit.
 
 ```{r fig.width=6, fig.height=6}
 fit_cov <- flexsurvreg(

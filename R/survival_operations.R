@@ -171,7 +171,7 @@ apply_hr <- function(dist, hr, log_hr = FALSE) {
 #' 
 #' @param dist A survival distribution.
 #' @param af An acceleration factor to be applied.
-#' @param log_af If `TRUE`, the accleration factor is
+#' @param log_af If `TRUE`, the acceleration factor is
 #'   exponentiated before being applied.
 #'   
 #' @return A `surv_aft` object.
@@ -349,7 +349,7 @@ add_hazards_ <- function(dots) {
 #' @param data A an optional data frame representing 
 #'   multiple sets of covariate values for which survival 
 #'   probabilities will be generated. Can be used to 
-#'   generate aggregate survival for a heterogenous set of 
+#'   generate aggregate survival for a heterogeneous set of 
 #'   subjects.
 #'   
 #' @return A `surv_model` object.

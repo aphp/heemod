@@ -26,7 +26,7 @@
 #' name. Cell naming follows the `cell_x_y` convention, with
 #' `x` being the row number and `y` the column number.
 #' 
-#' @param ... Name-value pairs of expressions definig matrix
+#' @param ... Name-value pairs of expressions defining matrix
 #'   cells. Can refer to parameters defined with 
 #'   [define_parameters()]. For `plot`, additional arguments
 #'   passed to [diagram::plotmat()].

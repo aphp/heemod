@@ -13,7 +13,7 @@ check_matrix(x)
 \code{NULL}
 }
 \description{
-Check whether a matrix fullfills the conditions to be a
+Check whether a matrix fulfills the conditions to be a
 transition matrix.
 }
 \details{

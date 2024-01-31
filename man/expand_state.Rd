@@ -6,7 +6,7 @@
 \alias{expand_state.uneval_state_list}
 \alias{expand_state.uneval_inflow}
 \alias{expand_state.uneval_init}
-\title{Expand Time-Dependant States into Tunnel States}
+\title{Expand Time-Dependent States into Tunnel States}
 \usage{
 expand_state(x, ...)
 
@@ -29,14 +29,14 @@ expand_state(x, ...)
 
 \item{cycles}{Number of cycle of the model.}
 
-\item{n}{Postition in the expansion process.}
+\item{n}{Position in the expansion process.}
 }
 \value{
 The same object type as the input.
 }
 \description{
 This function for transition matrices and state values
-expands states relying on \code{state_time} in a serie
+expands states relying on \code{state_time} in a series
 of tunnels states.
 }
 \keyword{internal}

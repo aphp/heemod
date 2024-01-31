@@ -21,7 +21,7 @@ or \code{surv}, for survival.}
 \item{...}{arguments passed to methods.}
 }
 \value{
-Returns either the survival probalities or
+Returns either the survival probabilities or
 conditional probabilities of event for each cycle.
 }
 \description{

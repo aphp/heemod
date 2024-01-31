@@ -94,7 +94,7 @@ export_psa <- function(x) {
 #' The BCEA package is needed for this function to work.
 #' 
 #' @param x Output from [run_psa()].
-#' @param ... Additional arguemnts passed to [BCEA::bcea()].
+#' @param ... Additional arguments passed to [BCEA::bcea()].
 #'   
 #' @return A BCEA analysis.
 #' @export

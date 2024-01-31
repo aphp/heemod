@@ -7,7 +7,7 @@
 extract_strata(sf)
 }
 \arguments{
-\item{sf}{A survit object.}
+\item{sf}{A survfit object.}
 }
 \value{
 A tidy data.frame of the product-limit tables for

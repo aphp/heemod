@@ -2,7 +2,7 @@
 % Please edit documentation in R/utils.R
 \name{is.wholenumber}
 \alias{is.wholenumber}
-\title{Check Wholenumbers}
+\title{Check whole Numbers}
 \usage{
 is.wholenumber(x, tol = .Machine$double.eps^0.5)
 }
@@ -16,6 +16,6 @@ such that 1 + x != 1.}
 A logical scalar.
 }
 \description{
-Check Wholenumbers
+Check whole Numbers
 }
 \keyword{internal}

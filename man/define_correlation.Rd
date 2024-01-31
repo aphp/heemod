@@ -12,7 +12,7 @@ define_correlation_(.dots)
 }
 \arguments{
 \item{...}{A list of parameter names and correlation
-coeficients of the form \code{var1, var2, cor(var1, 
+coefficients of the form \code{var1, var2, cor(var1, 
   var2), var3, var4, cor(var3, var4), ...}.}
 
 \item{.dots}{Used to work around non-standard evaluation.}

@@ -223,4 +223,4 @@ plot(res_mod, type = "values", panel = "by_value",
   )
 ```
 
-Note that classic `ggplot2` syntax can be used to modifiy plot appearance.
+Note that classic `ggplot2` syntax can be used to modify plot appearance.

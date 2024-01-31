@@ -19,7 +19,7 @@ evaluated.}
 \item{data}{A an optional data frame representing
 multiple sets of covariate values for which survival
 probabilities will be generated. Can be used to
-generate aggregate survival for a heterogenous set of
+generate aggregate survival for a heterogeneous set of
 subjects.}
 
 \item{covariates}{Used to work around non-standard

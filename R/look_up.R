@@ -5,7 +5,7 @@
 #' 
 #' This function is mostly used to extract population 
 #' informations (such as mortality rates), given some 
-#' individual caracteristics.
+#' individual characteristics.
 #' 
 #' If binning is activated, numeric individual 
 #' characteristics are matched to the corresponding 
@@ -20,7 +20,7 @@
 #'   binned, or character vector giving the names of
 #'   variables to bin (see examples).
 #'   
-#' @return A vector of values, same lenght as `...`.
+#' @return A vector of values, same length as `...`.
 #' @export
 #' 
 #' @example inst/examples/example_look_up.R

@@ -1,7 +1,7 @@
 #' Convenience Functions to Compute Probabilities
 #' 
-#' These convienience functions make it easier to compute 
-#' transition probabilities from indidence rates, OR, RR, or
+#' These convenience functions make it easier to compute 
+#' transition probabilities from incidence rates, OR, RR, or
 #' probabilities estimated on a different timeframe.
 #' 
 #' @name probability

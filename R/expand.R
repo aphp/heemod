@@ -33,17 +33,17 @@ substitute_dots <- function(.dots, .values) {
   )
 }
 
-#' Expand Time-Dependant States into Tunnel States
+#' Expand Time-Dependent States into Tunnel States
 #' 
 #' This function for transition matrices and state values 
-#' expands states relying on `state_time` in a serie
+#' expands states relying on `state_time` in a series
 #' of tunnels states.
 #' 
 #' @param x A transition matrix or a state list.
 #' @param state_pos Position of the state to expand.
 #' @param state_name Original name of the sate to expand.
 #' @param cycles Number of cycle of the model.
-#' @param n Postition in the expansion process.
+#' @param n Position in the expansion process.
 #' @param ... Addition parameters passed to methods.
 #'   
 #' @return The same object type as the input.

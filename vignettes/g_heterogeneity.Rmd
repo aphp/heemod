@@ -156,7 +156,7 @@ res_mod <- run_model(
 
 Heterogeneity analysis is a way to explore how the results of a model can vary depending on the characteristics of individuals in a population, and demographic analysis estimates the average values of a model over an entire population.
 
-In practice these two analyses naturally complement each other: heterogeneity analysis runs the model on multiple sets of parameters (reflecting differents characteristics found in the target population), and demographic analysis combines the results.
+In practice these two analyses naturally complement each other: heterogeneity analysis runs the model on multiple sets of parameters (reflecting different characteristics found in the target population), and demographic analysis combines the results.
 
 For this example we will use the result from the assessment of a new total hip replacement previously described in `vignette("d-non-homogeneous", "heemod")`.
 
