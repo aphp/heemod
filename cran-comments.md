@@ -1,5 +1,5 @@
 ## Test environments
-* local ubuntu 22.04 install, R 4.3.1
+* local ubuntu 22.04 install, R 4.3.2
 * github actions
 
 ## R CMD check results

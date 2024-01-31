@@ -1,21 +1,21 @@
-# Changelog
-
-## heemod 0.16.9000
-### Breaking changes
- * dplyr's pipe now causes an error when chaining survival operation. The new pipe
-is required in this situation.
- * `define_survival()` has been renamed `define_surv_dist()` for naming consistency
- * It is now necessary to use `define_surv_fit()` to specify a survival fit created
- with `survfit()`, `flexsurvreg()` or `flexsurvspline()`
- 
-### New Features
- * It is now possible to run probabilistic sensitivity analysis (PSA) with survival
- objects - either created from a parametric distribution (with `define_surv_dist`)
- or with real data fitted with `survfit()` or `flexsurvreg()`. 
- See `vignette("j-survival_2_psa")`
- * `plot.surv_object()` gains `psa` argument allowing to plot the distribution to
- check for its variability.
- * Created method `c.uneval_parameters()` to combine outputs of `define_parameters()`.
+# # Changelog
+# 
+# ## heemod 1.0.0
+# ### Breaking changes
+#  * dplyr's pipe now causes an error when chaining survival operation. The new pipe |>
+# is required in this situation.
+#  * `define_survival()` has been renamed `define_surv_dist()` for naming consistency
+#  * It is now necessary to use `define_surv_fit()` to specify a survival fit created
+#  with `survfit()`, `flexsurvreg()` or `flexsurvspline()`
+#  
+# ### New Features
+#  * It is now possible to run probabilistic sensitivity analysis (PSA) with survival
+#  objects - either created from a parametric distribution (with `define_surv_dist`)
+#  or with real data fitted with `survfit()` or `flexsurvreg()`. 
+#  See `vignette("j-survival_2_psa")`
+#  * `plot.surv_object()` gains `psa` argument allowing to plot the distribution to
+#  check for its variability.
+#  * Created method `c.uneval_parameters()` to combine outputs of `define_parameters()`.
  
 ### Other changes
  * All operation functions on survival objects are now of class `surv_object`
@@ -281,7 +281,7 @@ Package heemod.” _ArXiv e-prints_. R package version
   * Correctly identify efficiency frontier.
   * ICER are computed on the efficiency frontier.
   
-### Acknowledments
+### Acknowledgments
 
   * Thanks to [Matthew Wiener](https://github.com/MattWiener), [Zdenek Kabat](https://github.com/zkabat) and [Vojtech Filipec](https://github.com/vojtech-filipec) for their great contributions to this update.
 
@@ -345,7 +345,7 @@ Package heemod.” _ArXiv e-prints_. R package version
 
   * `eval_model_newdata()`, the function behind re-sampling and sensitivity analysis now returns list-variables.
   
-### Acknowledments
+### Acknowledgments
 
   * Thanks to [Matthew Wiener](https://github.com/MattWiener), [Zdenek Kabat](https://github.com/zkabat) and [Vojtech Filipec](https://github.com/vojtech-filipec) for their great contributions to this update.
 
