@@ -325,14 +325,14 @@ compute net monetary benefit.</p>
 <span><span class="co">#&gt; Values:</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt;      cost_health cost_drugs cost_total life_year</span></span>
-<span><span class="co">#&gt; comb   100030105   79208199   94681703 18150.366</span></span>
-<span><span class="co">#&gt; mono    49606577   19988723   49559158  8774.681</span></span>
+<span><span class="co">#&gt; comb   101410310   79596431   95192399 18239.329</span></span>
+<span><span class="co">#&gt; mono    51016424   20362762   50341922  8938.877</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; Net monetary benefit difference:</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt;          1000     5000     6000    10000</span></span>
-<span><span class="co">#&gt; mono 35746.86    0.000     0.00     0.00</span></span>
-<span><span class="co">#&gt; comb     0.00 1755.883 11131.57 48634.31</span></span>
+<span><span class="co">#&gt; mono 35550.02    0.000     0.00     0.00</span></span>
+<span><span class="co">#&gt; comb     0.00 1651.782 10952.23 48154.04</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; Efficiency frontier:</span></span>
 <span><span class="co">#&gt; </span></span>
@@ -340,8 +340,8 @@ compute net monetary benefit.</p>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; Differences:</span></span>
 <span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt;      Cost Diff. Effect Diff.    ICER Ref.</span></span>
-<span><span class="co">#&gt; comb   45122.55     9.375686 4812.72 mono</span></span></code></pre></div>
+<span><span class="co">#&gt;      Cost Diff. Effect Diff.     ICER Ref.</span></span>
+<span><span class="co">#&gt; comb   44850.48     9.300452 4822.398 mono</span></span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="result-interpretation">Result interpretation<a class="anchor" aria-label="anchor" href="#result-interpretation"></a>
@@ -368,8 +368,6 @@ cloud that looks like a line.</p>
 <p>Or on the difference between strategies:</p>
 <div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">pm</span>, type <span class="op">=</span> <span class="st">"cov"</span>, diff <span class="op">=</span> <span class="cn">TRUE</span>, threshold <span class="op">=</span> <span class="fl">5000</span><span class="op">)</span></span>
-<span><span class="co">#&gt; Warning in compute_prop_var(mgcv::gam(formula = form_cost, data = .data)):</span></span>
-<span><span class="co">#&gt; Parameter excluded because of perfect collinearity: p_AD_mono.</span></span>
 <span><span class="co">#&gt; Warning in compute_prop_var(mgcv::gam(formula = form_nmb, data = .data)): Only</span></span>
 <span><span class="co">#&gt; 99% of variance explained, results may be inaccurate.</span></span></code></pre></div>
 <p><img src="e_probabilistic_files/figure-html/unnamed-chunk-13-1.png" width="384" style="display: block; margin: auto;"></p>
@@ -429,21 +427,21 @@ with the <code><a href="../reference/run_bcea.html">run_bcea()</a></code> functi
 <span><span class="co">#&gt; Reference intervention:  comb</span></span>
 <span><span class="co">#&gt; Comparator intervention: mono</span></span>
 <span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; Optimal decision: choose comb for k &lt; 4820 and mono for k &gt;= 4820</span></span>
+<span><span class="co">#&gt; Optimal decision: choose comb for k &lt; 4840 and mono for k &gt;= 4840</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; Analysis for willingness to pay parameter k = 10000</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt;      Expected net benefit</span></span>
-<span><span class="co">#&gt; comb             38187651</span></span>
-<span><span class="co">#&gt; mono             86821962</span></span>
+<span><span class="co">#&gt; comb             39046847</span></span>
+<span><span class="co">#&gt; mono             87200888</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt;                    EIB CEAC   ICER</span></span>
-<span><span class="co">#&gt; comb vs mono -48634311    0 4812.7</span></span>
+<span><span class="co">#&gt; comb vs mono -48154041    0 4822.4</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; Optimal intervention (max expected net benefit) for k = 10000: mono</span></span>
 <span><span class="co">#&gt;                </span></span>
-<span><span class="co">#&gt; EVPI 6.7046e-09</span></span></code></pre></div>
+<span><span class="co">#&gt; EVPI 6.4068e-09</span></span></code></pre></div>
 </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
     </nav></aside>
