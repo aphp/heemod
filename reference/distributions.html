@@ -12,7 +12,7 @@ Uncertainty Analysis — distributions"><meta property="og:description" content=
     
     <a class="navbar-brand me-2" href="../index.html">heemod</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.16.0.9001</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.0.1</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -179,7 +179,7 @@ the output from an MCMC fit.</p></dd>
 in <code><a href="define_psa.html">define_psa()</a></code>. To specify a user-made
 function use <code>define_distribution()</code>.</p>
 <p><code>use_distribution()</code> uses gaussian kernel
-smoothing with a bandwith parameter calculated
+smoothing with a bandwidth parameter calculated
 by <code><a href="https://rdrr.io/r/stats/density.html" class="external-link">stats::density()</a></code>. Values for unobserved
 quantiles are calculated by linear
 interpolation.</p>
@@ -197,7 +197,7 @@ quantiles. See examples.</p>
 <span class="r-in"><span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [[1]]</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> function(x) stats::qexp(p = x, rate = 0.5)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> &lt;environment: 0x55edfeda7b60&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> &lt;environment: 0x55ca234f0cb0&gt;</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># a mixture of 2 gaussians</span></span></span>
@@ -218,8 +218,8 @@ quantiles. See examples.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     (stats::approxfun(x = seq(0, 1, length = length(distribution)), </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>         y = distribution))(x) + noise</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> }</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> &lt;bytecode: 0x55edf8c8cac0&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> &lt;environment: 0x55edf8c8f8c0&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> &lt;bytecode: 0x55ca22cea9c0&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> &lt;environment: 0x55ca22ced7c0&gt;</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 </code></pre></div>
     </div>

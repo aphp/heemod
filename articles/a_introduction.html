@@ -26,7 +26,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">heemod</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.16.0.9001</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.0.1</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -84,7 +84,7 @@
   <main id="main" class="col-md-9"><div class="page-header">
       <img src="" class="logo" alt=""><h1>An Introduction to `heemod`</h1>
             
-            <h4 data-toc-skip class="date">2024-01-30</h4>
+            <h4 data-toc-skip class="date">2024-02-06</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/aphp/heemod/blob/HEAD/vignettes/a_introduction.Rmd" class="external-link"><code>vignettes/a_introduction.Rmd</code></a></small>
       <div class="d-none name"><code>a_introduction.Rmd</code></div>
@@ -186,7 +186,7 @@ replaced by actual probabilities:</p>
 </h2>
 <p>Values are attached to states. Cost and utility are classical
 examples of such values. To continue with the previous example, the
-following values can be attachd to state <strong>A</strong> and
+following values can be attached to state <strong>A</strong> and
 <strong>B</strong>:</p>
 <ul>
 <li>State <strong>A</strong> has a cost of <em>1234</em> per cycle and
@@ -280,7 +280,7 @@ valuation of cost and effect must be given at that point.</p>
 first state (here state <strong>A</strong>).</p>
 </div>
 <div class="section level2">
-<h2 id="analyse-results">Analyse results<a class="anchor" aria-label="anchor" href="#analyse-results"></a>
+<h2 id="analyze-results">Analyze results<a class="anchor" aria-label="anchor" href="#analyze-results"></a>
 </h2>
 <p>We can plot the state membership counts over time. Other plot types
 are available.</p>
@@ -333,7 +333,7 @@ respectively.</p>
 <h2 id="convenience-functions">Convenience functions<a class="anchor" aria-label="anchor" href="#convenience-functions"></a>
 </h2>
 <p>Convenience functions are available to easily compute transition
-probabilities from indidence rates, OR, RR, or probabilities estimated
+probabilities from incidence rates, OR, RR, or probabilities estimated
 on a different timeframe.</p>
 <p>Example : convert an incidence rate of <em>162</em> cases per
 <em>1,000</em> person-years to a 5-year probability.</p>
@@ -373,7 +373,7 @@ variables. Time-varying probabilities and values are explained in
 </h2>
 <p>Transition costs between states can be defined by adding an
 additional state called a transition state. This is a special case of a
-tunnel state. A situation where the transtion from <code>A</code> to
+tunnel state. A situation where the transition from <code>A</code> to
 <code>B</code> (noted <code>A-&gt;B</code>) costs $100 and reduces
 utility by 0.1 points compared to the usual values of <code>B</code> can
 be modelled by adding a state <code>B_trans</code>.</p>

@@ -26,7 +26,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">heemod</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.16.0.9001</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.0.1</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -84,7 +84,7 @@
   <main id="main" class="col-md-9"><div class="page-header">
       <img src="" class="logo" alt=""><h1>Tabular Input</h1>
             
-            <h4 data-toc-skip class="date">2024-01-30</h4>
+            <h4 data-toc-skip class="date">2024-02-06</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/aphp/heemod/blob/HEAD/vignettes/h_tabular.Rmd" class="external-link"><code>vignettes/h_tabular.Rmd</code></a></small>
       <div class="d-none name"><code>h_tabular.Rmd</code></div>
@@ -380,8 +380,8 @@ strategy. Unspecified transition probabilities are assumed to be 0.</p>
 </h2>
 <p>A parameter file contains 2 mandatory columns: the parameter names
 <code>parameter</code> and the values <code>value</code>.</p>
-<p>Optional columns can be added to perform determinist or probabilist
-sensitivity analysis (DSA and PSA). <code>low</code> and
+<p>Optional columns can be added to perform deterministic or
+probabilistic sensitivity analysis (DSA and PSA). <code>low</code> and
 <code>high</code> columns specify the lower and upper bounds of
 parameter values for DSA, while <code>psa</code> contains the parameter
 distribution for PSA.</p>
@@ -655,7 +655,7 @@ by the function <code>run_model_from_tabular()</code>.</p>
 <code class="sourceCode R"><span><span class="va">result</span><span class="op">$</span><span class="va">demographics</span></span></code></pre></div>
 <pre><code><span><span class="co">## An analysis re-run on 8 parameter sets.</span></span>
 <span><span class="co">## </span></span>
-<span><span class="co">## * Weigths distribution:</span></span>
+<span><span class="co">## * Weights distribution:</span></span>
 <span><span class="co">## </span></span>
 <span><span class="co">##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. </span></span>
 <span><span class="co">## 0.00219 0.01194 0.01482 0.01489 0.01994 0.02264 </span></span>

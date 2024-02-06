@@ -26,7 +26,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">heemod</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.16.0.9001</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.0.1</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -84,7 +84,7 @@
   <main id="main" class="col-md-9"><div class="page-header">
       <img src="" class="logo" alt=""><h1>Deterministic Sensitivity Analysis</h1>
             
-            <h4 data-toc-skip class="date">2024-01-30</h4>
+            <h4 data-toc-skip class="date">2024-02-06</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/aphp/heemod/blob/HEAD/vignettes/f_sensitivity.Rmd" class="external-link"><code>vignettes/f_sensitivity.Rmd</code></a></small>
       <div class="d-none name"><code>f_sensitivity.Rmd</code></div>
@@ -125,7 +125,7 @@ costs.</li>
 <li>
 <code>dr</code>, the discount rate.</li>
 </ul>
-<p>Upper and lower values for the paramters are given to
+<p>Upper and lower values for the parameters are given to
 <code><a href="../reference/define_dsa.html">define_dsa()</a></code>.</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">se</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/define_dsa.html">define_dsa</a></span><span class="op">(</span></span>
@@ -217,7 +217,7 @@ input.</p>
 <p>Two distinct plot types are available. The basic plot
 (<code>type = "simple"</code>) displays cost variations for each model,
 around the base cost.</p>
-<p>As expected <code>mono</code> model costs are not senstive to
+<p>As expected <code>mono</code> model costs are not sensitive to
 <code>cost_lami</code>, since this drug was not given to this group.
 Similarly it is not sensitive to <code>rr</code>, because this
 parameters only modifies transition probabilities in the other
