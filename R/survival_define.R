@@ -81,7 +81,7 @@ define_surv_dist <- function(distribution = c("exp", "weibull",
   list_arg <- list(...)
   
   if (distribution %in% c("exp", "weibull",
-                          "llogis", "lnorm", "gamma")) {
+                          "lnorm", "gamma")) {
     env_f <- asNamespace("stats")
   } else {
     if (! requireNamespace("flexsurv")) {
