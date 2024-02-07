@@ -26,7 +26,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">heemod</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.0.1</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.0.1.9000</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -84,7 +84,7 @@
   <main id="main" class="col-md-9"><div class="page-header">
       <img src="" class="logo" alt=""><h1>Probabilistic Uncertainty Analysis</h1>
             
-            <h4 data-toc-skip class="date">2024-02-06</h4>
+            <h4 data-toc-skip class="date">2024-02-07</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/aphp/heemod/blob/HEAD/vignettes/e_probabilistic.Rmd" class="external-link"><code>vignettes/e_probabilistic.Rmd</code></a></small>
       <div class="d-none name"><code>e_probabilistic.Rmd</code></div>
@@ -325,14 +325,14 @@ compute net monetary benefit.</p>
 <span><span class="co">#&gt; Values:</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt;      cost_health cost_drugs cost_total life_year</span></span>
-<span><span class="co">#&gt; comb   101410310   79596431   95192399 18239.329</span></span>
-<span><span class="co">#&gt; mono    51016424   20362762   50341922  8938.877</span></span>
+<span><span class="co">#&gt; comb   100626237   79095638   94514529 18124.573</span></span>
+<span><span class="co">#&gt; mono    50964236   20371930   50260329  8942.902</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; Net monetary benefit difference:</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt;          1000     5000     6000    10000</span></span>
-<span><span class="co">#&gt; mono 35550.02    0.000     0.00     0.00</span></span>
-<span><span class="co">#&gt; comb     0.00 1651.782 10952.23 48154.04</span></span>
+<span><span class="co">#&gt; mono 35072.53    0.000     0.00     0.00</span></span>
+<span><span class="co">#&gt; comb     0.00 1654.158 10835.83 47562.52</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; Efficiency frontier:</span></span>
 <span><span class="co">#&gt; </span></span>
@@ -341,7 +341,7 @@ compute net monetary benefit.</p>
 <span><span class="co">#&gt; Differences:</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt;      Cost Diff. Effect Diff.     ICER Ref.</span></span>
-<span><span class="co">#&gt; comb   44850.48     9.300452 4822.398 mono</span></span></code></pre></div>
+<span><span class="co">#&gt; comb    44254.2     9.181672 4819.841 mono</span></span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="result-interpretation">Result interpretation<a class="anchor" aria-label="anchor" href="#result-interpretation"></a>
@@ -427,21 +427,21 @@ with the <code><a href="../reference/run_bcea.html">run_bcea()</a></code> functi
 <span><span class="co">#&gt; Reference intervention:  comb</span></span>
 <span><span class="co">#&gt; Comparator intervention: mono</span></span>
 <span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; Optimal decision: choose comb for k &lt; 4840 and mono for k &gt;= 4840</span></span>
+<span><span class="co">#&gt; Optimal decision: choose comb for k &lt; 4820 and mono for k &gt;= 4820</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; Analysis for willingness to pay parameter k = 10000</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt;      Expected net benefit</span></span>
-<span><span class="co">#&gt; comb             39046847</span></span>
-<span><span class="co">#&gt; mono             87200888</span></span>
+<span><span class="co">#&gt; comb             39168689</span></span>
+<span><span class="co">#&gt; mono             86731205</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt;                    EIB CEAC   ICER</span></span>
-<span><span class="co">#&gt; comb vs mono -48154041    0 4822.4</span></span>
+<span><span class="co">#&gt; comb vs mono -47562516    0 4819.8</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; Optimal intervention (max expected net benefit) for k = 10000: mono</span></span>
-<span><span class="co">#&gt;                </span></span>
-<span><span class="co">#&gt; EVPI 6.4068e-09</span></span></code></pre></div>
+<span><span class="co">#&gt;                 </span></span>
+<span><span class="co">#&gt; EVPI -3.8754e-09</span></span></code></pre></div>
 </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
     </nav></aside>
