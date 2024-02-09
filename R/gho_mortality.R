@@ -88,6 +88,10 @@ get_who_mr_memo <- function(age, sex = NULL, region = NULL, country = NULL,
   } else {
     ref_data$SEX <- "BTSX"
   }
+  
+  ref_data$SEX <- paste0("SEX_", ref_data$SEX)
+  ref_data$AGEGROUP <- paste0("AGEGROUP_", ref_data$AGEGROUP)
+  
   if (!is.null(country)) {
     ref_data$COUNTRY <- country
   }
