@@ -1,423 +1,143 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  <url>
-    <loc>https://aphp.github.io/heemod/404.html</loc>
-  </url>
-  <url>
-    <loc>https://aphp.github.io/heemod/LICENSE.html</loc>
-  </url>
-  <url>
-    <loc>https://aphp.github.io/heemod/articles/a_introduction.html</loc>
-  </url>
-  <url>
-    <loc>https://aphp.github.io/heemod/articles/b_time_dependency.html</loc>
-  </url>
-  <url>
-    <loc>https://aphp.github.io/heemod/articles/c_homogeneous.html</loc>
-  </url>
-  <url>
-    <loc>https://aphp.github.io/heemod/articles/d_non_homogeneous.html</loc>
-  </url>
-  <url>
-    <loc>https://aphp.github.io/heemod/articles/e_probabilistic.html</loc>
-  </url>
-  <url>
-    <loc>https://aphp.github.io/heemod/articles/f_sensitivity.html</loc>
-  </url>
-  <url>
-    <loc>https://aphp.github.io/heemod/articles/g_heterogeneity.html</loc>
-  </url>
-  <url>
-    <loc>https://aphp.github.io/heemod/articles/h_tabular.html</loc>
-  </url>
-  <url>
-    <loc>https://aphp.github.io/heemod/articles/i_reproduction.html</loc>
-  </url>
-  <url>
-    <loc>https://aphp.github.io/heemod/articles/index.html</loc>
-  </url>
-  <url>
-    <loc>https://aphp.github.io/heemod/articles/j_survival.html</loc>
-  </url>
-  <url>
-    <loc>https://aphp.github.io/heemod/articles/j_survival_2_psa.html</loc>
-  </url>
-  <url>
-    <loc>https://aphp.github.io/heemod/articles/k_calibration.html</loc>
-  </url>
-  <url>
-    <loc>https://aphp.github.io/heemod/authors.html</loc>
-  </url>
-  <url>
-    <loc>https://aphp.github.io/heemod/index.html</loc>
-  </url>
-  <url>
-    <loc>https://aphp.github.io/heemod/news/index.html</loc>
-  </url>
-  <url>
-    <loc>https://aphp.github.io/heemod/reference/acceptability_curve.html</loc>
-  </url>
-  <url>
-    <loc>https://aphp.github.io/heemod/reference/add_hazards.html</loc>
-  </url>
-  <url>
-    <loc>https://aphp.github.io/heemod/reference/apply_af.html</loc>
-  </url>
-  <url>
-    <loc>https://aphp.github.io/heemod/reference/apply_hr.html</loc>
-  </url>
-  <url>
-    <loc>https://aphp.github.io/heemod/reference/apply_or.html</loc>
-  </url>
-  <url>
-    <loc>https://aphp.github.io/heemod/reference/apply_shift.html</loc>
-  </url>
-  <url>
-    <loc>https://aphp.github.io/heemod/reference/as_expr_list.html</loc>
-  </url>
-  <url>
-    <loc>https://aphp.github.io/heemod/reference/calc_prob_from_surv.html</loc>
-  </url>
-  <url>
-    <loc>https://aphp.github.io/heemod/reference/calc_surv_from_prob.html</loc>
-  </url>
-  <url>
-    <loc>https://aphp.github.io/heemod/reference/calibrate_model.html</loc>
-  </url>
-  <url>
-    <loc>https://aphp.github.io/heemod/reference/check_cycle_inputs.html</loc>
-  </url>
-  <url>
-    <loc>https://aphp.github.io/heemod/reference/check_matrix.html</loc>
-  </url>
-  <url>
-    <loc>https://aphp.github.io/heemod/reference/check_names.html</loc>
-  </url>
-  <url>
-    <loc>https://aphp.github.io/heemod/reference/check_states.html</loc>
-  </url>
-  <url>
-    <loc>https://aphp.github.io/heemod/reference/check_strategy_index.html</loc>
-  </url>
-  <url>
-    <loc>https://aphp.github.io/heemod/reference/clean_factors.html</loc>
-  </url>
-  <url>
-    <loc>https://aphp.github.io/heemod/reference/cluster.html</loc>
-  </url>
-  <url>
-    <loc>https://aphp.github.io/heemod/reference/combine_models.html</loc>
-  </url>
-  <url>
-    <loc>https://aphp.github.io/heemod/reference/combine_probs.html</loc>
-  </url>
-  <url>
-    <loc>https://aphp.github.io/heemod/reference/compute_counts.html</loc>
-  </url>
-  <url>
-    <loc>https://aphp.github.io/heemod/reference/compute_icer.html</loc>
-  </url>
-  <url>
-    <loc>https://aphp.github.io/heemod/reference/compute_surv.html</loc>
-  </url>
-  <url>
-    <loc>https://aphp.github.io/heemod/reference/compute_values.html</loc>
-  </url>
-  <url>
-    <loc>https://aphp.github.io/heemod/reference/construct_part_surv_tib.html</loc>
-  </url>
-  <url>
-    <loc>https://aphp.github.io/heemod/reference/create_demographic_table.html</loc>
-  </url>
-  <url>
-    <loc>https://aphp.github.io/heemod/reference/create_df_from_tabular.html</loc>
-  </url>
-  <url>
-    <loc>https://aphp.github.io/heemod/reference/create_matrix_from_tabular.html</loc>
-  </url>
-  <url>
-    <loc>https://aphp.github.io/heemod/reference/create_model_from_tabular.html</loc>
-  </url>
-  <url>
-    <loc>https://aphp.github.io/heemod/reference/create_model_list_from_tabular.html</loc>
-  </url>
-  <url>
-    <loc>https://aphp.github.io/heemod/reference/create_options_from_tabular.html</loc>
-  </url>
-  <url>
-    <loc>https://aphp.github.io/heemod/reference/create_parameters_from_tabular.html</loc>
-  </url>
-  <url>
-    <loc>https://aphp.github.io/heemod/reference/create_states_from_tabular.html</loc>
-  </url>
-  <url>
-    <loc>https://aphp.github.io/heemod/reference/define_calibration_fn.html</loc>
-  </url>
-  <url>
-    <loc>https://aphp.github.io/heemod/reference/define_correlation.html</loc>
-  </url>
-  <url>
-    <loc>https://aphp.github.io/heemod/reference/define_dsa.html</loc>
-  </url>
-  <url>
-    <loc>https://aphp.github.io/heemod/reference/define_inflow.html</loc>
-  </url>
-  <url>
-    <loc>https://aphp.github.io/heemod/reference/define_init.html</loc>
-  </url>
-  <url>
-    <loc>https://aphp.github.io/heemod/reference/define_parameters.html</loc>
-  </url>
-  <url>
-    <loc>https://aphp.github.io/heemod/reference/define_part_surv.html</loc>
-  </url>
-  <url>
-    <loc>https://aphp.github.io/heemod/reference/define_psa.html</loc>
-  </url>
-  <url>
-    <loc>https://aphp.github.io/heemod/reference/define_starting_values.html</loc>
-  </url>
-  <url>
-    <loc>https://aphp.github.io/heemod/reference/define_state.html</loc>
-  </url>
-  <url>
-    <loc>https://aphp.github.io/heemod/reference/define_state_list.html</loc>
-  </url>
-  <url>
-    <loc>https://aphp.github.io/heemod/reference/define_strategy.html</loc>
-  </url>
-  <url>
-    <loc>https://aphp.github.io/heemod/reference/define_surv_dist.html</loc>
-  </url>
-  <url>
-    <loc>https://aphp.github.io/heemod/reference/define_surv_fit.html</loc>
-  </url>
-  <url>
-    <loc>https://aphp.github.io/heemod/reference/define_surv_spline.html</loc>
-  </url>
-  <url>
-    <loc>https://aphp.github.io/heemod/reference/define_surv_table.html</loc>
-  </url>
-  <url>
-    <loc>https://aphp.github.io/heemod/reference/define_transition.html</loc>
-  </url>
-  <url>
-    <loc>https://aphp.github.io/heemod/reference/discount.html</loc>
-  </url>
-  <url>
-    <loc>https://aphp.github.io/heemod/reference/discount_hack.html</loc>
-  </url>
-  <url>
-    <loc>https://aphp.github.io/heemod/reference/dispatch_strategy.html</loc>
-  </url>
-  <url>
-    <loc>https://aphp.github.io/heemod/reference/dispatch_strategy_hack.html</loc>
-  </url>
-  <url>
-    <loc>https://aphp.github.io/heemod/reference/distributions.html</loc>
-  </url>
-  <url>
-    <loc>https://aphp.github.io/heemod/reference/eval_models_from_tabular.html</loc>
-  </url>
-  <url>
-    <loc>https://aphp.github.io/heemod/reference/eval_parameters.html</loc>
-  </url>
-  <url>
-    <loc>https://aphp.github.io/heemod/reference/eval_resample.html</loc>
-  </url>
-  <url>
-    <loc>https://aphp.github.io/heemod/reference/eval_state_list.html</loc>
-  </url>
-  <url>
-    <loc>https://aphp.github.io/heemod/reference/eval_strategy.html</loc>
-  </url>
-  <url>
-    <loc>https://aphp.github.io/heemod/reference/eval_strategy_newdata.html</loc>
-  </url>
-  <url>
-    <loc>https://aphp.github.io/heemod/reference/eval_surv.html</loc>
-  </url>
-  <url>
-    <loc>https://aphp.github.io/heemod/reference/eval_transition.html</loc>
-  </url>
-  <url>
-    <loc>https://aphp.github.io/heemod/reference/expand_if_necessary.html</loc>
-  </url>
-  <url>
-    <loc>https://aphp.github.io/heemod/reference/expand_state.html</loc>
-  </url>
-  <url>
-    <loc>https://aphp.github.io/heemod/reference/export_savi.html</loc>
-  </url>
-  <url>
-    <loc>https://aphp.github.io/heemod/reference/extract_params.html</loc>
-  </url>
-  <url>
-    <loc>https://aphp.github.io/heemod/reference/extract_strata.html</loc>
-  </url>
-  <url>
-    <loc>https://aphp.github.io/heemod/reference/extract_stratum.html</loc>
-  </url>
-  <url>
-    <loc>https://aphp.github.io/heemod/reference/file-checkers.html</loc>
-  </url>
-  <url>
-    <loc>https://aphp.github.io/heemod/reference/filter_blanks.html</loc>
-  </url>
-  <url>
-    <loc>https://aphp.github.io/heemod/reference/gather_model_info.html</loc>
-  </url>
-  <url>
-    <loc>https://aphp.github.io/heemod/reference/get_counts.html</loc>
-  </url>
-  <url>
-    <loc>https://aphp.github.io/heemod/reference/get_counts_diff.html</loc>
-  </url>
-  <url>
-    <loc>https://aphp.github.io/heemod/reference/get_frontier.html</loc>
-  </url>
-  <url>
-    <loc>https://aphp.github.io/heemod/reference/get_mat_total.html</loc>
-  </url>
-  <url>
-    <loc>https://aphp.github.io/heemod/reference/get_matrix_order.html</loc>
-  </url>
-  <url>
-    <loc>https://aphp.github.io/heemod/reference/get_parameter_names.html</loc>
-  </url>
-  <url>
-    <loc>https://aphp.github.io/heemod/reference/get_state_names.html</loc>
-  </url>
-  <url>
-    <loc>https://aphp.github.io/heemod/reference/get_state_number.html</loc>
-  </url>
-  <url>
-    <loc>https://aphp.github.io/heemod/reference/get_state_value_names.html</loc>
-  </url>
-  <url>
-    <loc>https://aphp.github.io/heemod/reference/get_transition.html</loc>
-  </url>
-  <url>
-    <loc>https://aphp.github.io/heemod/reference/get_values.html</loc>
-  </url>
-  <url>
-    <loc>https://aphp.github.io/heemod/reference/heemod-package.html</loc>
-  </url>
-  <url>
-    <loc>https://aphp.github.io/heemod/reference/heemod_scale.html</loc>
-  </url>
-  <url>
-    <loc>https://aphp.github.io/heemod/reference/index.html</loc>
-  </url>
-  <url>
-    <loc>https://aphp.github.io/heemod/reference/insert.html</loc>
-  </url>
-  <url>
-    <loc>https://aphp.github.io/heemod/reference/interpolate.html</loc>
-  </url>
-  <url>
-    <loc>https://aphp.github.io/heemod/reference/is.wholenumber.html</loc>
-  </url>
-  <url>
-    <loc>https://aphp.github.io/heemod/reference/join.html</loc>
-  </url>
-  <url>
-    <loc>https://aphp.github.io/heemod/reference/list_all_same.html</loc>
-  </url>
-  <url>
-    <loc>https://aphp.github.io/heemod/reference/load_surv_models.html</loc>
-  </url>
-  <url>
-    <loc>https://aphp.github.io/heemod/reference/look_up.html</loc>
-  </url>
-  <url>
-    <loc>https://aphp.github.io/heemod/reference/make_names.html</loc>
-  </url>
-  <url>
-    <loc>https://aphp.github.io/heemod/reference/mix.html</loc>
-  </url>
-  <url>
-    <loc>https://aphp.github.io/heemod/reference/modify.html</loc>
-  </url>
-  <url>
-    <loc>https://aphp.github.io/heemod/reference/parse_multi_spec.html</loc>
-  </url>
-  <url>
-    <loc>https://aphp.github.io/heemod/reference/part_survs_from_surv_inputs.html</loc>
-  </url>
-  <url>
-    <loc>https://aphp.github.io/heemod/reference/plot.dsa.html</loc>
-  </url>
-  <url>
-    <loc>https://aphp.github.io/heemod/reference/plot.psa.html</loc>
-  </url>
-  <url>
-    <loc>https://aphp.github.io/heemod/reference/plot.run_model.html</loc>
-  </url>
-  <url>
-    <loc>https://aphp.github.io/heemod/reference/plot.surv_object.html</loc>
-  </url>
-  <url>
-    <loc>https://aphp.github.io/heemod/reference/plur.html</loc>
-  </url>
-  <url>
-    <loc>https://aphp.github.io/heemod/reference/probability.html</loc>
-  </url>
-  <url>
-    <loc>https://aphp.github.io/heemod/reference/project_fn.html</loc>
-  </url>
-  <url>
-    <loc>https://aphp.github.io/heemod/reference/read_file.html</loc>
-  </url>
-  <url>
-    <loc>https://aphp.github.io/heemod/reference/reexports.html</loc>
-  </url>
-  <url>
-    <loc>https://aphp.github.io/heemod/reference/reindent_transition.html</loc>
-  </url>
-  <url>
-    <loc>https://aphp.github.io/heemod/reference/resample_surv.html</loc>
-  </url>
-  <url>
-    <loc>https://aphp.github.io/heemod/reference/rescale_discount_rate.html</loc>
-  </url>
-  <url>
-    <loc>https://aphp.github.io/heemod/reference/run_bcea.html</loc>
-  </url>
-  <url>
-    <loc>https://aphp.github.io/heemod/reference/run_dsa.html</loc>
-  </url>
-  <url>
-    <loc>https://aphp.github.io/heemod/reference/run_model.html</loc>
-  </url>
-  <url>
-    <loc>https://aphp.github.io/heemod/reference/run_model_tabular.html</loc>
-  </url>
-  <url>
-    <loc>https://aphp.github.io/heemod/reference/run_psa.html</loc>
-  </url>
-  <url>
-    <loc>https://aphp.github.io/heemod/reference/safe_conversion.html</loc>
-  </url>
-  <url>
-    <loc>https://aphp.github.io/heemod/reference/save_outputs.html</loc>
-  </url>
-  <url>
-    <loc>https://aphp.github.io/heemod/reference/set_covariates.html</loc>
-  </url>
-  <url>
-    <loc>https://aphp.github.io/heemod/reference/summary.run_model.html</loc>
-  </url>
-  <url>
-    <loc>https://aphp.github.io/heemod/reference/summary.surv_shift.html</loc>
-  </url>
-  <url>
-    <loc>https://aphp.github.io/heemod/reference/update_model.html</loc>
-  </url>
-  <url>
-    <loc>https://aphp.github.io/heemod/reference/who_mortality.html</loc>
-  </url>
-  <url>
-    <loc>https://aphp.github.io/heemod/reference/wtd_summary.html</loc>
-  </url>
+<urlset xmlns = 'http://www.sitemaps.org/schemas/sitemap/0.9'>
+<url><loc>https://aphp.github.io/heemod/404.html</loc></url>
+<url><loc>https://aphp.github.io/heemod/LICENSE.html</loc></url>
+<url><loc>https://aphp.github.io/heemod/articles/a_introduction.html</loc></url>
+<url><loc>https://aphp.github.io/heemod/articles/b_time_dependency.html</loc></url>
+<url><loc>https://aphp.github.io/heemod/articles/c_homogeneous.html</loc></url>
+<url><loc>https://aphp.github.io/heemod/articles/d_non_homogeneous.html</loc></url>
+<url><loc>https://aphp.github.io/heemod/articles/e_probabilistic.html</loc></url>
+<url><loc>https://aphp.github.io/heemod/articles/f_sensitivity.html</loc></url>
+<url><loc>https://aphp.github.io/heemod/articles/g_heterogeneity.html</loc></url>
+<url><loc>https://aphp.github.io/heemod/articles/h_tabular.html</loc></url>
+<url><loc>https://aphp.github.io/heemod/articles/i_reproduction.html</loc></url>
+<url><loc>https://aphp.github.io/heemod/articles/index.html</loc></url>
+<url><loc>https://aphp.github.io/heemod/articles/j_survival.html</loc></url>
+<url><loc>https://aphp.github.io/heemod/articles/j_survival_2_psa.html</loc></url>
+<url><loc>https://aphp.github.io/heemod/articles/k_calibration.html</loc></url>
+<url><loc>https://aphp.github.io/heemod/authors.html</loc></url>
+<url><loc>https://aphp.github.io/heemod/index.html</loc></url>
+<url><loc>https://aphp.github.io/heemod/news/index.html</loc></url>
+<url><loc>https://aphp.github.io/heemod/reference/acceptability_curve.html</loc></url>
+<url><loc>https://aphp.github.io/heemod/reference/add_hazards.html</loc></url>
+<url><loc>https://aphp.github.io/heemod/reference/apply_af.html</loc></url>
+<url><loc>https://aphp.github.io/heemod/reference/apply_hr.html</loc></url>
+<url><loc>https://aphp.github.io/heemod/reference/apply_or.html</loc></url>
+<url><loc>https://aphp.github.io/heemod/reference/apply_shift.html</loc></url>
+<url><loc>https://aphp.github.io/heemod/reference/as_expr_list.html</loc></url>
+<url><loc>https://aphp.github.io/heemod/reference/calc_prob_from_surv.html</loc></url>
+<url><loc>https://aphp.github.io/heemod/reference/calc_surv_from_prob.html</loc></url>
+<url><loc>https://aphp.github.io/heemod/reference/calibrate_model.html</loc></url>
+<url><loc>https://aphp.github.io/heemod/reference/check_cycle_inputs.html</loc></url>
+<url><loc>https://aphp.github.io/heemod/reference/check_matrix.html</loc></url>
+<url><loc>https://aphp.github.io/heemod/reference/check_names.html</loc></url>
+<url><loc>https://aphp.github.io/heemod/reference/check_states.html</loc></url>
+<url><loc>https://aphp.github.io/heemod/reference/check_strategy_index.html</loc></url>
+<url><loc>https://aphp.github.io/heemod/reference/clean_factors.html</loc></url>
+<url><loc>https://aphp.github.io/heemod/reference/cluster.html</loc></url>
+<url><loc>https://aphp.github.io/heemod/reference/combine_models.html</loc></url>
+<url><loc>https://aphp.github.io/heemod/reference/combine_probs.html</loc></url>
+<url><loc>https://aphp.github.io/heemod/reference/compute_counts.html</loc></url>
+<url><loc>https://aphp.github.io/heemod/reference/compute_icer.html</loc></url>
+<url><loc>https://aphp.github.io/heemod/reference/compute_surv.html</loc></url>
+<url><loc>https://aphp.github.io/heemod/reference/compute_values.html</loc></url>
+<url><loc>https://aphp.github.io/heemod/reference/construct_part_surv_tib.html</loc></url>
+<url><loc>https://aphp.github.io/heemod/reference/create_demographic_table.html</loc></url>
+<url><loc>https://aphp.github.io/heemod/reference/create_df_from_tabular.html</loc></url>
+<url><loc>https://aphp.github.io/heemod/reference/create_matrix_from_tabular.html</loc></url>
+<url><loc>https://aphp.github.io/heemod/reference/create_model_from_tabular.html</loc></url>
+<url><loc>https://aphp.github.io/heemod/reference/create_model_list_from_tabular.html</loc></url>
+<url><loc>https://aphp.github.io/heemod/reference/create_options_from_tabular.html</loc></url>
+<url><loc>https://aphp.github.io/heemod/reference/create_parameters_from_tabular.html</loc></url>
+<url><loc>https://aphp.github.io/heemod/reference/create_states_from_tabular.html</loc></url>
+<url><loc>https://aphp.github.io/heemod/reference/define_calibration_fn.html</loc></url>
+<url><loc>https://aphp.github.io/heemod/reference/define_correlation.html</loc></url>
+<url><loc>https://aphp.github.io/heemod/reference/define_dsa.html</loc></url>
+<url><loc>https://aphp.github.io/heemod/reference/define_inflow.html</loc></url>
+<url><loc>https://aphp.github.io/heemod/reference/define_init.html</loc></url>
+<url><loc>https://aphp.github.io/heemod/reference/define_parameters.html</loc></url>
+<url><loc>https://aphp.github.io/heemod/reference/define_part_surv.html</loc></url>
+<url><loc>https://aphp.github.io/heemod/reference/define_psa.html</loc></url>
+<url><loc>https://aphp.github.io/heemod/reference/define_starting_values.html</loc></url>
+<url><loc>https://aphp.github.io/heemod/reference/define_state.html</loc></url>
+<url><loc>https://aphp.github.io/heemod/reference/define_state_list.html</loc></url>
+<url><loc>https://aphp.github.io/heemod/reference/define_strategy.html</loc></url>
+<url><loc>https://aphp.github.io/heemod/reference/define_surv_dist.html</loc></url>
+<url><loc>https://aphp.github.io/heemod/reference/define_surv_fit.html</loc></url>
+<url><loc>https://aphp.github.io/heemod/reference/define_surv_spline.html</loc></url>
+<url><loc>https://aphp.github.io/heemod/reference/define_surv_table.html</loc></url>
+<url><loc>https://aphp.github.io/heemod/reference/define_transition.html</loc></url>
+<url><loc>https://aphp.github.io/heemod/reference/discount.html</loc></url>
+<url><loc>https://aphp.github.io/heemod/reference/discount_hack.html</loc></url>
+<url><loc>https://aphp.github.io/heemod/reference/dispatch_strategy.html</loc></url>
+<url><loc>https://aphp.github.io/heemod/reference/dispatch_strategy_hack.html</loc></url>
+<url><loc>https://aphp.github.io/heemod/reference/distributions.html</loc></url>
+<url><loc>https://aphp.github.io/heemod/reference/eval_models_from_tabular.html</loc></url>
+<url><loc>https://aphp.github.io/heemod/reference/eval_parameters.html</loc></url>
+<url><loc>https://aphp.github.io/heemod/reference/eval_resample.html</loc></url>
+<url><loc>https://aphp.github.io/heemod/reference/eval_state_list.html</loc></url>
+<url><loc>https://aphp.github.io/heemod/reference/eval_strategy.html</loc></url>
+<url><loc>https://aphp.github.io/heemod/reference/eval_strategy_newdata.html</loc></url>
+<url><loc>https://aphp.github.io/heemod/reference/eval_surv.html</loc></url>
+<url><loc>https://aphp.github.io/heemod/reference/eval_transition.html</loc></url>
+<url><loc>https://aphp.github.io/heemod/reference/expand_if_necessary.html</loc></url>
+<url><loc>https://aphp.github.io/heemod/reference/expand_state.html</loc></url>
+<url><loc>https://aphp.github.io/heemod/reference/export_savi.html</loc></url>
+<url><loc>https://aphp.github.io/heemod/reference/extract_params.html</loc></url>
+<url><loc>https://aphp.github.io/heemod/reference/extract_strata.html</loc></url>
+<url><loc>https://aphp.github.io/heemod/reference/extract_stratum.html</loc></url>
+<url><loc>https://aphp.github.io/heemod/reference/file-checkers.html</loc></url>
+<url><loc>https://aphp.github.io/heemod/reference/filter_blanks.html</loc></url>
+<url><loc>https://aphp.github.io/heemod/reference/gather_model_info.html</loc></url>
+<url><loc>https://aphp.github.io/heemod/reference/get_counts.html</loc></url>
+<url><loc>https://aphp.github.io/heemod/reference/get_counts_diff.html</loc></url>
+<url><loc>https://aphp.github.io/heemod/reference/get_frontier.html</loc></url>
+<url><loc>https://aphp.github.io/heemod/reference/get_mat_total.html</loc></url>
+<url><loc>https://aphp.github.io/heemod/reference/get_matrix_order.html</loc></url>
+<url><loc>https://aphp.github.io/heemod/reference/get_parameter_names.html</loc></url>
+<url><loc>https://aphp.github.io/heemod/reference/get_state_names.html</loc></url>
+<url><loc>https://aphp.github.io/heemod/reference/get_state_number.html</loc></url>
+<url><loc>https://aphp.github.io/heemod/reference/get_state_value_names.html</loc></url>
+<url><loc>https://aphp.github.io/heemod/reference/get_transition.html</loc></url>
+<url><loc>https://aphp.github.io/heemod/reference/get_values.html</loc></url>
+<url><loc>https://aphp.github.io/heemod/reference/heemod-package.html</loc></url>
+<url><loc>https://aphp.github.io/heemod/reference/heemod_scale.html</loc></url>
+<url><loc>https://aphp.github.io/heemod/reference/index.html</loc></url>
+<url><loc>https://aphp.github.io/heemod/reference/insert.html</loc></url>
+<url><loc>https://aphp.github.io/heemod/reference/interpolate.html</loc></url>
+<url><loc>https://aphp.github.io/heemod/reference/is.wholenumber.html</loc></url>
+<url><loc>https://aphp.github.io/heemod/reference/join.html</loc></url>
+<url><loc>https://aphp.github.io/heemod/reference/list_all_same.html</loc></url>
+<url><loc>https://aphp.github.io/heemod/reference/load_surv_models.html</loc></url>
+<url><loc>https://aphp.github.io/heemod/reference/look_up.html</loc></url>
+<url><loc>https://aphp.github.io/heemod/reference/make_names.html</loc></url>
+<url><loc>https://aphp.github.io/heemod/reference/mix.html</loc></url>
+<url><loc>https://aphp.github.io/heemod/reference/modify.html</loc></url>
+<url><loc>https://aphp.github.io/heemod/reference/parse_multi_spec.html</loc></url>
+<url><loc>https://aphp.github.io/heemod/reference/part_survs_from_surv_inputs.html</loc></url>
+<url><loc>https://aphp.github.io/heemod/reference/plot.dsa.html</loc></url>
+<url><loc>https://aphp.github.io/heemod/reference/plot.psa.html</loc></url>
+<url><loc>https://aphp.github.io/heemod/reference/plot.run_model.html</loc></url>
+<url><loc>https://aphp.github.io/heemod/reference/plot.surv_object.html</loc></url>
+<url><loc>https://aphp.github.io/heemod/reference/plur.html</loc></url>
+<url><loc>https://aphp.github.io/heemod/reference/probability.html</loc></url>
+<url><loc>https://aphp.github.io/heemod/reference/project_fn.html</loc></url>
+<url><loc>https://aphp.github.io/heemod/reference/read_file.html</loc></url>
+<url><loc>https://aphp.github.io/heemod/reference/reexports.html</loc></url>
+<url><loc>https://aphp.github.io/heemod/reference/reindent_transition.html</loc></url>
+<url><loc>https://aphp.github.io/heemod/reference/resample_surv.html</loc></url>
+<url><loc>https://aphp.github.io/heemod/reference/rescale_discount_rate.html</loc></url>
+<url><loc>https://aphp.github.io/heemod/reference/run_bcea.html</loc></url>
+<url><loc>https://aphp.github.io/heemod/reference/run_dsa.html</loc></url>
+<url><loc>https://aphp.github.io/heemod/reference/run_model.html</loc></url>
+<url><loc>https://aphp.github.io/heemod/reference/run_model_tabular.html</loc></url>
+<url><loc>https://aphp.github.io/heemod/reference/run_psa.html</loc></url>
+<url><loc>https://aphp.github.io/heemod/reference/safe_conversion.html</loc></url>
+<url><loc>https://aphp.github.io/heemod/reference/save_outputs.html</loc></url>
+<url><loc>https://aphp.github.io/heemod/reference/set_covariates.html</loc></url>
+<url><loc>https://aphp.github.io/heemod/reference/summary.run_model.html</loc></url>
+<url><loc>https://aphp.github.io/heemod/reference/summary.surv_shift.html</loc></url>
+<url><loc>https://aphp.github.io/heemod/reference/update_model.html</loc></url>
+<url><loc>https://aphp.github.io/heemod/reference/who_mortality.html</loc></url>
+<url><loc>https://aphp.github.io/heemod/reference/wtd_summary.html</loc></url>
 </urlset>
+

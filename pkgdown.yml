@@ -1,5 +1,5 @@
-pandoc: 2.19.2
-pkgdown: 2.0.7
+pandoc: 3.1.11
+pkgdown: 2.1.0
 pkgdown_sha: ~
 articles:
   a_introduction: a_introduction.html
@@ -11,11 +11,10 @@ articles:
   g_heterogeneity: g_heterogeneity.html
   h_tabular: h_tabular.html
   i_reproduction: i_reproduction.html
-  j_survival: j_survival.html
   j_survival_2_psa: j_survival_2_psa.html
+  j_survival: j_survival.html
   k_calibration: k_calibration.html
-last_built: 2024-02-09T20:07Z
+last_built: 2024-09-11T09:29Z
 urls:
   reference: https://aphp.github.io/heemod/reference
   article: https://aphp.github.io/heemod/articles
-
