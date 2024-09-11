@@ -1,4 +1,4 @@
-# heemod (development version)
+# heemod
 
 # Changelog
 
