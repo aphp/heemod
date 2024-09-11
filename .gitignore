@@ -8,3 +8,5 @@ Meta
 /Meta/
 /autre/
 docs
+.Rprofile
+packrat/lib*/

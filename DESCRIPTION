@@ -32,7 +32,7 @@ Imports:
     vctrs (>= 0.6.0)
 LazyData: true
 VignetteBuilder: knitr
-RoxygenNote: 7.3.0
+RoxygenNote: 7.3.2
 Suggests:
     BCEA,
     diagram,
