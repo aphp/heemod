@@ -74,7 +74,7 @@ get_who_mr_memo <- function(age, sex = NULL, region = NULL, country = NULL,
     )
   }
   ages_gho <- trans_age_gho(age)
-  age_gho <- if ("AGE100+" %in% mr_data$AGEGROUP){
+  age_gho <- if ("YEARS100+" %in% mr_data$AGEGROUP){
     ages_gho[[1]]
   } else {
     ages_gho[[2]]  
@@ -242,17 +242,17 @@ trans_age_gho <- function(age) {
   )
   labs <- list(
     c(
-      "AGELT1", "AGE1-4", "AGE5-9",
-      "AGE10-14", "AGE15-19", "AGE20-24",
-      "AGE25-29", "AGE30-34", "AGE35-39",
-      "AGE40-44", "AGE45-49", "AGE50-54",
-      "AGE55-59", "AGE60-64", "AGE65-69",
-      "AGE70-74", "AGE75-79", "AGE80-84",
-      "AGE85-89", "AGE90-94", "AGE95-99",
-      "AGE100+"
+      "YEARSLT1", "YEARS1-4", "YEARS5-9",
+      "YEARS10-14", "YEARS15-19", "YEARS20-24",
+      "YEARS25-29", "YEARS30-34", "YEARS35-39",
+      "YEARS40-44", "YEARS45-49", "YEARS50-54",
+      "YEARS55-59", "YEARS60-64", "YEARS65-69",
+      "YEARS70-74", "YEARS75-79", "YEARS80-84",
+      "YEARS85-89", "YEARS90-94", "YEARS95-99",
+      "YEARS100+"
     )
   )
-  labs[[2]] <- c(labs[[1]][1:18], "AGE85PLUS")
+  labs[[2]] <- c(labs[[1]][1:18], "YEARS85PLUS")
   
   breaks <- list(
     c(0, 1, seq(5, 100, 5), +Inf),
