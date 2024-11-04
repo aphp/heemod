@@ -158,7 +158,7 @@ get_gho_mr <- function(sex, region, country, year) {
   }
   
   if (is.null(sex)) {
-    mr_data_year <- dplyr::filter(mr_data_year, .data$SEX == "BTSX")
+    mr_data_year <- dplyr::filter(mr_data_year, .data$SEX == "SEX_BTSX")
   }
 
   mr_data_year
