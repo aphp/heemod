@@ -8,8 +8,8 @@
 <title>Calibrating `heemod` models • heemod</title>
 <script src="../deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <link href="../deps/bootstrap-5.3.1/bootstrap.min.css" rel="stylesheet">
-<script src="../deps/bootstrap-5.3.1/bootstrap.bundle.min.js"></script><link href="../deps/font-awesome-6.4.2/css/all.min.css" rel="stylesheet">
-<link href="../deps/font-awesome-6.4.2/css/v4-shims.min.css" rel="stylesheet">
+<script src="../deps/bootstrap-5.3.1/bootstrap.bundle.min.js"></script><link href="../deps/font-awesome-6.5.2/css/all.min.css" rel="stylesheet">
+<link href="../deps/font-awesome-6.5.2/css/v4-shims.min.css" rel="stylesheet">
 <script src="../deps/headroom-0.11.0/headroom.min.js"></script><script src="../deps/headroom-0.11.0/jQuery.headroom.min.js"></script><script src="../deps/bootstrap-toc-1.0.1/bootstrap-toc.min.js"></script><script src="../deps/clipboard.js-2.0.11/clipboard.min.js"></script><script src="../deps/search-1.0.0/autocomplete.jquery.min.js"></script><script src="../deps/search-1.0.0/fuse.min.js"></script><script src="../deps/search-1.0.0/mark.min.js"></script><!-- pkgdown --><script src="../pkgdown.js"></script><meta property="og:title" content="Calibrating `heemod` models">
 </head>
 <body>
@@ -20,7 +20,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">heemod</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.0.2</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.1.0</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -69,7 +69,7 @@
 
       <h1>Calibrating `heemod` models</h1>
             
-            <h4 data-toc-skip class="date">2024-09-11</h4>
+            <h4 data-toc-skip class="date">2025-06-16</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/aphp/heemod/blob/master/vignettes/k_calibration.Rmd" class="external-link"><code>vignettes/k_calibration.Rmd</code></a></small>
       <div class="d-none name"><code>k_calibration.Rmd</code></div>
@@ -155,7 +155,435 @@ we want to reach as <code>target_values</code>.</p>
 <span>  target_values <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">2.5</span>, <span class="fl">0.8</span><span class="op">)</span></span>
 <span><span class="op">)</span></span></code></pre></div>
 <pre><code><span><span class="co">## Loading required namespace: optimx</span></span></code></pre>
-<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
+<pre><code><span><span class="co">## Fetching mortality data from package cached data.</span></span></code></pre>
+<pre><code><span><span class="co">## Using cached data from year 2019.</span></span></code></pre>
+<pre><code><span><span class="co">## Fetching mortality data from package cached data.</span></span></code></pre>
+<pre><code><span><span class="co">## Using cached data from year 2019.</span></span></code></pre>
+<pre><code><span><span class="co">## Fetching mortality data from package cached data.</span></span></code></pre>
+<pre><code><span><span class="co">## Using cached data from year 2019.</span></span></code></pre>
+<pre><code><span><span class="co">## Fetching mortality data from package cached data.</span></span></code></pre>
+<pre><code><span><span class="co">## Using cached data from year 2019.</span></span></code></pre>
+<pre><code><span><span class="co">## Fetching mortality data from package cached data.</span></span></code></pre>
+<pre><code><span><span class="co">## Using cached data from year 2019.</span></span></code></pre>
+<pre><code><span><span class="co">## Fetching mortality data from package cached data.</span></span></code></pre>
+<pre><code><span><span class="co">## Using cached data from year 2019.</span></span></code></pre>
+<pre><code><span><span class="co">## Fetching mortality data from package cached data.</span></span></code></pre>
+<pre><code><span><span class="co">## Using cached data from year 2019.</span></span></code></pre>
+<pre><code><span><span class="co">## Fetching mortality data from package cached data.</span></span></code></pre>
+<pre><code><span><span class="co">## Using cached data from year 2019.</span></span></code></pre>
+<pre><code><span><span class="co">## Fetching mortality data from package cached data.</span></span></code></pre>
+<pre><code><span><span class="co">## Using cached data from year 2019.</span></span></code></pre>
+<pre><code><span><span class="co">## Fetching mortality data from package cached data.</span></span></code></pre>
+<pre><code><span><span class="co">## Using cached data from year 2019.</span></span></code></pre>
+<pre><code><span><span class="co">## Fetching mortality data from package cached data.</span></span></code></pre>
+<pre><code><span><span class="co">## Using cached data from year 2019.</span></span></code></pre>
+<pre><code><span><span class="co">## Fetching mortality data from package cached data.</span></span></code></pre>
+<pre><code><span><span class="co">## Using cached data from year 2019.</span></span></code></pre>
+<pre><code><span><span class="co">## Fetching mortality data from package cached data.</span></span></code></pre>
+<pre><code><span><span class="co">## Using cached data from year 2019.</span></span></code></pre>
+<pre><code><span><span class="co">## Fetching mortality data from package cached data.</span></span></code></pre>
+<pre><code><span><span class="co">## Using cached data from year 2019.</span></span></code></pre>
+<pre><code><span><span class="co">## Fetching mortality data from package cached data.</span></span></code></pre>
+<pre><code><span><span class="co">## Using cached data from year 2019.</span></span></code></pre>
+<pre><code><span><span class="co">## Fetching mortality data from package cached data.</span></span></code></pre>
+<pre><code><span><span class="co">## Using cached data from year 2019.</span></span></code></pre>
+<pre><code><span><span class="co">## Fetching mortality data from package cached data.</span></span></code></pre>
+<pre><code><span><span class="co">## Using cached data from year 2019.</span></span></code></pre>
+<pre><code><span><span class="co">## Fetching mortality data from package cached data.</span></span></code></pre>
+<pre><code><span><span class="co">## Using cached data from year 2019.</span></span></code></pre>
+<pre><code><span><span class="co">## Fetching mortality data from package cached data.</span></span></code></pre>
+<pre><code><span><span class="co">## Using cached data from year 2019.</span></span></code></pre>
+<pre><code><span><span class="co">## Fetching mortality data from package cached data.</span></span></code></pre>
+<pre><code><span><span class="co">## Using cached data from year 2019.</span></span></code></pre>
+<pre><code><span><span class="co">## Fetching mortality data from package cached data.</span></span></code></pre>
+<pre><code><span><span class="co">## Using cached data from year 2019.</span></span></code></pre>
+<pre><code><span><span class="co">## Fetching mortality data from package cached data.</span></span></code></pre>
+<pre><code><span><span class="co">## Using cached data from year 2019.</span></span></code></pre>
+<pre><code><span><span class="co">## Fetching mortality data from package cached data.</span></span></code></pre>
+<pre><code><span><span class="co">## Using cached data from year 2019.</span></span></code></pre>
+<pre><code><span><span class="co">## Fetching mortality data from package cached data.</span></span></code></pre>
+<pre><code><span><span class="co">## Using cached data from year 2019.</span></span></code></pre>
+<pre><code><span><span class="co">## Fetching mortality data from package cached data.</span></span></code></pre>
+<pre><code><span><span class="co">## Using cached data from year 2019.</span></span></code></pre>
+<pre><code><span><span class="co">## Fetching mortality data from package cached data.</span></span></code></pre>
+<pre><code><span><span class="co">## Using cached data from year 2019.</span></span></code></pre>
+<pre><code><span><span class="co">## Fetching mortality data from package cached data.</span></span></code></pre>
+<pre><code><span><span class="co">## Using cached data from year 2019.</span></span></code></pre>
+<pre><code><span><span class="co">## Fetching mortality data from package cached data.</span></span></code></pre>
+<pre><code><span><span class="co">## Using cached data from year 2019.</span></span></code></pre>
+<pre><code><span><span class="co">## Fetching mortality data from package cached data.</span></span></code></pre>
+<pre><code><span><span class="co">## Using cached data from year 2019.</span></span></code></pre>
+<pre><code><span><span class="co">## Fetching mortality data from package cached data.</span></span></code></pre>
+<pre><code><span><span class="co">## Using cached data from year 2019.</span></span></code></pre>
+<pre><code><span><span class="co">## Fetching mortality data from package cached data.</span></span></code></pre>
+<pre><code><span><span class="co">## Using cached data from year 2019.</span></span></code></pre>
+<pre><code><span><span class="co">## Fetching mortality data from package cached data.</span></span></code></pre>
+<pre><code><span><span class="co">## Using cached data from year 2019.</span></span></code></pre>
+<pre><code><span><span class="co">## Fetching mortality data from package cached data.</span></span></code></pre>
+<pre><code><span><span class="co">## Using cached data from year 2019.</span></span></code></pre>
+<pre><code><span><span class="co">## Fetching mortality data from package cached data.</span></span></code></pre>
+<pre><code><span><span class="co">## Using cached data from year 2019.</span></span></code></pre>
+<pre><code><span><span class="co">## Fetching mortality data from package cached data.</span></span></code></pre>
+<pre><code><span><span class="co">## Using cached data from year 2019.</span></span></code></pre>
+<pre><code><span><span class="co">## Fetching mortality data from package cached data.</span></span></code></pre>
+<pre><code><span><span class="co">## Using cached data from year 2019.</span></span></code></pre>
+<pre><code><span><span class="co">## Fetching mortality data from package cached data.</span></span></code></pre>
+<pre><code><span><span class="co">## Using cached data from year 2019.</span></span></code></pre>
+<pre><code><span><span class="co">## Fetching mortality data from package cached data.</span></span></code></pre>
+<pre><code><span><span class="co">## Using cached data from year 2019.</span></span></code></pre>
+<pre><code><span><span class="co">## Fetching mortality data from package cached data.</span></span></code></pre>
+<pre><code><span><span class="co">## Using cached data from year 2019.</span></span></code></pre>
+<pre><code><span><span class="co">## Fetching mortality data from package cached data.</span></span></code></pre>
+<pre><code><span><span class="co">## Using cached data from year 2019.</span></span></code></pre>
+<pre><code><span><span class="co">## Fetching mortality data from package cached data.</span></span></code></pre>
+<pre><code><span><span class="co">## Using cached data from year 2019.</span></span></code></pre>
+<pre><code><span><span class="co">## Fetching mortality data from package cached data.</span></span></code></pre>
+<pre><code><span><span class="co">## Using cached data from year 2019.</span></span></code></pre>
+<pre><code><span><span class="co">## Fetching mortality data from package cached data.</span></span></code></pre>
+<pre><code><span><span class="co">## Using cached data from year 2019.</span></span></code></pre>
+<pre><code><span><span class="co">## Fetching mortality data from package cached data.</span></span></code></pre>
+<pre><code><span><span class="co">## Using cached data from year 2019.</span></span></code></pre>
+<pre><code><span><span class="co">## Fetching mortality data from package cached data.</span></span></code></pre>
+<pre><code><span><span class="co">## Using cached data from year 2019.</span></span></code></pre>
+<pre><code><span><span class="co">## Fetching mortality data from package cached data.</span></span></code></pre>
+<pre><code><span><span class="co">## Using cached data from year 2019.</span></span></code></pre>
+<pre><code><span><span class="co">## Fetching mortality data from package cached data.</span></span></code></pre>
+<pre><code><span><span class="co">## Using cached data from year 2019.</span></span></code></pre>
+<pre><code><span><span class="co">## Fetching mortality data from package cached data.</span></span></code></pre>
+<pre><code><span><span class="co">## Using cached data from year 2019.</span></span></code></pre>
+<pre><code><span><span class="co">## Fetching mortality data from package cached data.</span></span></code></pre>
+<pre><code><span><span class="co">## Using cached data from year 2019.</span></span></code></pre>
+<pre><code><span><span class="co">## Fetching mortality data from package cached data.</span></span></code></pre>
+<pre><code><span><span class="co">## Using cached data from year 2019.</span></span></code></pre>
+<pre><code><span><span class="co">## Fetching mortality data from package cached data.</span></span></code></pre>
+<pre><code><span><span class="co">## Using cached data from year 2019.</span></span></code></pre>
+<pre><code><span><span class="co">## Fetching mortality data from package cached data.</span></span></code></pre>
+<pre><code><span><span class="co">## Using cached data from year 2019.</span></span></code></pre>
+<pre><code><span><span class="co">## Fetching mortality data from package cached data.</span></span></code></pre>
+<pre><code><span><span class="co">## Using cached data from year 2019.</span></span></code></pre>
+<pre><code><span><span class="co">## Fetching mortality data from package cached data.</span></span></code></pre>
+<pre><code><span><span class="co">## Using cached data from year 2019.</span></span></code></pre>
+<pre><code><span><span class="co">## Fetching mortality data from package cached data.</span></span></code></pre>
+<pre><code><span><span class="co">## Using cached data from year 2019.</span></span></code></pre>
+<pre><code><span><span class="co">## Fetching mortality data from package cached data.</span></span></code></pre>
+<pre><code><span><span class="co">## Using cached data from year 2019.</span></span></code></pre>
+<pre><code><span><span class="co">## Fetching mortality data from package cached data.</span></span></code></pre>
+<pre><code><span><span class="co">## Using cached data from year 2019.</span></span></code></pre>
+<pre><code><span><span class="co">## Fetching mortality data from package cached data.</span></span></code></pre>
+<pre><code><span><span class="co">## Using cached data from year 2019.</span></span></code></pre>
+<pre><code><span><span class="co">## Fetching mortality data from package cached data.</span></span></code></pre>
+<pre><code><span><span class="co">## Using cached data from year 2019.</span></span></code></pre>
+<pre><code><span><span class="co">## Fetching mortality data from package cached data.</span></span></code></pre>
+<pre><code><span><span class="co">## Using cached data from year 2019.</span></span></code></pre>
+<pre><code><span><span class="co">## Fetching mortality data from package cached data.</span></span></code></pre>
+<pre><code><span><span class="co">## Using cached data from year 2019.</span></span></code></pre>
+<pre><code><span><span class="co">## Fetching mortality data from package cached data.</span></span></code></pre>
+<pre><code><span><span class="co">## Using cached data from year 2019.</span></span></code></pre>
+<pre><code><span><span class="co">## Fetching mortality data from package cached data.</span></span></code></pre>
+<pre><code><span><span class="co">## Using cached data from year 2019.</span></span></code></pre>
+<pre><code><span><span class="co">## Fetching mortality data from package cached data.</span></span></code></pre>
+<pre><code><span><span class="co">## Using cached data from year 2019.</span></span></code></pre>
+<pre><code><span><span class="co">## Fetching mortality data from package cached data.</span></span></code></pre>
+<pre><code><span><span class="co">## Using cached data from year 2019.</span></span></code></pre>
+<pre><code><span><span class="co">## Fetching mortality data from package cached data.</span></span></code></pre>
+<pre><code><span><span class="co">## Using cached data from year 2019.</span></span></code></pre>
+<pre><code><span><span class="co">## Fetching mortality data from package cached data.</span></span></code></pre>
+<pre><code><span><span class="co">## Using cached data from year 2019.</span></span></code></pre>
+<pre><code><span><span class="co">## Fetching mortality data from package cached data.</span></span></code></pre>
+<pre><code><span><span class="co">## Using cached data from year 2019.</span></span></code></pre>
+<pre><code><span><span class="co">## Fetching mortality data from package cached data.</span></span></code></pre>
+<pre><code><span><span class="co">## Using cached data from year 2019.</span></span></code></pre>
+<pre><code><span><span class="co">## Fetching mortality data from package cached data.</span></span></code></pre>
+<pre><code><span><span class="co">## Using cached data from year 2019.</span></span></code></pre>
+<pre><code><span><span class="co">## Fetching mortality data from package cached data.</span></span></code></pre>
+<pre><code><span><span class="co">## Using cached data from year 2019.</span></span></code></pre>
+<pre><code><span><span class="co">## Fetching mortality data from package cached data.</span></span></code></pre>
+<pre><code><span><span class="co">## Using cached data from year 2019.</span></span></code></pre>
+<pre><code><span><span class="co">## Fetching mortality data from package cached data.</span></span></code></pre>
+<pre><code><span><span class="co">## Using cached data from year 2019.</span></span></code></pre>
+<pre><code><span><span class="co">## Fetching mortality data from package cached data.</span></span></code></pre>
+<pre><code><span><span class="co">## Using cached data from year 2019.</span></span></code></pre>
+<pre><code><span><span class="co">## Fetching mortality data from package cached data.</span></span></code></pre>
+<pre><code><span><span class="co">## Using cached data from year 2019.</span></span></code></pre>
+<pre><code><span><span class="co">## Fetching mortality data from package cached data.</span></span></code></pre>
+<pre><code><span><span class="co">## Using cached data from year 2019.</span></span></code></pre>
+<pre><code><span><span class="co">## Fetching mortality data from package cached data.</span></span></code></pre>
+<pre><code><span><span class="co">## Using cached data from year 2019.</span></span></code></pre>
+<pre><code><span><span class="co">## Fetching mortality data from package cached data.</span></span></code></pre>
+<pre><code><span><span class="co">## Using cached data from year 2019.</span></span></code></pre>
+<pre><code><span><span class="co">## Fetching mortality data from package cached data.</span></span></code></pre>
+<pre><code><span><span class="co">## Using cached data from year 2019.</span></span></code></pre>
+<pre><code><span><span class="co">## Fetching mortality data from package cached data.</span></span></code></pre>
+<pre><code><span><span class="co">## Using cached data from year 2019.</span></span></code></pre>
+<pre><code><span><span class="co">## Fetching mortality data from package cached data.</span></span></code></pre>
+<pre><code><span><span class="co">## Using cached data from year 2019.</span></span></code></pre>
+<pre><code><span><span class="co">## Fetching mortality data from package cached data.</span></span></code></pre>
+<pre><code><span><span class="co">## Using cached data from year 2019.</span></span></code></pre>
+<pre><code><span><span class="co">## Fetching mortality data from package cached data.</span></span></code></pre>
+<pre><code><span><span class="co">## Using cached data from year 2019.</span></span></code></pre>
+<pre><code><span><span class="co">## Fetching mortality data from package cached data.</span></span></code></pre>
+<pre><code><span><span class="co">## Using cached data from year 2019.</span></span></code></pre>
+<pre><code><span><span class="co">## Fetching mortality data from package cached data.</span></span></code></pre>
+<pre><code><span><span class="co">## Using cached data from year 2019.</span></span></code></pre>
+<pre><code><span><span class="co">## Fetching mortality data from package cached data.</span></span></code></pre>
+<pre><code><span><span class="co">## Using cached data from year 2019.</span></span></code></pre>
+<pre><code><span><span class="co">## Fetching mortality data from package cached data.</span></span></code></pre>
+<pre><code><span><span class="co">## Using cached data from year 2019.</span></span></code></pre>
+<pre><code><span><span class="co">## Fetching mortality data from package cached data.</span></span></code></pre>
+<pre><code><span><span class="co">## Using cached data from year 2019.</span></span></code></pre>
+<pre><code><span><span class="co">## Fetching mortality data from package cached data.</span></span></code></pre>
+<pre><code><span><span class="co">## Using cached data from year 2019.</span></span></code></pre>
+<pre><code><span><span class="co">## Fetching mortality data from package cached data.</span></span></code></pre>
+<pre><code><span><span class="co">## Using cached data from year 2019.</span></span></code></pre>
+<pre><code><span><span class="co">## Fetching mortality data from package cached data.</span></span></code></pre>
+<pre><code><span><span class="co">## Using cached data from year 2019.</span></span></code></pre>
+<pre><code><span><span class="co">## Fetching mortality data from package cached data.</span></span></code></pre>
+<pre><code><span><span class="co">## Using cached data from year 2019.</span></span></code></pre>
+<pre><code><span><span class="co">## Fetching mortality data from package cached data.</span></span></code></pre>
+<pre><code><span><span class="co">## Using cached data from year 2019.</span></span></code></pre>
+<pre><code><span><span class="co">## Fetching mortality data from package cached data.</span></span></code></pre>
+<pre><code><span><span class="co">## Using cached data from year 2019.</span></span></code></pre>
+<pre><code><span><span class="co">## Fetching mortality data from package cached data.</span></span></code></pre>
+<pre><code><span><span class="co">## Using cached data from year 2019.</span></span></code></pre>
+<pre><code><span><span class="co">## Fetching mortality data from package cached data.</span></span></code></pre>
+<pre><code><span><span class="co">## Using cached data from year 2019.</span></span></code></pre>
+<pre><code><span><span class="co">## Fetching mortality data from package cached data.</span></span></code></pre>
+<pre><code><span><span class="co">## Using cached data from year 2019.</span></span></code></pre>
+<pre><code><span><span class="co">## Fetching mortality data from package cached data.</span></span></code></pre>
+<pre><code><span><span class="co">## Using cached data from year 2019.</span></span></code></pre>
+<pre><code><span><span class="co">## Fetching mortality data from package cached data.</span></span></code></pre>
+<pre><code><span><span class="co">## Using cached data from year 2019.</span></span></code></pre>
+<pre><code><span><span class="co">## Fetching mortality data from package cached data.</span></span></code></pre>
+<pre><code><span><span class="co">## Using cached data from year 2019.</span></span></code></pre>
+<pre><code><span><span class="co">## Fetching mortality data from package cached data.</span></span></code></pre>
+<pre><code><span><span class="co">## Using cached data from year 2019.</span></span></code></pre>
+<pre><code><span><span class="co">## Fetching mortality data from package cached data.</span></span></code></pre>
+<pre><code><span><span class="co">## Using cached data from year 2019.</span></span></code></pre>
+<pre><code><span><span class="co">## Fetching mortality data from package cached data.</span></span></code></pre>
+<pre><code><span><span class="co">## Using cached data from year 2019.</span></span></code></pre>
+<pre><code><span><span class="co">## Fetching mortality data from package cached data.</span></span></code></pre>
+<pre><code><span><span class="co">## Using cached data from year 2019.</span></span></code></pre>
+<pre><code><span><span class="co">## Fetching mortality data from package cached data.</span></span></code></pre>
+<pre><code><span><span class="co">## Using cached data from year 2019.</span></span></code></pre>
+<pre><code><span><span class="co">## Fetching mortality data from package cached data.</span></span></code></pre>
+<pre><code><span><span class="co">## Using cached data from year 2019.</span></span></code></pre>
+<pre><code><span><span class="co">## Fetching mortality data from package cached data.</span></span></code></pre>
+<pre><code><span><span class="co">## Using cached data from year 2019.</span></span></code></pre>
+<pre><code><span><span class="co">## Fetching mortality data from package cached data.</span></span></code></pre>
+<pre><code><span><span class="co">## Using cached data from year 2019.</span></span></code></pre>
+<pre><code><span><span class="co">## Fetching mortality data from package cached data.</span></span></code></pre>
+<pre><code><span><span class="co">## Using cached data from year 2019.</span></span></code></pre>
+<pre><code><span><span class="co">## Fetching mortality data from package cached data.</span></span></code></pre>
+<pre><code><span><span class="co">## Using cached data from year 2019.</span></span></code></pre>
+<pre><code><span><span class="co">## Fetching mortality data from package cached data.</span></span></code></pre>
+<pre><code><span><span class="co">## Using cached data from year 2019.</span></span></code></pre>
+<pre><code><span><span class="co">## Fetching mortality data from package cached data.</span></span></code></pre>
+<pre><code><span><span class="co">## Using cached data from year 2019.</span></span></code></pre>
+<pre><code><span><span class="co">## Fetching mortality data from package cached data.</span></span></code></pre>
+<pre><code><span><span class="co">## Using cached data from year 2019.</span></span></code></pre>
+<pre><code><span><span class="co">## Fetching mortality data from package cached data.</span></span></code></pre>
+<pre><code><span><span class="co">## Using cached data from year 2019.</span></span></code></pre>
+<pre><code><span><span class="co">## Fetching mortality data from package cached data.</span></span></code></pre>
+<pre><code><span><span class="co">## Using cached data from year 2019.</span></span></code></pre>
+<pre><code><span><span class="co">## Fetching mortality data from package cached data.</span></span></code></pre>
+<pre><code><span><span class="co">## Using cached data from year 2019.</span></span></code></pre>
+<pre><code><span><span class="co">## Fetching mortality data from package cached data.</span></span></code></pre>
+<pre><code><span><span class="co">## Using cached data from year 2019.</span></span></code></pre>
+<pre><code><span><span class="co">## Fetching mortality data from package cached data.</span></span></code></pre>
+<pre><code><span><span class="co">## Using cached data from year 2019.</span></span></code></pre>
+<pre><code><span><span class="co">## Fetching mortality data from package cached data.</span></span></code></pre>
+<pre><code><span><span class="co">## Using cached data from year 2019.</span></span></code></pre>
+<pre><code><span><span class="co">## Fetching mortality data from package cached data.</span></span></code></pre>
+<pre><code><span><span class="co">## Using cached data from year 2019.</span></span></code></pre>
+<pre><code><span><span class="co">## Fetching mortality data from package cached data.</span></span></code></pre>
+<pre><code><span><span class="co">## Using cached data from year 2019.</span></span></code></pre>
+<pre><code><span><span class="co">## Fetching mortality data from package cached data.</span></span></code></pre>
+<pre><code><span><span class="co">## Using cached data from year 2019.</span></span></code></pre>
+<pre><code><span><span class="co">## Fetching mortality data from package cached data.</span></span></code></pre>
+<pre><code><span><span class="co">## Using cached data from year 2019.</span></span></code></pre>
+<pre><code><span><span class="co">## Fetching mortality data from package cached data.</span></span></code></pre>
+<pre><code><span><span class="co">## Using cached data from year 2019.</span></span></code></pre>
+<pre><code><span><span class="co">## Fetching mortality data from package cached data.</span></span></code></pre>
+<pre><code><span><span class="co">## Using cached data from year 2019.</span></span></code></pre>
+<pre><code><span><span class="co">## Fetching mortality data from package cached data.</span></span></code></pre>
+<pre><code><span><span class="co">## Using cached data from year 2019.</span></span></code></pre>
+<pre><code><span><span class="co">## Fetching mortality data from package cached data.</span></span></code></pre>
+<pre><code><span><span class="co">## Using cached data from year 2019.</span></span></code></pre>
+<pre><code><span><span class="co">## Fetching mortality data from package cached data.</span></span></code></pre>
+<pre><code><span><span class="co">## Using cached data from year 2019.</span></span></code></pre>
+<pre><code><span><span class="co">## Fetching mortality data from package cached data.</span></span></code></pre>
+<pre><code><span><span class="co">## Using cached data from year 2019.</span></span></code></pre>
+<pre><code><span><span class="co">## Fetching mortality data from package cached data.</span></span></code></pre>
+<pre><code><span><span class="co">## Using cached data from year 2019.</span></span></code></pre>
+<pre><code><span><span class="co">## Fetching mortality data from package cached data.</span></span></code></pre>
+<pre><code><span><span class="co">## Using cached data from year 2019.</span></span></code></pre>
+<pre><code><span><span class="co">## Fetching mortality data from package cached data.</span></span></code></pre>
+<pre><code><span><span class="co">## Using cached data from year 2019.</span></span></code></pre>
+<pre><code><span><span class="co">## Fetching mortality data from package cached data.</span></span></code></pre>
+<pre><code><span><span class="co">## Using cached data from year 2019.</span></span></code></pre>
+<pre><code><span><span class="co">## Fetching mortality data from package cached data.</span></span></code></pre>
+<pre><code><span><span class="co">## Using cached data from year 2019.</span></span></code></pre>
+<pre><code><span><span class="co">## Fetching mortality data from package cached data.</span></span></code></pre>
+<pre><code><span><span class="co">## Using cached data from year 2019.</span></span></code></pre>
+<pre><code><span><span class="co">## Fetching mortality data from package cached data.</span></span></code></pre>
+<pre><code><span><span class="co">## Using cached data from year 2019.</span></span></code></pre>
+<pre><code><span><span class="co">## Fetching mortality data from package cached data.</span></span></code></pre>
+<pre><code><span><span class="co">## Using cached data from year 2019.</span></span></code></pre>
+<pre><code><span><span class="co">## Fetching mortality data from package cached data.</span></span></code></pre>
+<pre><code><span><span class="co">## Using cached data from year 2019.</span></span></code></pre>
+<pre><code><span><span class="co">## Fetching mortality data from package cached data.</span></span></code></pre>
+<pre><code><span><span class="co">## Using cached data from year 2019.</span></span></code></pre>
+<pre><code><span><span class="co">## Fetching mortality data from package cached data.</span></span></code></pre>
+<pre><code><span><span class="co">## Using cached data from year 2019.</span></span></code></pre>
+<pre><code><span><span class="co">## Fetching mortality data from package cached data.</span></span></code></pre>
+<pre><code><span><span class="co">## Using cached data from year 2019.</span></span></code></pre>
+<pre><code><span><span class="co">## Fetching mortality data from package cached data.</span></span></code></pre>
+<pre><code><span><span class="co">## Using cached data from year 2019.</span></span></code></pre>
+<pre><code><span><span class="co">## Fetching mortality data from package cached data.</span></span></code></pre>
+<pre><code><span><span class="co">## Using cached data from year 2019.</span></span></code></pre>
+<pre><code><span><span class="co">## Fetching mortality data from package cached data.</span></span></code></pre>
+<pre><code><span><span class="co">## Using cached data from year 2019.</span></span></code></pre>
+<pre><code><span><span class="co">## Fetching mortality data from package cached data.</span></span></code></pre>
+<pre><code><span><span class="co">## Using cached data from year 2019.</span></span></code></pre>
+<pre><code><span><span class="co">## Fetching mortality data from package cached data.</span></span></code></pre>
+<pre><code><span><span class="co">## Using cached data from year 2019.</span></span></code></pre>
+<pre><code><span><span class="co">## Fetching mortality data from package cached data.</span></span></code></pre>
+<pre><code><span><span class="co">## Using cached data from year 2019.</span></span></code></pre>
+<pre><code><span><span class="co">## Fetching mortality data from package cached data.</span></span></code></pre>
+<pre><code><span><span class="co">## Using cached data from year 2019.</span></span></code></pre>
+<pre><code><span><span class="co">## Fetching mortality data from package cached data.</span></span></code></pre>
+<pre><code><span><span class="co">## Using cached data from year 2019.</span></span></code></pre>
+<pre><code><span><span class="co">## Fetching mortality data from package cached data.</span></span></code></pre>
+<pre><code><span><span class="co">## Using cached data from year 2019.</span></span></code></pre>
+<pre><code><span><span class="co">## Fetching mortality data from package cached data.</span></span></code></pre>
+<pre><code><span><span class="co">## Using cached data from year 2019.</span></span></code></pre>
+<pre><code><span><span class="co">## Fetching mortality data from package cached data.</span></span></code></pre>
+<pre><code><span><span class="co">## Using cached data from year 2019.</span></span></code></pre>
+<pre><code><span><span class="co">## Fetching mortality data from package cached data.</span></span></code></pre>
+<pre><code><span><span class="co">## Using cached data from year 2019.</span></span></code></pre>
+<pre><code><span><span class="co">## Fetching mortality data from package cached data.</span></span></code></pre>
+<pre><code><span><span class="co">## Using cached data from year 2019.</span></span></code></pre>
+<pre><code><span><span class="co">## Fetching mortality data from package cached data.</span></span></code></pre>
+<pre><code><span><span class="co">## Using cached data from year 2019.</span></span></code></pre>
+<pre><code><span><span class="co">## Fetching mortality data from package cached data.</span></span></code></pre>
+<pre><code><span><span class="co">## Using cached data from year 2019.</span></span></code></pre>
+<pre><code><span><span class="co">## Fetching mortality data from package cached data.</span></span></code></pre>
+<pre><code><span><span class="co">## Using cached data from year 2019.</span></span></code></pre>
+<pre><code><span><span class="co">## Fetching mortality data from package cached data.</span></span></code></pre>
+<pre><code><span><span class="co">## Using cached data from year 2019.</span></span></code></pre>
+<pre><code><span><span class="co">## Fetching mortality data from package cached data.</span></span></code></pre>
+<pre><code><span><span class="co">## Using cached data from year 2019.</span></span></code></pre>
+<pre><code><span><span class="co">## Fetching mortality data from package cached data.</span></span></code></pre>
+<pre><code><span><span class="co">## Using cached data from year 2019.</span></span></code></pre>
+<pre><code><span><span class="co">## Fetching mortality data from package cached data.</span></span></code></pre>
+<pre><code><span><span class="co">## Using cached data from year 2019.</span></span></code></pre>
+<pre><code><span><span class="co">## Fetching mortality data from package cached data.</span></span></code></pre>
+<pre><code><span><span class="co">## Using cached data from year 2019.</span></span></code></pre>
+<pre><code><span><span class="co">## Fetching mortality data from package cached data.</span></span></code></pre>
+<pre><code><span><span class="co">## Using cached data from year 2019.</span></span></code></pre>
+<pre><code><span><span class="co">## Fetching mortality data from package cached data.</span></span></code></pre>
+<pre><code><span><span class="co">## Using cached data from year 2019.</span></span></code></pre>
+<pre><code><span><span class="co">## Fetching mortality data from package cached data.</span></span></code></pre>
+<pre><code><span><span class="co">## Using cached data from year 2019.</span></span></code></pre>
+<pre><code><span><span class="co">## Fetching mortality data from package cached data.</span></span></code></pre>
+<pre><code><span><span class="co">## Using cached data from year 2019.</span></span></code></pre>
+<pre><code><span><span class="co">## Fetching mortality data from package cached data.</span></span></code></pre>
+<pre><code><span><span class="co">## Using cached data from year 2019.</span></span></code></pre>
+<pre><code><span><span class="co">## Fetching mortality data from package cached data.</span></span></code></pre>
+<pre><code><span><span class="co">## Using cached data from year 2019.</span></span></code></pre>
+<pre><code><span><span class="co">## Fetching mortality data from package cached data.</span></span></code></pre>
+<pre><code><span><span class="co">## Using cached data from year 2019.</span></span></code></pre>
+<pre><code><span><span class="co">## Fetching mortality data from package cached data.</span></span></code></pre>
+<pre><code><span><span class="co">## Using cached data from year 2019.</span></span></code></pre>
+<pre><code><span><span class="co">## Fetching mortality data from package cached data.</span></span></code></pre>
+<pre><code><span><span class="co">## Using cached data from year 2019.</span></span></code></pre>
+<pre><code><span><span class="co">## Fetching mortality data from package cached data.</span></span></code></pre>
+<pre><code><span><span class="co">## Using cached data from year 2019.</span></span></code></pre>
+<pre><code><span><span class="co">## Fetching mortality data from package cached data.</span></span></code></pre>
+<pre><code><span><span class="co">## Using cached data from year 2019.</span></span></code></pre>
+<pre><code><span><span class="co">## Fetching mortality data from package cached data.</span></span></code></pre>
+<pre><code><span><span class="co">## Using cached data from year 2019.</span></span></code></pre>
+<pre><code><span><span class="co">## Fetching mortality data from package cached data.</span></span></code></pre>
+<pre><code><span><span class="co">## Using cached data from year 2019.</span></span></code></pre>
+<pre><code><span><span class="co">## Fetching mortality data from package cached data.</span></span></code></pre>
+<pre><code><span><span class="co">## Using cached data from year 2019.</span></span></code></pre>
+<pre><code><span><span class="co">## Fetching mortality data from package cached data.</span></span></code></pre>
+<pre><code><span><span class="co">## Using cached data from year 2019.</span></span></code></pre>
+<pre><code><span><span class="co">## Fetching mortality data from package cached data.</span></span></code></pre>
+<pre><code><span><span class="co">## Using cached data from year 2019.</span></span></code></pre>
+<pre><code><span><span class="co">## Fetching mortality data from package cached data.</span></span></code></pre>
+<pre><code><span><span class="co">## Using cached data from year 2019.</span></span></code></pre>
+<pre><code><span><span class="co">## Fetching mortality data from package cached data.</span></span></code></pre>
+<pre><code><span><span class="co">## Using cached data from year 2019.</span></span></code></pre>
+<pre><code><span><span class="co">## Fetching mortality data from package cached data.</span></span></code></pre>
+<pre><code><span><span class="co">## Using cached data from year 2019.</span></span></code></pre>
+<pre><code><span><span class="co">## Fetching mortality data from package cached data.</span></span></code></pre>
+<pre><code><span><span class="co">## Using cached data from year 2019.</span></span></code></pre>
+<pre><code><span><span class="co">## Fetching mortality data from package cached data.</span></span></code></pre>
+<pre><code><span><span class="co">## Using cached data from year 2019.</span></span></code></pre>
+<pre><code><span><span class="co">## Fetching mortality data from package cached data.</span></span></code></pre>
+<pre><code><span><span class="co">## Using cached data from year 2019.</span></span></code></pre>
+<pre><code><span><span class="co">## Fetching mortality data from package cached data.</span></span></code></pre>
+<pre><code><span><span class="co">## Using cached data from year 2019.</span></span></code></pre>
+<pre><code><span><span class="co">## Fetching mortality data from package cached data.</span></span></code></pre>
+<pre><code><span><span class="co">## Using cached data from year 2019.</span></span></code></pre>
+<pre><code><span><span class="co">## Fetching mortality data from package cached data.</span></span></code></pre>
+<pre><code><span><span class="co">## Using cached data from year 2019.</span></span></code></pre>
+<pre><code><span><span class="co">## Fetching mortality data from package cached data.</span></span></code></pre>
+<pre><code><span><span class="co">## Using cached data from year 2019.</span></span></code></pre>
+<pre><code><span><span class="co">## Fetching mortality data from package cached data.</span></span></code></pre>
+<pre><code><span><span class="co">## Using cached data from year 2019.</span></span></code></pre>
+<pre><code><span><span class="co">## Fetching mortality data from package cached data.</span></span></code></pre>
+<pre><code><span><span class="co">## Using cached data from year 2019.</span></span></code></pre>
+<pre><code><span><span class="co">## Fetching mortality data from package cached data.</span></span></code></pre>
+<pre><code><span><span class="co">## Using cached data from year 2019.</span></span></code></pre>
+<pre><code><span><span class="co">## Fetching mortality data from package cached data.</span></span></code></pre>
+<pre><code><span><span class="co">## Using cached data from year 2019.</span></span></code></pre>
+<pre><code><span><span class="co">## Fetching mortality data from package cached data.</span></span></code></pre>
+<pre><code><span><span class="co">## Using cached data from year 2019.</span></span></code></pre>
+<pre><code><span><span class="co">## Fetching mortality data from package cached data.</span></span></code></pre>
+<pre><code><span><span class="co">## Using cached data from year 2019.</span></span></code></pre>
+<pre><code><span><span class="co">## Fetching mortality data from package cached data.</span></span></code></pre>
+<pre><code><span><span class="co">## Using cached data from year 2019.</span></span></code></pre>
+<pre><code><span><span class="co">## Fetching mortality data from package cached data.</span></span></code></pre>
+<pre><code><span><span class="co">## Using cached data from year 2019.</span></span></code></pre>
+<pre><code><span><span class="co">## Fetching mortality data from package cached data.</span></span></code></pre>
+<pre><code><span><span class="co">## Using cached data from year 2019.</span></span></code></pre>
+<pre><code><span><span class="co">## Fetching mortality data from package cached data.</span></span></code></pre>
+<pre><code><span><span class="co">## Using cached data from year 2019.</span></span></code></pre>
+<pre><code><span><span class="co">## Fetching mortality data from package cached data.</span></span></code></pre>
+<pre><code><span><span class="co">## Using cached data from year 2019.</span></span></code></pre>
+<pre><code><span><span class="co">## Fetching mortality data from package cached data.</span></span></code></pre>
+<pre><code><span><span class="co">## Using cached data from year 2019.</span></span></code></pre>
+<pre><code><span><span class="co">## Fetching mortality data from package cached data.</span></span></code></pre>
+<pre><code><span><span class="co">## Using cached data from year 2019.</span></span></code></pre>
+<pre><code><span><span class="co">## Fetching mortality data from package cached data.</span></span></code></pre>
+<pre><code><span><span class="co">## Using cached data from year 2019.</span></span></code></pre>
+<pre><code><span><span class="co">## Fetching mortality data from package cached data.</span></span></code></pre>
+<pre><code><span><span class="co">## Using cached data from year 2019.</span></span></code></pre>
+<pre><code><span><span class="co">## Fetching mortality data from package cached data.</span></span></code></pre>
+<pre><code><span><span class="co">## Using cached data from year 2019.</span></span></code></pre>
+<pre><code><span><span class="co">## Fetching mortality data from package cached data.</span></span></code></pre>
+<pre><code><span><span class="co">## Using cached data from year 2019.</span></span></code></pre>
+<pre><code><span><span class="co">## Fetching mortality data from package cached data.</span></span></code></pre>
+<pre><code><span><span class="co">## Using cached data from year 2019.</span></span></code></pre>
+<pre><code><span><span class="co">## Fetching mortality data from package cached data.</span></span></code></pre>
+<pre><code><span><span class="co">## Using cached data from year 2019.</span></span></code></pre>
+<pre><code><span><span class="co">## Fetching mortality data from package cached data.</span></span></code></pre>
+<pre><code><span><span class="co">## Using cached data from year 2019.</span></span></code></pre>
+<pre><code><span><span class="co">## Fetching mortality data from package cached data.</span></span></code></pre>
+<pre><code><span><span class="co">## Using cached data from year 2019.</span></span></code></pre>
+<pre><code><span><span class="co">## Fetching mortality data from package cached data.</span></span></code></pre>
+<pre><code><span><span class="co">## Using cached data from year 2019.</span></span></code></pre>
+<pre><code><span><span class="co">## Fetching mortality data from package cached data.</span></span></code></pre>
+<pre><code><span><span class="co">## Using cached data from year 2019.</span></span></code></pre>
+<pre><code><span><span class="co">## Fetching mortality data from package cached data.</span></span></code></pre>
+<pre><code><span><span class="co">## Using cached data from year 2019.</span></span></code></pre>
+<pre><code><span><span class="co">## Fetching mortality data from package cached data.</span></span></code></pre>
+<pre><code><span><span class="co">## Using cached data from year 2019.</span></span></code></pre>
+<pre><code><span><span class="co">## Fetching mortality data from package cached data.</span></span></code></pre>
+<pre><code><span><span class="co">## Using cached data from year 2019.</span></span></code></pre>
+<div class="sourceCode" id="cb437"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">res_cal</span></span></code></pre></div>
 <pre><code><span><span class="co">##      gamma     rrNP1        value convcode</span></span>
 <span><span class="co">## 1 1.431919 0.3146302 3.346417e-10        0</span></span></code></pre>
@@ -164,7 +592,7 @@ we want to reach as <code>target_values</code>.</p>
 calibration was successful.</p>
 <p>It is possible to specify several possible starting values for the
 calibration procedure in order to explore the parameter space:</p>
-<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb439"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">start</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span></span>
 <span>  gamma <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1.0</span>, <span class="fl">1.5</span>, <span class="fl">2.0</span><span class="op">)</span>,</span>
 <span>  rrNP1 <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0.2</span>, <span class="fl">0.3</span>, <span class="fl">0.4</span><span class="op">)</span></span>
@@ -211,7 +639,7 @@ carefully check the results of calibrations.</p>
 </div>
 
 <div class="pkgdown-footer-right">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.0.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.3.</p>
 </div>
 
     </footer>
