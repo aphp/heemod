@@ -69,9 +69,6 @@
 #' @importFrom ggplot2 xlim
 #' @importFrom ggplot2 %+replace%
 #'   
-#' @importFrom memoise memoise
-#' @importFrom memoise timeout
-#'   
 #' @importFrom utils read.csv
 #' @importFrom utils write.csv
 #' @importFrom utils packageVersion

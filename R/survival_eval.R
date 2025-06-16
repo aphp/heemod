@@ -231,10 +231,6 @@ eval_surv <- function(x, time, ...) {
 #' Generate either survival probabilities or conditional
 #' probabilities of event for each model cycle.
 #' 
-#' The results of `compute_surv()` are memoised for 
-#' `options("heemod.memotime")` (default: 1 hour) to 
-#' increase resampling performance.
-#' 
 #' @param x A survival object
 #' @param time The `model_time` or `state_time` for which
 #'   to predict.

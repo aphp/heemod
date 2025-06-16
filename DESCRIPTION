@@ -1,6 +1,6 @@
 Package: heemod
 Title: Markov Models for Health Economic Evaluations
-Version: 1.0.2
+Version: 1.1.0
 Authors@R: c(
     person("Kevin", "Zarca", email = "kevin.zarca@gmail.com", role = c("aut", "cre")),
     person("Antoine", "Filipovic-Pierucci", role = "aut"),
@@ -22,7 +22,6 @@ Depends: R (>= 4.1.0)
 Imports:
     dplyr (>= 1.1.0),
     ggplot2 (>= 3.4.0),
-    memoise (>= 2.0.0),
     mvnfast (>= 0.2.5),
     tibble (>= 3.2.0),
     rlang (>= 1.1.0), 
@@ -44,7 +43,6 @@ Suggests:
     optimx,
     parallel,
     readxl,
-    rgho (>= 3.0.0),
     rmarkdown,
     stringr,
     survival,

@@ -2,27 +2,10 @@
 % Please edit documentation in R/gho_mortality.R
 \name{who_mortality}
 \alias{who_mortality}
-\alias{get_who_mr_memo}
 \alias{get_who_mr}
 \title{Use WHO Mortality Rate}
 \usage{
-get_who_mr_memo(
-  age,
-  sex = NULL,
-  region = NULL,
-  country = NULL,
-  year = "latest",
-  local = FALSE
-)
-
-get_who_mr(
-  age,
-  sex = NULL,
-  region = NULL,
-  country = NULL,
-  year = "latest",
-  local = FALSE
-)
+get_who_mr(age, sex = NULL, region = NULL, year = "latest")
 }
 \arguments{
 \item{age}{age as a continuous variable.}
@@ -30,16 +13,10 @@ get_who_mr(
 \item{sex}{sex as \code{"FMLE"}-\code{"MLE"}, \code{0}-\code{1} (male = 0,
 female = 1) or \code{1}-\code{2} (male = 1, female = 2).}
 
-\item{region}{Region code. Assumed \code{NULL} if provided along
-with \code{country}.}
-
-\item{country}{Country code (see details).}
+\item{region}{Region code.}
 
 \item{year}{Use data from that year. Defaults to
 \code{"latest"}.}
-
-\item{local}{Fetch mortality data from package cached
-data?}
 }
 \value{
 This function should be used within
@@ -47,22 +24,18 @@ This function should be used within
 }
 \description{
 Returns age and sex-specific mortality probabilities for
-a given country.
+a given region
 }
 \details{
-Locally cached data is used in case of connection
-problems, of if \code{local = TRUE}. For memory space reasons
+Only locally cached data are available.
+For memory space reasons
 local data is only available for WHO high-income
 countries (pooled), and only for the latest year.
-
-The results of \code{get_who_mr} are memoised for
-\code{options("heemod.memotime")} (default: 1 hour) to
-increase resampling performance.
 }
 \examples{
 
 define_transition(
-  C, get_who_mr(age = 50 + model_time, sex = "FMLE", country = "FRA"),
+  C, get_who_mr(age = 50 + model_time, sex = "FMLE", region = "EUR"),
   0, 1
 )
 

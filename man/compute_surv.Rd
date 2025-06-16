@@ -28,8 +28,3 @@ conditional probabilities of event for each cycle.
 Generate either survival probabilities or conditional
 probabilities of event for each model cycle.
 }
-\details{
-The results of \code{compute_surv()} are memoised for
-\code{options("heemod.memotime")} (default: 1 hour) to
-increase resampling performance.
-}

@@ -2,6 +2,10 @@
 
 # Changelog
 
+## heemod 1.1.0
+### Breaking changes
+ * Remove dependency to rgho. `get_who_mr` is still locally working
+
 ## heemod 1.0.0
 ### Breaking changes
  * dplyr's pipe now causes an error when chaining survival operation. The new pipe |>
